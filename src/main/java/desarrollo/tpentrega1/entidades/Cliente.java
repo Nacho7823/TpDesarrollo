@@ -4,9 +4,7 @@
  */
 package desarrollo.tpentrega1.entidades;
 
-import desarrollo.tpentrega1.servicios.ClienteServicio;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -14,13 +12,15 @@ import java.util.List;
  */
 public class Cliente {
     private String id;
+    private String nombre;          // no esta en el diagrama pero la etapa 1 lo pide
     private String cuit;
     private String email;
     private String direccion;
     private ArrayList<Coordenada> coordenadas;
 
-    public Cliente(String id, String cuit, String email, String direccion, ArrayList<Coordenada> coordenadas) {
+    public Cliente(String id, String nombre, String cuit, String email, String direccion, ArrayList<Coordenada> coordenadas) {
         this.id = id;
+        this.nombre = nombre;
         this.cuit = cuit;
         this.email = email;
         this.direccion = direccion;
@@ -36,6 +36,14 @@ public class Cliente {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getCuit() {

@@ -6,6 +6,8 @@ package desarrollo.tpentrega1.entidades;
 
 import java.util.List;
 
+import javax.swing.plaf.BorderUIResource.CompoundBorderUIResource;
+
 /**
  *
  * @author florh
@@ -57,5 +59,12 @@ public class Vendedor {
     public void setCoordenadas(List<Coordenada> coordenadas) {
         this.coordenadas = coordenadas;
     }
-    
+ 
+    public int distancia(Cliente cliente) {
+        Coordenada coordVend = this.coordenadas.get(0);
+        Coordenada coordCli = cliente.getCoordenadas().get(0);
+
+        // TODO
+        return 0;
+    }
 }
