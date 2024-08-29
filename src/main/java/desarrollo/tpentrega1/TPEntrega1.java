@@ -16,6 +16,23 @@ import desarrollo.tpentrega1.entidades.Vendedor;
  */
 public class TPEntrega1 {
 
+    public static Vendedor buscarId(String id, ArrayList<Vendedor> vendedores) {
+        for (int i = 0; i < vendedores.size(); i++) {
+            if (vendedores.get(i).getId().equals(id)) {
+                return vendedores.get(i);
+            }
+        }
+        return null;
+    }
+
+    public static Vendedor buscarNombre(String nombre, ArrayList<Vendedor> vendedores) {
+        for (int i = 0; i < vendedores.size(); i++) {
+            if (vendedores.get(i).getNombre().equals(nombre)) {
+                return vendedores.get(i);
+            }
+        }
+        return null;
+    }
 
     void etapa1() {
         ArrayList<Vendedor> vendedores = new ArrayList<>();
@@ -34,8 +51,14 @@ public class TPEntrega1 {
         coords.add(new Coordenada(4.12, 3.41));
         vendedores.add(new Vendedor("2", "Flor Hiembuchner", "san martin 5412", coords));
         
-        
+        // buscar vendedor en arreglo
 
+        Vendedor vendedor1 = buscarId("1", vendedores);
+        Vendedor vendedor2 = buscarNombre("Exequiel sandria", vendedores);
+
+        // eliminar vendedor
+
+        vendedores.remove(0);   //borramos el vendedor con indice 0
     }
 
 
