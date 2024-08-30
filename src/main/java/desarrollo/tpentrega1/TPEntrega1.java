@@ -111,8 +111,8 @@ public class TPEntrega1 {
         double distancia2 = vendedor2.distancia(cliente2);
 
         // mostrar distancia
-        System.out.println("distancia de cliente1 a vendedor1: " + distancia1);
-        System.out.println("distancia de cliente1 a vendedor2: " + distancia2);
+        System.out.println("distancia de cliente1 a vendedor1: " + distancia1 + " km");
+        System.out.println("distancia de cliente1 a vendedor2: " + distancia2+ "km");
 
     }
 }
