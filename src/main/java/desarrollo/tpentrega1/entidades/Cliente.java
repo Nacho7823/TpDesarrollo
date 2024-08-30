@@ -4,7 +4,7 @@
  */
 package desarrollo.tpentrega1.entidades;
 
-import java.util.ArrayList;
+
 
 /**
  *
@@ -16,15 +16,15 @@ public class Cliente {
     private String cuit;
     private String email;
     private String direccion;
-    private ArrayList<Coordenada> coordenadas;
+    private Coordenada coordenada;
 
-    public Cliente(String id, String nombre, String cuit, String email, String direccion, ArrayList<Coordenada> coordenadas) {
+    public Cliente(String id, String nombre, String cuit, String email, String direccion, Coordenada coordenada) {
         this.id = id;
         this.nombre = nombre;
         this.cuit = cuit;
         this.email = email;
         this.direccion = direccion;
-        this.coordenadas = coordenadas;
+        this.coordenada = coordenada;
     }
 
     public Cliente() {
@@ -70,12 +70,12 @@ public class Cliente {
         this.direccion = direccion;
     }
 
-    public ArrayList<Coordenada> getCoordenadas() {
-        return coordenadas;
+    public Coordenada getCoordenada() {
+        return coordenada;
     }
 
-    public void setCoordenadas(ArrayList<Coordenada> coordenadas) {
-        this.coordenadas = coordenadas;
+    public void setCoordenadas(Coordenada coordenada) {
+        this.coordenada = coordenada;
     }
 
    

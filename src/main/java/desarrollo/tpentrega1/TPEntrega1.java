@@ -4,9 +4,8 @@
 
 package desarrollo.tpentrega1;
 
-import java.lang.reflect.Array;
+
 import java.util.ArrayList;
-import java.util.Random;
 
 import desarrollo.tpentrega1.entidades.Coordenada;
 import desarrollo.tpentrega1.entidades.Vendedor;
@@ -55,46 +54,37 @@ public class TPEntrega1 {
     }
 
 
-    ArrayList<Vendedor> crearArregloVendedores() {
+    public static ArrayList<Vendedor> crearArregloVendedores() {
         ArrayList<Vendedor> vendedores = new ArrayList<>();
-        ArrayList<Coordenada> coords;
+       
 
-        coords = new ArrayList<Coordenada>();
-        coords.add(new Coordenada(1.23, 2.34));
-        vendedores.add(new Vendedor("0",  "Matias Carranza",  "San Martin 1263", coords));
+        
+        vendedores.add(new Vendedor("0",  "Matias Carranza",  "San Martin 1263", new Coordenada(3.45,2.65)));
 
-
-        coords = new ArrayList<Coordenada>();
-        coords.add(new Coordenada(3.45, 4.56));
-        vendedores.add(new Vendedor("1", "Exequiel sandria", "corrientes 1234", coords));
-
-        coords = new ArrayList<Coordenada>();
-        coords.add(new Coordenada(4.12, 3.41));
-        vendedores.add(new Vendedor("2", "Flor Hiembuchner", "san martin 5412", coords));
+        
+        vendedores.add(new Vendedor("1", "Exequiel sandria", "corrientes 1234",new Coordenada(13.5,54.1)));
+        
+      
+        vendedores.add(new Vendedor("2", "Flor Hiembuchner", "san martin 5412",new Coordenada(34.6,6.12) ));
         
         return vendedores;
     }
 
-    ArrayList<Cliente> crearArregloClientes() {
+    public static ArrayList<Cliente> crearArregloClientes() {
         ArrayList<Cliente> clientes = new ArrayList<>();
-        ArrayList<Coordenada> coords;
+       
 
-        coords = new ArrayList<Coordenada>();
-        coords.add(new Coordenada(1.32, 4.21));
-        clientes.add(new Cliente("0", "juan verde", "20345678912", "juanVerde12@hotmail.com", "corrientes 4124", coords));
-
-        coords = new ArrayList<Coordenada>();
-        coords.add(new Coordenada(2.54, 3.53));
-        clientes.add(new Cliente("1", "carlos fernandez", "20364764562", "carlosFernandez12@hotmail.com", "juan de garay 5123", coords));
-
-        coords = new ArrayList<Coordenada>();
-        coords.add(new Coordenada(2.12, 1.51));
-        clientes.add(new Cliente("2", "rafael hernandez", "20346572182", "rafaeljosehernandez@gmail.com", "junin 2421", coords));
+        //agregar las coordenadas
+        clientes.add(new Cliente("0", "juan verde", "20345678912", "juanVerde12@hotmail.com", "corrientes 4124", new Coordenada(3.5, 5.2)));
+        
+        clientes.add(new Cliente("1", "carlos fernandez", "20364764562", "carlosFernandez12@hotmail.com", "juan de garay 5123", new Coordenada(12.5, 65.2)));
+       
+        clientes.add(new Cliente("2", "rafael hernandez", "20346572182", "rafaeljosehernandez@gmail.com", "junin 2421", new Coordenada(6.75, 25.12)));
 
         return clientes;
     }
 
-    public void main(String[] args) {
+    public static void main(String[] args) {
         
         // vendedores
         ArrayList<Vendedor> vendedores = crearArregloVendedores();
@@ -117,8 +107,8 @@ public class TPEntrega1 {
         clientes.remove(0);   //borramos el cliente con indice 0
 
         // distancia
-        int distancia1 = vendedor1.distancia(cliente1);
-        int distancia2 = vendedor2.distancia(cliente2);
+        double distancia1 = vendedor1.distancia(cliente1);
+        double distancia2 = vendedor2.distancia(cliente2);
 
         // mostrar distancia
         System.out.println("distancia de cliente1 a vendedor1: " + distancia1);
