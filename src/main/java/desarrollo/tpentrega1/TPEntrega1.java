@@ -18,39 +18,59 @@ import desarrollo.tpentrega1.entidades.Cliente;
 public class TPEntrega1 {
 
     public static Vendedor buscarVendedorId(String id, ArrayList<Vendedor> vendedores) {
-        for (int i = 0; i < vendedores.size(); i++) {
-            if (vendedores.get(i).getId().equals(id)) {
-                return vendedores.get(i);
-            }
-        }
-        return null;
+        int i=0;
+        boolean bandera = true;
+        Vendedor v = new Vendedor();
+        while (i < vendedores.size() && bandera){
+        if(vendedores.get(i).getId().equals(id)) {
+            bandera = false;
+            v = vendedores.get(i);
+        } else i++;
+    }
+        if(!bandera)return v;
+            else{ System.out.println("No se ha encontrado vendedor con ese id: "+id); return null;}
     }
 
     public static Vendedor buscarVendedorNombre(String nombre, ArrayList<Vendedor> vendedores) {
-        for (int i = 0; i < vendedores.size(); i++) {
-            if (vendedores.get(i).getNombre().equals(nombre)) {
-                return vendedores.get(i);
-            }
-        }
-        return null;
+        int i=0;
+        boolean bandera = true;
+        Vendedor v = new Vendedor();
+        while (i < vendedores.size() && bandera){
+        if(vendedores.get(i).getNombre().equals(nombre)) {
+            bandera = false;
+            v = vendedores.get(i);
+        } else i++;
+    }
+        if(!bandera)return v;
+            else{ System.out.println("No se ha encontrado vendedor con ese nombre: "+nombre); return null;}
     }
 
     public static Cliente buscarClienteId(String id, ArrayList<Cliente> clientes) {
-        for (int i = 0; i < clientes.size(); i++) {
-            if (clientes.get(i).getId().equals(id)) {
-                return clientes.get(i);
-            }
-        }
-        return null;
+        int i=0;
+        boolean bandera = true;
+        Cliente c = new Cliente();
+        while (i < clientes.size() && bandera){
+        if(clientes.get(i).getId().equals(id)) {
+            bandera = false;
+            c = clientes.get(i);
+        } else i++;
+    }
+       if(!bandera) return c;
+        else{ System.out.println("No se ha encontrado cliente con el id: "+id); return null;}
     }
 
-    public static Cliente buscarClienteNombre(String nombre, ArrayList<Cliente> cliente) {
-        for (int i = 0; i < cliente.size(); i++) {
-            if (cliente.get(i).getNombre().equals(nombre)) {
-                return cliente.get(i);
-            }
-        }
-        return null;
+    public static Cliente buscarClienteNombre(String nombre, ArrayList<Cliente> clientes) {
+         int i=0;
+        boolean bandera = true;
+        Cliente c = new Cliente();
+        while (i < clientes.size() && bandera){
+        if(clientes.get(i).getNombre().equals(nombre)) {
+            bandera = false;
+            c = clientes.get(i);
+        } else i++;
+    }
+        if(!bandera) return c;
+        else{ System.out.println("No se ha encontrado cliente con ese nombre: "+nombre); return null;}
     }
 
 
@@ -85,7 +105,6 @@ public class TPEntrega1 {
     }
 
     public static void main(String[] args) {
-        
         // vendedores
         ArrayList<Vendedor> vendedores = crearArregloVendedores();
         // buscar vendedor en arreglo
@@ -103,6 +122,7 @@ public class TPEntrega1 {
         Cliente cliente1 = buscarClienteId("1", clientes);
         Cliente cliente2 = buscarClienteNombre("rafael hernandez", clientes);
 
+        
         // eliminar cliente
         clientes.remove(0);   //borramos el cliente con indice 0
 
@@ -112,7 +132,7 @@ public class TPEntrega1 {
 
         // mostrar distancia
         System.out.println("distancia de cliente1 a vendedor1: " + String.format("%.2f", distancia1) + " km");
-        System.out.println("distancia de cliente1 a vendedor2: " + String.format("%.2f",distancia2) + "km");
+        System.out.println("distancia de cliente1 a vendedor2: " + String.format("%.2f",distancia2) + " km");
 
     }
 }
