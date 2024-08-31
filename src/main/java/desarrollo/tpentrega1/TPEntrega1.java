@@ -11,10 +11,7 @@ import desarrollo.tpentrega1.entidades.Coordenada;
 import desarrollo.tpentrega1.entidades.Vendedor;
 import desarrollo.tpentrega1.entidades.Cliente;
 
-/**
- *
- * @author florh
- */
+
 public class TPEntrega1 {
 
     public static Vendedor buscarVendedorId(String id, ArrayList<Vendedor> vendedores) {
