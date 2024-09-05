@@ -4,6 +4,8 @@
  */
 package desarrollo.tpentrega1.entidades;
 
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  *
@@ -14,6 +16,7 @@ public class Vendedor {
     private String nombre;
     private String direccion;
     private Coordenada coordenada;
+    private List<ItemMenu> itemsMenu;   // lo agregamos al constructor?
 
     public Vendedor() {
     }
@@ -25,6 +28,7 @@ public class Vendedor {
         this.coordenada = coordenada;
     }
 
+    // getters / setters
     public String getId() {
         return id;
     }
@@ -57,6 +61,15 @@ public class Vendedor {
         this.coordenada = coordenada;
     }
  
+    public List<ItemMenu> getItemMenu(){
+        return this.itemsMenu;
+    }
+
+    public void setItemMenu(List<ItemMenu> itemsMenu){
+        this.itemsMenu = itemsMenu;
+    }
+
+    // funcs
     public double distancia(Cliente cliente) {
         Coordenada coord1 = this.coordenada;
         Coordenada coord2 = cliente.getCoordenada();
@@ -80,4 +93,51 @@ public class Vendedor {
        
         return (RADIO_TIERRA * c);
     }
+
+    public List<Bebida> getItemBebidas(){
+        List<Bebida> bebidas = new ArrayList<>();
+
+        for (ItemMenu item : itemsMenu){
+            if (item instanceof Bebida){
+                bebidas.add((Bebida)item);
+            }
+        }
+        return bebidas;
+    }
+
+    public List<Plato> getItemComidas(){
+        List<Plato> comidas = new ArrayList<>();
+
+        for (ItemMenu item : itemsMenu){
+            if (item instanceof Plato){
+                comidas.add((Plato)item);
+            }
+        }
+        return comidas;
+    }
+    
+    public List<Plato> getItemComidasVeganas() {
+        List<Plato> comidasVeganas = new ArrayList<>();
+        
+        for (ItemMenu item : itemsMenu) {
+            if (item instanceof Plato && ((Plato) item).aptoVegano()) {
+                comidasVeganas.add((Plato) item);
+            }
+        }
+
+        return comidasVeganas;
+    }
+
+    public List<Bebida> getItemBebidasSinAlcohol() {
+        List<Bebida> bebidasSinAlcohol = new ArrayList<>();
+
+        for (ItemMenu item : itemsMenu) {
+            if (item instanceof Bebida && ((Bebida) item).getGraduacionAlcoholica() == 0) {
+                bebidasSinAlcohol.add((Bebida) item);
+            }
+        }
+
+        return bebidasSinAlcohol;
+    }
+
 }
