@@ -18,11 +18,12 @@ public class Vendedor {
     public Vendedor() {
     }
 
-    public Vendedor(String id, String nombre, String direccion, Coordenada coordenada) {
+    public Vendedor(String id, String nombre, String direccion, Coordenada coordenada, ArrayList<ItemMenu> itemsMenu) {
         this.id = id;
         this.nombre = nombre;
         this.direccion = direccion;
         this.coordenada = coordenada;
+        this.itemsMenu = itemsMenu;
     }
 
     // getters / setters

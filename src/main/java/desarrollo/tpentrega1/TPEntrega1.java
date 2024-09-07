@@ -12,6 +12,9 @@ import desarrollo.tpentrega1.entidades.Coordenada;
 import desarrollo.tpentrega1.entidades.Vendedor;
 import desarrollo.tpentrega1.entidades.Cliente;
 import desarrollo.tpentrega1.entidades.Bebida;
+import desarrollo.tpentrega1.entidades.ItemMenu;
+import desarrollo.tpentrega1.entidades.Plato;
+import java.util.List;
 
 /**
  *
@@ -59,16 +62,53 @@ public class TPEntrega1 {
     static ArrayList<Vendedor> crearArregloVendedores() {
         ArrayList<Vendedor> vendedores = new ArrayList<>();
         Coordenada coords;
+        ArrayList<ItemMenu> items = new ArrayList<>();
 
         coords = new Coordenada(1.23, 2.34);
-        vendedores.add(new Vendedor("0",  "Matias Carranza",  "San Martin 1263", coords));
+        items.addAll(List.of(
+            new Bebida(200, 1),
+            new Bebida(200, 10),
+            new Bebida(200, 0),
+            new Bebida(200, 0),
+            new Bebida(200, 0),
+            new Plato(20, true, true, 200),
+            new Plato(20, false, true, 200),
+            new Plato(20, true, true, 200),
+            new Plato(20000, true, false, 2)
+        ));
+        
+        vendedores.add(new Vendedor("0",  "Matias Carranza",  "San Martin 1263", coords, items));
 
 
         coords = new Coordenada(3.45, 4.56);
-        vendedores.add(new Vendedor("1", "Exequiel sandria", "corrientes 1234", coords));
+        items.clear();
+        items.addAll(List.of(
+            new Bebida(200, 1),
+            new Bebida(200, 10),
+            new Bebida(200, 2),
+            new Bebida(200, 3),
+            new Bebida(200, 1.11),
+            new Plato(500, true, false, 200),
+            new Plato(1200, false, false, 500),
+            new Plato(190.93, true, false, 600),
+            new Plato(20000, true, false, 333)
+        ));
+        vendedores.add(new Vendedor("1", "Exequiel sandria", "corrientes 1234", coords, items));
 
         coords = new Coordenada(4.12, 3.41);
-        vendedores.add(new Vendedor("2", "Flor Hiembuchner", "san martin 5412", coords));
+        items.clear();
+        items.addAll(List.of(
+            new Bebida(200, 1),
+            new Bebida(200, 10),
+            new Bebida(200, 0),
+            new Bebida(200, 3),
+            new Bebida(200, 1.11),
+            new Plato(500, true, true, 200),
+            new Plato(1200, false, false, 500),
+            new Plato(190.93, true, false, 600),
+            new Plato(20000, true, false, 333)
+        ));
+        vendedores.add(new Vendedor("2", "Flor Hiembuchner", "san martin 5412", coords, items));
         
         return vendedores;
     }
