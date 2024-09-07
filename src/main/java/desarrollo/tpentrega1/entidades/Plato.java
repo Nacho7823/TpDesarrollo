@@ -4,15 +4,11 @@
  */
 package desarrollo.tpentrega1.entidades;
 
-/**
- *
- * @author gui
- */
+
 public class Plato extends ItemMenu {
     private double calorias;
     private boolean aptoCeliaco;
     private boolean aptoVegano;
-    // private boolean aptoVegetariano;
     private double peso;
 
     public Plato() {

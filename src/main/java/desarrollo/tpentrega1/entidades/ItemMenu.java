@@ -4,10 +4,6 @@
  */
 package desarrollo.tpentrega1.entidades;
 
-/**
- *
- * @author gui
- */
 public abstract class ItemMenu {
     
     private String id;

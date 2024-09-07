@@ -93,8 +93,8 @@ public class TPEntrega1 {
         
         // vendedores
         ArrayList<Vendedor> vendedores = crearArregloVendedores();
+        
         // buscar vendedor en arreglo
-
         Vendedor vendedor1 = buscarVendedorId("1", vendedores);
         Vendedor vendedor2 = buscarVendedorNombre("Exequiel sandria", vendedores);
 
@@ -118,6 +118,6 @@ public class TPEntrega1 {
         // mostrar distancia
         System.out.println("distancia de cliente1 a vendedor1: " + distancia1);
         System.out.println("distancia de cliente1 a vendedor2: " + distancia2);
-
+        
     }
 }

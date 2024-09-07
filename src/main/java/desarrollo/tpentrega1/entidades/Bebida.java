@@ -4,10 +4,6 @@
  */
 package desarrollo.tpentrega1.entidades;
 
-/**
- *
- * @author gui
- */
 public class Bebida extends ItemMenu {
     private double graduacionAlcoholica;
     private double tamaño;
@@ -48,7 +44,7 @@ public class Bebida extends ItemMenu {
         return 0;
     };
 
-    public boolean aptoVegano() { // consultar este método
+    public boolean aptoVegano() {
         return false;
     };
 

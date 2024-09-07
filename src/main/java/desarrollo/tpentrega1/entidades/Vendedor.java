@@ -4,19 +4,16 @@
  */
 package desarrollo.tpentrega1.entidades;
 
-import java.util.List;
+
 import java.util.ArrayList;
 
-/**
- *
- * @author florh
- */
+
 public class Vendedor {
     private String id;
     private String nombre;
     private String direccion;
     private Coordenada coordenada;
-    private List<ItemMenu> itemsMenu;   // lo agregamos al constructor?
+    private ArrayList<ItemMenu> itemsMenu;   // lo agregamos al constructor?
 
     public Vendedor() {
     }
@@ -61,11 +58,11 @@ public class Vendedor {
         this.coordenada = coordenada;
     }
  
-    public List<ItemMenu> getItemMenu(){
+    public ArrayList<ItemMenu> getItemMenu(){
         return this.itemsMenu;
     }
 
-    public void setItemMenu(List<ItemMenu> itemsMenu){
+    public void setItemMenu(ArrayList<ItemMenu> itemsMenu){
         this.itemsMenu = itemsMenu;
     }
 
@@ -94,8 +91,8 @@ public class Vendedor {
         return (RADIO_TIERRA * c);
     }
 
-    public List<Bebida> getItemBebidas(){
-        List<Bebida> bebidas = new ArrayList<>();
+    public ArrayList<Bebida> getItemBebidas(){
+        ArrayList<Bebida> bebidas = new ArrayList<>();
 
         for (ItemMenu item : itemsMenu){
             if (item instanceof Bebida){
@@ -105,8 +102,8 @@ public class Vendedor {
         return bebidas;
     }
 
-    public List<Plato> getItemComidas(){
-        List<Plato> comidas = new ArrayList<>();
+    public ArrayList<Plato> getItemComidas(){
+        ArrayList<Plato> comidas = new ArrayList<>();
 
         for (ItemMenu item : itemsMenu){
             if (item instanceof Plato){
@@ -116,8 +113,8 @@ public class Vendedor {
         return comidas;
     }
     
-    public List<Plato> getItemComidasVeganas() {
-        List<Plato> comidasVeganas = new ArrayList<>();
+    public ArrayList<Plato> getItemComidasVeganas() {
+        ArrayList<Plato> comidasVeganas = new ArrayList<>();
         
         for (ItemMenu item : itemsMenu) {
             if (item instanceof Plato && ((Plato) item).aptoVegano()) {
@@ -128,8 +125,8 @@ public class Vendedor {
         return comidasVeganas;
     }
 
-    public List<Bebida> getItemBebidasSinAlcohol() {
-        List<Bebida> bebidasSinAlcohol = new ArrayList<>();
+    public ArrayList<Bebida> getItemBebidasSinAlcohol() {
+        ArrayList<Bebida> bebidasSinAlcohol = new ArrayList<>();
 
         for (ItemMenu item : itemsMenu) {
             if (item instanceof Bebida && ((Bebida) item).getGraduacionAlcoholica() == 0) {
