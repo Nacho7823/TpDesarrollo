@@ -81,7 +81,7 @@ public class TPEntrega1 {
 
 
         coords = new Coordenada(3.45, 4.56);
-        items.clear();
+        items = new ArrayList<>();
         items.addAll(List.of(
             new Bebida(200, 1),
             new Bebida(200, 10),
@@ -96,7 +96,7 @@ public class TPEntrega1 {
         vendedores.add(new Vendedor("1", "Exequiel sandria", "corrientes 1234", coords, items));
 
         coords = new Coordenada(4.12, 3.41);
-        items.clear();
+        items = new ArrayList<>();
         items.addAll(List.of(
             new Bebida(200, 1),
             new Bebida(200, 10),
