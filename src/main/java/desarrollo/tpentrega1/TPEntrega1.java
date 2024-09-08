@@ -135,8 +135,9 @@ public class TPEntrega1 {
         ArrayList<Vendedor> vendedores = crearArregloVendedores();
         
         // buscar vendedor en arreglo
-        Vendedor vendedor1 = buscarVendedorId("1", vendedores);
-        Vendedor vendedor2 = buscarVendedorNombre("Exequiel sandria", vendedores);
+        Vendedor vendedor2 = buscarVendedorId("2", vendedores);
+        Vendedor vendedor1 = buscarVendedorNombre("Exequiel sandria", vendedores);
+        Vendedor vendedor0 = buscarVendedorId("0", vendedores);        
 
         // eliminar vendedor
         vendedores.remove(0);   //borramos el vendedor con indice 0
