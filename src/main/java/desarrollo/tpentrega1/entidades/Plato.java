@@ -53,6 +53,10 @@ public class Plato extends ItemMenu {
         return aptoVegano;
     };
 
+    public boolean aptoCeliaco() {
+        return aptoCeliaco;
+    }
+
     public boolean esBebida() {
         return false;
     };
