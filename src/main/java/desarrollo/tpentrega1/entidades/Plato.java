@@ -52,6 +52,9 @@ public class Plato extends ItemMenu {
     public boolean aptoVegano() { // consultar método
         return aptoVegano;
     };
+    public boolean aptoCeliaco() { 
+        return aptoCeliaco;
+    };
 
     public boolean esBebida() {
         return false;
@@ -68,5 +71,18 @@ public class Plato extends ItemMenu {
     // public String getCategoria() {
     // return super.getCategoria();
     // }
+
+    public String toString() {
+    return "Plato{" +
+            "calorias=" + calorias +
+            ", aptoCeliaco=" + aptoCeliaco +
+            ", aptoVegano=" + aptoVegano +
+            ", peso=" + peso +
+            ", nombre=" + getNombre() +
+            ", descripcion=" + getDescripcion() +
+            ", precio=" + getPrecio() +
+            '}';
+}
+    
 
 }

@@ -13,8 +13,10 @@ import desarrollo.tpentrega1.entidades.Vendedor;
 import desarrollo.tpentrega1.entidades.Cliente;
 import desarrollo.tpentrega1.entidades.Bebida;
 import desarrollo.tpentrega1.entidades.ItemMenu;
+import desarrollo.tpentrega1.entidades.ItemsPedidoMemory;
 import desarrollo.tpentrega1.entidades.Plato;
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  *
@@ -160,5 +162,39 @@ public class TPEntrega1 {
         System.out.println("distancia de cliente1 a vendedor1: " + distancia1);
         System.out.println("distancia de cliente1 a vendedor2: " + distancia2);
         
+        //ETAPA 3
+       
+        // Crear algunos objetos de prueba
+        Plato item1 = new Plato(300, true, true, 300);
+        Bebida item2 = new Bebida( 0.5, 5.0);
+        Plato item3 = new Plato(200, false, true, 150);
+      
+        
+        item1.setNombre("Pizza");
+        item1.setDescripcion("Deliciosa");
+        item3.setNombre("Ensalada");
+        item3.setDescripcion("Ensalada fresca");
+        item2.setNombre("Cerveza");
+        item2.setDescripcion("Artesanal");
+        item2.setPrecio(200);
+        item1.setPrecio(500);
+        item1.setCategoria("Comida");
+        item3.setCategoria("Comida");
+        item2.setCategoria("Bebida");
+        // Crear un Stream con los items
+        Stream<ItemMenu> items = Stream.of(item1, item2, item3);
+
+        // Crear una instancia de ItemsPedidoMemory y asignar el Stream
+        ItemsPedidoMemory itemsPedidoMemory = new ItemsPedidoMemory();
+        itemsPedidoMemory.setItems(items);
+
+        // Probar los métodos
+     
+
+        System.out.println("\nBuscar bebida por graduación:");
+        itemsPedidoMemory.buscarBebidaGraduacion(5.0);
     }
-}
+
+
+    }
+

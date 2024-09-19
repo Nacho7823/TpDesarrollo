@@ -55,4 +55,13 @@ public class Bebida extends ItemMenu {
     public boolean esComida() {
         return false;
     };
+    public String toString() {
+    return "Bebida{" +
+            "tamaño=" + tamaño +
+            ", graduacionAlcoholica=" + graduacionAlcoholica +
+            ", nombre=" + getNombre() +
+            ", descripcion=" + getDescripcion() +
+            ", precio=" + getPrecio() +
+            '}';
+}
 }
