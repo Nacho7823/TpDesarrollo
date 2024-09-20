@@ -12,7 +12,19 @@ public abstract class ItemMenu {
     private double precio;
     private String categoria;
 
-    
+    public ItemMenu() {}
+
+    public ItemMenu(String id,
+                    String nombre,
+                    String descripcion,
+                    double precio,
+                    String catergoria) {
+        this.id = id;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.precio = precio;
+        this.categoria = catergoria;
+    }
     
     public String getId() {
         return id;

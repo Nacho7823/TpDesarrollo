@@ -8,6 +8,8 @@ Aplicacion para gestionar delivery de comidas de restaurantes y rotiserias
 
 `doc/TP integrador.pdf`
 
+### Diagrama
+https://drive.google.com/file/d/1rmyY72twhVNFRc_E8a03VOwtI4DpkexH/view?usp=sharing
 
 
 **Etapas:**
