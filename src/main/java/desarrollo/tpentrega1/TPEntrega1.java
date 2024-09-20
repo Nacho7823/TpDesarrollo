@@ -168,21 +168,43 @@ public class TPEntrega1 {
         Plato item1 = new Plato(300, true, true, 300);
         Bebida item2 = new Bebida( 0.5, 5.0);
         Plato item3 = new Plato(200, false, true, 150);
+        Bebida item4 = new Bebida( 0.5, 5.0);
+        Bebida item5 = new Bebida( 0.7, 5.0);
+        Bebida item6 = new Bebida( 0.9, 5.0);
       
         
         item1.setNombre("Pizza");
         item1.setDescripcion("Deliciosa");
-        item3.setNombre("Ensalada");
-        item3.setDescripcion("Ensalada fresca");
+        item1.setCategoria("Comida");
+        item1.setPrecio(500);
+
         item2.setNombre("Cerveza");
         item2.setDescripcion("Artesanal");
-        item2.setPrecio(200);
-        item1.setPrecio(500);
-        item1.setCategoria("Comida");
-        item3.setCategoria("Comida");
         item2.setCategoria("Bebida");
+        item2.setPrecio(200);
+        
+        item3.setNombre("Ensalada");
+        item3.setDescripcion("Ensalada fresca");
+        item3.setCategoria("Comida");
+        item3.setPrecio(300);
+
+        item4.setNombre("Cerveza");
+        item4.setDescripcion("Artesanal 2");
+        item4.setCategoria("Bebida");
+        item4.setPrecio(500);
+        
+        item5.setNombre("Cerveza");
+        item5.setDescripcion("Roja");
+        item5.setCategoria("Bebida");
+        item5.setPrecio(600);
+        
+        item6.setNombre("Cerveza");
+        item6.setDescripcion("Roja");
+        item6.setCategoria("Bebida");
+        item6.setPrecio(1000);
+
         // Crear un Stream con los items
-        Stream<ItemMenu> items = Stream.of(item1, item2, item3);
+        List<ItemMenu> items = List.of(item1, item2, item3, item4, item5, item6);
 
         // Crear una instancia de ItemsPedidoMemory y asignar el Stream
         ItemsPedidoMemory itemsPedidoMemory = new ItemsPedidoMemory();
@@ -190,9 +212,21 @@ public class TPEntrega1 {
 
         // Probar los métodos
      
-
         System.out.println("\nBuscar bebida por graduación:");
         itemsPedidoMemory.buscarBebidaGraduacion(5.0);
+        
+        List<ItemMenu> itemsFiltrados = itemsPedidoMemory.getItems();
+        for (ItemMenu item : itemsFiltrados) {
+            System.out.println(item);
+        }
+        
+        System.out.println("\nBuscar bebida por graduación y precio:");
+        itemsPedidoMemory.buscarPrecioEntre(500, 1200);
+
+        itemsFiltrados = itemsPedidoMemory.getItems();
+        for (ItemMenu item : itemsFiltrados) {
+            System.out.println(item);
+        }
     }
 
 
