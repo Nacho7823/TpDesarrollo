@@ -131,6 +131,8 @@ public class TPEntrega1 {
 
     public static void main(String[] args) {
 
+      /* 
+        //ETAPA 1
         // vendedores
         ArrayList<Vendedor> vendedores = crearArregloVendedores();
 
@@ -156,9 +158,9 @@ public class TPEntrega1 {
         int distancia1 = (int) vendedor1.distancia(cliente1);
         int distancia2 = (int) vendedor2.distancia(cliente2);
 
-        // mostrar distancia
+         mostrar distancia
         System.out.println("distancia de cliente1 a vendedor1: " + distancia1);
-        System.out.println("distancia de cliente1 a vendedor2: " + distancia2);
+        System.out.println("distancia de cliente1 a vendedor2: " + distancia2);*/
 
         // ETAPA 3
 
