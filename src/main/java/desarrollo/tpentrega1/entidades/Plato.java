@@ -22,8 +22,9 @@ public class Plato extends ItemMenu {
                 double calorias,
                 boolean aptoCeliaco,
                 boolean aptoVegano,
-                double peso) {
-        super(id, nombre, descripcion, precio, categoria);
+                double peso,
+                Vendedor vendedor) {
+        super(id, nombre, descripcion, precio, categoria,vendedor);
         this.calorias = calorias;
         this.aptoCeliaco = aptoCeliaco;
         this.aptoVegano = aptoVegano;
