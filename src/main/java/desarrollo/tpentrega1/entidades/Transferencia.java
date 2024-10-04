@@ -10,11 +10,11 @@ package desarrollo.tpentrega1.entidades;
  */
 public class Transferencia implements FormaDePago{
     private String cuit;
-    private String cbu;
+    private String cvu;
 
-    public Transferencia(String cuit, String cbu) {
+    public Transferencia(String cuit, String cvu) {
         this.cuit = cuit;
-        this.cbu = cbu;
+        this.cvu = cvu;
     }
     @Override
     public double aplicarRecargo(double total) {

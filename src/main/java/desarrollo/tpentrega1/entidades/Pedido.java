@@ -15,28 +15,26 @@ public class Pedido {
     private FormaDePago formaDePago;
     private double total;
     private EstadoPedido estado;
-  
 
-    public Pedido(List<ItemMenu> items, FormaDePago formaDePago) throws InvalidOrderException {
-        if (!validarItemsUnVendedor(items)) {
-        throw new InvalidOrderException("Los ítems deben pertenecer al mismo vendedor");
-        }   
+    public Pedido(List<ItemMenu> items, FormaDePago formaDePago, Vendedor vendedor) throws InvalidOrderException {
+        if (!validarItemsUnVendedor(items, vendedor)) {
+            throw new InvalidOrderException("Los ítems deben pertenecer al mismo vendedor");
+        }
         this.items = items;
         this.formaDePago = formaDePago;
         this.total = calcularTotal();
         this.estado = EstadoPedido.RECIBIDO;
     }
-    
-    private boolean validarItemsUnVendedor(List<ItemMenu> items) {
-        Vendedor vendedor=new Vendedor();
-        vendedor = items.getFirst().getVendedor();
-     for (ItemMenu item : items) {
-            if (!item.getVendedor().getId().equals(vendedor.getId())) {
-                return false; // Si encontramos un ítem que no pertenece al mismo vendedor, retornamos false
-            }
-        }
+
+    private boolean validarItemsUnVendedor(List<ItemMenu> items, Vendedor vendedor) {
+        List<ItemMenu> itemsVendedor = vendedor.getItemMenu();
+
+        for (ItemMenu item : items) 
+            if(!itemsVendedor.contains(item)) 
+                return false;
         return true;
     }
+
     private double calcularTotal() {
         double totalProductos = items.stream().mapToDouble(ItemMenu::getPrecio).sum();
         return totalProductos + formaDePago.aplicarRecargo(totalProductos);
@@ -45,4 +43,13 @@ public class Pedido {
     public EstadoPedido getEstado() {
         return estado;
     }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public List<ItemMenu> getItems() {
+        return items;
+    }
+
 }

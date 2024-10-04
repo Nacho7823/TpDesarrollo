@@ -16,9 +16,8 @@ public class Bebida extends ItemMenu {
                 double precio,
                 String categoria,
                 double tamaño,
-                double graduacionAlcoholica,
-                Vendedor vendedor) {
-        super(id, nombre, descripcion, precio, categoria,vendedor);
+                double graduacionAlcoholica) {
+        super(id, nombre, descripcion, precio, categoria);
         this.graduacionAlcoholica = graduacionAlcoholica;
         this.tamaño = tamaño;
     }
