@@ -11,32 +11,32 @@ import java.util.List;
  * @author Flor Hiembuchner
  */
 public class Pedido {
-    private List<ItemMenu> items;
+    private PedidoDetalle pedidoDetalle;
     private FormaDePago formaDePago;
     private double total;
     private EstadoPedido estado;
 
-    public Pedido(List<ItemMenu> items, FormaDePago formaDePago, Vendedor vendedor) throws InvalidOrderException {
-        if (!validarItemsUnVendedor(items, vendedor)) {
+    public Pedido(PedidoDetalle pedidoDetalle, FormaDePago formaDePago, Vendedor vendedor) throws InvalidOrderException {
+        if (!validarItemsUnVendedor(pedidoDetalle, vendedor)) {
             throw new InvalidOrderException("Los ítems deben pertenecer al mismo vendedor");
         }
-        this.items = items;
+        this.pedidoDetalle = pedidoDetalle;
         this.formaDePago = formaDePago;
         this.total = calcularTotal();
         this.estado = EstadoPedido.RECIBIDO;
     }
 
-    private boolean validarItemsUnVendedor(List<ItemMenu> items, Vendedor vendedor) {
+    private boolean validarItemsUnVendedor(PedidoDetalle pedidoDetalle, Vendedor vendedor) {
         List<ItemMenu> itemsVendedor = vendedor.getItemMenu();
 
-        for (ItemMenu item : items) 
+        for (ItemMenu item : pedidoDetalle.getItems()) 
             if(!itemsVendedor.contains(item)) 
                 return false;
         return true;
     }
 
     private double calcularTotal() {
-        double totalProductos = items.stream().mapToDouble(ItemMenu::getPrecio).sum();
+        double totalProductos = pedidoDetalle.getItems().stream().mapToDouble(ItemMenu::getPrecio).sum();
         return totalProductos + formaDePago.aplicarRecargo(totalProductos);
     }
 
@@ -48,8 +48,8 @@ public class Pedido {
         return total;
     }
 
-    public List<ItemMenu> getItems() {
-        return items;
+    public PedidoDetalle getPedidoDetalle() {
+        return pedidoDetalle;
     }
 
 }

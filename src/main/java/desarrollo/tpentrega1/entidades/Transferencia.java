@@ -20,5 +20,12 @@ public class Transferencia implements FormaDePago{
     public double aplicarRecargo(double total) {
       return total * 0.02;  
     }
+
+    public String getCuit() {
+        return cuit;
+    }
+    public String getCvu() {
+        return cvu;
+    }
     
 }

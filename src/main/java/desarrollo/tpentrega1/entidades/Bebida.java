@@ -53,7 +53,7 @@ public class Bebida extends ItemMenu {
             p = (tamaño * 1.04 + ((tamaño * 20) / 100));
         else
             p = (tamaño * 0.99 + ((tamaño * 20) / 100));
-        return 0;
+        return p;
     };
 
     public boolean aptoVegano() {

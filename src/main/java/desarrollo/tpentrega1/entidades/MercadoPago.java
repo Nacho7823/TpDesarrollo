@@ -19,4 +19,9 @@ public class MercadoPago implements FormaDePago{
     public double aplicarRecargo(double total) {
         return total * 0.04; // Recargo del 4%
     }
+
+    public String getAlias() {
+        return alias;
+    }
+
 }

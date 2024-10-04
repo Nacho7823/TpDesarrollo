@@ -4,9 +4,7 @@
 
 package desarrollo.tpentrega1;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Random;
 
 import desarrollo.tpentrega1.entidades.Coordenada;
 import desarrollo.tpentrega1.entidades.FormaDePago;
@@ -17,11 +15,11 @@ import desarrollo.tpentrega1.entidades.Bebida;
 import desarrollo.tpentrega1.entidades.ItemMenu;
 import desarrollo.tpentrega1.entidades.ItemsPedidoMemory;
 import desarrollo.tpentrega1.entidades.Pedido;
+import desarrollo.tpentrega1.entidades.PedidoDetalle;
 import desarrollo.tpentrega1.entidades.Plato;
 import desarrollo.tpentrega1.entidades.Transferencia;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 /**
  *
@@ -236,20 +234,23 @@ public class TPEntrega1 {
         itemsPedidoMemory.setItems(vendedor.getItemMenu());
 
         itemsPedidoMemory.buscarBebidas();
+        itemsPedidoMemory.buscarPrecio(250);
         // itemsPedidoMemory.buscar
 
         List<ItemMenu> items = itemsPedidoMemory.getItems();
+
         // items.stream().filter(item -> {
             // return item.getNombre().equals("Cerveza") || item.getNombre().equals("Gaseosa");
         // });
         
         FormaDePago formaDePago = new Transferencia("20452159792", "0000003100092901454053");
+        PedidoDetalle pedidoDetalle = new PedidoDetalle(items);
 
         Pedido pedido;
         try {
-            pedido = new Pedido(items, formaDePago, vendedor);
+            pedido = new Pedido(pedidoDetalle, formaDePago, vendedor);
             System.out.println("Pedido creado, total: " + pedido.getTotal());
-            System.out.println("Items:" + pedido.getItems().toString());
+            System.out.println("Items:" + pedido.getPedidoDetalle().getItems().toString());
 
         } catch (InvalidOrderException e) {
             System.out.println(e.getMessage());
