@@ -99,24 +99,23 @@ public class TPEntrega1 {
         coords = new Coordenada(4.12, 3.41);
         items = new ArrayList<>();
         items.addAll(List.of(
-            new Plato("0", "Pizza", "Deliciosa", 500, "Comida", 300, true, true, 300),
+                new Plato("0", "Pizza", "Deliciosa", 500, "Comida", 300, true, true, 300),
 
-            new Plato("1", "Hamburguesa", "carne", 1200, "Comida", 400, false, true, 150),
+                new Plato("1", "Hamburguesa", "carne", 1200, "Comida", 400, false, true, 150),
 
-            new Plato("2", "Hamburguesa", "vegana", 190.93, "Comida", 400, true, true, 150),
+                new Plato("2", "Hamburguesa", "vegana", 190.93, "Comida", 400, true, true, 150),
 
-            new Plato("3", "Milanesas", "napolitana", 130, "Comida", 600, true, false, 333),
+                new Plato("3", "Milanesas", "napolitana", 130, "Comida", 600, true, false, 333),
 
-            new Bebida("4", "Cerveza", "Artesanal", 200, "Bebida", 0.5, 5.0),
-            new Bebida("5", "Cerveza", "Rubia", 250, "Bebida", 0.5, 5.0),
-            new Bebida("6", "Gin", "frutos rojos", 230, "Bebida", 0.5, 3.0),
-            new Bebida("7", "Gin", "heredero", 230, "Bebida", 0.5, 7.0),
+                new Bebida("4", "Cerveza", "Artesanal", 200, "Bebida", 0.5, 5.0),
+                new Bebida("5", "Cerveza", "Rubia", 250, "Bebida", 0.5, 5.0),
+                new Bebida("6", "Gin", "frutos rojos", 230, "Bebida", 0.5, 3.0),
+                new Bebida("7", "Gin", "heredero", 230, "Bebida", 0.5, 7.0),
 
-            new Bebida("8", "Gaseosa", "Cocacola 200", 100, "Bebida", 0.2, 0.0),
-            new Bebida("9", "Gaseosa", "Cocacola 500", 140, "Bebida", 0.5, 0.0),
-            new Bebida("10", "Gaseosa", "Cocacola 1500", 230, "Bebida", 1.5, 0.0),
-            new Bebida("11", "Gaseosa", "Cocacola 200", 100, "Bebida", 0.5, 0.0))
-        );
+                new Bebida("8", "Gaseosa", "Cocacola 200", 100, "Bebida", 0.2, 0.0),
+                new Bebida("9", "Gaseosa", "Cocacola 500", 140, "Bebida", 0.5, 0.0),
+                new Bebida("10", "Gaseosa", "Cocacola 1500", 230, "Bebida", 1.5, 0.0),
+                new Bebida("11", "Gaseosa", "Cocacola 200", 100, "Bebida", 0.5, 0.0)));
         vendedores.add(new Vendedor("2", "Flor Hiembuchner", "san martin 5412", coords, items));
 
         return vendedores;
@@ -143,87 +142,93 @@ public class TPEntrega1 {
 
     public static void main(String[] args) {
 
-      /* 
-        //ETAPA 1
-        // vendedores
-        ArrayList<Vendedor> vendedores = crearArregloVendedores();
+        /*
+         * //ETAPA 1
+         * // vendedores
+         * ArrayList<Vendedor> vendedores = crearArregloVendedores();
+         * 
+         * // buscar vendedor en arreglo
+         * Vendedor vendedor2 = buscarVendedorId("2", vendedores);
+         * Vendedor vendedor1 = buscarVendedorNombre("Exequiel sandria", vendedores);
+         * Vendedor vendedor0 = buscarVendedorId("0", vendedores);
+         * 
+         * // eliminar vendedor
+         * vendedores.remove(0); // borramos el vendedor con indice 0
+         * 
+         * // clientes
+         * ArrayList<Cliente> clientes = crearArregloClientes();
+         * // buscar cliente en matriz
+         * 
+         * Cliente cliente1 = buscarClienteId("1", clientes);
+         * Cliente cliente2 = buscarClienteNombre("rafael hernandez", clientes);
+         * 
+         * // eliminar cliente
+         * clientes.remove(0); // borramos el cliente con indice 0
+         * 
+         * // distancia
+         * int distancia1 = (int) vendedor1.distancia(cliente1);
+         * int distancia2 = (int) vendedor2.distancia(cliente2);
+         * 
+         * mostrar distancia
+         * System.out.println("distancia de cliente1 a vendedor1: " + distancia1);
+         * System.out.println("distancia de cliente1 a vendedor2: " + distancia2);
+         */
 
-        // buscar vendedor en arreglo
-        Vendedor vendedor2 = buscarVendedorId("2", vendedores);
-        Vendedor vendedor1 = buscarVendedorNombre("Exequiel sandria", vendedores);
-        Vendedor vendedor0 = buscarVendedorId("0", vendedores);
-
-        // eliminar vendedor
-        vendedores.remove(0); // borramos el vendedor con indice 0
-
-        // clientes
-        ArrayList<Cliente> clientes = crearArregloClientes();
-        // buscar cliente en matriz
-
-        Cliente cliente1 = buscarClienteId("1", clientes);
-        Cliente cliente2 = buscarClienteNombre("rafael hernandez", clientes);
-
-        // eliminar cliente
-        clientes.remove(0); // borramos el cliente con indice 0
-
-        // distancia
-        int distancia1 = (int) vendedor1.distancia(cliente1);
-        int distancia2 = (int) vendedor2.distancia(cliente2);
-
-         mostrar distancia
-        System.out.println("distancia de cliente1 a vendedor1: " + distancia1);
-        System.out.println("distancia de cliente1 a vendedor2: " + distancia2);*/
-
-        /* ETAPA 3
-
-        // Crear algunos objetos de prueba
-
-        ItemMenu[] itemsArray = {
-            new Plato("0", "Pizza", "Deliciosa", 500, "Comida", 300, true, true, 300),
-
-            new Plato("1", "Hamburguesa", "carne", 1200, "Comida", 400, false, true, 150),
-
-            new Plato("2", "Hamburguesa", "vegana", 190.93, "Comida", 400, true, true, 150),
-
-            new Plato("3", "Milanesas", "napolitana", 130, "Comida", 600, true, false, 333),
-
-            new Bebida("4", "Cerveza", "Artesanal", 200, "Bebida", 0.5, 5.0),
-            new Bebida("5", "Cerveza", "Rubia", 250, "Bebida", 0.5, 5.0),
-            new Bebida("6", "Gin", "frutos rojos", 230, "Bebida", 0.5, 3.0),
-            new Bebida("7", "Gin", "heredero", 230, "Bebida", 0.5, 7.0),
-
-            new Bebida("8", "Gaseosa", "Cocacola 200", 100, "Bebida", 0.2, 0.0),
-            new Bebida("9", "Gaseosa", "Cocacola 500", 140, "Bebida", 0.5, 0.0),
-            new Bebida("10", "Gaseosa", "Cocacola 1500", 230, "Bebida", 1.5, 0.0),
-            new Bebida("11", "Gaseosa", "Cocacola 200", 100, "Bebida", 0.5, 0.0)
-    };
-
-
-        // Crear un Stream con los items
-        List<ItemMenu> items = List.of(itemsArray);
-        
-
-        // Crear una instancia de ItemsPedidoMemory y asignar el Stream
-        ItemsPedidoMemory itemsPedidoMemory = new ItemsPedidoMemory();
-        itemsPedidoMemory.setItems(items);
-
-        // Probar los métodos
-
-        System.out.println("\nBuscar bebida por graduación:");
-        itemsPedidoMemory.buscarBebidaGraduacion(5.0);
-
-        List<ItemMenu> itemsFiltrados = itemsPedidoMemory.getItems();
-        for (ItemMenu item : itemsFiltrados) {
-            System.out.println(item);
-        }
-
-        System.out.println("\nBuscar bebida por graduación y precio:");
-        itemsPedidoMemory.buscarPrecioEntre(500, 1200);
-
-        itemsFiltrados = itemsPedidoMemory.getItems();
-        for (ItemMenu item : itemsFiltrados) {
-            System.out.println(item);
-        }*/
+        /*
+         * ETAPA 3
+         * 
+         * // Crear algunos objetos de prueba
+         * 
+         * ItemMenu[] itemsArray = {
+         * new Plato("0", "Pizza", "Deliciosa", 500, "Comida", 300, true, true, 300),
+         * 
+         * new Plato("1", "Hamburguesa", "carne", 1200, "Comida", 400, false, true,
+         * 150),
+         * 
+         * new Plato("2", "Hamburguesa", "vegana", 190.93, "Comida", 400, true, true,
+         * 150),
+         * 
+         * new Plato("3", "Milanesas", "napolitana", 130, "Comida", 600, true, false,
+         * 333),
+         * 
+         * new Bebida("4", "Cerveza", "Artesanal", 200, "Bebida", 0.5, 5.0),
+         * new Bebida("5", "Cerveza", "Rubia", 250, "Bebida", 0.5, 5.0),
+         * new Bebida("6", "Gin", "frutos rojos", 230, "Bebida", 0.5, 3.0),
+         * new Bebida("7", "Gin", "heredero", 230, "Bebida", 0.5, 7.0),
+         * 
+         * new Bebida("8", "Gaseosa", "Cocacola 200", 100, "Bebida", 0.2, 0.0),
+         * new Bebida("9", "Gaseosa", "Cocacola 500", 140, "Bebida", 0.5, 0.0),
+         * new Bebida("10", "Gaseosa", "Cocacola 1500", 230, "Bebida", 1.5, 0.0),
+         * new Bebida("11", "Gaseosa", "Cocacola 200", 100, "Bebida", 0.5, 0.0)
+         * };
+         * 
+         * 
+         * // Crear un Stream con los items
+         * List<ItemMenu> items = List.of(itemsArray);
+         * 
+         * 
+         * // Crear una instancia de ItemsPedidoMemory y asignar el Stream
+         * ItemsPedidoMemory itemsPedidoMemory = new ItemsPedidoMemory();
+         * itemsPedidoMemory.setItems(items);
+         * 
+         * // Probar los métodos
+         * 
+         * System.out.println("\nBuscar bebida por graduación:");
+         * itemsPedidoMemory.buscarBebidaGraduacion(5.0);
+         * 
+         * List<ItemMenu> itemsFiltrados = itemsPedidoMemory.getItems();
+         * for (ItemMenu item : itemsFiltrados) {
+         * System.out.println(item);
+         * }
+         * 
+         * System.out.println("\nBuscar bebida por graduación y precio:");
+         * itemsPedidoMemory.buscarPrecioEntre(500, 1200);
+         * 
+         * itemsFiltrados = itemsPedidoMemory.getItems();
+         * for (ItemMenu item : itemsFiltrados) {
+         * System.out.println(item);
+         * }
+         */
 
         // ETAPA 4
 
@@ -240,9 +245,10 @@ public class TPEntrega1 {
         List<ItemMenu> items = itemsPedidoMemory.getItems();
 
         // items.stream().filter(item -> {
-            // return item.getNombre().equals("Cerveza") || item.getNombre().equals("Gaseosa");
+        // return item.getNombre().equals("Cerveza") ||
+        // item.getNombre().equals("Gaseosa");
         // });
-        
+
         FormaDePago formaDePago = new Transferencia("20452159792", "0000003100092901454053");
         PedidoDetalle pedidoDetalle = new PedidoDetalle(items);
 
@@ -255,11 +261,7 @@ public class TPEntrega1 {
         } catch (InvalidOrderException e) {
             System.out.println(e.getMessage());
         }
-        
 
     }
-
-
-
 
 }
