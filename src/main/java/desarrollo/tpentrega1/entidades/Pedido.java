@@ -1,25 +1,22 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package desarrollo.tpentrega1.entidades;
 
 import java.util.List;
 
-/**
- *
- * @author Flor Hiembuchner
- */
 public class Pedido {
+
+
+    private Cliente cliente;
     private PedidoDetalle pedidoDetalle;
     private FormaDePago formaDePago;
     private double total;
     private EstadoPedido estado;
 
-    public Pedido(PedidoDetalle pedidoDetalle, FormaDePago formaDePago, Vendedor vendedor) throws InvalidOrderException {
+    public Pedido(Cliente cliente,PedidoDetalle pedidoDetalle, FormaDePago formaDePago, Vendedor vendedor) throws InvalidOrderException {
         if (!validarItemsUnVendedor(pedidoDetalle, vendedor)) {
             throw new InvalidOrderException("Los ítems deben pertenecer al mismo vendedor");
         }
+        this.cliente=cliente;
         this.pedidoDetalle = pedidoDetalle;
         this.formaDePago = formaDePago;
         this.total = calcularTotal();
@@ -50,6 +47,10 @@ public class Pedido {
 
     public PedidoDetalle getPedidoDetalle() {
         return pedidoDetalle;
+    }
+    
+    public Cliente getCliente() {
+        return cliente;
     }
 
 }

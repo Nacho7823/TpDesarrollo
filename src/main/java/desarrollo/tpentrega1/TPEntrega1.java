@@ -6,7 +6,8 @@ package desarrollo.tpentrega1;
 
 import java.util.ArrayList;
 
-import desarrollo.tpentrega1.entidades.Coordenada;
+import desarrollo.tpentrega1.entidades.*;
+/*import desarrollo.tpentrega1.entidades.Coordenada;
 import desarrollo.tpentrega1.entidades.FormaDePago;
 import desarrollo.tpentrega1.entidades.InvalidOrderException;
 import desarrollo.tpentrega1.entidades.Vendedor;
@@ -17,14 +18,10 @@ import desarrollo.tpentrega1.entidades.ItemsPedidoMemory;
 import desarrollo.tpentrega1.entidades.Pedido;
 import desarrollo.tpentrega1.entidades.PedidoDetalle;
 import desarrollo.tpentrega1.entidades.Plato;
-import desarrollo.tpentrega1.entidades.Transferencia;
+import desarrollo.tpentrega1.entidades.Transferencia;*/
 
 import java.util.List;
 
-/**
- *
- * @author florh
- */
 public class TPEntrega1 {
 
     public static Vendedor buscarVendedorId(String id, ArrayList<Vendedor> vendedores) {
@@ -235,6 +232,9 @@ public class TPEntrega1 {
         ArrayList<Vendedor> vendedores = crearArregloVendedores();
         Vendedor vendedor = buscarVendedorNombre("Flor Hiembuchner", vendedores);
 
+        ArrayList<Cliente> clientes = crearArregloClientes();
+        Cliente cliente = buscarClienteId("1", clientes);
+        
         ItemsPedidoMemory itemsPedidoMemory = new ItemsPedidoMemory();
         itemsPedidoMemory.setItems(vendedor.getItemMenu());
 
@@ -249,13 +249,13 @@ public class TPEntrega1 {
         // item.getNombre().equals("Gaseosa");
         // });
 
-        FormaDePago formaDePago = new Transferencia("20452159792", "0000003100092901454053");
+        FormaDePago formaDePago = new Transferencia("20346572182", "0000003100092901454053");
         PedidoDetalle pedidoDetalle = new PedidoDetalle(items);
 
         Pedido pedido;
         try {
-            pedido = new Pedido(pedidoDetalle, formaDePago, vendedor);
-            System.out.println("Pedido creado, total: " + pedido.getTotal());
+            pedido = new Pedido(cliente,pedidoDetalle, formaDePago, vendedor);
+            System.out.println("Pedido creado a nombre de: "+pedido.getCliente().getNombre()+", total: $" + pedido.getTotal());
             System.out.println("Items:" + pedido.getPedidoDetalle().getItems().toString());
 
         } catch (InvalidOrderException e) {
