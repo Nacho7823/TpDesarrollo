@@ -89,9 +89,11 @@ public class Cliente implements Observador{
         }
     }
 
-    private void generarPago(Pedido pedido) {
-        Pago nuevoPago = new Pago(/* Datos del pago como fecha, monto, etc. */);
+    private Pago generarPago(Pedido pedido) {
+        Pago nuevoPago = new Pago(pedido.getTotal());
         System.out.println("Pago generado por el pedido " + pedido.getEstado());
+        return nuevoPago;
+
     }
 }
     
