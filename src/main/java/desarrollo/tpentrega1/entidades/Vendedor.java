@@ -137,5 +137,10 @@ public class Vendedor {
 
         return bebidasSinAlcohol;
     }
+    
+      public void cambiarEstadoPedido(Pedido pedido, EstadoPedido nuevoEstado) {
+        pedido.setEstado(nuevoEstado); // Cambiar el estado notifica automáticamente a los observadores
+        System.out.println("El vendedor ha cambiado el estado del pedido a " + nuevoEstado);
+    }
 
 }

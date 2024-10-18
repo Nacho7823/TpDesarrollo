@@ -10,7 +10,7 @@ package desarrollo.tpentrega1.entidades;
  *
  * @author florh
  */
-public class Cliente {
+public class Cliente implements Observador{
     private String id;
     private String nombre;          // no esta en el diagrama pero la etapa 1 lo pide
     private String cuit;
@@ -78,6 +78,23 @@ public class Cliente {
         this.coordenada = coordenada;
     }
 
-   
-    
+    @Override
+    public void actualizar(Pedido pedido) {
+        System.out.println("Cliente " + nombre + " ha sido notificado del cambio de estado del pedido " 
+                            + pedido.getEstado());
+        
+        // Si el pedido está en estado 'ENVIADO', generar un pago
+        if (pedido.getEstado().equals(EstadoPedido.ENVIADO)) {
+            generarPago(pedido);
+        }
+    }
+
+    private Pago generarPago(Pedido pedido) {
+        Pago nuevoPago = new Pago(pedido.getTotal());
+        System.out.println("Pago generado por el pedido " + pedido.getEstado());
+        return nuevoPago;
+
+    }
 }
+    
+

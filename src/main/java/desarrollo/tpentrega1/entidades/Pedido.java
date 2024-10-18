@@ -1,17 +1,47 @@
 
 package desarrollo.tpentrega1.entidades;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Pedido {
 
 
     private Cliente cliente;
+    private String id;
     private PedidoDetalle pedidoDetalle;
     private FormaDePago formaDePago;
     private double total;
     private EstadoPedido estado;
+    private List<Observador> observadores = new ArrayList<>();
+    
+    public Pedido(String id, EstadoPedido estadoInicial) {
+        this.id = id;
+        this.estado = estadoInicial;
+    }
 
+    public void agregarObservador(Observador observador) {
+        observadores.add(observador);
+    }
+
+    public void eliminarObservador(Observador observador) {
+        observadores.remove(observador);
+    }
+
+    public void setEstado(EstadoPedido nuevoEstado) {
+        this.estado = nuevoEstado;
+        notificarObservadores();
+    }
+
+    public EstadoPedido getEstado() {
+        return estado;
+    }
+
+    private void notificarObservadores() {
+        for (Observador observador : observadores) {
+            observador.actualizar(this);
+        }
+    }
     public Pedido(Cliente cliente,PedidoDetalle pedidoDetalle, FormaDePago formaDePago, Vendedor vendedor) throws InvalidOrderException {
         if (!validarItemsUnVendedor(pedidoDetalle, vendedor)) {
             throw new InvalidOrderException("Los ítems deben pertenecer al mismo vendedor");
@@ -37,9 +67,6 @@ public class Pedido {
         return totalProductos + formaDePago.aplicarRecargo(totalProductos);
     }
 
-    public EstadoPedido getEstado() {
-        return estado;
-    }
 
     public double getTotal() {
         return total;
