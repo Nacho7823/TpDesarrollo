@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package desarrollo.tpentrega1.entidades;
 
 
@@ -13,7 +10,8 @@ public class Vendedor {
     private String nombre;
     private String direccion;
     private Coordenada coordenada;
-    private ArrayList<ItemMenu> itemsMenu;   // lo agregamos al constructor?
+    private ArrayList<ItemMenu> itemsMenu;
+    private ArrayList<Pedido> pedidos;
 
     public Vendedor() {
     }
@@ -23,7 +21,18 @@ public class Vendedor {
         this.nombre = nombre;
         this.direccion = direccion;
         this.coordenada = coordenada;
+        this.itemsMenu = new ArrayList<>();
         this.itemsMenu = itemsMenu;
+        this.pedidos = new ArrayList<>();
+    }
+       
+    public Vendedor(String id, String nombre, String direccion, Coordenada coordenada) {
+        this.id = id;
+        this.nombre = nombre;
+        this.direccion = direccion;
+        this.coordenada = coordenada;
+        this.itemsMenu = new ArrayList<>();
+        this.pedidos = new ArrayList<>();
     }
 
     // getters / setters
@@ -67,6 +76,15 @@ public class Vendedor {
         this.itemsMenu = itemsMenu;
     }
 
+    public void addItemMenu(ItemMenu item){
+        this.itemsMenu.add(item);
+    }
+    
+    public void addPedido(Pedido pedido){
+        if(!this.pedidos.contains(pedido)) this.pedidos.add(pedido);
+        
+    }
+    
     // funcs
     public double distancia(Cliente cliente) {
         Coordenada coord1 = this.coordenada;
@@ -142,5 +160,11 @@ public class Vendedor {
         pedido.setEstado(nuevoEstado); // Cambiar el estado notifica automáticamente a los observadores
         System.out.println("El vendedor ha cambiado el estado del pedido a " + nuevoEstado);
     }
-
+//buscar pedido por estado
+    public void buscarPedidoPorEstado(ArrayList<Pedido> pedido, EstadoPedido estado){
+        for (Pedido pedido1 : pedidos) {
+            if(pedido1.getEstado()==estado) pedido.add(pedido1);
+        }
+    }
+    
 }

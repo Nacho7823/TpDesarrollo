@@ -8,6 +8,7 @@ public class Pedido {
 
 
     private Cliente cliente;
+    private Vendedor vendedor;
     private String id;
     private PedidoDetalle pedidoDetalle;
     private FormaDePago formaDePago;
@@ -15,11 +16,16 @@ public class Pedido {
     private EstadoPedido estado;
     private List<Observador> observadores = new ArrayList<>();
     
-    public Pedido(String id, EstadoPedido estadoInicial) {
+    public Pedido(String id, EstadoPedido estadoInicial,Cliente cliente, Vendedor vendedor) {
         this.id = id;
         this.estado = estadoInicial;
+        this.total=0;
+        this.cliente=cliente;
+        this.vendedor=vendedor;
+        this.vendedor.addPedido(this);
     }
 
+    
     public void agregarObservador(Observador observador) {
         observadores.add(observador);
     }

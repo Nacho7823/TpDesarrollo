@@ -2,7 +2,8 @@ package desarrollo.tpentrega1.entidades;
 
 
 public interface ItemsPedidoDao {
-    // itemmenu
+    
+// itemmenu
     public void buscarPorNombre(String nombre);
     public void buscarDescripcion(String descripcion);
     public void buscarPrecioEntre(int precioMin, int precioMax);

@@ -7,18 +7,7 @@ package desarrollo.tpentrega1;
 import java.util.ArrayList;
 
 import desarrollo.tpentrega1.entidades.*;
-/*import desarrollo.tpentrega1.entidades.Coordenada;
-import desarrollo.tpentrega1.entidades.FormaDePago;
-import desarrollo.tpentrega1.entidades.InvalidOrderException;
-import desarrollo.tpentrega1.entidades.Vendedor;
-import desarrollo.tpentrega1.entidades.Cliente;
-import desarrollo.tpentrega1.entidades.Bebida;
-import desarrollo.tpentrega1.entidades.ItemMenu;
-import desarrollo.tpentrega1.entidades.ItemsPedidoMemory;
-import desarrollo.tpentrega1.entidades.Pedido;
-import desarrollo.tpentrega1.entidades.PedidoDetalle;
-import desarrollo.tpentrega1.entidades.Plato;
-import desarrollo.tpentrega1.entidades.Transferencia;*/
+
 
 import java.util.List;
 
@@ -227,7 +216,7 @@ public class TPEntrega1 {
          * }
          */
 
-        // ETAPA 4
+        /*// ETAPA 4
 
         ArrayList<Vendedor> vendedores = crearArregloVendedores();
         Vendedor vendedor = buscarVendedorNombre("Flor Hiembuchner", vendedores);
@@ -261,7 +250,8 @@ public class TPEntrega1 {
         } catch (InvalidOrderException e) {
             System.out.println(e.getMessage());
         }
+*/
 
-    }
+}
 
 }
