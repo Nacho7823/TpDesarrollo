@@ -1,6 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- */
 
 package desarrollo.tpentrega1;
 
@@ -216,7 +213,7 @@ public class TPEntrega1 {
          * }
          */
 
-        /*// ETAPA 4
+        // ETAPA 4
 
         ArrayList<Vendedor> vendedores = crearArregloVendedores();
         Vendedor vendedor = buscarVendedorNombre("Flor Hiembuchner", vendedores);
@@ -225,7 +222,7 @@ public class TPEntrega1 {
         Cliente cliente = buscarClienteId("1", clientes);
         
         ItemsPedidoMemory itemsPedidoMemory = new ItemsPedidoMemory();
-        itemsPedidoMemory.setItems(vendedor.getItemMenu());
+        itemsPedidoMemory.setItems(vendedor.getItemsMenu());
 
         itemsPedidoMemory.buscarBebidas();
         itemsPedidoMemory.buscarPrecio(250);
@@ -246,12 +243,35 @@ public class TPEntrega1 {
             pedido = new Pedido(cliente,pedidoDetalle, formaDePago, vendedor);
             System.out.println("Pedido creado a nombre de: "+pedido.getCliente().getNombre()+", total: $" + pedido.getTotal());
             System.out.println("Items:" + pedido.getPedidoDetalle().getItems().toString());
+            System.out.println();
 
         } catch (InvalidOrderException e) {
             System.out.println(e.getMessage());
         }
-*/
 
+        itemsPedidoMemory.setItems(vendedor.getItemsMenu());
+        itemsPedidoMemory.buscarBebidaGraduacion(7);
+        items=itemsPedidoMemory.getItems();
+        pedidoDetalle.setItems(items);
+        
+        try {
+            pedido = new Pedido(cliente,pedidoDetalle, formaDePago, vendedor);
+            System.out.println("Pedido creado a nombre de: "+pedido.getCliente().getNombre()+", total: $" + pedido.getTotal());
+            System.out.println("Items:" + pedido.getPedidoDetalle().getItems().toString());
+            System.out.println();
+
+        } catch (InvalidOrderException e) {
+            System.out.println(e.getMessage());
+        }
+        
+        // etapa 5
+        ArrayList<Pedido> pedidos= new ArrayList<>();
+        vendedor.buscarPedidoPorEstado(pedidos, EstadoPedido.RECIBIDO);
+        
+        vendedor.cambiarEstadoPedido(pedidos.get(0), EstadoPedido.PROCESADO);
+        vendedor.cambiarEstadoPedido(pedidos.get(1), EstadoPedido.ENVIADO);
+        
+        
 }
 
 }

@@ -1,15 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package desarrollo.tpentrega1.entidades;
 
-
-
-/**
- *
- * @author florh
- */
 public class Cliente implements Observador{
     private String id;
     private String nombre;          // no esta en el diagrama pero la etapa 1 lo pide

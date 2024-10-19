@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package desarrollo.tpentrega1.entidades;
 
 public class Bebida extends ItemMenu {
@@ -69,11 +66,11 @@ public class Bebida extends ItemMenu {
     };
     public String toString() {
     return "Bebida{" +
-            "tamaño=" + tamaño +
-            ", graduacionAlcoholica=" + graduacionAlcoholica +
-            ", nombre=" + getNombre() +
-            ", descripcion=" + getDescripcion() +
-            ", precio=" + getPrecio() +
+            "tamaño=" + this.tamaño +
+            ", graduacionAlcoholica=" + this.graduacionAlcoholica +
+            ", nombre=" + this.getNombre() +
+            ", descripcion=" + this.getDescripcion() +
+            ", precio=" + this.getPrecio() +
             '}';
 }
 }

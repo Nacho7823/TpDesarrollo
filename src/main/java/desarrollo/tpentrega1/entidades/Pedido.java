@@ -25,6 +25,33 @@ public class Pedido {
         this.vendedor.addPedido(this);
     }
 
+    public Pedido(Cliente cliente,PedidoDetalle pedidoDetalle, FormaDePago formaDePago, Vendedor vendedor) throws InvalidOrderException {
+        if (!validarItemsUnVendedor(pedidoDetalle, vendedor)) {
+            throw new InvalidOrderException("Los ítems deben pertenecer al mismo vendedor");
+        }
+        this.cliente=cliente;
+        this.agregarObservador(cliente);
+        this.pedidoDetalle = pedidoDetalle;
+        this.formaDePago = formaDePago;
+        this.total = calcularTotal();
+        this.estado = EstadoPedido.RECIBIDO;
+        this.vendedor=vendedor;
+        this.vendedor.addPedido(this);
+    }
+
+    private boolean validarItemsUnVendedor(PedidoDetalle pedidoDetalle, Vendedor vendedor) {
+        List<ItemMenu> itemsVendedor = vendedor.getItemsMenu();
+
+        for (ItemMenu item : pedidoDetalle.getItems()) 
+            if(!itemsVendedor.contains(item)) 
+                return false;
+        return true;
+    }
+
+    private double calcularTotal() {
+        double totalProductos = pedidoDetalle.getItems().stream().mapToDouble(ItemMenu::getPrecio).sum();
+        return totalProductos + formaDePago.aplicarRecargo(totalProductos);
+    }
     
     public void agregarObservador(Observador observador) {
         observadores.add(observador);
@@ -48,31 +75,6 @@ public class Pedido {
             observador.actualizar(this);
         }
     }
-    public Pedido(Cliente cliente,PedidoDetalle pedidoDetalle, FormaDePago formaDePago, Vendedor vendedor) throws InvalidOrderException {
-        if (!validarItemsUnVendedor(pedidoDetalle, vendedor)) {
-            throw new InvalidOrderException("Los ítems deben pertenecer al mismo vendedor");
-        }
-        this.cliente=cliente;
-        this.pedidoDetalle = pedidoDetalle;
-        this.formaDePago = formaDePago;
-        this.total = calcularTotal();
-        this.estado = EstadoPedido.RECIBIDO;
-    }
-
-    private boolean validarItemsUnVendedor(PedidoDetalle pedidoDetalle, Vendedor vendedor) {
-        List<ItemMenu> itemsVendedor = vendedor.getItemMenu();
-
-        for (ItemMenu item : pedidoDetalle.getItems()) 
-            if(!itemsVendedor.contains(item)) 
-                return false;
-        return true;
-    }
-
-    private double calcularTotal() {
-        double totalProductos = pedidoDetalle.getItems().stream().mapToDouble(ItemMenu::getPrecio).sum();
-        return totalProductos + formaDePago.aplicarRecargo(totalProductos);
-    }
-
 
     public double getTotal() {
         return total;

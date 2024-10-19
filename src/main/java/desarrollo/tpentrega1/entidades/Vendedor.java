@@ -68,7 +68,7 @@ public class Vendedor {
         this.coordenada = coordenada;
     }
  
-    public ArrayList<ItemMenu> getItemMenu(){
+    public ArrayList<ItemMenu> getItemsMenu(){
         return this.itemsMenu;
     }
 
@@ -159,6 +159,7 @@ public class Vendedor {
       public void cambiarEstadoPedido(Pedido pedido, EstadoPedido nuevoEstado) {
         pedido.setEstado(nuevoEstado); // Cambiar el estado notifica automáticamente a los observadores
         System.out.println("El vendedor ha cambiado el estado del pedido a " + nuevoEstado);
+        System.out.println();
     }
 //buscar pedido por estado
     public void buscarPedidoPorEstado(ArrayList<Pedido> pedido, EstadoPedido estado){
