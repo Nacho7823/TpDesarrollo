@@ -9,5 +9,5 @@ package desarrollo.tpentrega1.controllers;
  * @author florh
  */
 public class ClienteController {
-    
+    //implementar los mismos métodos que vendedorController
 }

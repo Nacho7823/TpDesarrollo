@@ -9,5 +9,10 @@ package desarrollo.tpentrega1.controllers;
  * @author florh
  */
 public class VendedorController {
-    
+    // implementar estos métodos
+//    mostrarListaVendedor()
+//    crearNuevoVendedor(nombre, direccion, coordenadas) no deben poder crear con identificador, sino que la deberían de manera automática.
+//    modificarVendedor(nombre, direccion, coordenadas)
+//    eliminarVendedor(int id)
+//    buscarVendedor(int id)
 }

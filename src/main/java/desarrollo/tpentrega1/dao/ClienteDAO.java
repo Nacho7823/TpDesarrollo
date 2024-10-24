@@ -9,5 +9,10 @@ package desarrollo.tpentrega1.dao;
  * @author florh
  */
 public class ClienteDAO {
-    
+   
+//    listarX(X dato)
+//crearX(X dato)
+//actualizarX(X dato)
+//eliminarX(int id)
+//buscarX(int id)
 }
