@@ -1,4 +1,4 @@
-package desarrollo.tpentrega1.entidades;
+package desarrollo.tpentrega1.dao;
 
 
 public interface ItemsPedidoDao {

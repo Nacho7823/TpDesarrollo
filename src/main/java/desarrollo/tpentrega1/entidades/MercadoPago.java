@@ -1,6 +1,8 @@
 
 package desarrollo.tpentrega1.entidades;
 
+import desarrollo.tpentrega1.interfaces.FormaDePago;
+
 public class MercadoPago implements FormaDePago{
     private String alias;
 

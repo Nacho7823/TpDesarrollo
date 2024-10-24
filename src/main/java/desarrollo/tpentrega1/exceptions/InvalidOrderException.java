@@ -1,5 +1,5 @@
 
-package desarrollo.tpentrega1.entidades;
+package desarrollo.tpentrega1.exceptions;
 
 
 public class InvalidOrderException extends Exception {

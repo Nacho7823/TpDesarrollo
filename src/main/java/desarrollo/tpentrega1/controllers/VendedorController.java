@@ -2,14 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package desarrollo.tpentrega1.entidades;
+package desarrollo.tpentrega1.controllers;
 
 /**
  *
- * @author Flor Hiembuchner
+ * @author florh
  */
-public class ItemNoEncontradoException extends Exception {
-    public ItemNoEncontradoException(String mensaje) {
-        super(mensaje);
-    }
+public class VendedorController {
+    
 }

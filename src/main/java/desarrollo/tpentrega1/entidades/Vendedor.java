@@ -2,6 +2,7 @@
 package desarrollo.tpentrega1.entidades;
 
 
+import desarrollo.tpentrega1.enums.EstadoPedido;
 import java.util.ArrayList;
 
 

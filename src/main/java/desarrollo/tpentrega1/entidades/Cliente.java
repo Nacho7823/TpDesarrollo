@@ -1,6 +1,9 @@
 
 package desarrollo.tpentrega1.entidades;
 
+import desarrollo.tpentrega1.interfaces.Observador;
+import desarrollo.tpentrega1.enums.EstadoPedido;
+
 public class Cliente implements Observador{
     private String id;
     private String nombre;          // no esta en el diagrama pero la etapa 1 lo pide

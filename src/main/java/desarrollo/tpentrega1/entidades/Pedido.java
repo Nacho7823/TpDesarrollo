@@ -1,6 +1,10 @@
 
 package desarrollo.tpentrega1.entidades;
 
+import desarrollo.tpentrega1.interfaces.Observador;
+import desarrollo.tpentrega1.interfaces.FormaDePago;
+import desarrollo.tpentrega1.enums.EstadoPedido;
+import desarrollo.tpentrega1.exceptions.InvalidOrderException;
 import java.util.ArrayList;
 import java.util.List;
 

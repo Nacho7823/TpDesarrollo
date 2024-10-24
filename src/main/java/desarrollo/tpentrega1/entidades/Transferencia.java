@@ -1,6 +1,8 @@
 
 package desarrollo.tpentrega1.entidades;
 
+import desarrollo.tpentrega1.interfaces.FormaDePago;
+
 public class Transferencia implements FormaDePago{
     private String cuit;
     private String cvu;
