@@ -1,17 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package desarrollo.tpentrega1.dao;
 
-/**
- *
- * @author florh
- */
-public class ItemsMenuDAO {
-//    listarX(X dato)
-//crearX(X dato)
-//actualizarX(X dato)
-//eliminarX(int id)
-//buscarX(int id)
+package desarrollo.tpentrega1.dao;
+import desarrollo.tpentrega1.entidades.ItemMenu;
+import java.util.List;
+
+public interface ItemsMenuDAO {
+public void listarItemsMenu(List<ItemMenu> itemsMenu);
+public void crearItemsMenu(List<ItemMenu> itemsMenu);
+public void actualizarItemsMenu(List<ItemMenu> itemsMenu);
+public void eliminarItemsMenu(int id);
+public void buscarItemsMenu(int id);
 }

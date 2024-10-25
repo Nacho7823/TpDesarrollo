@@ -1,17 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package desarrollo.tpentrega1.dao;
 
-/**
- *
- * @author florh
- */
-public class VendedorDAO {
-//    listarX(X dato)
-//crearX(X dato)
-//actualizarX(X dato)
-//eliminarX(int id)
-//buscarX(int id)
+package desarrollo.tpentrega1.dao;
+import desarrollo.tpentrega1.entidades.Vendedor;
+
+public interface VendedorDAO {
+    
+public void listarVendedor(Vendedor vendedor);
+public void crearVendedor(Vendedor vendedor);
+public void actualizarVendedor(Vendedor vendedor);
+public void eliminarVendedor(int id);
+public void buscarVendedor(int id);
 }

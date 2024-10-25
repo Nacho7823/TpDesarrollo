@@ -1,18 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package desarrollo.tpentrega1.dao;
 
-/**
- *
- * @author florh
- */
-public class ClienteDAO {
-   
-//    listarX(X dato)
-//crearX(X dato)
-//actualizarX(X dato)
-//eliminarX(int id)
-//buscarX(int id)
+package desarrollo.tpentrega1.dao;
+import desarrollo.tpentrega1.entidades.Cliente;
+
+public interface ClienteDAO {
+
+    public void listarCliente(Cliente cliente);
+    public void crearCliente(Cliente cliente);
+    public void actualizarCliente(Cliente cliente);
+    public void eliminarCliente(int id);
+    public void buscarCliente(int id);
 }
