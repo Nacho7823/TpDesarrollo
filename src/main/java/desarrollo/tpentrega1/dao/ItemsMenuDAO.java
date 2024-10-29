@@ -4,9 +4,9 @@ import desarrollo.tpentrega1.entidades.ItemMenu;
 import java.util.List;
 
 public interface ItemsMenuDAO {
-public void listarItemsMenu(List<ItemMenu> itemsMenu);
-public void crearItemsMenu(List<ItemMenu> itemsMenu);
-public void actualizarItemsMenu(List<ItemMenu> itemsMenu);
-public void eliminarItemsMenu(int id);
-public void buscarItemsMenu(int id);
+public void listarItemsMenu();
+public void crearItemsMenu(ItemMenu item);
+public void actualizarItemsMenu(ItemMenu item);
+public void eliminarItemsMenu(String id);
+public ItemMenu buscarItemsMenu(String id);
 }
