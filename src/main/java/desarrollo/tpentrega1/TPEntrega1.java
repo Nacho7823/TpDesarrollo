@@ -282,14 +282,23 @@
 package desarrollo.tpentrega1;
 
 import desarrollo.tpentrega1.Memory.ClienteMemory;
+import desarrollo.tpentrega1.Memory.ItemsPedidoMemory;
+import desarrollo.tpentrega1.Memory.PedidoMemory;
 import desarrollo.tpentrega1.Memory.VendedorMemory;
 import desarrollo.tpentrega1.controllers.ClienteController;
+import desarrollo.tpentrega1.controllers.PedidoController;
 import desarrollo.tpentrega1.controllers.VendedorController;
 import desarrollo.tpentrega1.UI.ClienteUI;
+import desarrollo.tpentrega1.UI.PedidosUI;
 import desarrollo.tpentrega1.UI.VendedorUI;
 import desarrollo.tpentrega1.entidades.Cliente;
 import desarrollo.tpentrega1.entidades.Vendedor;
 import desarrollo.tpentrega1.entidades.Coordenada;
+import desarrollo.tpentrega1.entidades.ItemMenu;
+import desarrollo.tpentrega1.entidades.PedidoDetalle;
+import desarrollo.tpentrega1.entidades.Transferencia;
+import desarrollo.tpentrega1.interfaces.FormaDePago;
+import java.util.List;
 
 import javax.swing.*;
 
@@ -298,10 +307,12 @@ public class TPEntrega1 {
         // Crear instancias de memoria (simulando bases de datos en memoria)
         ClienteMemory clienteMemory = new ClienteMemory();
         VendedorMemory vendedorMemory = new VendedorMemory();
+        PedidoMemory pedidoMemory = new PedidoMemory();
 
         // Crear instancias de controladores
         ClienteController clienteController = new ClienteController(clienteMemory);
         VendedorController vendedorController = new VendedorController(vendedorMemory);
+        PedidoController pedidoController = new PedidoController(pedidoMemory);
 
         // Cargar datos de prueba para clientes
         clienteController.crearNuevoCliente("Juan Pérez", "20-12345678-9", "juan@example.com", "Calle Falsa 123", new Coordenada(-34.603722, -58.381592));
@@ -310,6 +321,22 @@ public class TPEntrega1 {
         // Cargar datos de prueba para vendedores
         vendedorController.crearNuevoVendedor("Supermercado ABC", "Av. Corrientes 1500", new Coordenada(-34.603532, -58.383222));
         vendedorController.crearNuevoVendedor("Verdulería El Tomate", "Calle Libertad 2300", new Coordenada(-34.606732, -58.384752));
+
+
+        ItemsPedidoMemory itemsPedidoMemory = new ItemsPedidoMemory();
+        itemsPedidoMemory.setItems(vendedorController.obtenerListaVendedores().get(0).getItemsMenu());
+
+        itemsPedidoMemory.buscarBebidas();
+        itemsPedidoMemory.buscarPrecio(250);
+        List<ItemMenu> items = itemsPedidoMemory.getItems();
+
+        FormaDePago formaDePago = new Transferencia("20346572182", "0000003100092901454053");
+        PedidoDetalle pedidoDetalle = new PedidoDetalle(items);
+
+        pedidoController.crearNuevoPedido(clienteController.obtenerListaClientes().get(0), 
+            pedidoDetalle, 
+            formaDePago, 
+            vendedorController.obtenerListaVendedores().get(0));
 
         // Configurar UI de Cliente y Vendedor
         SwingUtilities.invokeLater(new Runnable() {
@@ -320,6 +347,10 @@ public class TPEntrega1 {
 
                 VendedorUI vendedorUI = new VendedorUI(vendedorController);
                 vendedorUI.setVisible(true);
+
+                PedidosUI pedidosUI = new PedidosUI(pedidoController);
+                pedidosUI.setVisible(true);
+
             }
         });
     }

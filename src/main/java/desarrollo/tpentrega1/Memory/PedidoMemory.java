@@ -8,6 +8,11 @@ import java.util.List;
 
 public class PedidoMemory implements PedidoDAO{
  private static List<Pedido> pedidos = new ArrayList<>();
+ 
+    public List<Pedido> getPedidos() {
+        return pedidos;
+    }
+ 
     @Override
     public void listarPedido(Pedido pedido) {
         for (Pedido p : pedidos) {
@@ -20,7 +25,7 @@ public class PedidoMemory implements PedidoDAO{
     @Override
     public void crearPedido(Pedido pedido) {
         pedidos.add(pedido);
-        System.out.println("Pedido creado con ID: " + pedido.getId());
+        // System.out.println("Pedido creado con ID: " + pedido.getId());
     }
 
     @Override

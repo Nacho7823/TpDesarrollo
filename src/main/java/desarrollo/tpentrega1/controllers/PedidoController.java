@@ -12,6 +12,7 @@ import desarrollo.tpentrega1.entidades.Vendedor;
 import desarrollo.tpentrega1.enums.EstadoPedido;
 import desarrollo.tpentrega1.exceptions.InvalidOrderException;
 import desarrollo.tpentrega1.interfaces.FormaDePago;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -20,6 +21,10 @@ import java.util.UUID;
  */
 public class PedidoController {
     private PedidoMemory pedidoDAO = new PedidoMemory();
+
+    public PedidoController(PedidoMemory pedidoDAO) {
+        this.pedidoDAO = pedidoDAO;
+    }
 
     // Mostrar lista de todos los pedidos
     public void mostrarListaPedidos() {
@@ -65,5 +70,9 @@ public class PedidoController {
         } else {
             System.out.println("Pedido no encontrado con ID: " + id);
         }
+    }
+
+    public List<Pedido> obtenerListaPedidos() {
+        return pedidoDAO.getPedidos();
     }
 }
