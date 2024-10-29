@@ -7,6 +7,7 @@ package desarrollo.tpentrega1.controllers;
 import desarrollo.tpentrega1.Memory.ClienteMemory;
 import desarrollo.tpentrega1.entidades.Cliente;
 import desarrollo.tpentrega1.entidades.Coordenada;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -52,12 +53,18 @@ public class ClienteController {
     }
 
     // Buscar un cliente por ID
-    public void buscarCliente(int id) {
+    public Cliente buscarCliente(int id) {
         Cliente cliente = clienteDAO.buscarCliente(id);
         if (cliente != null) {
             System.out.println("Cliente encontrado: " + cliente.getNombre());
+            return cliente;
         } else {
             System.out.println("Cliente no encontrado con ID: " + id);
+            return null;
         }
+    }
+
+    public List<Cliente> obtenerListaClientes() {
+        return clienteDAO.getClientes();
     }
 }

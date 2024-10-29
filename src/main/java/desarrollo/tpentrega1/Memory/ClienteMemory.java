@@ -10,6 +10,10 @@ public class ClienteMemory implements ClienteDAO{
     
 private static List<Cliente> clientes = new ArrayList<>();
 
+    public static List<Cliente> getClientes() {
+        return clientes;
+    }
+
     @Override
     public void listarCliente(Cliente cliente) {
         for (Cliente c : clientes) {
