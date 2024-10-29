@@ -16,6 +16,10 @@ import java.util.UUID;
 public class VendedorController {
     private VendedorMemory vendedorDAO = new VendedorMemory();
 
+    public VendedorController(VendedorMemory vendedorMemory) {
+       this.vendedorDAO=vendedorMemory;
+    }
+
     // Mostrar la lista de todos los vendedores
     public void mostrarListaVendedor() {
         System.out.println("Lista de Vendedores:");

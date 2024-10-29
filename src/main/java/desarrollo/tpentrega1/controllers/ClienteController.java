@@ -17,6 +17,11 @@ import java.util.UUID;
 public class ClienteController {
      private ClienteMemory clienteDAO = new ClienteMemory();
 
+    public ClienteController(ClienteMemory c) {
+        this.clienteDAO=c;
+    }
+
+    
     // Mostrar lista de todos los clientes
     public void mostrarListaClientes() {
         System.out.println("Lista de Clientes:");
