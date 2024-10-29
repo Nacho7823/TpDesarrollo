@@ -8,5 +8,5 @@ public interface ClienteDAO {
     public void crearCliente(Cliente cliente);
     public void actualizarCliente(Cliente cliente);
     public void eliminarCliente(int id);
-    public void buscarCliente(int id);
+    public Cliente buscarCliente(int id);
 }

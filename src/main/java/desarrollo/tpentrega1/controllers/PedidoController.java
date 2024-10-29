@@ -9,6 +9,7 @@ import desarrollo.tpentrega1.entidades.Cliente;
 import desarrollo.tpentrega1.entidades.Pedido;
 import desarrollo.tpentrega1.entidades.PedidoDetalle;
 import desarrollo.tpentrega1.entidades.Vendedor;
+import desarrollo.tpentrega1.enums.EstadoPedido;
 import desarrollo.tpentrega1.exceptions.InvalidOrderException;
 import desarrollo.tpentrega1.interfaces.FormaDePago;
 import java.util.UUID;
