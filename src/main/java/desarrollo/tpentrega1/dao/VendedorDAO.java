@@ -8,5 +8,5 @@ public void listarVendedor(Vendedor vendedor);
 public void crearVendedor(Vendedor vendedor);
 public void actualizarVendedor(Vendedor vendedor);
 public void eliminarVendedor(int id);
-public void buscarVendedor(int id);
+public Vendedor buscarVendedor(int id);
 }
