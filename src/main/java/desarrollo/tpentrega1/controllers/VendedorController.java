@@ -7,6 +7,7 @@ package desarrollo.tpentrega1.controllers;
 import desarrollo.tpentrega1.entidades.Vendedor;
 import desarrollo.tpentrega1.Memory.VendedorMemory;
 import desarrollo.tpentrega1.entidades.Coordenada;
+import java.util.List;
 import java.util.UUID;
 /**
  *
@@ -48,12 +49,18 @@ public class VendedorController {
     }
 
     // Buscar un vendedor por ID
-    public void buscarVendedor(int id) {
+    public Vendedor buscarVendedor(int id) {
         Vendedor vendedor = vendedorDAO.buscarVendedor(id);
         if (vendedor != null) {
             System.out.println("Vendedor encontrado: " + vendedor.getNombre());
+            return vendedor;
         } else {
             System.out.println("Vendedor no encontrado con ID " + id);
+            return null;
         }
+    }
+
+    public List<Vendedor> obtenerListaVendedores() {
+        return vendedorDAO.getVendedores();
     }
 }

@@ -1,29 +1,21 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package desarrollo.tpentrega1.UI;
-/**
- *
- * @author florh
- */
+
 import desarrollo.tpentrega1.entidades.Coordenada;
 import desarrollo.tpentrega1.entidades.Vendedor;
+import desarrollo.tpentrega1.controllers.VendedorController;
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.util.List;
 
-
-public class VendedorUI extends JFrame{
-   private JTextField txtId, txtNombre, txtDireccion, txtLatitud, txtLongitud;
+public class VendedorUI extends JFrame {
+    private JTextField txtId, txtNombre, txtDireccion, txtLatitud, txtLongitud;
     private JButton btnCrear, btnBuscar, btnEditar, btnEliminar;
     private JTable tableVendedores;
-    private ArrayList<Vendedor> vendedores;
+    private VendedorController vendedorController;
 
-    public VendedorUI(ArrayList<Vendedor> vendedores) {
-        this.vendedores = vendedores;
+    public VendedorUI(VendedorController vendedorController) {
+        this.vendedorController = vendedorController;
         setTitle("Gestión de Vendedores");
         setSize(600, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -46,20 +38,10 @@ public class VendedorUI extends JFrame{
         btnEditar = new JButton("Editar");
         btnEliminar = new JButton("Eliminar");
 
-        // Tabla para mostrar los vendedores
-        String[] columnNames = {"ID", "Nombre", "Dirección", "Latitud", "Longitud"};
-        Object[][] data = new Object[vendedores.size()][5];
-        for (int i = 0; i < vendedores.size(); i++) {
-            Vendedor v = vendedores.get(i);
-            data[i][0] = v.getId();
-            data[i][1] = v.getNombre();
-            data[i][2] = v.getDireccion();
-            data[i][3] = v.getCoordenada().getLat();
-            data[i][4] = v.getCoordenada().getLng();
-        }
-        tableVendedores = new JTable(data, columnNames);
+        // Inicializar tabla
+        tableVendedores = new JTable();
+        actualizarTabla();
 
-        // Panel de la tabla
         JScrollPane scrollPane = new JScrollPane(tableVendedores);
 
         // Layout de la ventana principal usando GroupLayout
@@ -69,7 +51,6 @@ public class VendedorUI extends JFrame{
         layout.setAutoCreateGaps(true);
         layout.setAutoCreateContainerGaps(true);
 
-        // Horizontal Group
         layout.setHorizontalGroup(layout.createSequentialGroup()
             .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                 .addComponent(lblId)
@@ -91,7 +72,6 @@ public class VendedorUI extends JFrame{
             .addComponent(scrollPane)
         );
 
-        // Vertical Group
         layout.setVerticalGroup(layout.createSequentialGroup()
             .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                 .addComponent(lblId)
@@ -117,8 +97,6 @@ public class VendedorUI extends JFrame{
         );
 
         add(panel);
-
-        // Configurar los botones
         configurarAcciones();
     }
 
@@ -126,32 +104,29 @@ public class VendedorUI extends JFrame{
         btnCrear.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String id = txtId.getText();
                 String nombre = txtNombre.getText();
                 String direccion = txtDireccion.getText();
                 double lat = Double.parseDouble(txtLatitud.getText());
                 double lng = Double.parseDouble(txtLongitud.getText());
 
-                Vendedor vendedor = new Vendedor(id, nombre, direccion, new Coordenada(lat, lng));
-                vendedores.add(vendedor);
-
+                Coordenada coordenada = new Coordenada(lat, lng);
+                vendedorController.crearNuevoVendedor(nombre, direccion, coordenada);
                 actualizarTabla();
             }
         });
 
-        // Configurar los otros botones para Buscar, Editar y Eliminar
         btnBuscar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String id = txtId.getText();
-                for (Vendedor vendedor : vendedores) {
-                    if (vendedor.getId().equals(id)) {
-                        txtNombre.setText(vendedor.getNombre());
-                        txtDireccion.setText(vendedor.getDireccion());
-                        txtLatitud.setText(String.valueOf(vendedor.getCoordenada().getLat()));
-                        txtLongitud.setText(String.valueOf(vendedor.getCoordenada().getLng()));
-                        break;
-                    }
+                Vendedor vendedor = vendedorController.buscarVendedor(Integer.parseInt(id));
+                if (vendedor != null) {
+                    txtNombre.setText(vendedor.getNombre());
+                    txtDireccion.setText(vendedor.getDireccion());
+                    txtLatitud.setText(String.valueOf(vendedor.getCoordenada().getLat()));
+                    txtLongitud.setText(String.valueOf(vendedor.getCoordenada().getLng()));
+                } else {
+                    JOptionPane.showMessageDialog(null, "Vendedor no encontrado.");
                 }
             }
         });
@@ -160,16 +135,14 @@ public class VendedorUI extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 String id = txtId.getText();
-                for (Vendedor vendedor : vendedores) {
-                    if (vendedor.getId().equals(id)) {
-                        vendedor.setNombre(txtNombre.getText());
-                        vendedor.setDireccion(txtDireccion.getText());
-                        vendedor.getCoordenada().setLat(Double.parseDouble(txtLatitud.getText()));
-                        vendedor.getCoordenada().setLng(Double.parseDouble(txtLongitud.getText()));
-                        actualizarTabla();
-                        break;
-                    }
-                }
+                String nombre = txtNombre.getText();
+                String direccion = txtDireccion.getText();
+                double lat = Double.parseDouble(txtLatitud.getText());
+                double lng = Double.parseDouble(txtLongitud.getText());
+
+                Coordenada coordenada = new Coordenada(lat, lng);
+                vendedorController.modificarVendedor(id, nombre, direccion, coordenada);
+                actualizarTabla();
             }
         });
 
@@ -177,13 +150,14 @@ public class VendedorUI extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 String id = txtId.getText();
-                vendedores.removeIf(vendedor -> vendedor.getId().equals(id));
+                vendedorController.eliminarVendedor(Integer.parseInt(id));
                 actualizarTabla();
             }
         });
     }
 
     private void actualizarTabla() {
+        List<Vendedor> vendedores = vendedorController.obtenerListaVendedores();
         String[] columnNames = {"ID", "Nombre", "Dirección", "Latitud", "Longitud"};
         Object[][] data = new Object[vendedores.size()][5];
         for (int i = 0; i < vendedores.size(); i++) {
@@ -198,5 +172,3 @@ public class VendedorUI extends JFrame{
     }
 }
 
-    
-    

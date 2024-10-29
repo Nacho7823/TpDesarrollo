@@ -9,6 +9,10 @@ import java.util.List;
 public class VendedorMemory implements VendedorDAO{
 
     private static List<Vendedor> vendedores = new ArrayList<>();
+
+    public static List<Vendedor> getVendedores() {
+        return vendedores;
+    }
     
     @Override
     public void listarVendedor(Vendedor vendedor) {
