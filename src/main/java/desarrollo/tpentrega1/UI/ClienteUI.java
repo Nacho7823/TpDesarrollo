@@ -1,35 +1,21 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package desarrollo.tpentrega1.UI;
 
-import desarrollo.tpentrega1.entidades.Coordenada;
 import desarrollo.tpentrega1.entidades.Cliente;
+import desarrollo.tpentrega1.entidades.Coordenada;
+import desarrollo.tpentrega1.controllers.ClienteController;
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import javax.swing.GroupLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
+import java.util.List;
 
-/**
- *
- * @author florh
- */
-public class ClienteUI extends JFrame{
-    private JTextField txtId, txtNombre,txtCuit, txtEmail, txtDireccion, txtLatitud, txtLongitud;
+public class ClienteUI extends JFrame {
+    private JTextField txtId, txtNombre, txtCuit, txtEmail, txtDireccion, txtLatitud, txtLongitud;
     private JButton btnCrear, btnBuscar, btnEditar, btnEliminar;
     private JTable tableClientes;
-    private ArrayList<Cliente> clientes;
+    private ClienteController clienteController;
 
-    public ClienteUI(ArrayList<Cliente> clientes) {
-        this.clientes = clientes;
+    public ClienteUI(ClienteController clienteController) {
+        this.clienteController = clienteController;
         setTitle("Gestión de Clientes");
         setSize(600, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -45,34 +31,21 @@ public class ClienteUI extends JFrame{
 
         txtId = new JTextField(20);
         txtNombre = new JTextField(20);
-        txtCuit= new JTextField(20);
-        txtEmail = new JTextField(60);
+        txtCuit = new JTextField(20);
+        txtEmail = new JTextField(20);
         txtDireccion = new JTextField(20);
         txtLatitud = new JTextField(20);
         txtLongitud = new JTextField(20);
-        
 
         btnCrear = new JButton("Crear");
         btnBuscar = new JButton("Buscar");
         btnEditar = new JButton("Editar");
         btnEliminar = new JButton("Eliminar");
 
-        // Tabla para mostrar los clientes
-        String[] columnNames = {"ID", "Nombre","Cuit", "Email", "Dirección", "Latitud", "Longitud"};
-        Object[][] data = new Object[clientes.size()][7];
-        for (int i = 0; i < clientes.size(); i++) {
-            Cliente c = clientes.get(i);
-            data[i][0] = c.getId();
-            data[i][1] = c.getNombre();
-            data[i][2] = c.getCuit();
-            data[i][3] = c.getEmail();
-            data[i][4] = c.getDireccion();
-            data[i][5] = c.getCoordenada().getLat();
-            data[i][6] = c.getCoordenada().getLng();
-        }
-        tableClientes = new JTable(data, columnNames);
+        // Inicializar tabla
+        tableClientes = new JTable();
+        actualizarTabla();
 
-        // Panel de la tabla
         JScrollPane scrollPane = new JScrollPane(tableClientes);
 
         // Layout de la ventana principal usando GroupLayout
@@ -82,7 +55,6 @@ public class ClienteUI extends JFrame{
         layout.setAutoCreateGaps(true);
         layout.setAutoCreateContainerGaps(true);
 
-        // Horizontal Group
         layout.setHorizontalGroup(layout.createSequentialGroup()
             .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                 .addComponent(lblId)
@@ -108,7 +80,6 @@ public class ClienteUI extends JFrame{
             .addComponent(scrollPane)
         );
 
-        // Vertical Group
         layout.setVerticalGroup(layout.createSequentialGroup()
             .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                 .addComponent(lblId)
@@ -140,8 +111,6 @@ public class ClienteUI extends JFrame{
         );
 
         add(panel);
-
-        // Configurar los botones
         configurarAcciones();
     }
 
@@ -149,36 +118,33 @@ public class ClienteUI extends JFrame{
         btnCrear.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String id = txtId.getText();
                 String nombre = txtNombre.getText();
-                String direccion = txtDireccion.getText();
                 String cuit = txtCuit.getText();
                 String email = txtEmail.getText();
+                String direccion = txtDireccion.getText();
                 double lat = Double.parseDouble(txtLatitud.getText());
                 double lng = Double.parseDouble(txtLongitud.getText());
 
-                Cliente cliente = new Cliente(id, nombre,cuit, email, direccion, new Coordenada(lat, lng));
-                clientes.add(cliente);
-
+                Coordenada coordenada = new Coordenada(lat, lng);
+                clienteController.crearNuevoCliente(nombre, cuit, email, direccion, coordenada);
                 actualizarTabla();
             }
         });
 
-        // Configurar los otros botones para Buscar, Editar y Eliminar
         btnBuscar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String id = txtId.getText();
-                for (Cliente cliente : clientes) {
-                    if (cliente.getId().equals(id)) {
-                        txtNombre.setText(cliente.getNombre());
-                        txtCuit.setText(cliente.getCuit());
-                        txtEmail.setText(cliente.getEmail());
-                        txtDireccion.setText(cliente.getDireccion());
-                        txtLatitud.setText(String.valueOf(cliente.getCoordenada().getLat()));
-                        txtLongitud.setText(String.valueOf(cliente.getCoordenada().getLng()));
-                        break;
-                    }
+                Cliente cliente = clienteController.buscarCliente(Integer.parseInt(id));
+                if (cliente != null) {
+                    txtNombre.setText(cliente.getNombre());
+                    txtCuit.setText(cliente.getCuit());
+                    txtEmail.setText(cliente.getEmail());
+                    txtDireccion.setText(cliente.getDireccion());
+                    txtLatitud.setText(String.valueOf(cliente.getCoordenada().getLat()));
+                    txtLongitud.setText(String.valueOf(cliente.getCoordenada().getLng()));
+                } else {
+                    JOptionPane.showMessageDialog(null, "Cliente no encontrado.");
                 }
             }
         });
@@ -187,16 +153,16 @@ public class ClienteUI extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 String id = txtId.getText();
-                for (Cliente cliente : clientes) {
-                    if (cliente.getId().equals(id)) {
-                        cliente.setNombre(txtNombre.getText());
-                        cliente.setDireccion(txtDireccion.getText());
-                        cliente.getCoordenada().setLat(Double.parseDouble(txtLatitud.getText()));
-                        cliente.getCoordenada().setLng(Double.parseDouble(txtLongitud.getText()));
-                        actualizarTabla();
-                        break;
-                    }
-                }
+                String nombre = txtNombre.getText();
+                String cuit = txtCuit.getText();
+                String email = txtEmail.getText();
+                String direccion = txtDireccion.getText();
+                double lat = Double.parseDouble(txtLatitud.getText());
+                double lng = Double.parseDouble(txtLongitud.getText());
+
+                Coordenada coordenada = new Coordenada(lat, lng);
+                clienteController.modificarCliente(id, nombre, cuit, email, direccion, coordenada);
+                actualizarTabla();
             }
         });
 
@@ -204,21 +170,22 @@ public class ClienteUI extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 String id = txtId.getText();
-                clientes.removeIf(cliente -> cliente.getId().equals(id));
+                clienteController.eliminarCliente(Integer.parseInt(id));
                 actualizarTabla();
             }
         });
     }
 
     private void actualizarTabla() {
-        String[] columnNames = {"ID", "Nombre","Cuit","Email", "Dirección", "Latitud", "Longitud"};
+        List<Cliente> clientes = clienteController.obtenerListaClientes();
+        String[] columnNames = {"ID", "Nombre", "Cuit", "Email", "Dirección", "Latitud", "Longitud"};
         Object[][] data = new Object[clientes.size()][7];
         for (int i = 0; i < clientes.size(); i++) {
             Cliente c = clientes.get(i);
             data[i][0] = c.getId();
             data[i][1] = c.getNombre();
             data[i][2] = c.getCuit();
-            data[i][2] = c.getEmail();
+            data[i][3] = c.getEmail();
             data[i][4] = c.getDireccion();
             data[i][5] = c.getCoordenada().getLat();
             data[i][6] = c.getCoordenada().getLng();

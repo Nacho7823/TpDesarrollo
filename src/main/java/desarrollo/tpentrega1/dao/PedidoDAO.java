@@ -7,5 +7,5 @@ public interface PedidoDAO {
     public void crearPedido(Pedido pedido);
     public void actualizarPedido(Pedido pedido);
     public void eliminarPedido(int id);
-    public void buscarPedido(int id);
+    public Pedido buscarPedido(int id);
 }
