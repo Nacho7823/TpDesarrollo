@@ -291,6 +291,7 @@ import desarrollo.tpentrega1.controllers.VendedorController;
 import desarrollo.tpentrega1.UI.ClienteUI;
 import desarrollo.tpentrega1.UI.PedidosUI;
 import desarrollo.tpentrega1.UI.VendedorUI;
+import desarrollo.tpentrega1.UI.MenuGeneral;
 import desarrollo.tpentrega1.entidades.Cliente;
 import desarrollo.tpentrega1.entidades.Vendedor;
 import desarrollo.tpentrega1.entidades.Coordenada;
@@ -342,14 +343,8 @@ public class TPEntrega1 {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                ClienteUI clienteUI = new ClienteUI(clienteController);
-                clienteUI.setVisible(true);
-
-                VendedorUI vendedorUI = new VendedorUI(vendedorController);
-                vendedorUI.setVisible(true);
-
-                PedidosUI pedidosUI = new PedidosUI(pedidoController);
-                pedidosUI.setVisible(true);
+                MenuGeneral menu= new MenuGeneral(clienteController,vendedorController);
+                menu.setVisible(true);
 
             }
         });

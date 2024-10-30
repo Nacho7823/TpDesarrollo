@@ -8,7 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-public class ClienteUI extends JFrame {
+public class ClienteUI extends JPanel {
     private JTextField txtId, txtNombre, txtCuit, txtEmail, txtDireccion, txtLatitud, txtLongitud;
     private JButton btnCrear, btnBuscar, btnEditar, btnEliminar;
     private JTable tableClientes;
@@ -16,9 +16,6 @@ public class ClienteUI extends JFrame {
 
     public ClienteUI(ClienteController clienteController) {
         this.clienteController = clienteController;
-        setTitle("Gestión de Clientes");
-        setSize(600, 400);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Crear los componentes
         JLabel lblId = new JLabel("ID:");
@@ -49,9 +46,8 @@ public class ClienteUI extends JFrame {
         JScrollPane scrollPane = new JScrollPane(tableClientes);
 
         // Layout de la ventana principal usando GroupLayout
-        JPanel panel = new JPanel();
-        GroupLayout layout = new GroupLayout(panel);
-        panel.setLayout(layout);
+        GroupLayout layout = new GroupLayout(this);
+        this.setLayout(layout);
         layout.setAutoCreateGaps(true);
         layout.setAutoCreateContainerGaps(true);
 
@@ -110,7 +106,6 @@ public class ClienteUI extends JFrame {
             .addComponent(scrollPane)
         );
 
-        add(panel);
         configurarAcciones();
     }
 

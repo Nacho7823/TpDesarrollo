@@ -8,7 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-public class VendedorUI extends JFrame {
+public class VendedorUI extends JPanel {
     private JTextField txtId, txtNombre, txtDireccion, txtLatitud, txtLongitud;
     private JButton btnCrear, btnBuscar, btnEditar, btnEliminar;
     private JTable tableVendedores;
@@ -16,10 +16,7 @@ public class VendedorUI extends JFrame {
 
     public VendedorUI(VendedorController vendedorController) {
         this.vendedorController = vendedorController;
-        setTitle("Gestión de Vendedores");
-        setSize(600, 400);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        
         // Crear los componentes
         JLabel lblId = new JLabel("ID:");
         JLabel lblNombre = new JLabel("Nombre:");
@@ -45,9 +42,8 @@ public class VendedorUI extends JFrame {
         JScrollPane scrollPane = new JScrollPane(tableVendedores);
 
         // Layout de la ventana principal usando GroupLayout
-        JPanel panel = new JPanel();
-        GroupLayout layout = new GroupLayout(panel);
-        panel.setLayout(layout);
+        GroupLayout layout = new GroupLayout(this);
+        this.setLayout(layout);
         layout.setAutoCreateGaps(true);
         layout.setAutoCreateContainerGaps(true);
 
@@ -96,7 +92,6 @@ public class VendedorUI extends JFrame {
             .addComponent(scrollPane)
         );
 
-        add(panel);
         configurarAcciones();
     }
 
