@@ -1,5 +1,6 @@
 desarrollo\tpentrega1\UI\PedidosUI$3.class
 desarrollo\tpentrega1\UI\VendedorUI$1.class
+<<<<<<< Updated upstream
 desarrollo\tpentrega1\dao\PedidoDAO.class
 desarrollo\tpentrega1\dao\VendedorDAO.class
 desarrollo\tpentrega1\entidades\Transferencia.class
@@ -16,6 +17,8 @@ desarrollo\tpentrega1\enums\EstadoPedido.class
 desarrollo\tpentrega1\interfaces\FormaDePago.class
 desarrollo\tpentrega1\UI\VendedorUI$4.class
 desarrollo\tpentrega1\entidades\Plato.class
+=======
+>>>>>>> Stashed changes
 desarrollo\tpentrega1\UI\ClienteUI$4.class
 desarrollo\tpentrega1\TPEntrega1$1.class
 desarrollo\tpentrega1\dao\ItemsPedidoDao.class
@@ -23,10 +26,15 @@ desarrollo\tpentrega1\UI\PedidosUI.class
 desarrollo\tpentrega1\controllers\PedidoController.class
 desarrollo\tpentrega1\UI\PedidosUI$1.class
 desarrollo\tpentrega1\Memory\ClienteMemory.class
+<<<<<<< Updated upstream
+=======
+desarrollo\tpentrega1\dao\PedidoDAO.class
+>>>>>>> Stashed changes
 desarrollo\tpentrega1\Memory\VendedorMemory.class
 desarrollo\tpentrega1\UI\VendedorUI$3.class
 desarrollo\tpentrega1\controllers\ClienteController.class
 desarrollo\tpentrega1\dao\ItemsMenuDAO.class
+<<<<<<< Updated upstream
 desarrollo\tpentrega1\UI\PedidosUI$5.class
 desarrollo\tpentrega1\exceptions\ItemNoEncontradoException.class
 desarrollo\tpentrega1\dao\ClienteDAO.class
@@ -38,10 +46,45 @@ desarrollo\tpentrega1\entidades\MercadoPago.class
 desarrollo\tpentrega1\entidades\Pedido.class
 desarrollo\tpentrega1\UI\ClienteUI.class
 desarrollo\tpentrega1\UI\VendedorUI$2.class
+=======
+desarrollo\tpentrega1\dao\VendedorDAO.class
+desarrollo\tpentrega1\entidades\Transferencia.class
+desarrollo\tpentrega1\Memory\PedidoMemory.class
+desarrollo\tpentrega1\UI\ClienteUI$2.class
+desarrollo\tpentrega1\controllers\VendedorController.class
+desarrollo\tpentrega1\exceptions\ItemNoEncontradoException.class
+desarrollo\tpentrega1\dao\ClienteDAO.class
+desarrollo\tpentrega1\entidades\Pago.class
+desarrollo\tpentrega1\UI\ItemsMenu$1.class
+desarrollo\tpentrega1\entidades\Bebida.class
+desarrollo\tpentrega1\entidades\Coordenada.class
+desarrollo\tpentrega1\TPEntrega1.class
+desarrollo\tpentrega1\controllers\ItemsMenuController.class
+desarrollo\tpentrega1\UI\VendedorUI.class
+desarrollo\tpentrega1\entidades\MercadoPago.class
+desarrollo\tpentrega1\UI\ItemsMenu.class
+desarrollo\tpentrega1\entidades\Pedido.class
+desarrollo\tpentrega1\UI\ClienteUI.class
+desarrollo\tpentrega1\UI\PedidosUI$2.class
+desarrollo\tpentrega1\entidades\Cliente.class
+desarrollo\tpentrega1\entidades\ItemMenu.class
+desarrollo\tpentrega1\UI\VendedorUI$2.class
+desarrollo\tpentrega1\exceptions\InvalidOrderException.class
+desarrollo\tpentrega1\UI\ClienteUI$3.class
+desarrollo\tpentrega1\enums\EstadoPedido.class
+>>>>>>> Stashed changes
 desarrollo\tpentrega1\interfaces\Observador.class
 desarrollo\tpentrega1\Memory\ItemsMenuMemory.class
 desarrollo\tpentrega1\UI\ClienteUI$1.class
 desarrollo\tpentrega1\entidades\PedidoDetalle.class
+<<<<<<< Updated upstream
 desarrollo\tpentrega1\Memory\ItemsPedidoMemory.class
 desarrollo\tpentrega1\UI\PedidosUI$7.class
 desarrollo\tpentrega1\UI\PedidosUI$4.class
+=======
+desarrollo\tpentrega1\interfaces\FormaDePago.class
+desarrollo\tpentrega1\UI\VendedorUI$4.class
+desarrollo\tpentrega1\Memory\ItemsPedidoMemory.class
+desarrollo\tpentrega1\entidades\Plato.class
+desarrollo\tpentrega1\entidades\Vendedor.class
+>>>>>>> Stashed changes
