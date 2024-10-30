@@ -13,8 +13,20 @@ public class ItemsMenu extends javax.swing.JFrame {
     /**
      * Creates new form ItemsMenu
      */
+    private void DisEnablePlatoFrame(boolean b){
+        CaloriasField.setEnabled(b);
+        PesoField.setEnabled(b);
+        ApVeCheckBox.setEnabled(b);
+        ApCeCheckBox.setEnabled(b);
+    }
+    private void DisEnableBebidaFrame(boolean b){
+        GradAlcField.setEnabled(b);
+        TamField.setEnabled(b);
+    }
     public ItemsMenu() {
         initComponents();
+        DisEnableBebidaFrame(false);
+        DisEnablePlatoFrame(false);
     }
 
     /**
@@ -28,15 +40,31 @@ public class ItemsMenu extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         buttonGroup1 = new javax.swing.ButtonGroup();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        IDField = new javax.swing.JTextField();
+        NombreField = new javax.swing.JTextField();
+        DescripcionField = new javax.swing.JTextField();
+        PrecioField = new javax.swing.JTextField();
+        IDLabel = new javax.swing.JLabel();
+        NombreLabel = new javax.swing.JLabel();
+        DescripcionLabel = new javax.swing.JLabel();
+        PrecioLabel = new javax.swing.JLabel();
+        CategoriaLabel = new javax.swing.JLabel();
+        BebidaButton = new javax.swing.JRadioButton();
+        PlatoButton = new javax.swing.JRadioButton();
+        PlatoFrame = new javax.swing.JInternalFrame();
+        PesoField = new javax.swing.JTextField();
+        CaloriasLabel = new javax.swing.JLabel();
+        AptoCeliacosLabel = new javax.swing.JLabel();
+        AptoVeganosLabel = new javax.swing.JLabel();
+        PesoLabel = new javax.swing.JLabel();
+        ApCeCheckBox = new javax.swing.JCheckBox();
+        ApVeCheckBox = new javax.swing.JCheckBox();
+        CaloriasField = new javax.swing.JTextField();
+        BebidaFrame = new javax.swing.JInternalFrame();
+        GradAlcField = new javax.swing.JTextField();
+        TamField = new javax.swing.JTextField();
+        GradAlcLabel = new javax.swing.JLabel();
+        TamLabel = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -52,23 +80,136 @@ public class ItemsMenu extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gestión de ItemsMenu");
 
-        jTextField1.setText("jTextField1");
+        IDField.setText("jTextField1");
 
-        jTextField2.setText("jTextField1");
+        NombreField.setText("jTextField1");
 
-        jTextField3.setText("jTextField1");
+        DescripcionField.setText("jTextField1");
 
-        jTextField4.setText("jTextField1");
+        PrecioField.setText("jTextField1");
 
-        jLabel1.setText("ID");
+        IDLabel.setText("ID");
 
-        jLabel2.setText("Nombre");
+        NombreLabel.setText("Nombre");
 
-        jLabel3.setText("Descripcion");
+        DescripcionLabel.setText("Descripcion");
 
-        jLabel4.setText("Precio");
+        PrecioLabel.setText("Precio");
 
-        jLabel5.setText("Categoria");
+        CategoriaLabel.setText("Categoria");
+
+        buttonGroup1.add(BebidaButton);
+        BebidaButton.setText("Bebida");
+        BebidaButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BebidaButtonActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(PlatoButton);
+        PlatoButton.setText("Plato");
+        PlatoButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PlatoButtonActionPerformed(evt);
+            }
+        });
+
+        PlatoFrame.setTitle("Plato");
+        PlatoFrame.setVisible(true);
+
+        PesoField.setText("jTextField1");
+
+        CaloriasLabel.setText("Calorias");
+
+        AptoCeliacosLabel.setText("Apto Celiacos");
+
+        AptoVeganosLabel.setText("Apto Veganos");
+
+        PesoLabel.setText("Peso");
+
+        CaloriasField.setText("jTextField1");
+
+        javax.swing.GroupLayout PlatoFrameLayout = new javax.swing.GroupLayout(PlatoFrame.getContentPane());
+        PlatoFrame.getContentPane().setLayout(PlatoFrameLayout);
+        PlatoFrameLayout.setHorizontalGroup(
+            PlatoFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PlatoFrameLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(PlatoFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(CaloriasLabel)
+                    .addComponent(AptoCeliacosLabel)
+                    .addComponent(AptoVeganosLabel)
+                    .addComponent(PesoLabel))
+                .addGap(42, 42, 42)
+                .addGroup(PlatoFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(PesoField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(PlatoFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(CaloriasField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(ApCeCheckBox)
+                        .addComponent(ApVeCheckBox)))
+                .addContainerGap(8, Short.MAX_VALUE))
+        );
+        PlatoFrameLayout.setVerticalGroup(
+            PlatoFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PlatoFrameLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(PlatoFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(CaloriasField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CaloriasLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(PlatoFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(AptoCeliacosLabel)
+                    .addComponent(ApCeCheckBox))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(PlatoFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(AptoVeganosLabel)
+                    .addComponent(ApVeCheckBox))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(PlatoFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(PesoField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(PesoLabel))
+                .addContainerGap(30, Short.MAX_VALUE))
+        );
+
+        BebidaFrame.setTitle("Bebida");
+        BebidaFrame.setVisible(true);
+
+        GradAlcField.setText("jTextField1");
+
+        TamField.setText("jTextField1");
+
+        GradAlcLabel.setText("Graduacion Alcoholica");
+
+        TamLabel.setText("Tamaño");
+
+        javax.swing.GroupLayout BebidaFrameLayout = new javax.swing.GroupLayout(BebidaFrame.getContentPane());
+        BebidaFrame.getContentPane().setLayout(BebidaFrameLayout);
+        BebidaFrameLayout.setHorizontalGroup(
+            BebidaFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BebidaFrameLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(BebidaFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(GradAlcLabel)
+                    .addComponent(TamLabel))
+                .addGap(42, 42, 42)
+                .addGroup(BebidaFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(GradAlcField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TamField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+        BebidaFrameLayout.setVerticalGroup(
+            BebidaFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(BebidaFrameLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(BebidaFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(GradAlcField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(GradAlcLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(BebidaFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TamField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TamLabel))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -77,45 +218,73 @@ public class ItemsMenu extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5))
-                .addGap(42, 42, 42)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(219, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(IDLabel)
+                            .addComponent(NombreLabel)
+                            .addComponent(DescripcionLabel)
+                            .addComponent(PrecioLabel)
+                            .addComponent(CategoriaLabel))
+                        .addGap(42, 42, 42)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(IDField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(NombreField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(DescripcionField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(PrecioField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(PlatoButton)
+                                .addGap(22, 22, 22)
+                                .addComponent(BebidaButton))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(PlatoFrame, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(BebidaFrame, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                    .addComponent(IDField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(IDLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
+                    .addComponent(NombreField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(NombreLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
+                    .addComponent(DescripcionField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(DescripcionLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
+                    .addComponent(PrecioField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(PrecioLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel5)
-                .addContainerGap(166, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(CategoriaLabel)
+                    .addComponent(BebidaButton)
+                    .addComponent(PlatoButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(BebidaFrame)
+                    .addComponent(PlatoFrame))
+                .addContainerGap(56, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    
+    private void BebidaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BebidaButtonActionPerformed
+        DisEnableBebidaFrame(true);
+        DisEnablePlatoFrame(false);
+        
+    }//GEN-LAST:event_BebidaButtonActionPerformed
+
+    private void PlatoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PlatoButtonActionPerformed
+        DisEnableBebidaFrame(false);
+        DisEnablePlatoFrame(true);
+    }//GEN-LAST:event_PlatoButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -153,16 +322,32 @@ public class ItemsMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox ApCeCheckBox;
+    private javax.swing.JCheckBox ApVeCheckBox;
+    private javax.swing.JLabel AptoCeliacosLabel;
+    private javax.swing.JLabel AptoVeganosLabel;
+    private javax.swing.JRadioButton BebidaButton;
+    private javax.swing.JInternalFrame BebidaFrame;
+    private javax.swing.JTextField CaloriasField;
+    private javax.swing.JLabel CaloriasLabel;
+    private javax.swing.JLabel CategoriaLabel;
+    private javax.swing.JTextField DescripcionField;
+    private javax.swing.JLabel DescripcionLabel;
+    private javax.swing.JTextField GradAlcField;
+    private javax.swing.JLabel GradAlcLabel;
+    private javax.swing.JTextField IDField;
+    private javax.swing.JLabel IDLabel;
+    private javax.swing.JTextField NombreField;
+    private javax.swing.JLabel NombreLabel;
+    private javax.swing.JTextField PesoField;
+    private javax.swing.JLabel PesoLabel;
+    private javax.swing.JRadioButton PlatoButton;
+    private javax.swing.JInternalFrame PlatoFrame;
+    private javax.swing.JTextField PrecioField;
+    private javax.swing.JLabel PrecioLabel;
+    private javax.swing.JTextField TamField;
+    private javax.swing.JLabel TamLabel;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     // End of variables declaration//GEN-END:variables
 }
