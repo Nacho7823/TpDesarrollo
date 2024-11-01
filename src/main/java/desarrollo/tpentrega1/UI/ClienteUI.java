@@ -3,10 +3,10 @@ package desarrollo.tpentrega1.UI;
 import desarrollo.tpentrega1.entidades.Cliente;
 import desarrollo.tpentrega1.entidades.Coordenada;
 import desarrollo.tpentrega1.controllers.ClienteController;
+import java.awt.Color;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 public class ClienteUI extends JPanel {
     private JTextField txtId, txtNombre, txtCuit, txtEmail, txtDireccion, txtLatitud, txtLongitud;
@@ -41,41 +41,44 @@ public class ClienteUI extends JPanel {
 
         // Inicializar tabla
         tableClientes = new JTable();
-        actualizarTabla();
+        actualizarTabla(null);
 
         JScrollPane scrollPane = new JScrollPane(tableClientes);
 
-        // Layout de la ventana principal usando GroupLayout
+        this.setBackground(Color.cyan.darker());
+       
         GroupLayout layout = new GroupLayout(this);
         this.setLayout(layout);
         layout.setAutoCreateGaps(true);
         layout.setAutoCreateContainerGaps(true);
 
-        layout.setHorizontalGroup(layout.createSequentialGroup()
-            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                .addComponent(lblId)
-                .addComponent(lblNombre)
-                .addComponent(lblCuit)
-                .addComponent(lblEmail)
-                .addComponent(lblDireccion)
-                .addComponent(lblLatitud)
-                .addComponent(lblLongitud))
-            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                .addComponent(txtId)
-                .addComponent(txtNombre)
-                .addComponent(txtCuit)
-                .addComponent(txtEmail)
-                .addComponent(txtDireccion)
-                .addComponent(txtLatitud)
-                .addComponent(txtLongitud)
-                .addGroup(layout.createSequentialGroup()
-                    .addComponent(btnCrear)
-                    .addComponent(btnBuscar)
-                    .addComponent(btnEditar)
-                    .addComponent(btnEliminar)))
+       layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addComponent(lblId)
+                    .addComponent(lblNombre)
+                    .addComponent(lblCuit)
+                    .addComponent(lblEmail)
+                    .addComponent(lblDireccion)
+                    .addComponent(lblLatitud)
+                    .addComponent(lblLongitud))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addComponent(txtId)
+                    .addComponent(txtNombre)
+                    .addComponent(txtCuit)
+                    .addComponent(txtEmail)
+                    .addComponent(txtDireccion)
+                    .addComponent(txtLatitud)
+                    .addComponent(txtLongitud)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnCrear)
+                        .addComponent(btnBuscar)
+                        .addComponent(btnEditar)
+                        .addComponent(btnEliminar))))
             .addComponent(scrollPane)
         );
 
+        // Configuración de los grupos verticales
         layout.setVerticalGroup(layout.createSequentialGroup()
             .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                 .addComponent(lblId)
@@ -113,6 +116,7 @@ public class ClienteUI extends JPanel {
         btnCrear.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String id=txtId.getText();
                 String nombre = txtNombre.getText();
                 String cuit = txtCuit.getText();
                 String email = txtEmail.getText();
@@ -121,8 +125,16 @@ public class ClienteUI extends JPanel {
                 double lng = Double.parseDouble(txtLongitud.getText());
 
                 Coordenada coordenada = new Coordenada(lat, lng);
-                clienteController.crearNuevoCliente(nombre, cuit, email, direccion, coordenada);
-                actualizarTabla();
+                clienteController.crearNuevoCliente(id,nombre, cuit, email, direccion, coordenada);
+                actualizarTabla(clienteController.obtenerListaClientes().getLast());
+                txtId.setText("");
+                txtNombre.setText("");
+                txtCuit.setText("");
+                txtEmail.setText("");
+                txtDireccion.setText("");
+                txtLatitud.setText("");
+                txtLongitud.setText("");
+                
             }
         });
 
@@ -132,15 +144,23 @@ public class ClienteUI extends JPanel {
                 String id = txtId.getText();
                 Cliente cliente = clienteController.buscarCliente(Integer.parseInt(id));
                 if (cliente != null) {
-                    txtNombre.setText(cliente.getNombre());
+                    actualizarTabla(cliente);
+                    /*txtNombre.setText(cliente.getNombre());
                     txtCuit.setText(cliente.getCuit());
                     txtEmail.setText(cliente.getEmail());
                     txtDireccion.setText(cliente.getDireccion());
                     txtLatitud.setText(String.valueOf(cliente.getCoordenada().getLat()));
-                    txtLongitud.setText(String.valueOf(cliente.getCoordenada().getLng()));
+                    txtLongitud.setText(String.valueOf(cliente.getCoordenada().getLng()));*/
                 } else {
                     JOptionPane.showMessageDialog(null, "Cliente no encontrado.");
                 }
+                txtId.setText("");
+                txtNombre.setText("");
+                txtCuit.setText("");
+                txtEmail.setText("");
+                txtDireccion.setText("");
+                txtLatitud.setText("");
+                txtLongitud.setText("");
             }
         });
 
@@ -157,7 +177,14 @@ public class ClienteUI extends JPanel {
 
                 Coordenada coordenada = new Coordenada(lat, lng);
                 clienteController.modificarCliente(id, nombre, cuit, email, direccion, coordenada);
-                actualizarTabla();
+                actualizarTabla(clienteController.buscarCliente(Integer.parseInt(id)));
+                txtId.setText("");
+                txtNombre.setText("");
+                txtCuit.setText("");
+                txtEmail.setText("");
+                txtDireccion.setText("");
+                txtLatitud.setText("");
+                txtLongitud.setText("");
             }
         });
 
@@ -165,26 +192,41 @@ public class ClienteUI extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String id = txtId.getText();
+                actualizarTabla(clienteController.buscarCliente(Integer.parseInt(id)));
                 clienteController.eliminarCliente(Integer.parseInt(id));
-                actualizarTabla();
+            txtId.setText("");
+                txtNombre.setText("");
+                txtCuit.setText("");
+                txtEmail.setText("");
+                txtDireccion.setText("");
+                txtLatitud.setText("");
+                txtLongitud.setText("");
             }
+           
         });
     }
 
-    private void actualizarTabla() {
-        List<Cliente> clientes = clienteController.obtenerListaClientes();
+    private void actualizarTabla(Cliente c) {
         String[] columnNames = {"ID", "Nombre", "Cuit", "Email", "Dirección", "Latitud", "Longitud"};
-        Object[][] data = new Object[clientes.size()][7];
-        for (int i = 0; i < clientes.size(); i++) {
-            Cliente c = clientes.get(i);
-            data[i][0] = c.getId();
-            data[i][1] = c.getNombre();
-            data[i][2] = c.getCuit();
-            data[i][3] = c.getEmail();
-            data[i][4] = c.getDireccion();
-            data[i][5] = c.getCoordenada().getLat();
-            data[i][6] = c.getCoordenada().getLng();
+        Object[][] data= new Object[1][7];
+        if(c==null){
+            data[0][0] = " ";
+            data[0][1] = " ";
+            data[0][2] = " ";
+            data[0][3] = " ";
+            data[0][4] = " ";
+            data[0][5] = " ";
+            data[0][6] = " ";
         }
+        else {
+            data[0][0] = c.getId();
+            data[0][1] = c.getNombre();
+            data[0][2] = c.getCuit();
+            data[0][3] = c.getEmail();
+            data[0][4] = c.getDireccion();
+            data[0][5] = c.getCoordenada().getLat();
+            data[0][6] = c.getCoordenada().getLng();
+                }
         tableClientes.setModel(new javax.swing.table.DefaultTableModel(data, columnNames));
     }
 }

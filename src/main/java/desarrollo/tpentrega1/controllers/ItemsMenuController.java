@@ -5,16 +5,23 @@
 package desarrollo.tpentrega1.controllers;
 
 import desarrollo.tpentrega1.Memory.ItemsMenuMemory;
-import desarrollo.tpentrega1.dao.ItemsMenuDAO;
 import desarrollo.tpentrega1.entidades.ItemMenu;
 import desarrollo.tpentrega1.entidades.Plato;
 import desarrollo.tpentrega1.entidades.Bebida;
+import java.util.List;
 import java.util.UUID;
 
 public class ItemsMenuController {
 
     private ItemsMenuMemory itemMenuDAO = new ItemsMenuMemory();
 
+    public ItemsMenuController(ItemsMenuMemory itemsMenuMemory){
+        this.itemMenuDAO=itemsMenuMemory;
+    }
+    public List<ItemMenu> obtenerListaItemsMenu(){
+        return itemMenuDAO.getItemsMenu();
+    }
+    
     // Mostrar lista de todos los ítems de menú
     public void mostrarListaItemsMenu() {
         System.out.println("Lista de Ítems de Menú:");

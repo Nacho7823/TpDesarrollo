@@ -9,10 +9,7 @@ import desarrollo.tpentrega1.Memory.VendedorMemory;
 import desarrollo.tpentrega1.entidades.Coordenada;
 import java.util.List;
 import java.util.UUID;
-/**
- *
- * @author florh
- */
+
 public class VendedorController {
     private VendedorMemory vendedorDAO = new VendedorMemory();
 
@@ -27,8 +24,8 @@ public class VendedorController {
     }
 
     // Crear un nuevo vendedor con generación automática de ID
-    public void crearNuevoVendedor(String nombre, String direccion, Coordenada coordenada) {
-        String id = UUID.randomUUID().toString(); // Generación automática de ID
+    public void crearNuevoVendedor(String id,String nombre, String direccion, Coordenada coordenada) {
+        //String id = UUID.randomUUID().toString(); // Generación automática de ID
         Vendedor nuevoVendedor = new Vendedor(id, nombre, direccion, coordenada);
         vendedorDAO.crearVendedor(nuevoVendedor);
     }

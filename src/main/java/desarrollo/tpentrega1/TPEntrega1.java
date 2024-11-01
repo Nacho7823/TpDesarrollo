@@ -282,18 +282,15 @@
 package desarrollo.tpentrega1;
 
 import desarrollo.tpentrega1.Memory.ClienteMemory;
+import desarrollo.tpentrega1.Memory.ItemsMenuMemory;
 import desarrollo.tpentrega1.Memory.ItemsPedidoMemory;
 import desarrollo.tpentrega1.Memory.PedidoMemory;
 import desarrollo.tpentrega1.Memory.VendedorMemory;
 import desarrollo.tpentrega1.controllers.ClienteController;
 import desarrollo.tpentrega1.controllers.PedidoController;
 import desarrollo.tpentrega1.controllers.VendedorController;
-import desarrollo.tpentrega1.UI.ClienteUI;
-import desarrollo.tpentrega1.UI.PedidosUI;
-import desarrollo.tpentrega1.UI.VendedorUI;
 import desarrollo.tpentrega1.UI.MenuGeneral;
-import desarrollo.tpentrega1.entidades.Cliente;
-import desarrollo.tpentrega1.entidades.Vendedor;
+import desarrollo.tpentrega1.controllers.ItemsMenuController;
 import desarrollo.tpentrega1.entidades.Coordenada;
 import desarrollo.tpentrega1.entidades.ItemMenu;
 import desarrollo.tpentrega1.entidades.PedidoDetalle;
@@ -309,24 +306,26 @@ public class TPEntrega1 {
         ClienteMemory clienteMemory = new ClienteMemory();
         VendedorMemory vendedorMemory = new VendedorMemory();
         PedidoMemory pedidoMemory = new PedidoMemory();
+        ItemsMenuMemory itemsMenuMemory= new ItemsMenuMemory();
 
         // Crear instancias de controladores
         ClienteController clienteController = new ClienteController(clienteMemory);
         VendedorController vendedorController = new VendedorController(vendedorMemory);
         PedidoController pedidoController = new PedidoController(pedidoMemory);
-
+        ItemsMenuController itemsMenuController= new ItemsMenuController(itemsMenuMemory);
+        
         // Cargar datos de prueba para clientes
-        clienteController.crearNuevoCliente("Juan Pérez", "20-12345678-9", "juan@example.com", "Calle Falsa 123", new Coordenada(-34.603722, -58.381592));
-        clienteController.crearNuevoCliente("María Gómez", "27-87654321-0", "maria@example.com", "Avenida Siempre Viva 742", new Coordenada(-34.609722, -58.392592));
+        clienteController.crearNuevoCliente("2","Juan Pérez", "20-12345678-9", "juan@example.com", "Calle Falsa 123", new Coordenada(-34.603722, -58.381592));
+        clienteController.crearNuevoCliente("3","María Gómez", "27-87654321-0", "maria@example.com", "Avenida Siempre Viva 742", new Coordenada(-34.609722, -58.392592));
 
         // Cargar datos de prueba para vendedores
-        vendedorController.crearNuevoVendedor("Supermercado ABC", "Av. Corrientes 1500", new Coordenada(-34.603532, -58.383222));
-        vendedorController.crearNuevoVendedor("Verdulería El Tomate", "Calle Libertad 2300", new Coordenada(-34.606732, -58.384752));
+        vendedorController.crearNuevoVendedor("2","Supermercado ABC", "Av. Corrientes 1500", new Coordenada(-34.603532, -58.383222));
+        vendedorController.crearNuevoVendedor("3","Verdulería El Tomate", "Calle Libertad 2300", new Coordenada(-34.606732, -58.384752));
 
 
         ItemsPedidoMemory itemsPedidoMemory = new ItemsPedidoMemory();
         itemsPedidoMemory.setItems(vendedorController.obtenerListaVendedores().get(0).getItemsMenu());
-
+        
         itemsPedidoMemory.buscarBebidas();
         itemsPedidoMemory.buscarPrecio(250);
         List<ItemMenu> items = itemsPedidoMemory.getItems();
@@ -343,7 +342,7 @@ public class TPEntrega1 {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                MenuGeneral menu= new MenuGeneral(clienteController,vendedorController);
+                MenuGeneral menu= new MenuGeneral(clienteController,vendedorController,itemsMenuController);
                 menu.setVisible(true);
 
             }

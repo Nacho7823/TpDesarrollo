@@ -8,6 +8,11 @@ import java.util.List;
 public class ItemsMenuMemory implements ItemsMenuDAO {
     private static List<ItemMenu> itemsMenu = new ArrayList<>();
 
+    
+    public static List<ItemMenu> getItemsMenu() {
+        return itemsMenu;
+    }
+    
     @Override
     public void listarItemsMenu() {
         for (ItemMenu item : itemsMenu) {

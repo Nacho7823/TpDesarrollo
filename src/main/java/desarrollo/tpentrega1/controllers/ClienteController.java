@@ -29,8 +29,8 @@ public class ClienteController {
     }
 
     // Crear un nuevo cliente con generación automática de ID
-    public void crearNuevoCliente(String nombre, String cuit, String email, String direccion, Coordenada coordenada) {
-        String id = UUID.randomUUID().toString(); // Generación automática de ID
+    public void crearNuevoCliente(String id,String nombre, String cuit, String email, String direccion, Coordenada coordenada) {
+        //String id = UUID.randomUUID().toString(); // Generación automática de ID
         Cliente nuevoCliente = new Cliente(id, nombre, cuit, email, direccion, coordenada);
         clienteDAO.crearCliente(nuevoCliente);
     }
