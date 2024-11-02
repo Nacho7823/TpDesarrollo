@@ -1,13 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package desarrollo.tpentrega1.UI;
 
-/**
- *
- * @author gui
- */
 public class ItemsMenu extends javax.swing.JFrame {
 
     /**
@@ -79,6 +72,7 @@ public class ItemsMenu extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gestión de ItemsMenu");
+        setBackground(new java.awt.Color(130, 217, 217));
 
         IDField.setText("jTextField1");
 

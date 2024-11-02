@@ -41,7 +41,7 @@ public class VendedorUI extends JPanel {
 
         JScrollPane scrollPane = new JScrollPane(tableVendedores);
  
-        this.setBackground(Color.cyan.darker());
+        this.setBackground(new Color(130, 217, 217));
         // Layout de la ventana principal usando GroupLayout
         GroupLayout layout = new GroupLayout(this);
         this.setLayout(layout);
