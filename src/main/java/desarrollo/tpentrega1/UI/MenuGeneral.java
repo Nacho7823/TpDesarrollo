@@ -7,7 +7,7 @@ import javax.swing.JTabbedPane;
 public class MenuGeneral extends JFrame{
     public MenuGeneral(ClienteController clienteController,VendedorController vendedorController,ItemsMenuController itemsMenuController, PedidoController pedidoController){
         setTitle("Menu general");
-        setSize(600,400);
+        setSize(800,600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JTabbedPane tabbedPane = new JTabbedPane();

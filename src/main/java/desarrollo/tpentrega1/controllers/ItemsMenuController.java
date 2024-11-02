@@ -29,6 +29,9 @@ public class ItemsMenuController {
     }
 
     // Crear un nuevo plato
+    
+    
+    
     public void crearNuevoPlato(String id,String nombre, String descripcion, double precio, String categoria,
                                 double calorias, boolean aptoCeliaco, boolean aptoVegano, double peso) {
         //String id = UUID.randomUUID().toString(); // Generación automática de ID
@@ -57,6 +60,14 @@ public class ItemsMenuController {
         } else {
             System.out.println("Item de menú no encontrado para modificar.");
         }
+    }
+    
+    public void modificarPlato(Plato plato) {
+        itemMenuDAO.actualizarItemsMenu(plato);
+    }
+    
+    public void modificarBebida(Bebida bebida) {
+        itemMenuDAO.actualizarItemsMenu(bebida);
     }
 
     // Eliminar un ítem de menú por ID
