@@ -1,6 +1,8 @@
 
 package desarrollo.tpentrega1.dao;
+import desarrollo.tpentrega1.entidades.ItemMenu;
 import desarrollo.tpentrega1.entidades.Pedido;
+import java.util.List;
 
 public interface PedidoDAO {
     public void listarPedido(Pedido pedido);
@@ -8,4 +10,6 @@ public interface PedidoDAO {
     public void actualizarPedido(Pedido pedido);
     public void eliminarPedido(int id);
     public Pedido buscarPedido(int id);
+    public void addItem(ItemMenu item, Pedido p);
+    public List<ItemMenu> getItems(Pedido p);
 }

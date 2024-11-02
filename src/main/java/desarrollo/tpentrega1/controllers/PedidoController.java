@@ -6,6 +6,7 @@ package desarrollo.tpentrega1.controllers;
 
 import desarrollo.tpentrega1.Memory.PedidoMemory;
 import desarrollo.tpentrega1.entidades.Cliente;
+import desarrollo.tpentrega1.entidades.ItemMenu;
 import desarrollo.tpentrega1.entidades.Pedido;
 import desarrollo.tpentrega1.entidades.PedidoDetalle;
 import desarrollo.tpentrega1.entidades.Vendedor;
@@ -74,5 +75,13 @@ public class PedidoController {
 
     public List<Pedido> obtenerListaPedidos() {
         return pedidoDAO.getPedidos();
+    }
+    
+    public void addItem(ItemMenu item, Pedido p){
+        pedidoDAO.addItem(item, p);
+    }
+    
+    public List<ItemMenu> getItems(Pedido p){
+        return pedidoDAO.getItems(p);
     }
 }

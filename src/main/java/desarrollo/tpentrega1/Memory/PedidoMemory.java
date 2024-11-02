@@ -2,6 +2,7 @@
 package desarrollo.tpentrega1.Memory;
 
 import desarrollo.tpentrega1.dao.PedidoDAO;
+import desarrollo.tpentrega1.entidades.ItemMenu;
 import desarrollo.tpentrega1.entidades.Pedido;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,4 +62,11 @@ public class PedidoMemory implements PedidoDAO{
         return null;  
     }
     
+    public void addItem(ItemMenu item, Pedido p){
+        p.addItem(item);
+    }
+    
+    public List<ItemMenu> getItems(Pedido p){
+        return p.getItems();
+    }
 }

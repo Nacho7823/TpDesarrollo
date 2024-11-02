@@ -17,4 +17,7 @@ public class PedidoDetalle {
         this.items = items;
     }
 
+    public void addItem(ItemMenu item){
+        this.items.add(item);
+    }
 }

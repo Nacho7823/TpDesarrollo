@@ -83,7 +83,15 @@ public class Pedido {
     public double getTotal() {
         return total;
     }
-
+    
+    public Vendedor getVendedor(){
+        return this.vendedor;
+    }
+    
+    public FormaDePago getFormaDePago(){
+        return this.formaDePago;
+    }
+    
     public PedidoDetalle getPedidoDetalle() {
         return pedidoDetalle;
     }
@@ -92,6 +100,14 @@ public class Pedido {
         return cliente;
     }
 
+    public List<ItemMenu> getItems(){
+        return this.pedidoDetalle.getItems();
+    }
+    
+    public void addItem(ItemMenu item){
+        this.pedidoDetalle.addItem(item);
+    }
+    
     public Object getId() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
