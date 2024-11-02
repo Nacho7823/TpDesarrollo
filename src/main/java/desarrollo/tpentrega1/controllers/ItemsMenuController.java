@@ -29,17 +29,17 @@ public class ItemsMenuController {
     }
 
     // Crear un nuevo plato
-    public void crearNuevoPlato(String nombre, String descripcion, double precio, String categoria,
+    public void crearNuevoPlato(String id,String nombre, String descripcion, double precio, String categoria,
                                 double calorias, boolean aptoCeliaco, boolean aptoVegano, double peso) {
-        String id = UUID.randomUUID().toString(); // Generación automática de ID
+        //String id = UUID.randomUUID().toString(); // Generación automática de ID
         Plato nuevoPlato = new Plato(id, nombre, descripcion, precio, categoria, calorias, aptoCeliaco, aptoVegano, peso);
         itemMenuDAO.crearItemsMenu(nuevoPlato);
     }
 
     // Crear una nueva bebida
-    public void crearNuevaBebida(String nombre, String descripcion, double precio, String categoria,
+    public void crearNuevaBebida(String id,String nombre, String descripcion, double precio, String categoria,
                                  double tamaño, double graduacionAlcoholica) {
-        String id = UUID.randomUUID().toString(); // Generación automática de ID
+        //String id = UUID.randomUUID().toString(); // Generación automática de ID
         Bebida nuevaBebida = new Bebida(id, nombre, descripcion, precio, categoria, tamaño, graduacionAlcoholica);
         itemMenuDAO.crearItemsMenu(nuevaBebida);
     }
@@ -66,12 +66,14 @@ public class ItemsMenuController {
     }
 
     // Buscar un ítem de menú por ID
-    public void buscarItemsMenu(String id) {
+    public ItemMenu buscarItemsMenu(String id) {
         ItemMenu item = itemMenuDAO.buscarItemsMenu(id);
         if (item != null) {
             System.out.println("Item de menú encontrado: " + item.getNombre());
+                    return item;
         } else {
             System.out.println("Item de menú no encontrado con ID: " + id);
+                    return null;
         }
     }
 }

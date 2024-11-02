@@ -322,6 +322,8 @@ public class TPEntrega1 {
         vendedorController.crearNuevoVendedor("2","Supermercado ABC", "Av. Corrientes 1500", new Coordenada(-34.603532, -58.383222));
         vendedorController.crearNuevoVendedor("3","Verdulería El Tomate", "Calle Libertad 2300", new Coordenada(-34.606732, -58.384752));
 
+        itemsMenuController.crearNuevaBebida("1","Heineken", "Cerveza", 2300, "Bebida", 70, 2.0);
+        itemsMenuController.crearNuevoPlato("2", "Guaymallen", "Alfajor", 700, "Plato", 200, false, false, 120);
 
         ItemsPedidoMemory itemsPedidoMemory = new ItemsPedidoMemory();
         itemsPedidoMemory.setItems(vendedorController.obtenerListaVendedores().get(0).getItemsMenu());

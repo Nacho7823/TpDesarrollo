@@ -1,11 +1,12 @@
-
 package desarrollo.tpentrega1.UI;
+
 import desarrollo.tpentrega1.controllers.ItemsMenuController;
 import desarrollo.tpentrega1.entidades.Bebida;
 import desarrollo.tpentrega1.entidades.ItemMenu;
 import desarrollo.tpentrega1.entidades.Plato;
 import java.awt.Color;
-import java.util.List;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public class ItemMenuUI extends JPanel{
@@ -36,9 +37,10 @@ public class ItemMenuUI extends JPanel{
         btnEliminar= new JButton("Eliminar");
         
         tableBebida= new JTable();
+        tableBebida.setName("tableBebida");
         tablePlato= new JTable();
-       actualizarTabla(tableBebida);
-      actualizarTabla(tablePlato);
+       actualizarTabla(tableBebida,null);
+       actualizarTabla(tablePlato,null);
         
       JScrollPane scrollPaneBebida = new JScrollPane(tableBebida);
       JScrollPane scrollPanePlato = new JScrollPane(tablePlato);
@@ -50,46 +52,192 @@ public class ItemMenuUI extends JPanel{
       layout.setAutoCreateGaps(true);
       layout.setAutoCreateContainerGaps(true);
       
-     // layout.setHorizontalGroup(layout.createSequentialGroup().addGroup())
+layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+        .addGroup(layout.createSequentialGroup()
+            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addComponent(lblId)
+                .addComponent(lblNombre)
+                .addComponent(lblDescripcion)
+                .addComponent(lblPrecio)
+                .addComponent(lblCategoria))
+            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addComponent(txtId)
+                .addComponent(txtNombre)
+                .addComponent(txtDescripcion)
+                .addComponent(txtPrecio)
+                .addGroup(layout.createSequentialGroup()
+                    .addComponent(btnCrear)
+                    .addComponent(btnBuscar)
+                    .addComponent(btnEditar)
+                    .addComponent(btnEliminar))))
+        .addComponent(scrollPaneBebida)
+        .addComponent(scrollPanePlato)
+);
+
+layout.setVerticalGroup(
+    layout.createSequentialGroup()
+        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+            .addComponent(lblId)
+            .addComponent(txtId))
+        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+            .addComponent(lblNombre)
+            .addComponent(txtNombre))
+        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+            .addComponent(lblDescripcion)
+            .addComponent(txtDescripcion))
+        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+            .addComponent(lblPrecio)
+            .addComponent(txtPrecio))
+        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+            .addComponent(lblCategoria))
+        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+            .addComponent(btnCrear)
+            .addComponent(btnBuscar)
+            .addComponent(btnEditar)
+            .addComponent(btnEliminar))
+        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED) // Espacio antes de las tablas
+        .addComponent(scrollPaneBebida)
+        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED) // Espacio entre tablas
+        .addComponent(scrollPanePlato)
+);
+
+
+        configurarAcciones();
+    }
+private void configurarAcciones() {
+        btnCrear.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String id=txtId.getText();
+                String nombre = txtNombre.getText();
+                String descripcion = txtDescripcion.getText();
+                String precio = txtPrecio.getText();
+                
+                
+                txtId.setText("");
+                txtNombre.setText("");
+                txtDescripcion.setText("");
+                txtPrecio.setText("");
+                
+            }
+        });
+
+        btnBuscar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String id = txtId.getText();
+                ItemMenu itemMenu = itemsMenuController.buscarItemsMenu(id);
+                if (itemMenu != null) {
+                    ItemMenu item=itemsMenuController.buscarItemsMenu(id);
+                if(item instanceof Bebida){ actualizarTabla(tableBebida,item); actualizarTabla(tablePlato,null);}
+                else{actualizarTabla(tableBebida,null); actualizarTabla(tablePlato,item);}
+                } else {
+                    JOptionPane.showMessageDialog(null, "Item no encontrado.");
+                    actualizarTabla(tablePlato,null);
+                    actualizarTabla(tableBebida,null);
+                }
+                txtId.setText("");
+                txtNombre.setText("");
+                txtDescripcion.setText("");
+                txtPrecio.setText("");
+            }
+        });
+
+        btnEditar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String id = txtId.getText();
+                String nombre = txtNombre.getText();
+                String descripcion = txtDescripcion.getText();
+                String precio = txtPrecio.getText();
+
+                ItemMenu item=itemsMenuController.buscarItemsMenu(id);
+                if(item instanceof Bebida){ actualizarTabla(tableBebida,item); actualizarTabla(tablePlato,null);}
+                else{actualizarTabla(tableBebida,null); actualizarTabla(tablePlato,item);}
+                txtId.setText("");
+                txtNombre.setText("");
+                txtDescripcion.setText("");
+                txtPrecio.setText("");
+            }
+        });
+
+        btnEliminar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String id = txtId.getText();
+                ItemMenu item=itemsMenuController.buscarItemsMenu(id);
+                if(item instanceof Bebida){actualizarTabla(tablePlato,null); actualizarTabla(tableBebida,item);}
+                else{actualizarTabla(tableBebida,null); actualizarTabla(tablePlato,item);}
+                itemsMenuController.eliminarItemsMenu(id);
+            txtId.setText("");
+                txtNombre.setText("");
+                txtDescripcion.setText("");
+                txtPrecio.setText("");
+            }
+           
+        });
     }
     
     
-   private void actualizarTabla(JTable tabla) {
-        List<ItemMenu> itemsMenu = itemsMenuController.obtenerListaItemsMenu();
-        if(tabla.toString().equals("tableBebida")){
-        String[] columnNamesBebida = {"ID", "Nombre", "Descripcion", "Precio",
+   private void actualizarTabla(JTable tabla,ItemMenu item) {
+        if(item==null){
+         if("tableBebida".equals(tabla.getName())){
+             String[] columnNamesBebida = {"ID", "Nombre", "Descripcion", "Precio",
             "Graduacion Alcoholica", "Tamaño"};
-        
-        Object[][] data = new Object[itemsMenu.size()][6];
-        for (int j = 0; j < itemsMenu.size(); j++) {
-            ItemMenu i = itemsMenu.get(j);
-            if(i instanceof Bebida){
-            data[j][0] = i.getId();
-            data[j][1] = i.getNombre();
-            data[j][2] = i.getDescripcion();
-            data[j][3] = i.getPrecio();
-            data[j][4] = ((Bebida)i).getGraduacionAlcoholica();
-            data[j][5] = ((Bebida)i).getTamaño();}
-        }
+       
+            Object[][] data = new Object[1][6];
+            data[0][0] = "";
+            data[0][1] = "";
+            data[0][2] = "";
+            data[0][3] = "";
+            data[0][4] = "";
+            data[0][5] = "";
         tabla.setModel(new javax.swing.table.DefaultTableModel(data, columnNamesBebida));
-        }
-        else{String[] columnNamesPlato = {"ID", "Nombre", "Descripcion", "Precio",
+         } 
+         else{
+             String[] columnNamesPlato = {"ID", "Nombre", "Descripcion", "Precio",
             "Calorias", "Apto Celiacos","Apto Veganos","Peso"};
         
-        Object[][] data = new Object[itemsMenu.size()][8];
-        for (int j = 0; j < itemsMenu.size(); j++) {
-            ItemMenu i = itemsMenu.get(j);
-            data[j][0] = i.getId();
-            data[j][1] = i.getNombre();
-            data[j][2] = i.getDescripcion();
-            data[j][3] = i.getPrecio();
-            data[j][4] = ((Plato)i).getCalorias();
-            data[j][5] = ((Plato)i).aptoCeliaco();
-            data[j][6] = ((Plato)i).aptoVegano();
-            data[j][7] = ((Plato)i).peso();
+        Object[][] data = new Object[1][8];
+            data[0][0] = "";
+            data[0][1] = "";
+            data[0][2] = "";
+            data[0][3] = "";
+            data[0][4] = "";
+            data[0][5] = "";
+            data[0][6] = "";
+            data[0][7] = "";
+        
+        tabla.setModel(new javax.swing.table.DefaultTableModel(data, columnNamesPlato));
+         }
         }
+        else if(item instanceof Bebida){
+        String[] columnNamesBebida = {"ID", "Nombre", "Descripcion", "Precio",
+            "Graduacion Alcoholica", "Tamaño"};
+       
+            Object[][] data = new Object[1][6];
+            data[0][0] = item.getId();
+            data[0][1] = item.getNombre();
+            data[0][2] = item.getDescripcion();
+            data[0][3] = item.getPrecio();
+            data[0][4] = ((Bebida)item).getGraduacionAlcoholica();
+            data[0][5] = ((Bebida)item).getTamaño();
+        tabla.setModel(new javax.swing.table.DefaultTableModel(data, columnNamesBebida));
+        }
+        else{
+        String[] columnNamesPlato = {"ID", "Nombre", "Descripcion", "Precio",
+            "Calorias", "Apto Celiacos","Apto Veganos","Peso"};
+        
+        Object[][] data = new Object[1][8];
+            data[0][0] = item.getId();
+            data[0][1] = item.getNombre();
+            data[0][2] = item.getDescripcion();
+            data[0][3] = item.getPrecio();
+            data[0][4] = ((Plato)item).getCalorias();
+            data[0][5] = ((Plato)item).aptoCeliaco();
+            data[0][6] = ((Plato)item).aptoVegano();
+            data[0][7] = ((Plato)item).peso();
+        
         tabla.setModel(new javax.swing.table.DefaultTableModel(data, columnNamesPlato));}
         
-        
-    }
-}
+        }}
