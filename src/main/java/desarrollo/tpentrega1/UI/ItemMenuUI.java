@@ -43,7 +43,7 @@ public class ItemMenuUI extends JPanel{
       JScrollPane scrollPaneBebida = new JScrollPane(tableBebida);
       JScrollPane scrollPanePlato = new JScrollPane(tablePlato);
       
-      this.setBackground(Color.cyan.darker());
+      this.setBackground(new Color(130, 217, 217));
      
       GroupLayout layout= new GroupLayout(this);
       this.setLayout(layout);
