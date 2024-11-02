@@ -152,6 +152,7 @@ public class ClienteUI extends JPanel {
                     txtLongitud.setText(String.valueOf(cliente.getCoordenada().getLng()));*/
                 } else {
                     JOptionPane.showMessageDialog(null, "Cliente no encontrado.");
+                    actualizarTabla(null);
                 }
                 txtId.setText("");
                 txtNombre.setText("");

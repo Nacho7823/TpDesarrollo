@@ -123,6 +123,7 @@ public class VendedorUI extends JPanel {
                     actualizarTabla(vendedor);
                 } else {
                     JOptionPane.showMessageDialog(null, "Vendedor no encontrado.");
+                    actualizarTabla(null);
                 }
             }
         });
