@@ -191,15 +191,6 @@ public class PedidoUI extends javax.swing.JPanel {
     Object[][] data = new Object[pedidos.size()][5];
     
     for (int i = 0; i < pedidos.size(); i++) {
-        // Aquí deberías obtener los datos reales de tu lista de pedidos
-        // Pedido c = pedidos.get(i);
-        // data[i][0] = c.getCliente();
-        // data[i][1] = c.getVendedor();
-        // data[i][2] = c.getId();
-        // data[i][3] = c.getFormaPago();
-        // data[i][4] = c.getEstado();
-
-        // Valores de ejemplo
         data[i][0] = "cliente";
         data[i][1] = "vendedor";
         data[i][2] = "" + i;

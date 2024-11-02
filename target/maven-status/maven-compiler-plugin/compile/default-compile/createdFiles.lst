@@ -1,4 +1,3 @@
-desarrollo\tpentrega1\UI\PedidosUI$3.class
 desarrollo\tpentrega1\UI\VendedorUI$1.class
 desarrollo\tpentrega1\UI\PedidoUI$1.class
 desarrollo\tpentrega1\dao\PedidoDAO.class
@@ -12,7 +11,6 @@ desarrollo\tpentrega1\UI\ItemsMenu$1.class
 desarrollo\tpentrega1\entidades\Coordenada.class
 desarrollo\tpentrega1\UI\ItemsMenu.class
 desarrollo\tpentrega1\UI\MenuGeneral.class
-desarrollo\tpentrega1\UI\PedidosUI$2.class
 desarrollo\tpentrega1\entidades\ItemMenu.class
 desarrollo\tpentrega1\exceptions\InvalidOrderException.class
 desarrollo\tpentrega1\UI\ClienteUI$3.class
@@ -24,10 +22,8 @@ desarrollo\tpentrega1\UI\PedidoUI$3.class
 desarrollo\tpentrega1\UI\ClienteUI$4.class
 desarrollo\tpentrega1\TPEntrega1$1.class
 desarrollo\tpentrega1\dao\ItemsPedidoDao.class
-desarrollo\tpentrega1\UI\PedidosUI.class
 desarrollo\tpentrega1\controllers\PedidoController.class
 desarrollo\tpentrega1\UI\ItemMenuUI.class
-desarrollo\tpentrega1\UI\PedidosUI$1.class
 desarrollo\tpentrega1\Memory\ClienteMemory.class
 desarrollo\tpentrega1\UI\ItemMenuUI$3.class
 desarrollo\tpentrega1\Memory\VendedorMemory.class

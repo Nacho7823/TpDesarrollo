@@ -44,9 +44,11 @@ private static List<Cliente> clientes = new ArrayList<>();
 
     @Override
     public void eliminarCliente(int id) {
+        boolean existe= clientes.stream().anyMatch(c ->c.getId().equals(String.valueOf(id)));
+        if(existe){
         clientes.removeIf(c -> c.getId().equals(String.valueOf(id)));
         System.out.println("Cliente eliminado con ID: " + id);
-    }
+    }}
 
     @Override
     public Cliente buscarCliente(int id) {

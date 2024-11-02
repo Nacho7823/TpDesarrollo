@@ -26,15 +26,41 @@ public class ItemMenuUI extends JPanel{
         JLabel lblPrecio= new JLabel("Precio:");
         JLabel lblCategoria= new JLabel("Categoria:");
         
+        //para comida
+        JLabel calorias= new JLabel("Calorias:");
+        JLabel peso= new JLabel("Peso:");
+        JLabel aptoCeliacosLabel= new JLabel("Apto Celiacos:");
+        JLabel aptoVeganosLabel= new JLabel("Apto Veganos:");
+        //para bebida
+        JLabel graduacion= new JLabel("Graduacion Alcoholica:");
+        JLabel tamaño= new JLabel("Tamaño:");
+        
         txtId= new JTextField(20);
         txtNombre= new JTextField(20);
         txtDescripcion= new JTextField(20);
         txtPrecio= new JTextField(20);
         
+       //para comida
+        JTextField txtCalorias= new JTextField(3);
+        JTextField txtPeso= new JTextField(3);
+        //para bebida
+        JTextField txtGraduacion= new JTextField(3);
+        JTextField txtTamaño= new JTextField(3);
+        
+        //para comida
+        JCheckBox ApCeCheckBox= new JCheckBox();
+        JCheckBox ApVeCheckBox= new JCheckBox();
+        
+        
         btnCrear= new JButton("Crear");
         btnBuscar= new JButton("Buscar");
         btnEditar= new JButton("Editar");
         btnEliminar= new JButton("Eliminar");
+        rbtnBebida= new JRadioButton("Bebida");
+        rbtnPlato= new JRadioButton("Plato");
+        ButtonGroup categorias= new ButtonGroup();
+        categorias.add(rbtnBebida);
+        categorias.add(rbtnPlato);
         
         tableBebida= new JTable();
         tableBebida.setName("tableBebida");
@@ -65,6 +91,7 @@ layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADI
                 .addComponent(txtNombre)
                 .addComponent(txtDescripcion)
                 .addComponent(txtPrecio)
+                .addGroup(layout.createSequentialGroup().addComponent(rbtnBebida).addComponent(rbtnPlato))
                 .addGroup(layout.createSequentialGroup()
                     .addComponent(btnCrear)
                     .addComponent(btnBuscar)
@@ -89,7 +116,9 @@ layout.setVerticalGroup(
             .addComponent(lblPrecio)
             .addComponent(txtPrecio))
         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-            .addComponent(lblCategoria))
+            .addComponent(lblCategoria)
+            .addComponent(rbtnBebida)
+            .addComponent(rbtnPlato))
         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
             .addComponent(btnCrear)
             .addComponent(btnBuscar)
@@ -104,6 +133,16 @@ layout.setVerticalGroup(
 
         configurarAcciones();
     }
+   /* private void DisEnablePlatoPanel(boolean b){
+        CaloriasField.setEnabled(b);
+        PesoField.setEnabled(b);
+        ApVeCheckBox.setEnabled(b);
+        ApCeCheckBox.setEnabled(b);
+    }
+    private void DisEnableBebidaPanel(boolean b){
+        GradAlcField.setEnabled(b);
+        TamField.setEnabled(b);
+    }*/
 private void configurarAcciones() {
         btnCrear.addActionListener(new ActionListener() {
             @Override

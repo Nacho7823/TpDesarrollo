@@ -40,9 +40,11 @@ public class ItemsMenuMemory implements ItemsMenuDAO {
 
     @Override
     public void eliminarItemsMenu(String id) {
+        boolean existe= itemsMenu.stream().anyMatch(c -> c.getId().equals(String.valueOf(id)));
+        if(existe){
         itemsMenu.removeIf(item -> item.getId().equals(id));
         System.out.println("Item de menú eliminado con ID: " + id);
-    }
+    }}
 
     @Override
     public ItemMenu buscarItemsMenu(String id) {
