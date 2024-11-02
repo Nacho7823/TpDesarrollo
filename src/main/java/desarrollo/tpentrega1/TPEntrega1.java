@@ -342,7 +342,7 @@ public class TPEntrega1 {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                MenuGeneral menu= new MenuGeneral(clienteController,vendedorController,itemsMenuController);
+                MenuGeneral menu= new MenuGeneral(clienteController,vendedorController,itemsMenuController, pedidoController);
                 menu.setVisible(true);
 
             }

@@ -1,13 +1,11 @@
 
 package desarrollo.tpentrega1.UI;
-import desarrollo.tpentrega1.controllers.ClienteController;
-import desarrollo.tpentrega1.controllers.ItemsMenuController;
-import desarrollo.tpentrega1.controllers.VendedorController;
+import desarrollo.tpentrega1.controllers.*;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 
 public class MenuGeneral extends JFrame{
-    public MenuGeneral(ClienteController clienteController,VendedorController vendedorController,ItemsMenuController itemsMenuController){
+    public MenuGeneral(ClienteController clienteController,VendedorController vendedorController,ItemsMenuController itemsMenuController, PedidoController pedidoController){
         setTitle("Menu general");
         setSize(600,400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -18,6 +16,7 @@ public class MenuGeneral extends JFrame{
         tabbedPane.addTab("Cliente", new ClienteUI(clienteController));
         tabbedPane.addTab("Vendedor", new VendedorUI(vendedorController));
         tabbedPane.addTab("ItemMenu",new ItemMenuUI(itemsMenuController));
+        tabbedPane.addTab("Pedido",new PedidoUI(pedidoController));
 
         add(tabbedPane);
 
