@@ -4,9 +4,11 @@ import desarrollo.tpentrega1.entidades.Coordenada;
 import desarrollo.tpentrega1.entidades.Vendedor;
 import desarrollo.tpentrega1.controllers.VendedorController;
 import java.awt.Color;
+import java.awt.Dimension;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.table.JTableHeader;
 
 public class VendedorUI extends JPanel {
     private JTextField txtId, txtNombre, txtDireccion, txtLatitud, txtLongitud;
@@ -35,65 +37,71 @@ public class VendedorUI extends JPanel {
         btnEditar = new JButton("Editar");
         btnEliminar = new JButton("Eliminar");
 
-        // Inicializar tabla
-        tableVendedores = new JTable();
-        actualizarTabla(null);
+tableVendedores = new JTable();
+actualizarTabla(null);
+tableVendedores.setRowHeight(40);
+JTableHeader tableHeader = tableVendedores.getTableHeader();
 
-        JScrollPane scrollPane = new JScrollPane(tableVendedores);
- 
-        this.setBackground(new Color(130, 217, 217));
-        // Layout de la ventana principal usando GroupLayout
-        GroupLayout layout = new GroupLayout(this);
-        this.setLayout(layout);
-        layout.setAutoCreateGaps(true);
-        layout.setAutoCreateContainerGaps(true);
+JPanel tablePanel = new JPanel();
+tablePanel.setLayout(new BoxLayout(tablePanel, BoxLayout.Y_AXIS));
+tablePanel.add(tableHeader);  // Añade el encabezado al panel
+tablePanel.add(tableVendedores);  // Añade la tabla directamente debajo del encabezado
+//tablePanel.setBackground(new Color(130, 217, 217)); // Color de fondo opcional
+this.setBackground(new Color(130, 217, 217));
+// Configuración del layout usando GroupLayout
+GroupLayout layout = new GroupLayout(this);
+this.setLayout(layout);
+layout.setAutoCreateGaps(true);
+layout.setAutoCreateContainerGaps(true);
 
-         layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+// Configuración de los grupos horizontales
+layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+    .addGroup(layout.createSequentialGroup()
+        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addComponent(lblId)
+            .addComponent(lblNombre)
+            .addComponent(lblDireccion)
+            .addComponent(lblLatitud)
+            .addComponent(lblLongitud))
+        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addComponent(txtId)
+            .addComponent(txtNombre)
+            .addComponent(txtDireccion)
+            .addComponent(txtLatitud)
+            .addComponent(txtLongitud)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addComponent(lblId)
-                    .addComponent(lblNombre)
-                    .addComponent(lblDireccion)
-                    .addComponent(lblLatitud)
-                    .addComponent(lblLongitud))
-                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addComponent(txtId)
-                    .addComponent(txtNombre)
-                    .addComponent(txtDireccion)
-                    .addComponent(txtLatitud)
-                    .addComponent(txtLongitud)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnCrear)
-                        .addComponent(btnBuscar)
-                        .addComponent(btnEditar)
-                        .addComponent(btnEliminar))))
-            .addComponent(scrollPane) 
-        );
-
-        // Configuración de los grupos verticales
-        layout.setVerticalGroup(layout.createSequentialGroup()
-            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                .addComponent(lblId)
-                .addComponent(txtId))
-            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                .addComponent(lblNombre)
-                .addComponent(txtNombre))
-            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                .addComponent(lblDireccion)
-                .addComponent(txtDireccion))
-            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                .addComponent(lblLatitud)
-                .addComponent(txtLatitud))
-            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                .addComponent(lblLongitud)
-                .addComponent(txtLongitud))
-            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                 .addComponent(btnCrear)
                 .addComponent(btnBuscar)
                 .addComponent(btnEditar)
-                .addComponent(btnEliminar))
-            .addComponent(scrollPane)
-        );
+                .addComponent(btnEliminar))))
+    .addComponent(tablePanel)  
+);
+
+// Configuración de los grupos verticales
+layout.setVerticalGroup(layout.createSequentialGroup()
+    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+        .addComponent(lblId)
+        .addComponent(txtId))
+    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+        .addComponent(lblNombre)
+        .addComponent(txtNombre))
+    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+        .addComponent(lblDireccion)
+        .addComponent(txtDireccion))
+    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+        .addComponent(lblLatitud)
+        .addComponent(txtLatitud))
+    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+        .addComponent(lblLongitud)
+        .addComponent(txtLongitud))
+    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+        .addComponent(btnCrear)
+        .addComponent(btnBuscar)
+        .addComponent(btnEditar)
+        .addComponent(btnEliminar))
+    .addComponent(tablePanel)
+);
+
 
         configurarAcciones();
     }
@@ -161,15 +169,13 @@ public class VendedorUI extends JPanel {
                 txtLatitud.setText("");
                 txtLongitud.setText("");
         String[] columnNames = {"ID", "Nombre", "Dirección", "Latitud", "Longitud"};
-        Object[][] data= new Object[1][7];
+        Object[][] data= new Object[1][5];
         if(v==null){
             data[0][0] = " ";
             data[0][1] = " ";
             data[0][2] = " ";
             data[0][3] = " ";
             data[0][4] = " ";
-            data[0][5] = " ";
-            data[0][6] = " ";
         }
         else {
             data[0][0] = v.getId();
