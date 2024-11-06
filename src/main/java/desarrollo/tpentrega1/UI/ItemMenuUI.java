@@ -4,11 +4,12 @@ import desarrollo.tpentrega1.controllers.ItemsMenuController;
 import desarrollo.tpentrega1.entidades.Bebida;
 import desarrollo.tpentrega1.entidades.ItemMenu;
 import desarrollo.tpentrega1.entidades.Plato;
-import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+import javax.swing.table.JTableHeader;
 
 public class ItemMenuUI extends JPanel {
 
@@ -88,10 +89,20 @@ public class ItemMenuUI extends JPanel {
         tableBebida.setName("tableBebida");
         tablePlato = new JTable();
         actualizarTabla(tableBebida, null);
+        tableBebida.setRowHeight(40);
+        JTableHeader tableHeaderB = tableBebida.getTableHeader();
         actualizarTabla(tablePlato, null);
+        tablePlato.setRowHeight(40);
+        JTableHeader tableHeaderP = tablePlato.getTableHeader();
 
-        JScrollPane scrollPaneBebida = new JScrollPane(tableBebida);
-        JScrollPane scrollPanePlato = new JScrollPane(tablePlato);
+        JPanel tablePanelB = new JPanel();
+        tablePanelB.setLayout(new BoxLayout(tablePanelB, BoxLayout.Y_AXIS));
+        tablePanelB.add(tableHeaderB); 
+        tablePanelB.add(tableBebida);
+        JPanel tablePanelP = new JPanel();
+        tablePanelP.setLayout(new BoxLayout(tablePanelP, BoxLayout.Y_AXIS));
+        tablePanelP.add(tableHeaderP); 
+        tablePanelP.add(tablePlato);
 
         this.setBackground(new Color(130, 217, 217));
 
@@ -100,74 +111,68 @@ public class ItemMenuUI extends JPanel {
         layout.setAutoCreateGaps(true);
         layout.setAutoCreateContainerGaps(true);
 
-        layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                .addComponent(lblId)
-                                .addComponent(lblNombre)
-                                .addComponent(lblDescripcion)
-                                .addComponent(lblPrecio)
-                                .addComponent(lblCategoria))
-                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                .addComponent(txtId)
-                                .addComponent(txtNombre)
-                                .addComponent(txtDescripcion)
-                                .addComponent(txtPrecio)
-                                .addGroup(layout.createSequentialGroup().addComponent(rbtnBebida).addComponent(rbtnPlato))
-                                .addGroup(layout.createSequentialGroup().addComponent(cardPanel))
-                                .addGroup(layout.createSequentialGroup()
-                                        .addComponent(btnCrear)
-                                        .addComponent(btnBuscar)
-                                        .addComponent(btnEditar)
-                                        .addComponent(btnEliminar))))
-                .addComponent(scrollPaneBebida)
-                .addComponent(scrollPanePlato)
-        );
 
-        layout.setVerticalGroup(
-                layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                .addComponent(lblId)
-                                .addComponent(txtId))
-                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                .addComponent(lblNombre)
-                                .addComponent(txtNombre))
-                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                .addComponent(lblDescripcion)
-                                .addComponent(txtDescripcion))
-                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                .addComponent(lblPrecio)
-                                .addComponent(txtPrecio))
-                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                .addComponent(lblCategoria)
-                                .addComponent(rbtnBebida)
-                                .addComponent(rbtnPlato))
-                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                .addComponent(cardPanel))
-                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                .addComponent(btnCrear)
-                                .addComponent(btnBuscar)
-                                .addComponent(btnEditar)
-                                .addComponent(btnEliminar))
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED) // Espacio antes de las tablas
-                        .addComponent(scrollPaneBebida)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED) // Espacio entre tablas
-                        .addComponent(scrollPanePlato)
-        );
+
+layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+    .addGroup(layout.createSequentialGroup()
+        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addComponent(lblId)
+            .addComponent(lblNombre)
+            .addComponent(lblDescripcion)
+            .addComponent(lblPrecio)
+            .addComponent(lblCategoria))
+        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addComponent(txtId)
+            .addComponent(txtNombre)
+            .addComponent(txtDescripcion)
+            .addComponent(txtPrecio)
+            .addGroup(layout.createSequentialGroup().addComponent(rbtnBebida).addComponent(rbtnPlato))
+            // Establece el tamaño preferido de cardPanel
+            .addComponent(cardPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(btnCrear)
+                .addComponent(btnBuscar)
+                .addComponent(btnEditar)
+                .addComponent(btnEliminar))))
+    .addComponent(tablePanelB)
+    .addComponent(tablePanelP)
+);
+
+layout.setVerticalGroup(
+    layout.createSequentialGroup()
+        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+            .addComponent(lblId)
+            .addComponent(txtId))
+        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+            .addComponent(lblNombre)
+            .addComponent(txtNombre))
+        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+            .addComponent(lblDescripcion)
+            .addComponent(txtDescripcion))
+        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+            .addComponent(lblPrecio)
+            .addComponent(txtPrecio))
+        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+            .addComponent(lblCategoria)
+            .addComponent(rbtnBebida)
+            .addComponent(rbtnPlato))
+        // Ajusta cardPanel a tamaño preferido
+        .addComponent(cardPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+            .addComponent(btnCrear)
+            .addComponent(btnBuscar)
+            .addComponent(btnEditar)
+            .addComponent(btnEliminar))
+        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+        .addComponent(tablePanelB)
+        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(tablePanelP)
+);
 
         configurarAcciones();
     }
 
-    /* private void DisEnablePlatoPanel(boolean b){
-        CaloriasField.setEnabled(b);
-        PesoField.setEnabled(b);
-        ApVeCheckBox.setEnabled(b);
-        ApCeCheckBox.setEnabled(b);
-    }
-    private void DisEnableBebidaPanel(boolean b){
-        GradAlcField.setEnabled(b);
-        TamField.setEnabled(b);
-    }*/
+ 
     private void configurarAcciones() {
         btnCrear.addActionListener(new ActionListener() {
             @Override

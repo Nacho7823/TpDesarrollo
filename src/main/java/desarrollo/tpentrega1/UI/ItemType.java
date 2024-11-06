@@ -1,15 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
+
 package desarrollo.tpentrega1.UI;
 
-import java.awt.CardLayout;
 
-/**
- *
- * @author imsac
- */
+import java.awt.CardLayout;
+import java.awt.Dimension;
+
 public class ItemType extends javax.swing.JPanel {
 
     /**
@@ -22,9 +17,12 @@ public class ItemType extends javax.swing.JPanel {
     
     public void mostrarBebida() {
         ((CardLayout)getLayout()).show(this, "card3");
+        this.setMinimumSize(new Dimension(200, 150));
+
     }
     public void mostrarComida() {
         ((CardLayout)getLayout()).show(this, "card2");
+        this.setMinimumSize(new Dimension(200, 200));
     }
     
     public double getCalorias(){
@@ -38,7 +36,7 @@ public class ItemType extends javax.swing.JPanel {
         return rbtnAptoVegano.isSelected();
     }
     public boolean getAptoCeliaco(){
-        return rbtnAptoVegano.isSelected();
+        return rbtnAptoCeliacos.isSelected();
     }
     public double getPeso() {
         double d = 0;
@@ -94,121 +92,71 @@ public class ItemType extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        panelComida = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
-        jPanel6 = new javax.swing.JPanel();
-        tfCalorias = new javax.swing.JTextField();
-        lbCalorias = new javax.swing.JLabel();
-        rbtnAptoCeliacos = new javax.swing.JRadioButton();
-        jPanel5 = new javax.swing.JPanel();
-        tfPeso = new javax.swing.JTextField();
-        lbPeso = new javax.swing.JLabel();
-        rbtnAptoVegano = new javax.swing.JRadioButton();
+        BebidaFrame = new javax.swing.JInternalFrame();
+        GradAlcField = new javax.swing.JTextField();
+        TamField = new javax.swing.JTextField();
+        GradAlcLabel = new javax.swing.JLabel();
+        TamLabel = new javax.swing.JLabel();
         panelBebida = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         tfTamaño = new javax.swing.JTextField();
         tfGraduacionAlcoholica = new javax.swing.JTextField();
         IDLabel2 = new javax.swing.JLabel();
         NombreLabel2 = new javax.swing.JLabel();
+        panelComida = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        jPanel6 = new javax.swing.JPanel();
+        tfCalorias = new javax.swing.JTextField();
+        lbCalorias = new javax.swing.JLabel();
+        rbtnAptoVegano = new javax.swing.JRadioButton();
+        jPanel5 = new javax.swing.JPanel();
+        tfPeso = new javax.swing.JTextField();
+        lbPeso = new javax.swing.JLabel();
+        rbtnAptoCeliacos = new javax.swing.JRadioButton();
+
+        BebidaFrame.setTitle("Bebida");
+        BebidaFrame.setVisible(true);
+
+        GradAlcField.setText("jTextField1");
+
+        TamField.setText("jTextField1");
+
+        GradAlcLabel.setText("Graduacion Alcoholica");
+
+        TamLabel.setText("Tamaño");
+
+        javax.swing.GroupLayout BebidaFrameLayout = new javax.swing.GroupLayout(BebidaFrame.getContentPane());
+        BebidaFrame.getContentPane().setLayout(BebidaFrameLayout);
+        BebidaFrameLayout.setHorizontalGroup(
+            BebidaFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BebidaFrameLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(BebidaFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(GradAlcLabel)
+                    .addComponent(TamLabel))
+                .addGap(42, 42, 42)
+                .addGroup(BebidaFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(GradAlcField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TamField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+        BebidaFrameLayout.setVerticalGroup(
+            BebidaFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(BebidaFrameLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(BebidaFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(GradAlcField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(GradAlcLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(BebidaFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TamField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TamLabel))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         setLayout(new java.awt.CardLayout());
 
-        jPanel3.setLayout(new javax.swing.BoxLayout(jPanel3, javax.swing.BoxLayout.LINE_AXIS));
-
-        jPanel6.setPreferredSize(new java.awt.Dimension(220, 80));
-
-        lbCalorias.setText("Calorias");
-
-        rbtnAptoCeliacos.setText("AptoCeliacos");
-        rbtnAptoCeliacos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbtnAptoCeliacosActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(rbtnAptoCeliacos)
-                .addContainerGap(121, Short.MAX_VALUE))
-            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel6Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(lbCalorias)
-                    .addGap(66, 66, 66)
-                    .addComponent(tfCalorias, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-        );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addContainerGap(39, Short.MAX_VALUE)
-                .addComponent(rbtnAptoCeliacos)
-                .addGap(20, 20, 20))
-            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel6Layout.createSequentialGroup()
-                    .addGap(5, 5, 5)
-                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(tfCalorias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lbCalorias))
-                    .addContainerGap(53, Short.MAX_VALUE)))
-        );
-
-        jPanel3.add(jPanel6);
-
-        jPanel5.setPreferredSize(new java.awt.Dimension(221, 80));
-
-        tfPeso.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfPesoActionPerformed(evt);
-            }
-        });
-
-        lbPeso.setText("Peso");
-
-        rbtnAptoVegano.setText("AptoVegano");
-        rbtnAptoVegano.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbtnAptoVeganoActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(rbtnAptoVegano)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(lbPeso)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
-                        .addComponent(tfPeso, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbPeso)
-                    .addComponent(tfPeso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(rbtnAptoVegano)
-                .addGap(20, 20, 20))
-        );
-
-        jPanel3.add(jPanel5);
-
-        panelComida.add(jPanel3);
-
-        add(panelComida, "card2");
+        panelBebida.setLayout(new java.awt.BorderLayout());
 
         IDLabel2.setText("Tamaño");
 
@@ -218,7 +166,7 @@ public class ItemType extends javax.swing.JPanel {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 272, Short.MAX_VALUE)
+            .addGap(0, 451, Short.MAX_VALUE)
             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel4Layout.createSequentialGroup()
                     .addContainerGap()
@@ -233,7 +181,7 @@ public class ItemType extends javax.swing.JPanel {
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+            .addGap(0, 91, Short.MAX_VALUE)
             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel4Layout.createSequentialGroup()
                     .addGap(5, 5, 5)
@@ -244,12 +192,107 @@ public class ItemType extends javax.swing.JPanel {
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(tfGraduacionAlcoholica, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(NombreLabel2))
-                    .addContainerGap(45, Short.MAX_VALUE)))
+                    .addContainerGap(36, Short.MAX_VALUE)))
         );
 
-        panelBebida.add(jPanel4);
+        panelBebida.add(jPanel4, java.awt.BorderLayout.CENTER);
 
         add(panelBebida, "card3");
+
+        jPanel3.setLayout(new javax.swing.BoxLayout(jPanel3, javax.swing.BoxLayout.LINE_AXIS));
+
+        jPanel6.setPreferredSize(new java.awt.Dimension(220, 80));
+
+        lbCalorias.setText("Calorias");
+
+        rbtnAptoVegano.setText("AptoVegano");
+        rbtnAptoVegano.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnAptoVeganoActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(rbtnAptoVegano)
+                .addContainerGap(125, Short.MAX_VALUE))
+            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel6Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(lbCalorias)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(tfCalorias, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(81, Short.MAX_VALUE)))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addGap(0, 32, Short.MAX_VALUE)
+                .addComponent(rbtnAptoVegano)
+                .addGap(27, 27, 27))
+            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel6Layout.createSequentialGroup()
+                    .addGap(5, 5, 5)
+                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(tfCalorias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lbCalorias))
+                    .addContainerGap(53, Short.MAX_VALUE)))
+        );
+
+        jPanel3.add(jPanel6);
+
+        panelComida.add(jPanel3);
+
+        jPanel5.setPreferredSize(new java.awt.Dimension(221, 80));
+
+        tfPeso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfPesoActionPerformed(evt);
+            }
+        });
+
+        lbPeso.setText("Peso");
+
+        rbtnAptoCeliacos.setText("AptoCeliacos");
+        rbtnAptoCeliacos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnAptoCeliacosActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(lbPeso)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tfPeso, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(rbtnAptoCeliacos))
+                .addContainerGap(99, Short.MAX_VALUE))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbPeso)
+                    .addComponent(tfPeso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(rbtnAptoCeliacos)
+                .addGap(26, 26, 26))
+        );
+
+        panelComida.add(jPanel5);
+
+        add(panelComida, "card2");
     }// </editor-fold>//GEN-END:initComponents
 
     private void rbtnAptoCeliacosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnAptoCeliacosActionPerformed
@@ -266,8 +309,13 @@ public class ItemType extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JInternalFrame BebidaFrame;
+    private javax.swing.JTextField GradAlcField;
+    private javax.swing.JLabel GradAlcLabel;
     private javax.swing.JLabel IDLabel2;
     private javax.swing.JLabel NombreLabel2;
+    private javax.swing.JTextField TamField;
+    private javax.swing.JLabel TamLabel;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;

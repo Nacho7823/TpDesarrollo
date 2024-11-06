@@ -7,6 +7,7 @@ import java.awt.Color;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.table.JTableHeader;
 
 public class ClienteUI extends JPanel {
     private JTextField txtId, txtNombre, txtCuit, txtEmail, txtDireccion, txtLatitud, txtLongitud;
@@ -42,8 +43,13 @@ public class ClienteUI extends JPanel {
         // Inicializar tabla
         tableClientes = new JTable();
         actualizarTabla(null);
+        tableClientes.setRowHeight(40);
+        JTableHeader tableHeader = tableClientes.getTableHeader();
 
-        JScrollPane scrollPane = new JScrollPane(tableClientes);
+        JPanel tablePanel = new JPanel();
+        tablePanel.setLayout(new BoxLayout(tablePanel, BoxLayout.Y_AXIS));
+        tablePanel.add(tableHeader); 
+        tablePanel.add(tableClientes);
         
         this.setBackground(new Color(130, 217, 217));
         GroupLayout layout = new GroupLayout(this);
@@ -74,7 +80,7 @@ public class ClienteUI extends JPanel {
                         .addComponent(btnBuscar)
                         .addComponent(btnEditar)
                         .addComponent(btnEliminar))))
-            .addComponent(scrollPane)
+            .addComponent(tablePanel)
         );
 
         // Configuración de los grupos verticales
@@ -105,7 +111,7 @@ public class ClienteUI extends JPanel {
                 .addComponent(btnBuscar)
                 .addComponent(btnEditar)
                 .addComponent(btnEliminar))
-            .addComponent(scrollPane)
+            .addComponent(tablePanel)
         );
 
         configurarAcciones();
@@ -144,12 +150,6 @@ public class ClienteUI extends JPanel {
                 Cliente cliente = clienteController.buscarCliente(Integer.parseInt(id));
                 if (cliente != null) {
                     actualizarTabla(cliente);
-                    /*txtNombre.setText(cliente.getNombre());
-                    txtCuit.setText(cliente.getCuit());
-                    txtEmail.setText(cliente.getEmail());
-                    txtDireccion.setText(cliente.getDireccion());
-                    txtLatitud.setText(String.valueOf(cliente.getCoordenada().getLat()));
-                    txtLongitud.setText(String.valueOf(cliente.getCoordenada().getLng()));*/
                 } else {
                     JOptionPane.showMessageDialog(null, "Cliente no encontrado.");
                     actualizarTabla(null);

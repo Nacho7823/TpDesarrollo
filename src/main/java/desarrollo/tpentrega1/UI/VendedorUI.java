@@ -44,9 +44,8 @@ JTableHeader tableHeader = tableVendedores.getTableHeader();
 
 JPanel tablePanel = new JPanel();
 tablePanel.setLayout(new BoxLayout(tablePanel, BoxLayout.Y_AXIS));
-tablePanel.add(tableHeader);  // Añade el encabezado al panel
-tablePanel.add(tableVendedores);  // Añade la tabla directamente debajo del encabezado
-//tablePanel.setBackground(new Color(130, 217, 217)); // Color de fondo opcional
+tablePanel.add(tableHeader); 
+tablePanel.add(tableVendedores); 
 this.setBackground(new Color(130, 217, 217));
 // Configuración del layout usando GroupLayout
 GroupLayout layout = new GroupLayout(this);
