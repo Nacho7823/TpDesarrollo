@@ -72,7 +72,10 @@ public class PedidoController {
             System.out.println("Pedido no encontrado con ID: " + id);
         }
     }
-
+    public Pedido buscarYDevolverPedido(int id){
+        return pedidoDAO.buscarPedido(id);
+    }
+    //public void editarPedido(int id, )
     public List<Pedido> obtenerListaPedidos() {
         return pedidoDAO.getPedidos();
     }

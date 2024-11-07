@@ -45,7 +45,8 @@ public class ClienteUI extends JPanel {
         actualizarTabla(null);
         tableClientes.setRowHeight(40);
         JTableHeader tableHeader = tableClientes.getTableHeader();
-
+        tableHeader.setReorderingAllowed(false);
+        
         JPanel tablePanel = new JPanel();
         tablePanel.setLayout(new BoxLayout(tablePanel, BoxLayout.Y_AXIS));
         tablePanel.add(tableHeader); 
