@@ -12,7 +12,7 @@ public class ItemType extends javax.swing.JPanel {
      */
     public ItemType() {
         initComponents();
-        mostrarComida();
+        mostrarPlato();
     }
     
     public void mostrarBebida() {
@@ -20,7 +20,7 @@ public class ItemType extends javax.swing.JPanel {
         this.setMinimumSize(new Dimension(200, 150));
 
     }
-    public void mostrarComida() {
+    public void mostrarPlato() {
         ((CardLayout)getLayout()).show(this, "card2");
         this.setMinimumSize(new Dimension(200, 200));
     }
@@ -29,37 +29,66 @@ public class ItemType extends javax.swing.JPanel {
         double d = 0;
         try {
             d = Double.parseDouble(tfCalorias.getText());
-        } catch(Exception ignore){}
+        } catch(Exception ignore){
+            tfCalorias.setText("");
+        }
         return d;
     }
+    public void setCalorias(double cal) {
+        tfCalorias.setText(cal + "");
+    }
+    
     public boolean getAptoVegano(){
         return rbtnAptoVegano.isSelected();
     }
+    public void setAptoVegano(boolean b) {
+        rbtnAptoVegano.setSelected(b);
+    }
+    
     public boolean getAptoCeliaco(){
         return rbtnAptoCeliacos.isSelected();
     }
+    public void setAptoCeliaco(boolean b) {
+        rbtnAptoCeliacos.setSelected(b);
+    }
+    
     public double getPeso() {
         double d = 0;
         try {
             d = Double.parseDouble(tfPeso.getText());
-        } catch(Exception ignore){}
+        } catch(Exception ignore){
+            tfPeso.setText("");
+        }
         return d;
+    }
+    public void setPeso(double p) {
+        tfPeso.setText(p + "");
     }
     
     public double getTamaño() {
         double d = 0;
         try {
             d = Double.parseDouble(tfTamaño.getText());
-        } catch(Exception ignore){}
+        } catch(Exception ignore){
+            tfTamaño.setText("");
+        }
         return d;
+    }
+    public void setTamaño(double d) {
+        tfTamaño.setText(d + "");
     }
     
     public double getGraduacionAlcoholica() {
         double d = 0;
         try {
             d = Double.parseDouble(tfGraduacionAlcoholica.getText());
-        } catch(Exception ignore){}
+        } catch(Exception ignore){
+            tfGraduacionAlcoholica.setText("");
+        }
         return d;
+    }
+    public void setGraduacionAlcoholica(double g) {
+        tfGraduacionAlcoholica.setText(g + "");
     }
     
     public void resetCalorias() {

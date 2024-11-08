@@ -22,7 +22,6 @@ public class Vendedor {
         this.nombre = nombre;
         this.direccion = direccion;
         this.coordenada = coordenada;
-        this.itemsMenu = new ArrayList<>();
         this.itemsMenu = itemsMenu;
         this.pedidos = new ArrayList<>();
     }
@@ -75,10 +74,15 @@ public class Vendedor {
 
     public void setItemMenu(ArrayList<ItemMenu> itemsMenu){
         this.itemsMenu = itemsMenu;
+        for (int i = 0; i < itemsMenu.size(); i++) {
+            itemsMenu.get(i).setVendedor(this);
+        }
     }
 
     public void addItemMenu(ItemMenu item){
-        this.itemsMenu.add(item);
+        if (!itemsMenu.contains(item))
+            this.itemsMenu.add(item);
+        
     }
     
     public void addPedido(Pedido pedido){
