@@ -29,7 +29,7 @@ public class VendedorController {
 
     // Modificar un vendedor existente (asumiendo que se identifica por nombre, dirección, coordenada)
     public void modificarVendedor(String id, String nombre, String direccion, Coordenada coordenada) {
-        Vendedor vendedorExistente = vendedorDAO.buscarVendedor(id);
+        Vendedor vendedorExistente = vendedorDAO.buscarVendedor(Integer.parseInt(id));
         if (vendedorExistente != null) {
             vendedorExistente.setNombre(nombre);
             vendedorExistente.setDireccion(direccion);
@@ -40,18 +40,14 @@ public class VendedorController {
             System.out.println("Vendedor no encontrado para modificar.");
         }
     }
-    
-    public void modificarVendedor(Vendedor vendedor) {
-        vendedorDAO.actualizarVendedor(vendedor);
-    }
 
     // Eliminar un vendedor por ID
-    public void eliminarVendedor(String id) {
+    public void eliminarVendedor(int id) {
         vendedorDAO.eliminarVendedor(id);
     }
 
     // Buscar un vendedor por ID
-    public Vendedor buscarVendedor(String id) {
+    public Vendedor buscarVendedor(int id) {
         Vendedor vendedor = vendedorDAO.buscarVendedor(id);
         if (vendedor != null) {
             System.out.println("Vendedor encontrado: " + vendedor.getNombre());

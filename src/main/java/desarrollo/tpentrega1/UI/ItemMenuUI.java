@@ -13,7 +13,7 @@ import javax.swing.table.JTableHeader;
 
 public class ItemMenuUI extends JPanel {
 
-    private JTextField txtId, txtNombre, txtDescripcion, txtPrecio, txtIdVendedor;
+    private JTextField txtId, txtNombre, txtDescripcion, txtPrecio;
     private JTextField txtCalorias, txtPeso, txtGraduacionAlcoholica, txtTamaño;
     private JButton btnCrear, btnBuscar, btnEditar, btnEliminar;
     private JRadioButton rbtnPlato, rbtnBebida;
@@ -28,7 +28,6 @@ public class ItemMenuUI extends JPanel {
         JLabel lblNombre = new JLabel("Nombre:");
         JLabel lblDescripcion = new JLabel("Descripcion:");
         JLabel lblPrecio = new JLabel("Precio:");
-        JLabel lblIdVendedor = new JLabel("idVendedor:");
         JLabel lblCategoria = new JLabel("Categoria:");
 
         //para comida
@@ -44,7 +43,6 @@ public class ItemMenuUI extends JPanel {
         txtNombre = new JTextField(20);
         txtDescripcion = new JTextField(20);
         txtPrecio = new JTextField(20);
-        txtIdVendedor = new JTextField(20);
 
         //para comida
         JTextField txtCalorias = new JTextField(3);
@@ -82,7 +80,7 @@ public class ItemMenuUI extends JPanel {
         rbtnPlato.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                cardPanel.mostrarPlato();
+                cardPanel.mostrarComida();
             }
         });
         
@@ -122,14 +120,12 @@ layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADI
             .addComponent(lblNombre)
             .addComponent(lblDescripcion)
             .addComponent(lblPrecio)
-            .addComponent(lblIdVendedor)
             .addComponent(lblCategoria))
         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addComponent(txtId)
             .addComponent(txtNombre)
             .addComponent(txtDescripcion)
             .addComponent(txtPrecio)
-            .addComponent(txtIdVendedor)
             .addGroup(layout.createSequentialGroup().addComponent(rbtnBebida).addComponent(rbtnPlato))
             // Establece el tamaño preferido de cardPanel
             .addComponent(cardPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -156,9 +152,6 @@ layout.setVerticalGroup(
         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
             .addComponent(lblPrecio)
             .addComponent(txtPrecio))
-        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-            .addComponent(lblIdVendedor)
-            .addComponent(txtIdVendedor))
         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
             .addComponent(lblCategoria)
             .addComponent(rbtnBebida)
@@ -188,13 +181,11 @@ layout.setVerticalGroup(
                 String nombre = txtNombre.getText();
                 String descripcion = txtDescripcion.getText();
                 double precio = Double.parseDouble(txtPrecio.getText());
-                String idVendedor = txtIdVendedor.getText();
 
                 txtId.setText("");
                 txtNombre.setText("");
                 txtDescripcion.setText("");
                 txtPrecio.setText("");
-                txtIdVendedor.setText("");
                 
                 cardPanel.resetCalorias();
                 cardPanel.resetGraduacionAlcoholica();
@@ -203,7 +194,7 @@ layout.setVerticalGroup(
                 cardPanel.resetAptoCeliacos();
                 cardPanel.resetAptoVegano();
                 
-                String categoria = "";  // ??? FIXME:
+                String categoria = "";  // ???
                 
                 if (rbtnPlato.isSelected()) {
                     double calorias = cardPanel.getCalorias();
@@ -211,15 +202,13 @@ layout.setVerticalGroup(
                     boolean aptoVegano = cardPanel.getAptoVegano();
                     double peso = cardPanel.getPeso();
                     
-                    
-                    itemsMenuController.crearNuevoPlato(id, nombre, descripcion, precio, categoria, idVendedor, 
-                            calorias, aptoCeliaco, aptoVegano, peso);
+                    itemsMenuController.crearNuevoPlato(id, nombre, descripcion, precio, 
+                            categoria, calorias, aptoCeliaco, aptoVegano, peso);
                 }
                 else {
                     double tamaño = cardPanel.getTamaño();
                     double graduacionAlcoholica = cardPanel.getGraduacionAlcoholica();
-                    itemsMenuController.crearNuevaBebida(id, nombre, descripcion, precio, categoria, idVendedor, 
-                            tamaño, graduacionAlcoholica);
+                    itemsMenuController.crearNuevaBebida(id, nombre, descripcion, precio, categoria, tamaño, graduacionAlcoholica);
                 }
 
             }
@@ -232,39 +221,10 @@ layout.setVerticalGroup(
                 ItemMenu itemMenu = itemsMenuController.buscarItemsMenu(id);
                 if (itemMenu != null) {
                     ItemMenu item = itemsMenuController.buscarItemsMenu(id);
-                    
                     if (item instanceof Bebida) {
-                        txtId.setText(id);
-                        txtNombre.setText(item.getNombre());
-                        txtDescripcion.setText(item.getDescripcion());
-                        txtPrecio.setText(item.getPrecio() + "");
-                        
-                        rbtnBebida.setSelected(true);
-                        rbtnPlato.setSelected(false);
-                        
-                        cardPanel.mostrarBebida();
-                        
-                        cardPanel.setTamaño(((Bebida)item).getTamaño());
-                        cardPanel.setGraduacionAlcoholica(((Bebida)item).getGraduacionAlcoholica());
-                        
                         actualizarTabla(tableBebida, item);
                         actualizarTabla(tablePlato, null);
                     } else {
-                        txtId.setText(id);
-                        txtNombre.setText(item.getNombre());
-                        txtDescripcion.setText(item.getDescripcion());
-                        txtPrecio.setText(item.getPrecio() + "");
-                        
-                        rbtnBebida.setSelected(true);
-                        rbtnPlato.setSelected(false);
-                        
-                        cardPanel.mostrarPlato();
-                        
-                        cardPanel.setCalorias(((Plato)item).getCalorias());
-                        cardPanel.setAptoVegano(((Plato)item).aptoVegano());
-                        cardPanel.setAptoCeliaco(((Plato)item).aptoCeliaco());
-                        cardPanel.setPeso(((Plato)item).peso());
-                        
                         actualizarTabla(tableBebida, null);
                         actualizarTabla(tablePlato, item);
                     }
@@ -272,19 +232,11 @@ layout.setVerticalGroup(
                     JOptionPane.showMessageDialog(null, "Item no encontrado.");
                     actualizarTabla(tablePlato, null);
                     actualizarTabla(tableBebida, null);
-                    txtId.setText("");
-                    txtNombre.setText("");
-                    txtDescripcion.setText("");
-                    txtPrecio.setText("");
-                    
-                    cardPanel.resetAptoCeliacos();
-                    cardPanel.resetAptoVegano();
-                    cardPanel.resetCalorias();
-                    cardPanel.resetGraduacionAlcoholica();
-                    cardPanel.resetPeso();
-                    cardPanel.resetTamaño();
-                    
                 }
+                txtId.setText("");
+                txtNombre.setText("");
+                txtDescripcion.setText("");
+                txtPrecio.setText("");
             }
         });
 

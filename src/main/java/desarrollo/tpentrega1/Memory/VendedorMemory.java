@@ -41,8 +41,8 @@ public class VendedorMemory implements VendedorDAO{
     }
 
 @Override
-public void eliminarVendedor(String id) {
-    boolean existe = vendedores.stream().anyMatch(v -> v.getId().equals(id));
+public void eliminarVendedor(int id) {
+    boolean existe = vendedores.stream().anyMatch(v -> v.getId().equals(String.valueOf(id)));
     
     if (existe) {
         vendedores.removeIf(v -> v.getId().equals(String.valueOf(id)));
@@ -51,9 +51,9 @@ public void eliminarVendedor(String id) {
 }
 
     @Override
-    public Vendedor buscarVendedor(String id) {
+    public Vendedor buscarVendedor(int id) {
         for (Vendedor vendedor : vendedores) {
-            if (vendedor.getId().equals(id)) {
+            if (vendedor.getId().equals(String.valueOf(id))) {
                 return vendedor;
                
             }

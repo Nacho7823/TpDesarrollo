@@ -11,7 +11,6 @@ import java.awt.event.ActionListener;
 import javax.swing.table.JTableHeader;
 
 public class VendedorUI extends JPanel {
-
     private JTextField txtId, txtNombre, txtDireccion, txtLatitud, txtLongitud;
     private JButton btnCrear, btnBuscar, btnEditar, btnEliminar;
     private JTable tableVendedores;
@@ -19,7 +18,7 @@ public class VendedorUI extends JPanel {
 
     public VendedorUI(VendedorController vendedorController) {
         this.vendedorController = vendedorController;
-
+        
         // Crear los componentes
         JLabel lblId = new JLabel("ID:");
         JLabel lblNombre = new JLabel("Nombre:");
@@ -38,69 +37,70 @@ public class VendedorUI extends JPanel {
         btnEditar = new JButton("Editar");
         btnEliminar = new JButton("Eliminar");
 
-        tableVendedores = new JTable();
-        actualizarTabla(null);
-        tableVendedores.setRowHeight(40);
-        JTableHeader tableHeader = tableVendedores.getTableHeader();
+tableVendedores = new JTable();
+actualizarTabla(null);
+tableVendedores.setRowHeight(40);
+JTableHeader tableHeader = tableVendedores.getTableHeader();
 
-        JPanel tablePanel = new JPanel();
-        tablePanel.setLayout(new BoxLayout(tablePanel, BoxLayout.Y_AXIS));
-        tablePanel.add(tableHeader);
-        tablePanel.add(tableVendedores);
-        this.setBackground(new Color(130, 217, 217));
+JPanel tablePanel = new JPanel();
+tablePanel.setLayout(new BoxLayout(tablePanel, BoxLayout.Y_AXIS));
+tablePanel.add(tableHeader); 
+tablePanel.add(tableVendedores); 
+this.setBackground(new Color(130, 217, 217));
 // Configuración del layout usando GroupLayout
-        GroupLayout layout = new GroupLayout(this);
-        this.setLayout(layout);
-        layout.setAutoCreateGaps(true);
-        layout.setAutoCreateContainerGaps(true);
+GroupLayout layout = new GroupLayout(this);
+this.setLayout(layout);
+layout.setAutoCreateGaps(true);
+layout.setAutoCreateContainerGaps(true);
 
 // Configuración de los grupos horizontales
-        layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                .addComponent(lblId)
-                                .addComponent(lblNombre)
-                                .addComponent(lblDireccion)
-                                .addComponent(lblLatitud)
-                                .addComponent(lblLongitud))
-                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                .addComponent(txtId)
-                                .addComponent(txtNombre)
-                                .addComponent(txtDireccion)
-                                .addComponent(txtLatitud)
-                                .addComponent(txtLongitud)
-                                .addGroup(layout.createSequentialGroup()
-                                        .addComponent(btnCrear)
-                                        .addComponent(btnBuscar)
-                                        .addComponent(btnEditar)
-                                        .addComponent(btnEliminar))))
-                .addComponent(tablePanel)
-        );
+layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+    .addGroup(layout.createSequentialGroup()
+        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addComponent(lblId)
+            .addComponent(lblNombre)
+            .addComponent(lblDireccion)
+            .addComponent(lblLatitud)
+            .addComponent(lblLongitud))
+        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addComponent(txtId)
+            .addComponent(txtNombre)
+            .addComponent(txtDireccion)
+            .addComponent(txtLatitud)
+            .addComponent(txtLongitud)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(btnCrear)
+                .addComponent(btnBuscar)
+                .addComponent(btnEditar)
+                .addComponent(btnEliminar))))
+    .addComponent(tablePanel)  
+);
 
 // Configuración de los grupos verticales
-        layout.setVerticalGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(lblId)
-                        .addComponent(txtId))
-                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(lblNombre)
-                        .addComponent(txtNombre))
-                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(lblDireccion)
-                        .addComponent(txtDireccion))
-                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(lblLatitud)
-                        .addComponent(txtLatitud))
-                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(lblLongitud)
-                        .addComponent(txtLongitud))
-                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnCrear)
-                        .addComponent(btnBuscar)
-                        .addComponent(btnEditar)
-                        .addComponent(btnEliminar))
-                .addComponent(tablePanel)
-        );
+layout.setVerticalGroup(layout.createSequentialGroup()
+    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+        .addComponent(lblId)
+        .addComponent(txtId))
+    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+        .addComponent(lblNombre)
+        .addComponent(txtNombre))
+    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+        .addComponent(lblDireccion)
+        .addComponent(txtDireccion))
+    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+        .addComponent(lblLatitud)
+        .addComponent(txtLatitud))
+    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+        .addComponent(lblLongitud)
+        .addComponent(txtLongitud))
+    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+        .addComponent(btnCrear)
+        .addComponent(btnBuscar)
+        .addComponent(btnEditar)
+        .addComponent(btnEliminar))
+    .addComponent(tablePanel)
+);
+
 
         configurarAcciones();
     }
@@ -109,15 +109,15 @@ public class VendedorUI extends JPanel {
         btnCrear.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String id = txtId.getText();
+                String id= txtId.getText();
                 String nombre = txtNombre.getText();
                 String direccion = txtDireccion.getText();
                 double lat = Double.parseDouble(txtLatitud.getText());
                 double lng = Double.parseDouble(txtLongitud.getText());
 
                 Coordenada coordenada = new Coordenada(lat, lng);
-                vendedorController.crearNuevoVendedor(id, nombre, direccion, coordenada);
-                actualizarTabla(vendedorController.buscarVendedor(id));
+                vendedorController.crearNuevoVendedor(id,nombre, direccion, coordenada);
+                actualizarTabla(vendedorController.buscarVendedor(Integer.parseInt(id)));
             }
         });
 
@@ -125,14 +125,9 @@ public class VendedorUI extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String id = txtId.getText();
-                Vendedor vendedor = vendedorController.buscarVendedor(id);
+                Vendedor vendedor = vendedorController.buscarVendedor(Integer.parseInt(id));
                 if (vendedor != null) {
                     actualizarTabla(vendedor);
-                    txtId.setText(vendedor.getId());
-                    txtNombre.setText(vendedor.getNombre());
-                    txtDireccion.setText(vendedor.getDireccion());
-                    txtLatitud.setText(vendedor.getCoordenada().getLat() + "");
-                    txtLongitud.setText(vendedor.getCoordenada().getLng() + "");
                 } else {
                     JOptionPane.showMessageDialog(null, "Vendedor no encontrado.");
                     actualizarTabla(null);
@@ -151,7 +146,7 @@ public class VendedorUI extends JPanel {
 
                 Coordenada coordenada = new Coordenada(lat, lng);
                 vendedorController.modificarVendedor(id, nombre, direccion, coordenada);
-                actualizarTabla(vendedorController.buscarVendedor(id));
+                actualizarTabla(vendedorController.buscarVendedor(Integer.parseInt(id)));
             }
         });
 
@@ -159,34 +154,36 @@ public class VendedorUI extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String id = txtId.getText();
-                actualizarTabla(vendedorController.buscarVendedor(id));
-                vendedorController.eliminarVendedor(id);
+                actualizarTabla(vendedorController.buscarVendedor(Integer.parseInt(id)));
+                vendedorController.eliminarVendedor(Integer.parseInt(id));
 
             }
         });
     }
 
     private void actualizarTabla(Vendedor v) {
-        txtId.setText("");
-        txtNombre.setText("");
-        txtDireccion.setText("");
-        txtLatitud.setText("");
-        txtLongitud.setText("");
+                       txtId.setText("");
+                txtNombre.setText("");
+                txtDireccion.setText("");
+                txtLatitud.setText("");
+                txtLongitud.setText("");
         String[] columnNames = {"ID", "Nombre", "Dirección", "Latitud", "Longitud"};
-        Object[][] data = new Object[1][5];
-        if (v == null) {
+        Object[][] data= new Object[1][5];
+        if(v==null){
             data[0][0] = " ";
             data[0][1] = " ";
             data[0][2] = " ";
             data[0][3] = " ";
             data[0][4] = " ";
-        } else {
+        }
+        else {
             data[0][0] = v.getId();
             data[0][1] = v.getNombre();
             data[0][2] = v.getDireccion();
             data[0][3] = v.getCoordenada().getLat();
             data[0][4] = v.getCoordenada().getLng();
-        }
+                }
         tableVendedores.setModel(new javax.swing.table.DefaultTableModel(data, columnNames));
     }
 }
+

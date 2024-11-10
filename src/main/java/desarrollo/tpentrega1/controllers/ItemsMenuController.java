@@ -8,18 +8,15 @@ import desarrollo.tpentrega1.Memory.ItemsMenuMemory;
 import desarrollo.tpentrega1.entidades.ItemMenu;
 import desarrollo.tpentrega1.entidades.Plato;
 import desarrollo.tpentrega1.entidades.Bebida;
-import desarrollo.tpentrega1.entidades.Vendedor;
 import java.util.List;
 import java.util.UUID;
 
 public class ItemsMenuController {
 
     private ItemsMenuMemory itemMenuDAO = new ItemsMenuMemory();
-    private VendedorController vendedorController;
 
-    public ItemsMenuController(ItemsMenuMemory itemsMenuMemory, VendedorController vendedorController){
+    public ItemsMenuController(ItemsMenuMemory itemsMenuMemory){
         this.itemMenuDAO=itemsMenuMemory;
-        this.vendedorController = vendedorController;
     }
     public List<ItemMenu> obtenerListaItemsMenu(){
         return itemMenuDAO.getItemsMenu();
@@ -35,30 +32,19 @@ public class ItemsMenuController {
     
     
     
-    public void crearNuevoPlato(String id,String nombre, String descripcion, double precio, String categoria, String idVendedor,
+    public void crearNuevoPlato(String id,String nombre, String descripcion, double precio, String categoria,
                                 double calorias, boolean aptoCeliaco, boolean aptoVegano, double peso) {
         //String id = UUID.randomUUID().toString(); // Generación automática de ID
-        Vendedor vendedor = vendedorController.buscarVendedor(idVendedor);
-        
-        Plato nuevoPlato = new Plato(id, nombre, descripcion, precio, categoria, vendedor, calorias, aptoCeliaco, aptoVegano, peso);
-        vendedor.addItemMenu(nuevoPlato);
-        
+        Plato nuevoPlato = new Plato(id, nombre, descripcion, precio, categoria, calorias, aptoCeliaco, aptoVegano, peso);
         itemMenuDAO.crearItemsMenu(nuevoPlato);
-        vendedorController.modificarVendedor(vendedor);
-        
     }
 
     // Crear una nueva bebida
-    public void crearNuevaBebida(String id,String nombre, String descripcion, double precio, String categoria, String idVendedor,
+    public void crearNuevaBebida(String id,String nombre, String descripcion, double precio, String categoria,
                                  double tamaño, double graduacionAlcoholica) {
         //String id = UUID.randomUUID().toString(); // Generación automática de ID
-        Vendedor vendedor = vendedorController.buscarVendedor(idVendedor);
-        
-        Bebida nuevaBebida = new Bebida(id, nombre, descripcion, precio, categoria, vendedor, tamaño, graduacionAlcoholica);
-        vendedor.addItemMenu(nuevaBebida);
-        
+        Bebida nuevaBebida = new Bebida(id, nombre, descripcion, precio, categoria, tamaño, graduacionAlcoholica);
         itemMenuDAO.crearItemsMenu(nuevaBebida);
-        vendedorController.modificarVendedor(vendedor);
     }
 
     // Modificar un ítem de menú existente

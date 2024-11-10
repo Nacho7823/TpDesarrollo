@@ -34,11 +34,10 @@ public class PedidoController {
     }
 
     // Crear un nuevo pedido con generación automática de ID
-    public void crearNuevoPedido(String id, Cliente cliente, PedidoDetalle pedidoDetalle, FormaDePago formaDePago, Vendedor vendedor) {
+    public void crearNuevoPedido(Cliente cliente, PedidoDetalle pedidoDetalle, FormaDePago formaDePago, Vendedor vendedor) {
         try {
-//            String id = UUID.randomUUID().toString(); // Generación automática de ID
+            String id = UUID.randomUUID().toString(); // Generación automática de ID
             Pedido nuevoPedido = new Pedido(cliente, pedidoDetalle, formaDePago, vendedor);
-            nuevoPedido.setId(id);
             pedidoDAO.crearPedido(nuevoPedido);
             
         } catch (InvalidOrderException e) {
@@ -48,7 +47,7 @@ public class PedidoController {
 
     // Modificar un pedido existente (cambia su estado)
     public void modificarPedidoEstado(String id, EstadoPedido nuevoEstado) {
-        Pedido pedidoExistente = pedidoDAO.buscarPedido(id);
+        Pedido pedidoExistente = pedidoDAO.buscarPedido(Integer.parseInt(id));
         if (pedidoExistente != null) {
             pedidoExistente.setEstado(nuevoEstado);
             pedidoDAO.actualizarPedido(pedidoExistente);
@@ -59,13 +58,13 @@ public class PedidoController {
     }
 
     // Eliminar un pedido por ID
-    public void eliminarPedido(String id) {
+    public void eliminarPedido(int id) {
         pedidoDAO.eliminarPedido(id);
         
     }
 
     // Buscar un pedido por ID
-    public void buscarPedido(String id) {     //TODO: sirve?
+    public void buscarPedido(int id) {
         Pedido pedido = pedidoDAO.buscarPedido(id);
         if (pedido != null) {
             System.out.println("Pedido encontrado con ID: " + pedido.getId());
@@ -73,7 +72,7 @@ public class PedidoController {
             System.out.println("Pedido no encontrado con ID: " + id);
         }
     }
-    public Pedido buscarYDevolverPedido(String id){
+    public Pedido buscarYDevolverPedido(int id){
         return pedidoDAO.buscarPedido(id);
     }
     //public void editarPedido(int id, )

@@ -293,7 +293,6 @@ import desarrollo.tpentrega1.UI.MenuGeneral;
 import desarrollo.tpentrega1.controllers.ItemsMenuController;
 import desarrollo.tpentrega1.entidades.Coordenada;
 import desarrollo.tpentrega1.entidades.ItemMenu;
-import desarrollo.tpentrega1.entidades.MercadoPago;
 import desarrollo.tpentrega1.entidades.PedidoDetalle;
 import desarrollo.tpentrega1.entidades.Transferencia;
 import desarrollo.tpentrega1.interfaces.FormaDePago;
@@ -313,7 +312,7 @@ public class TPEntrega1 {
         ClienteController clienteController = new ClienteController(clienteMemory);
         VendedorController vendedorController = new VendedorController(vendedorMemory);
         PedidoController pedidoController = new PedidoController(pedidoMemory);
-        ItemsMenuController itemsMenuController= new ItemsMenuController(itemsMenuMemory, vendedorController);
+        ItemsMenuController itemsMenuController= new ItemsMenuController(itemsMenuMemory);
         
         // Cargar datos de prueba para clientes
         clienteController.crearNuevoCliente("2","Juan Pérez", "20-12345678-9", "juan@example.com", "Calle Falsa 123", new Coordenada(-34.603722, -58.381592));
@@ -323,29 +322,23 @@ public class TPEntrega1 {
         vendedorController.crearNuevoVendedor("2","Supermercado ABC", "Av. Corrientes 1500", new Coordenada(-34.603532, -58.383222));
         vendedorController.crearNuevoVendedor("3","Verdulería El Tomate", "Calle Libertad 2300", new Coordenada(-34.606732, -58.384752));
 
-        itemsMenuController.crearNuevaBebida("1","Heineken", "Cerveza", 2300, "Bebida", "2", 70, 2.0);
-        itemsMenuController.crearNuevaBebida("3","CocaCola", "Gaseosa", 2000, "Bebida", "2", 60, 0.0);
-        itemsMenuController.crearNuevoPlato("2", "Guaymallen", "Alfajor", 700, "Plato", "2",200, false, false, 120);
+        itemsMenuController.crearNuevaBebida("1","Heineken", "Cerveza", 2300, "Bebida", 70, 2.0);
+        itemsMenuController.crearNuevoPlato("2", "Guaymallen", "Alfajor", 700, "Plato", 200, false, false, 120);
 
         ItemsPedidoMemory itemsPedidoMemory = new ItemsPedidoMemory();
         itemsPedidoMemory.setItems(vendedorController.obtenerListaVendedores().get(0).getItemsMenu());
         
-//        itemsPedidoMemory.buscarBebidas();
-//        itemsPedidoMemory.buscarPrecio(250);
+        itemsPedidoMemory.buscarBebidas();
+        itemsPedidoMemory.buscarPrecio(250);
         List<ItemMenu> items = itemsPedidoMemory.getItems();
 
         FormaDePago formaDePago = new Transferencia("20346572182", "0000003100092901454053");
         PedidoDetalle pedidoDetalle = new PedidoDetalle(items);
 
-        pedidoController.crearNuevoPedido("1", clienteController.obtenerListaClientes().get(0), 
+        pedidoController.crearNuevoPedido(clienteController.obtenerListaClientes().get(0), 
             pedidoDetalle, 
             formaDePago, 
-            vendedorController.obtenerListaVendedores().get(1));
-        
-        pedidoController.crearNuevoPedido("2", clienteController.obtenerListaClientes().get(1), 
-            pedidoDetalle, 
-            new MercadoPago("alias.mp"), 
-            vendedorController.obtenerListaVendedores().get(1));
+            vendedorController.obtenerListaVendedores().get(0));
 
         // Configurar UI de Cliente y Vendedor
         SwingUtilities.invokeLater(new Runnable() {

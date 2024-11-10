@@ -30,7 +30,7 @@ public class Pedido {
     }
 
     public Pedido(Cliente cliente,PedidoDetalle pedidoDetalle, FormaDePago formaDePago, Vendedor vendedor) throws InvalidOrderException {
-        if (!validarItemsUnVendedor(pedidoDetalle)) {
+        if (!validarItemsUnVendedor(pedidoDetalle, vendedor)) {
             throw new InvalidOrderException("Los ítems deben pertenecer al mismo vendedor");
         }
         this.cliente=cliente;
@@ -43,15 +43,12 @@ public class Pedido {
         this.vendedor.addPedido(this);
     }
 
-    private boolean validarItemsUnVendedor(PedidoDetalle pedidoDetalle) {
-        List<ItemMenu> items = pedidoDetalle.getItems();
-        if (items.size() > 0) {
-            Vendedor v = items.get(0).getVendedor();
-            for (int i = 1; i < items.size(); i++) {
-                if(!items.get(i).getVendedor().equals(v))
-                    return false;
-            }
-        }
+    private boolean validarItemsUnVendedor(PedidoDetalle pedidoDetalle, Vendedor vendedor) {
+        List<ItemMenu> itemsVendedor = vendedor.getItemsMenu();
+
+        for (ItemMenu item : pedidoDetalle.getItems()) 
+            if(!itemsVendedor.contains(item)) 
+                return false;
         return true;
     }
 
@@ -111,13 +108,8 @@ public class Pedido {
         this.pedidoDetalle.addItem(item);
     }
     
-    public String getId() {
-        return id;
+    public Object getId() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-    
 
 }
