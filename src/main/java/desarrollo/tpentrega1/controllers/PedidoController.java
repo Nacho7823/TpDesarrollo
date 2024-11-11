@@ -44,6 +44,11 @@ public class PedidoController {
             System.out.println("Error al crear el pedido: " + e.getMessage());
         }
     }
+    
+    public void newPedido(String id, Vendedor vendedor, List<ItemMenu> items, FormaDePago formaDePago, EstadoPedido estado) {
+        Pedido nuevoPedido = new Pedido(id, vendedor, items, formaDePago, estado);
+        pedidoDAO.crearPedido(nuevoPedido);
+    }
 
     // Modificar un pedido existente (cambia su estado)
     public void modificarPedidoEstado(String id, EstadoPedido nuevoEstado) {
@@ -86,5 +91,9 @@ public class PedidoController {
     
     public List<ItemMenu> getItems(Pedido p){
         return pedidoDAO.getItems(p);
+    }
+    
+    public void removeItem(ItemMenu item, Pedido p){
+        pedidoDAO.removeItem(item,p);
     }
 }

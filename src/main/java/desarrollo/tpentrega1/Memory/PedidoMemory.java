@@ -69,4 +69,8 @@ public class PedidoMemory implements PedidoDAO{
     public List<ItemMenu> getItems(Pedido p){
         return p.getItems();
     }
+    
+    public void removeItem(ItemMenu item, Pedido p){
+        p.removeItem(item);
+    }
 }

@@ -42,7 +42,15 @@ public class Pedido {
         this.vendedor=vendedor;
         this.vendedor.addPedido(this);
     }
-
+    
+    public Pedido(String id, Vendedor vendedor, List<ItemMenu> items, FormaDePago formaDePago, EstadoPedido estado){
+        this.id = id;
+        this.vendedor = vendedor;
+        this.vendedor.addPedido(this);
+        this.estado = estado;
+        this.formaDePago = formaDePago;
+        this.pedidoDetalle = new PedidoDetalle(items);
+    }
     private boolean validarItemsUnVendedor(PedidoDetalle pedidoDetalle, Vendedor vendedor) {
         List<ItemMenu> itemsVendedor = vendedor.getItemsMenu();
 
@@ -110,6 +118,10 @@ public class Pedido {
     
     public Object getId() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
+    public void removeItem(ItemMenu item){
+        this.pedidoDetalle.removeItem(item);
     }
 
 }

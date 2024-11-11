@@ -9,6 +9,8 @@ public class MercadoPago implements FormaDePago{
     public MercadoPago(String alias) {
         this.alias = alias;
     }
+    
+    public MercadoPago(){}
 
     @Override
     public double aplicarRecargo(double total) {

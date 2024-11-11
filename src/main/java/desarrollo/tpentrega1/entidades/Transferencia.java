@@ -11,6 +11,9 @@ public class Transferencia implements FormaDePago{
         this.cuit = cuit;
         this.cvu = cvu;
     }
+    
+    public Transferencia(){}
+    
     @Override
     public double aplicarRecargo(double total) {
       return total * 0.02;  

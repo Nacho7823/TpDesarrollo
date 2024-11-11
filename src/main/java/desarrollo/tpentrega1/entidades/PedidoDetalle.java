@@ -20,4 +20,8 @@ public class PedidoDetalle {
     public void addItem(ItemMenu item){
         this.items.add(item);
     }
+    
+    public void removeItem(ItemMenu item){
+        this.items.remove(item);
+    }
 }
