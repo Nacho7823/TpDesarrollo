@@ -117,7 +117,7 @@ layout.setVerticalGroup(layout.createSequentialGroup()
 
                 Coordenada coordenada = new Coordenada(lat, lng);
                 vendedorController.crearNuevoVendedor(id,nombre, direccion, coordenada);
-                actualizarTabla(vendedorController.buscarVendedor(Integer.parseInt(id)));
+                actualizarTabla(vendedorController.buscarVendedor(id));
             }
         });
 
@@ -125,7 +125,7 @@ layout.setVerticalGroup(layout.createSequentialGroup()
             @Override
             public void actionPerformed(ActionEvent e) {
                 String id = txtId.getText();
-                Vendedor vendedor = vendedorController.buscarVendedor(Integer.parseInt(id));
+                Vendedor vendedor = vendedorController.buscarVendedor(id);
                 if (vendedor != null) {
                     actualizarTabla(vendedor);
                 } else {
@@ -146,7 +146,7 @@ layout.setVerticalGroup(layout.createSequentialGroup()
 
                 Coordenada coordenada = new Coordenada(lat, lng);
                 vendedorController.modificarVendedor(id, nombre, direccion, coordenada);
-                actualizarTabla(vendedorController.buscarVendedor(Integer.parseInt(id)));
+                actualizarTabla(vendedorController.buscarVendedor(id));
             }
         });
 
@@ -154,8 +154,8 @@ layout.setVerticalGroup(layout.createSequentialGroup()
             @Override
             public void actionPerformed(ActionEvent e) {
                 String id = txtId.getText();
-                actualizarTabla(vendedorController.buscarVendedor(Integer.parseInt(id)));
-                vendedorController.eliminarVendedor(Integer.parseInt(id));
+                actualizarTabla(vendedorController.buscarVendedor(id));
+                vendedorController.eliminarVendedor(id);
 
             }
         });

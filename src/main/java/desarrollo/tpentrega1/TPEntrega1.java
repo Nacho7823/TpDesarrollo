@@ -325,8 +325,8 @@ public class TPEntrega1 {
         itemsMenuController.crearNuevaBebida("1","Heineken", "Cerveza", 2300, "Bebida", 70, 2.0);
         itemsMenuController.crearNuevoPlato("2", "Guaymallen", "Alfajor", 700, "Plato", 200, false, false, 120);
         
-        vendedorController.buscarVendedor(2).addItemMenu(itemsMenuController.buscarItemsMenu("1"));
-        vendedorController.buscarVendedor(3).addItemMenu(itemsMenuController.buscarItemsMenu("2"));        
+        vendedorController.buscarVendedor("2").addItemMenu(itemsMenuController.buscarItemsMenu("1"));
+        vendedorController.buscarVendedor("3").addItemMenu(itemsMenuController.buscarItemsMenu("2"));        
         
         ItemsPedidoMemory itemsPedidoMemory = new ItemsPedidoMemory();
         itemsPedidoMemory.setItems(vendedorController.obtenerListaVendedores().get(0).getItemsMenu());
