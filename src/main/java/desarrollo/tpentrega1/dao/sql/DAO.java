@@ -1,8 +1,10 @@
 
 package desarrollo.tpentrega1.dao.sql;
 
+import desarrollo.tpentrega1.exceptions.DAOException;
 import java.sql.Connection ;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -54,22 +56,35 @@ public class DAO<T> {
             }
         }
         
-        protected void insertarModificarEliminar(String sql) throws Exception {
-            //recibe la consulta a realizar
-            try {
-                ConectarBase();
-                sentencia = conexion.createStatement();
-                sentencia.executeUpdate(sql);
-                
-            } catch (ClassNotFoundException | SQLException ex) {
-                //conexion.rollback(); hace que no se modifique
-                throw ex;
-            } finally {
-                desconectarBase();
-            }
-            
+    protected void insertarModificarEliminar(String sql, Object... parametros) throws Exception {
+    PreparedStatement preparedStatement = null;
+    try {
+       
+        ConectarBase();
+        
+       
+        preparedStatement = conexion.prepareStatement(sql);
+        
+        
+        for (int i = 0; i < parametros.length; i++) {
+            preparedStatement.setObject(i + 1, parametros[i]);  
         }
         
+        
+        preparedStatement.executeUpdate();
+        
+    } catch (ClassNotFoundException | SQLException ex) {
+        
+        throw new DAOException("Error al ejecutar la consulta: " + ex.getMessage());
+    } finally {
+        
+        if (preparedStatement != null) {
+            preparedStatement.close();
+        }
+        desconectarBase();
+    }
+}
+
         protected void consultarBase(String sql) throws Exception {
             try {
                 ConectarBase();
@@ -80,6 +95,6 @@ public class DAO<T> {
                 throw e;
             }
         }
-          
+        
  
 }
