@@ -3,13 +3,20 @@ package desarrollo.tpentrega1.dao.sql;
 
 import desarrollo.tpentrega1.dao.VendedorDAO;
 import desarrollo.tpentrega1.entidades.Vendedor;
+import java.sql.Connection;
 
 
 
 public class VendedorDAOSql extends DAO<Vendedor> implements VendedorDAO {
+    
+    private Connection connection;
+    
+    public VendedorDAOSql() {
+        connection = ConnectionDB.getConnection();
+    }
 
-    @Override
-    public void listarVendedor() {
+//    @Override
+//    public void listarVendedor() {
         /*try {
             guardar(vendedor);
             System.out.println("El vendedor ha sido creado exitosamente");
@@ -18,10 +25,10 @@ public class VendedorDAOSql extends DAO<Vendedor> implements VendedorDAO {
             
         }
     }*/          // que es esto???? porque se crea un vendedor con la funcion listar
-    }
+//    }
     @Override
     public void crearVendedor(Vendedor vendedor) {
-        throw new UnsupportedOperationException("Not supported yet."); 
+        
     }
 
     @Override
