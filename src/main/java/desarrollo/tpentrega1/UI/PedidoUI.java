@@ -33,7 +33,7 @@ public class PedidoUI extends javax.swing.JPanel {
         initComponents();
         List<Vendedor> listaVendedores = vendedorController.obtenerListaVendedores();
         for (Vendedor v : listaVendedores) {
-            vendedoresDropDown.addItem((v.getNombre()).toString());
+            vendedoresDropDown.addItem(v.getNombre());
         }
         vendedoresDropDown.setMaximumRowCount(listaVendedores.size());
         for(EstadoPedido e : EstadoPedido.values()){
@@ -363,14 +363,29 @@ public class PedidoUI extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_buscarButtonActionPerformed
 
+   protected void actualizarVendedoresDropDown() {
+       int index=vendedoresDropDown.getSelectedIndex();
+       vendedoresDropDown.setSelectedIndex(0);
+    vendedoresDropDown.removeAllItems();
+    
+    List<Vendedor> listaVendedores = vendedorController.obtenerListaVendedores();
+    System.out.println("Actualizando lista de vendedores: " + listaVendedores.size() + " vendedores encontrados.");
+    for (Vendedor v : listaVendedores) {
+        vendedoresDropDown.addItem(v.getNombre());
+    }
+    vendedoresDropDown.setSelectedIndex(index);
+}
+    
     private void idFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_idFieldActionPerformed
 
     private void vendedoresDropDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vendedoresDropDownActionPerformed
-        if(evt.getSource()==vendedoresDropDown){
-            String nombre=(vendedoresDropDown.getSelectedItem()).toString();
+        if(evt.getSource()==vendedoresDropDown && vendedoresDropDown.getSelectedItem()!=null){
             List<Vendedor> listaVendedores = vendedorController.obtenerListaVendedores();
+            
+            String nombre=(vendedoresDropDown.getSelectedItem()).toString();
+            
             for(Vendedor v : listaVendedores){
                 if(v.getNombre().equals(nombre)) vendedor=v;
             }

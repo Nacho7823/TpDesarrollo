@@ -12,11 +12,13 @@ public class MenuGeneral extends JFrame{
 
         JTabbedPane tabbedPane = new JTabbedPane();
 
-
+        PedidoUI interfazPedido=new PedidoUI(pedidoController, vendedorController, itemsMenuController);
+        VendedorUI vendedorUI = new VendedorUI(vendedorController, interfazPedido);
+        
         tabbedPane.addTab("Cliente", new ClienteUI(clienteController));
-        tabbedPane.addTab("Vendedor", new VendedorUI(vendedorController));
+        tabbedPane.addTab("Vendedor", vendedorUI);
         tabbedPane.addTab("ItemMenu",new ItemMenuUI(itemsMenuController));
-        tabbedPane.addTab("Pedido",new PedidoUI(pedidoController, vendedorController, itemsMenuController));
+        tabbedPane.addTab("Pedido",interfazPedido);
 
         add(tabbedPane);
 
