@@ -131,6 +131,11 @@ layout.setVerticalGroup(layout.createSequentialGroup()
                 Vendedor vendedor = vendedorController.buscarVendedor(id);
                 if (vendedor != null) {
                     actualizarTabla(vendedor);
+                    txtId.setText(vendedor.getId());
+                    txtNombre.setText(vendedor.getNombre());
+                    txtDireccion.setText(vendedor.getDireccion());
+                    txtLatitud.setText(vendedor.getCoordenada().getLat() + "");
+                    txtLongitud.setText(vendedor.getCoordenada().getLng() + "");
                 } else {
                     JOptionPane.showMessageDialog(null, "Vendedor no encontrado.");
                     actualizarTabla(null);

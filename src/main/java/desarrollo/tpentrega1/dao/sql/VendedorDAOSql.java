@@ -45,7 +45,7 @@ public class VendedorDAOSql implements VendedorDAO {
     @Override
     public void actualizarVendedor(Vendedor vendedor) throws DAOException {
         try {
-            String sql = "UPDATE vendedor SET nombre = ?, direccion = ?, lognitud = ?, latitud = ? WHERE id_vendedor = ?";
+            String sql = "UPDATE vendedor SET nombre = ?, direccion = ?, longitud = ?, latitud = ? WHERE id_vendedor = ?";
 
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, vendedor.getNombre());
@@ -67,7 +67,7 @@ public class VendedorDAOSql implements VendedorDAO {
             String sql = "DELETE FROM vendedor WHERE id_vendedor = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             
-            statement.setString(1, vendedor.getId());
+            statement.setInt(1, Integer.parseInt(vendedor.getId()));
             statement.executeUpdate();
 
         } catch (SQLException ex) {

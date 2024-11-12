@@ -48,7 +48,7 @@ public class ClienteDAOSql implements ClienteDAO {
     @Override
     public void actualizarCliente(Cliente cliente) throws DAOException {
         try {
-            String sql = "UPDATE cliente SET nombre = ?, cuit = ?, email = ?, direccion = ?, lognitud = ?, latitud = ? WHERE id_cliente = ?";
+            String sql = "UPDATE cliente SET nombre = ?, cuit = ?, email = ?, direccion = ?, longitud = ?, latitud = ? WHERE id_cliente = ?";
 
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, cliente.getNombre());
@@ -72,7 +72,7 @@ public class ClienteDAOSql implements ClienteDAO {
             String sql = "DELETE FROM cliente WHERE id_cliente = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             
-            statement.setString(1, cliente.getId());
+            statement.setInt(1, Integer.parseInt(cliente.getId()));
             statement.executeUpdate();
 
         } catch (SQLException ex) {

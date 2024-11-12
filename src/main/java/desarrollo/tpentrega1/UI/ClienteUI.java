@@ -155,9 +155,24 @@ public class ClienteUI extends JPanel {
                 Cliente cliente = clienteController.buscarCliente(id);
                 if (cliente != null) {
                     actualizarTabla(cliente);
+                    txtId.setText(cliente.getId());
+                    txtNombre.setText(cliente.getNombre());
+                    txtCuit.setText(cliente.getCuit());
+                    txtEmail.setText(cliente.getEmail());
+                    txtDireccion.setText(cliente.getDireccion());
+                    txtLatitud.setText(cliente.getCoordenada().getLat() + "");
+                    txtLongitud.setText(cliente.getCoordenada().getLng() + "");
+
                 } else {
                     JOptionPane.showMessageDialog(null, "Cliente no encontrado.");
                     actualizarTabla(null);
+                        txtId.setText("");
+                    txtNombre.setText("");
+                    txtCuit.setText("");
+                    txtEmail.setText("");
+                    txtDireccion.setText("");
+                    txtLatitud.setText("");
+                    txtLongitud.setText("");
                 }
                 txtId.setText("");
                 txtNombre.setText("");
