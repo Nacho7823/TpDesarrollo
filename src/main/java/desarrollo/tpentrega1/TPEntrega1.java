@@ -295,6 +295,7 @@ import desarrollo.tpentrega1.entidades.Coordenada;
 import desarrollo.tpentrega1.entidades.ItemMenu;
 import desarrollo.tpentrega1.entidades.PedidoDetalle;
 import desarrollo.tpentrega1.entidades.Transferencia;
+import desarrollo.tpentrega1.enums.EstadoPedido;
 import desarrollo.tpentrega1.interfaces.FormaDePago;
 import java.util.List;
 
@@ -336,12 +337,13 @@ public class TPEntrega1 {
         List<ItemMenu> items = itemsPedidoMemory.getItems();
 
         FormaDePago formaDePago = new Transferencia("20346572182", "0000003100092901454053");
-        PedidoDetalle pedidoDetalle = new PedidoDetalle(items);
 
-        pedidoController.crearNuevoPedido(clienteController.obtenerListaClientes().get(0), 
-            pedidoDetalle, 
+        pedidoController.newPedido("1",clienteController.obtenerListaClientes().get(0),
+                vendedorController.obtenerListaVendedores().get(0),
+            items, 
             formaDePago, 
-            vendedorController.obtenerListaVendedores().get(0));
+            EstadoPedido.RECIBIDO
+            );
 
         // Configurar UI de Cliente y Vendedor
         SwingUtilities.invokeLater(new Runnable() {

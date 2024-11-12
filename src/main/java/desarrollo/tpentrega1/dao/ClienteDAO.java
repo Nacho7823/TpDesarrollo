@@ -4,9 +4,9 @@ import desarrollo.tpentrega1.entidades.Cliente;
 
 public interface ClienteDAO {
 
-    public void listarCliente(Cliente cliente);
+    public void listarCliente();
     public void crearCliente(Cliente cliente);
     public void actualizarCliente(Cliente cliente);
-    public void eliminarCliente(int id);
-    public Cliente buscarCliente(int id);
+    public void eliminarCliente(String id);
+    public Cliente buscarCliente(String id);
 }

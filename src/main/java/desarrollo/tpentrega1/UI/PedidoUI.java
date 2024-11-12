@@ -1,10 +1,12 @@
 
 package desarrollo.tpentrega1.UI;
 
+import desarrollo.tpentrega1.controllers.ClienteController;
 import desarrollo.tpentrega1.controllers.ItemsMenuController;
 import desarrollo.tpentrega1.controllers.PedidoController;
 import desarrollo.tpentrega1.controllers.VendedorController;
 import desarrollo.tpentrega1.entidades.Bebida;
+import desarrollo.tpentrega1.entidades.Cliente;
 import desarrollo.tpentrega1.entidades.ItemMenu;
 import desarrollo.tpentrega1.entidades.MercadoPago;
 import desarrollo.tpentrega1.entidades.Pedido;
@@ -18,19 +20,28 @@ import java.util.List;
 
 public class PedidoUI extends javax.swing.JPanel {
     private VendedorController vendedorController;
+    private ClienteController clienteController;
     private PedidoController pedidoController;
     private ItemsMenuController itemsMenuController;
     private Vendedor vendedor;
+    private Cliente cliente;
     private Pedido pedido;
     List<ItemMenu> items = new ArrayList();
     List<Bebida> bebidas = new ArrayList();
     List<Plato> platos = new ArrayList();
     
-    public PedidoUI(PedidoController pedidoController, VendedorController vendedorController, ItemsMenuController itemsMenuController) {
+    public PedidoUI(PedidoController pedidoController,ClienteController clienteController,
+            VendedorController vendedorController, ItemsMenuController itemsMenuController) {
         this.pedidoController = pedidoController;
+        this.clienteController=clienteController;
         this.vendedorController = vendedorController;
         this.itemsMenuController = itemsMenuController;
         initComponents();
+        List<Cliente> listaClientes= clienteController.obtenerListaClientes();
+                for (Cliente c : listaClientes) {
+            clientesDropDown.addItem(c.getNombre());
+        }
+                clientesDropDown.setMaximumRowCount(listaClientes.size());
         List<Vendedor> listaVendedores = vendedorController.obtenerListaVendedores();
         for (Vendedor v : listaVendedores) {
             vendedoresDropDown.addItem(v.getNombre());
@@ -76,6 +87,8 @@ public class PedidoUI extends javax.swing.JPanel {
         jList1 = new javax.swing.JList<>();
         estadoDropDown = new javax.swing.JComboBox<>();
         formaDePagoDropDown = new javax.swing.JComboBox<>();
+        jLabel5 = new javax.swing.JLabel();
+        clientesDropDown = new javax.swing.JComboBox<>();
 
         itemsFrame.setLocationByPlatform(true);
         itemsFrame.setSize(new java.awt.Dimension(400, 400));
@@ -261,6 +274,15 @@ public class PedidoUI extends javax.swing.JPanel {
             }
         });
 
+        jLabel5.setText("Cliente:");
+
+        clientesDropDown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {}));
+        clientesDropDown.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clientesDropDownActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -275,9 +297,15 @@ public class PedidoUI extends javax.swing.JPanel {
                             .addComponent(jLabel2)
                             .addComponent(jLabel4)
                             .addComponent(jLabel6)
-                            .addComponent(jLabel3))
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel5))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(idField)
+                            .addComponent(jScrollPane4)
+                            .addComponent(estadoDropDown, javax.swing.GroupLayout.Alignment.TRAILING, 0, 499, Short.MAX_VALUE)
+                            .addComponent(formaDePagoDropDown, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(vendedoresDropDown, javax.swing.GroupLayout.Alignment.TRAILING, 0, 499, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(29, 29, 29)
                                 .addComponent(editarItemsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -286,12 +314,9 @@ public class PedidoUI extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(buscarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(eliminarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(idField)
-                            .addComponent(vendedoresDropDown, 0, 499, Short.MAX_VALUE)
-                            .addComponent(jScrollPane4)
-                            .addComponent(estadoDropDown, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(formaDePagoDropDown, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addComponent(eliminarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(clientesDropDown, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -302,6 +327,10 @@ public class PedidoUI extends javax.swing.JPanel {
                     .addComponent(idField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(clientesDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(4, 4, 4)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(vendedoresDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -325,7 +354,7 @@ public class PedidoUI extends javax.swing.JPanel {
                     .addComponent(editarItemsButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(441, Short.MAX_VALUE))
+                .addContainerGap(415, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -334,7 +363,7 @@ public class PedidoUI extends javax.swing.JPanel {
     }//GEN-LAST:event_aceptarButtonActionPerformed
 
     private void crearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearButtonActionPerformed
-        FormaDePago f = null;
+    FormaDePago f = null;
         EstadoPedido ep = null;
         if(formaDePagoDropDown.getSelectedItem().toString().equals("Transferencia")){
             f = new Transferencia();
@@ -347,7 +376,7 @@ public class PedidoUI extends javax.swing.JPanel {
             }
             
         }
-        pedidoController.newPedido(idField.getText(), vendedor, items, f, ep);
+        pedidoController.newPedido(idField.getText(),cliente, vendedor, items, f, ep);
         actualizarTabla();
     }//GEN-LAST:event_crearButtonActionPerformed
 
@@ -361,13 +390,23 @@ public class PedidoUI extends javax.swing.JPanel {
     vendedoresDropDown.removeAllItems();
     
     List<Vendedor> listaVendedores = vendedorController.obtenerListaVendedores();
-    System.out.println("Actualizando lista de vendedores: " + listaVendedores.size() + " vendedores encontrados.");
     for (Vendedor v : listaVendedores) {
         vendedoresDropDown.addItem(v.getNombre());
     }
     vendedoresDropDown.setSelectedIndex(index);
 }
+       protected void actualizarClientesDropDown() {
+       int index=clientesDropDown.getSelectedIndex();
+       clientesDropDown.setSelectedIndex(0);
+    clientesDropDown.removeAllItems();
     
+    List<Cliente> listaClientes = clienteController.obtenerListaClientes();
+
+    for (Cliente c : listaClientes) {
+        clientesDropDown.addItem(c.getNombre());
+    }
+    clientesDropDown.setSelectedIndex(index);
+}
     private void idFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_idFieldActionPerformed
@@ -407,11 +446,23 @@ public class PedidoUI extends javax.swing.JPanel {
 
     private void eliminarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarButtonActionPerformed
        if(!(idField.getText().equals(""))){
-           pedidoController.eliminarPedido(Integer.parseInt(idField.getText()));
+           pedidoController.eliminarPedido(idField.getText());
        }
        actualizarTabla();   
         
     }//GEN-LAST:event_eliminarButtonActionPerformed
+
+    private void clientesDropDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientesDropDownActionPerformed
+        if(evt.getSource()==clientesDropDown && clientesDropDown.getSelectedItem()!=null){
+            List<Cliente> listaClientes = clienteController.obtenerListaClientes();
+            
+            String nombre=(clientesDropDown.getSelectedItem()).toString();
+            
+            for(Cliente c : listaClientes){
+                if(c.getNombre().equals(nombre)) cliente=c;
+            }
+        }
+    }//GEN-LAST:event_clientesDropDownActionPerformed
     private void actualizarItems(List<ItemMenu> lista){
         jList1.removeAll();
         try{
@@ -431,19 +482,21 @@ public class PedidoUI extends javax.swing.JPanel {
     private void actualizarTabla(){
         List<Pedido> pedidos = pedidoController.obtenerListaPedidos();
 
-        String[] columnNames = {"Id", "Vendedor", "Estado", "Forma de pago", "Total", "Items"};
-        Object[][] data = new Object[pedidos.size()][6];
+
+        String[] columnNames = {"Id","Cliente", "Vendedor", "Estado", "Forma de pago", "Total", "Items"};
+        Object[][] data = new Object[pedidos.size()][7];
         for (int i = 0; i < pedidos.size(); i++) {
             List<String> items1 = new ArrayList();
             data[i][0] = pedidos.get(i).getId();
-            data[i][1] = pedidos.get(i).getVendedor().getNombre();
-            data[i][2] = pedidos.get(i).getEstado().toString();
-            data[i][3] = pedidos.get(i).getFormaDePago().getClass();
-            data[i][4] = pedidos.get(i).getTotal();
+            data[i][1] = pedidos.get(i).getCliente();
+            data[i][2] = pedidos.get(i).getVendedor().getNombre();
+            data[i][3] = pedidos.get(i).getEstado().toString();
+            data[i][4] = pedidos.get(i).getFormaDePago().getClass();
+            data[i][5] = pedidos.get(i).getTotal();
             for(ItemMenu item : pedidos.get(i).getItems()){
                 items1.add(item.getNombre());
             }
-            data[i][5] = items1;
+            data[i][6] = items1;
         }
         jTable3.setModel(new javax.swing.table.DefaultTableModel(data, columnNames));
     }
@@ -553,6 +606,7 @@ public class PedidoUI extends javax.swing.JPanel {
     private javax.swing.JButton aceptarButton;
     private javax.swing.JTable bebidaTable;
     private javax.swing.JButton buscarButton;
+    private javax.swing.JComboBox<String> clientesDropDown;
     private javax.swing.JButton crearButton;
     private javax.swing.JButton editarItemsButton;
     private javax.swing.JButton eliminarButton;
@@ -564,6 +618,7 @@ public class PedidoUI extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;

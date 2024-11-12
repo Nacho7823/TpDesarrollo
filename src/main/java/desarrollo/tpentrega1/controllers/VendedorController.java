@@ -5,7 +5,6 @@ import desarrollo.tpentrega1.entidades.Vendedor;
 import desarrollo.tpentrega1.Memory.VendedorMemory;
 import desarrollo.tpentrega1.entidades.Coordenada;
 import java.util.List;
-import java.util.UUID;
 
 public class VendedorController {
     private VendedorMemory vendedorDAO = new VendedorMemory();
@@ -17,12 +16,11 @@ public class VendedorController {
     // Mostrar la lista de todos los vendedores
     public void mostrarListaVendedor() {
         System.out.println("Lista de Vendedores:");
-        vendedorDAO.listarVendedor(null); // null porque el método listarVendedor no necesita un parámetro
+        vendedorDAO.listarVendedor();
     }
 
     // Crear un nuevo vendedor con generación automática de ID
     public void crearNuevoVendedor(String id,String nombre, String direccion, Coordenada coordenada) {
-        //String id = UUID.randomUUID().toString(); // Generación automática de ID
         Vendedor nuevoVendedor = new Vendedor(id, nombre, direccion, coordenada);
         vendedorDAO.crearVendedor(nuevoVendedor);
     }

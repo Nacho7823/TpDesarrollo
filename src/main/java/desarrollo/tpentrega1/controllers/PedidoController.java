@@ -1,25 +1,17 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package desarrollo.tpentrega1.controllers;
 
 import desarrollo.tpentrega1.Memory.PedidoMemory;
 import desarrollo.tpentrega1.entidades.Cliente;
 import desarrollo.tpentrega1.entidades.ItemMenu;
 import desarrollo.tpentrega1.entidades.Pedido;
-import desarrollo.tpentrega1.entidades.PedidoDetalle;
 import desarrollo.tpentrega1.entidades.Vendedor;
 import desarrollo.tpentrega1.enums.EstadoPedido;
 import desarrollo.tpentrega1.exceptions.InvalidOrderException;
 import desarrollo.tpentrega1.interfaces.FormaDePago;
 import java.util.List;
-import java.util.UUID;
 
-/**
- *
- * @author florh
- */
+
 public class PedidoController {
     private PedidoMemory pedidoDAO = new PedidoMemory();
 
@@ -30,29 +22,21 @@ public class PedidoController {
     // Mostrar lista de todos los pedidos
     public void mostrarListaPedidos() {
         System.out.println("Lista de Pedidos:");
-        pedidoDAO.listarPedido(null);
+        pedidoDAO.listarPedido();
     }
-
-    // Crear un nuevo pedido con generación automática de ID
-    public void crearNuevoPedido(Cliente cliente, PedidoDetalle pedidoDetalle, FormaDePago formaDePago, Vendedor vendedor) {
+    
+    public void newPedido(String id,Cliente cliente, Vendedor vendedor, List<ItemMenu> items, FormaDePago formaDePago, EstadoPedido estado) {
         try {
-            String id = UUID.randomUUID().toString(); // Generación automática de ID
-            Pedido nuevoPedido = new Pedido(cliente, pedidoDetalle, formaDePago, vendedor);
-            pedidoDAO.crearPedido(nuevoPedido);
-            
+        Pedido nuevoPedido = new Pedido(id,cliente, vendedor, items, formaDePago, estado);
+        pedidoDAO.crearPedido(nuevoPedido);
         } catch (InvalidOrderException e) {
             System.out.println("Error al crear el pedido: " + e.getMessage());
         }
     }
-    
-    public void newPedido(String id, Vendedor vendedor, List<ItemMenu> items, FormaDePago formaDePago, EstadoPedido estado) {
-        Pedido nuevoPedido = new Pedido(id, vendedor, items, formaDePago, estado);
-        pedidoDAO.crearPedido(nuevoPedido);
-    }
 
     // Modificar un pedido existente (cambia su estado)
     public void modificarPedidoEstado(String id, EstadoPedido nuevoEstado) {
-        Pedido pedidoExistente = pedidoDAO.buscarPedido(Integer.parseInt(id));
+        Pedido pedidoExistente = pedidoDAO.buscarPedido(id);
         if (pedidoExistente != null) {
             pedidoExistente.setEstado(nuevoEstado);
             pedidoDAO.actualizarPedido(pedidoExistente);
@@ -63,13 +47,13 @@ public class PedidoController {
     }
 
     // Eliminar un pedido por ID
-    public void eliminarPedido(int id) {
+    public void eliminarPedido(String id) {
         pedidoDAO.eliminarPedido(id);
         
     }
 
     // Buscar un pedido por ID
-    public void buscarPedido(int id) {
+    public void buscarPedido(String id) {
         Pedido pedido = pedidoDAO.buscarPedido(id);
         if (pedido != null) {
             System.out.println("Pedido encontrado con ID: " + pedido.getId());
@@ -77,7 +61,7 @@ public class PedidoController {
             System.out.println("Pedido no encontrado con ID: " + id);
         }
     }
-    public Pedido buscarYDevolverPedido(int id){
+    public Pedido buscarYDevolverPedido(String id){
         return pedidoDAO.buscarPedido(id);
     }
     //public void editarPedido(int id, )

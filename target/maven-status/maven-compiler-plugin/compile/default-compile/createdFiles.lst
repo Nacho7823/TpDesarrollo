@@ -23,6 +23,7 @@ desarrollo\tpentrega1\exceptions\InvalidOrderException.class
 desarrollo\tpentrega1\UI\ClienteUI$3.class
 desarrollo\tpentrega1\enums\EstadoPedido.class
 desarrollo\tpentrega1\UI\ItemType.class
+desarrollo\tpentrega1\UI\PedidoUI$13.class
 desarrollo\tpentrega1\interfaces\FormaDePago.class
 desarrollo\tpentrega1\UI\PedidoUI$6.class
 desarrollo\tpentrega1\UI\VendedorUI$4.class

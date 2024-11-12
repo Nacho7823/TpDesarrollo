@@ -15,7 +15,7 @@ public class VendedorMemory implements VendedorDAO{
     }
     
     @Override
-    public void listarVendedor(Vendedor vendedor) {
+    public void listarVendedor() {
         for (Vendedor v : vendedores) {
             System.out.println("ID: " + v.getId() + ", Nombre: " + v.getNombre() +
                                ", Dirección: " + v.getDireccion() +

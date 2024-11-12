@@ -14,54 +14,37 @@ public class Pedido {
     private Cliente cliente;
     private Vendedor vendedor;
     private String id;
-    private PedidoDetalle pedidoDetalle;
+    private List<ItemMenu> items;
     private FormaDePago formaDePago;
     private double total;
     private EstadoPedido estado;
     private List<Observador> observadores = new ArrayList<>();
     
-    public Pedido(String id, EstadoPedido estadoInicial,Cliente cliente, Vendedor vendedor) {
-        this.id = id;
-        this.estado = estadoInicial;
-        this.total=0;
-        this.cliente=cliente;
-        this.vendedor=vendedor;
-        this.vendedor.addPedido(this);
-    }
 
-    public Pedido(Cliente cliente,PedidoDetalle pedidoDetalle, FormaDePago formaDePago, Vendedor vendedor) throws InvalidOrderException {
-        if (!validarItemsUnVendedor(pedidoDetalle, vendedor)) {
+    
+    public Pedido(String id,Cliente cliente, Vendedor vendedor, List<ItemMenu> items, FormaDePago formaDePago, EstadoPedido estado)throws InvalidOrderException {
+        if (!validarItemsUnVendedor(items, vendedor)) {
             throw new InvalidOrderException("Los ítems deben pertenecer al mismo vendedor");
         }
-        this.cliente=cliente;
-        this.agregarObservador(cliente);
-        this.pedidoDetalle = pedidoDetalle;
-        this.formaDePago = formaDePago;
-        this.total = calcularTotal();
-        this.estado = EstadoPedido.RECIBIDO;
-        this.vendedor=vendedor;
-        this.vendedor.addPedido(this);
-    }
-    
-    public Pedido(String id, Vendedor vendedor, List<ItemMenu> items, FormaDePago formaDePago, EstadoPedido estado){
         this.id = id;
+        this.cliente=cliente;
         this.vendedor = vendedor;
         this.vendedor.addPedido(this);
         this.estado = estado;
         this.formaDePago = formaDePago;
-        this.pedidoDetalle = new PedidoDetalle(items);
+        this.items=items;
     }
-    private boolean validarItemsUnVendedor(PedidoDetalle pedidoDetalle, Vendedor vendedor) {
+    private boolean validarItemsUnVendedor(List<ItemMenu> items, Vendedor vendedor) {
         List<ItemMenu> itemsVendedor = vendedor.getItemsMenu();
 
-        for (ItemMenu item : pedidoDetalle.getItems()) 
+        for (ItemMenu item : items) 
             if(!itemsVendedor.contains(item)) 
                 return false;
         return true;
     }
 
     private double calcularTotal() {
-        double totalProductos = pedidoDetalle.getItems().stream().mapToDouble(ItemMenu::getPrecio).sum();
+        double totalProductos = items.stream().mapToDouble(ItemMenu::getPrecio).sum();
         this.total = totalProductos + formaDePago.aplicarRecargo(totalProductos);
         return this.total;
     }
@@ -101,20 +84,16 @@ public class Pedido {
         return this.formaDePago;
     }
     
-    public PedidoDetalle getPedidoDetalle() {
-        return pedidoDetalle;
-    }
-    
     public Cliente getCliente() {
         return cliente;
     }
 
     public List<ItemMenu> getItems(){
-        return this.pedidoDetalle.getItems();
+        return items;
     }
     
     public void addItem(ItemMenu item){
-        this.pedidoDetalle.addItem(item);
+        this.items.add(item);
     }
     
     public Object getId() {
@@ -122,7 +101,7 @@ public class Pedido {
     }
     
     public void removeItem(ItemMenu item){
-        this.pedidoDetalle.removeItem(item);
+        this.items.remove(item);
     }
 
 }

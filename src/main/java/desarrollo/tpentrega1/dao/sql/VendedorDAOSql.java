@@ -9,16 +9,16 @@ import desarrollo.tpentrega1.entidades.Vendedor;
 public class VendedorDAOSql extends DAO<Vendedor> implements VendedorDAO {
 
     @Override
-    public void listarVendedor(Vendedor vendedor) {
-        try {
+    public void listarVendedor() {
+        /*try {
             guardar(vendedor);
             System.out.println("El vendedor ha sido creado exitosamente");
         } catch (Exception e) {
             System.out.println(e);
             
         }
+    }*/          // que es esto???? porque se crea un vendedor con la funcion listar
     }
-
     @Override
     public void crearVendedor(Vendedor vendedor) {
         throw new UnsupportedOperationException("Not supported yet."); 
@@ -29,14 +29,18 @@ public class VendedorDAOSql extends DAO<Vendedor> implements VendedorDAO {
         throw new UnsupportedOperationException("Not supported yet."); 
     }
 
+    @Override
     public void eliminarVendedor(String id) {
         throw new UnsupportedOperationException("Not supported yet."); 
     }
 
+    @Override
     public Vendedor buscarVendedor(String id) {
         throw new UnsupportedOperationException("Not supported yet."); 
     }
 
+    
+    // por que hay funciones iguales??
     public void eliminarVendedor(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }

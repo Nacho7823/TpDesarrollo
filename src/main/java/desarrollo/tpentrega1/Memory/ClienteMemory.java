@@ -1,6 +1,5 @@
 
 package desarrollo.tpentrega1.Memory;
-import desarrollo.tpentrega1.dao.ClienteDAO;
 
 import desarrollo.tpentrega1.dao.ClienteDAO;
 import desarrollo.tpentrega1.entidades.Cliente;
@@ -16,7 +15,7 @@ private static List<Cliente> clientes = new ArrayList<>();
     }
 
     @Override
-    public void listarCliente(Cliente cliente) {
+    public void listarCliente() {
         for (Cliente c : clientes) {
             System.out.println("ID: " + c.getId() + ", Nombre: " + c.getNombre() + 
                                ", CUIT: " + c.getCuit() + ", Email: " + c.getEmail() + 
@@ -43,17 +42,17 @@ private static List<Cliente> clientes = new ArrayList<>();
     }
 
     @Override
-    public void eliminarCliente(int id) {
-        boolean existe= clientes.stream().anyMatch(c ->c.getId().equals(String.valueOf(id)));
+    public void eliminarCliente(String id) {
+        boolean existe= clientes.stream().anyMatch(c ->c.getId().equals(id));
         if(existe){
-        clientes.removeIf(c -> c.getId().equals(String.valueOf(id)));
+        clientes.removeIf(c -> c.getId().equals(id));
         System.out.println("Cliente eliminado con ID: " + id);
     }}
 
     @Override
-    public Cliente buscarCliente(int id) {
+    public Cliente buscarCliente(String id) {
          for (Cliente cliente : clientes) {
-            if (cliente.getId().equals(String.valueOf(id))) {
+            if (cliente.getId().equals(id)) {
                 
                 return cliente;
             }

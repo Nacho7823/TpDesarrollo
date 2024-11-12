@@ -14,9 +14,11 @@ public class ClienteUI extends JPanel {
     private JButton btnCrear, btnBuscar, btnEditar, btnEliminar;
     private JTable tableClientes;
     private ClienteController clienteController;
+    private PedidoUI pedidosUI;
 
-    public ClienteUI(ClienteController clienteController) {
+    public ClienteUI(ClienteController clienteController,PedidoUI pedidosUI) {
         this.clienteController = clienteController;
+        this.pedidosUI=pedidosUI;
 
         // Crear los componentes
         JLabel lblId = new JLabel("ID:");
@@ -133,6 +135,7 @@ public class ClienteUI extends JPanel {
                 Coordenada coordenada = new Coordenada(lat, lng);
                 clienteController.crearNuevoCliente(id,nombre, cuit, email, direccion, coordenada);
                 actualizarTabla(clienteController.obtenerListaClientes().getLast());
+                pedidosUI.actualizarClientesDropDown();
                 txtId.setText("");
                 txtNombre.setText("");
                 txtCuit.setText("");
@@ -148,7 +151,7 @@ public class ClienteUI extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String id = txtId.getText();
-                Cliente cliente = clienteController.buscarCliente(Integer.parseInt(id));
+                Cliente cliente = clienteController.buscarCliente(id);
                 if (cliente != null) {
                     actualizarTabla(cliente);
                 } else {
@@ -178,7 +181,7 @@ public class ClienteUI extends JPanel {
 
                 Coordenada coordenada = new Coordenada(lat, lng);
                 clienteController.modificarCliente(id, nombre, cuit, email, direccion, coordenada);
-                actualizarTabla(clienteController.buscarCliente(Integer.parseInt(id)));
+                actualizarTabla(clienteController.buscarCliente(id));
                 txtId.setText("");
                 txtNombre.setText("");
                 txtCuit.setText("");
@@ -193,8 +196,8 @@ public class ClienteUI extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String id = txtId.getText();
-                actualizarTabla(clienteController.buscarCliente(Integer.parseInt(id)));
-                clienteController.eliminarCliente(Integer.parseInt(id));
+                actualizarTabla(clienteController.buscarCliente(id));
+                clienteController.eliminarCliente(id);
             txtId.setText("");
                 txtNombre.setText("");
                 txtCuit.setText("");
@@ -202,6 +205,7 @@ public class ClienteUI extends JPanel {
                 txtDireccion.setText("");
                 txtLatitud.setText("");
                 txtLongitud.setText("");
+                pedidosUI.actualizarClientesDropDown();
             }
            
         });

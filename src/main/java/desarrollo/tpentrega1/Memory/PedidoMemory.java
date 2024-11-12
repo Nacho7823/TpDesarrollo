@@ -15,7 +15,7 @@ public class PedidoMemory implements PedidoDAO{
     }
  
     @Override
-    public void listarPedido(Pedido pedido) {
+    public void listarPedido() {
         for (Pedido p : pedidos) {
             System.out.println("ID: " + p.getId() + ", Estado: " + p.getEstado() +
                                ", Total: " + p.getTotal() +
@@ -26,7 +26,6 @@ public class PedidoMemory implements PedidoDAO{
     @Override
     public void crearPedido(Pedido pedido) {
         pedidos.add(pedido);
-        // System.out.println("Pedido creado con ID: " + pedido.getId());
     }
 
     @Override
@@ -43,17 +42,17 @@ public class PedidoMemory implements PedidoDAO{
     
 
     @Override
-    public void eliminarPedido(int id) {
-        boolean existe = pedidos.stream().anyMatch(p-> p.getId().equals(String.valueOf(id)));
+    public void eliminarPedido(String id) {
+        boolean existe = pedidos.stream().anyMatch(p-> p.getId().equals(id));
         if(existe){
-        pedidos.removeIf(p -> p.getId().equals(String.valueOf(id)));
+        pedidos.removeIf(p -> p.getId().equals(id));
         System.out.println("Pedido eliminado con ID: " + id);
     }}
 
     @Override
-    public Pedido buscarPedido(int id) {
+    public Pedido buscarPedido(String id) {
        for (Pedido pedido : pedidos) {
-            if (pedido.getId().equals(String.valueOf(id))) {
+            if (pedido.getId().equals(id)) {
                 
                 return pedido;
             }
