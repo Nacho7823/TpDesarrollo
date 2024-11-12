@@ -62,7 +62,8 @@ public class Pedido {
 
     private double calcularTotal() {
         double totalProductos = pedidoDetalle.getItems().stream().mapToDouble(ItemMenu::getPrecio).sum();
-        return totalProductos + formaDePago.aplicarRecargo(totalProductos);
+        this.total = totalProductos + formaDePago.aplicarRecargo(totalProductos);
+        return this.total;
     }
     
     public void agregarObservador(Observador observador) {
@@ -89,7 +90,7 @@ public class Pedido {
     }
 
     public double getTotal() {
-        return total;
+        return this.calcularTotal();
     }
     
     public Vendedor getVendedor(){
@@ -117,7 +118,7 @@ public class Pedido {
     }
     
     public Object getId() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return this.id;
     }
     
     public void removeItem(ItemMenu item){

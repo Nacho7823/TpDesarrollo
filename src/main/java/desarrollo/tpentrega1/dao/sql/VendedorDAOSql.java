@@ -29,14 +29,20 @@ public class VendedorDAOSql extends DAO<Vendedor> implements VendedorDAO {
         throw new UnsupportedOperationException("Not supported yet."); 
     }
 
-    @Override
     public void eliminarVendedor(String id) {
         throw new UnsupportedOperationException("Not supported yet."); 
     }
 
-    @Override
     public Vendedor buscarVendedor(String id) {
         throw new UnsupportedOperationException("Not supported yet."); 
+    }
+
+    public void eliminarVendedor(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public Vendedor buscarVendedor(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }
