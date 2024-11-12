@@ -6,7 +6,6 @@ import java.util.List;
 
 public interface VendedorDAO {
 
-//public void listarVendedor();
     public void crearVendedor(Vendedor vendedor) throws DAOException;
 
     public void actualizarVendedor(Vendedor vendedor) throws DAOException;

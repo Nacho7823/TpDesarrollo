@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-//public class VendedorDAOSql extends DAO<Vendedor> implements VendedorDAO {
 public class VendedorDAOSql implements VendedorDAO {
 
     private Connection connection;
@@ -28,7 +27,7 @@ public class VendedorDAOSql implements VendedorDAO {
         try {
             String sql = "INSERT INTO vendedor (id_vendedor, nombre, direccion, longitud, latitud) VALUES (?, ?, ?, ?, ?)";
             
-            PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement = connection.prepareStatement(sql);
             
             statement.setInt(1, Integer.parseInt(vendedor.getId()));
             statement.setString(2, vendedor.getNombre());
@@ -47,13 +46,15 @@ public class VendedorDAOSql implements VendedorDAO {
     public void actualizarVendedor(Vendedor vendedor) throws DAOException {
         try {
             String sql = "UPDATE vendedor SET nombre = ?, direccion = ?, lognitud = ?, latitud = ? WHERE id_vendedor = ?";
-            ArrayList<String> ar = new ArrayList<String>();
-            ar.add(vendedor.getNombre());
-            ar.add(vendedor.getDireccion());
-            ar.add(vendedor.getCoordenada().getLng() + "");
-            ar.add(vendedor.getCoordenada().getLat() + "");
-            ar.add(vendedor.getId());
-            update(sql, ar);
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, vendedor.getNombre());
+            statement.setString(2, vendedor.getDireccion());
+            statement.setDouble(3, vendedor.getCoordenada().getLng());
+            statement.setDouble(4, vendedor.getCoordenada().getLat());
+            statement.setInt(5, Integer.parseInt(vendedor.getId()));
+        
+            statement.executeUpdate();
 
         } catch (SQLException ex) {
             throw new DAOException("no se pudo actualizar el vendedor: \n" + ex.getMessage());
@@ -64,9 +65,10 @@ public class VendedorDAOSql implements VendedorDAO {
     public void eliminarVendedor(Vendedor vendedor) throws DAOException {
         try {
             String sql = "DELETE FROM vendedor WHERE id_vendedor = ?";
-            ArrayList<String> ar = new ArrayList<String>();
-            ar.add(vendedor.getId());
-            update(sql, ar);
+            PreparedStatement statement = connection.prepareStatement(sql);
+            
+            statement.setString(1, vendedor.getId());
+            statement.executeUpdate();
 
         } catch (SQLException ex) {
             throw new DAOException("no se pudo actualizar el vendedor: \n" + ex.getMessage());
@@ -84,7 +86,6 @@ public class VendedorDAOSql implements VendedorDAO {
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
-                // Suponiendo que tienes columnas como 'nombre' y 'email'
                 String nombre = rs.getString("nombre");
                 String direccion = rs.getString("direccion");
                 double longitud = rs.getDouble("longitud");
@@ -105,11 +106,11 @@ public class VendedorDAOSql implements VendedorDAO {
             
             String sql = "SELECT id_vendedor, nombre, direccion, longitud, latitud FROM vendedor";
 
-            ResultSet rs = select(sql, new ArrayList<String>());
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet rs = statement.executeQuery();
 
             ArrayList<Vendedor> list = new ArrayList<Vendedor>();
             while (rs.next()) {
-                // Suponiendo que tienes columnas como 'nombre' y 'email'
                 String id_vendedor = rs.getString("id_vendedor");
                 String nombre = rs.getString("nombre");
                 String direccion = rs.getString("direccion");

@@ -16,10 +16,10 @@ public class ClienteController {
 
     
     // Mostrar lista de todos los clientes
-    public void mostrarListaClientes() {
-        System.out.println("Lista de Clientes:");
-        clienteDAO.listarCliente();
-    }
+//    public void mostrarListaClientes() {
+//        System.out.println("Lista de Clientes:");
+//        clienteDAO.listarCliente();
+//    }
 
     public void crearNuevoCliente(String id,String nombre, String cuit, String email, String direccion, Coordenada coordenada) {
         Cliente nuevoCliente = new Cliente(id, nombre, cuit, email, direccion, coordenada);
@@ -43,7 +43,7 @@ public class ClienteController {
     }
 
     // Eliminar un cliente por ID
-    public void eliminarCliente(String id) {
+    public void eliminarCliente(Cliente id) {
         clienteDAO.eliminarCliente(id);
         
     }

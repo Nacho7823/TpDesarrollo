@@ -10,15 +10,16 @@ import java.awt.event.ActionListener;
 import javax.swing.table.JTableHeader;
 
 public class ClienteUI extends JPanel {
+
     private JTextField txtId, txtNombre, txtCuit, txtEmail, txtDireccion, txtLatitud, txtLongitud;
     private JButton btnCrear, btnBuscar, btnEditar, btnEliminar;
     private JTable tableClientes;
     private ClienteController clienteController;
     private PedidoUI pedidosUI;
 
-    public ClienteUI(ClienteController clienteController,PedidoUI pedidosUI) {
+    public ClienteUI(ClienteController clienteController, PedidoUI pedidosUI) {
         this.clienteController = clienteController;
-        this.pedidosUI=pedidosUI;
+        this.pedidosUI = pedidosUI;
 
         // Crear los componentes
         JLabel lblId = new JLabel("ID:");
@@ -48,73 +49,73 @@ public class ClienteUI extends JPanel {
         tableClientes.setRowHeight(40);
         JTableHeader tableHeader = tableClientes.getTableHeader();
         tableHeader.setReorderingAllowed(false);
-        
+
         JPanel tablePanel = new JPanel();
         tablePanel.setLayout(new BoxLayout(tablePanel, BoxLayout.Y_AXIS));
-        tablePanel.add(tableHeader); 
+        tablePanel.add(tableHeader);
         tablePanel.add(tableClientes);
-        
+
         this.setBackground(new Color(130, 217, 217));
         GroupLayout layout = new GroupLayout(this);
         this.setLayout(layout);
         layout.setAutoCreateGaps(true);
         layout.setAutoCreateContainerGaps(true);
 
-       layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addComponent(lblId)
-                    .addComponent(lblNombre)
-                    .addComponent(lblCuit)
-                    .addComponent(lblEmail)
-                    .addComponent(lblDireccion)
-                    .addComponent(lblLatitud)
-                    .addComponent(lblLongitud))
-                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addComponent(txtId)
-                    .addComponent(txtNombre)
-                    .addComponent(txtCuit)
-                    .addComponent(txtEmail)
-                    .addComponent(txtDireccion)
-                    .addComponent(txtLatitud)
-                    .addComponent(txtLongitud)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnCrear)
-                        .addComponent(btnBuscar)
-                        .addComponent(btnEditar)
-                        .addComponent(btnEliminar))))
-            .addComponent(tablePanel)
+        layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                .addComponent(lblId)
+                                .addComponent(lblNombre)
+                                .addComponent(lblCuit)
+                                .addComponent(lblEmail)
+                                .addComponent(lblDireccion)
+                                .addComponent(lblLatitud)
+                                .addComponent(lblLongitud))
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                .addComponent(txtId)
+                                .addComponent(txtNombre)
+                                .addComponent(txtCuit)
+                                .addComponent(txtEmail)
+                                .addComponent(txtDireccion)
+                                .addComponent(txtLatitud)
+                                .addComponent(txtLongitud)
+                                .addGroup(layout.createSequentialGroup()
+                                        .addComponent(btnCrear)
+                                        .addComponent(btnBuscar)
+                                        .addComponent(btnEditar)
+                                        .addComponent(btnEliminar))))
+                .addComponent(tablePanel)
         );
 
         // Configuración de los grupos verticales
         layout.setVerticalGroup(layout.createSequentialGroup()
-            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                .addComponent(lblId)
-                .addComponent(txtId))
-            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                .addComponent(lblNombre)
-                .addComponent(txtNombre))
-            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                .addComponent(lblCuit)
-                .addComponent(txtCuit))
-            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                .addComponent(lblEmail)
-                .addComponent(txtEmail))
-            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                .addComponent(lblDireccion)
-                .addComponent(txtDireccion))
-            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                .addComponent(lblLatitud)
-                .addComponent(txtLatitud))
-            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                .addComponent(lblLongitud)
-                .addComponent(txtLongitud))
-            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                .addComponent(btnCrear)
-                .addComponent(btnBuscar)
-                .addComponent(btnEditar)
-                .addComponent(btnEliminar))
-            .addComponent(tablePanel)
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblId)
+                        .addComponent(txtId))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblNombre)
+                        .addComponent(txtNombre))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblCuit)
+                        .addComponent(txtCuit))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblEmail)
+                        .addComponent(txtEmail))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblDireccion)
+                        .addComponent(txtDireccion))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblLatitud)
+                        .addComponent(txtLatitud))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblLongitud)
+                        .addComponent(txtLongitud))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnCrear)
+                        .addComponent(btnBuscar)
+                        .addComponent(btnEditar)
+                        .addComponent(btnEliminar))
+                .addComponent(tablePanel)
         );
 
         configurarAcciones();
@@ -124,7 +125,7 @@ public class ClienteUI extends JPanel {
         btnCrear.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String id=txtId.getText();
+                String id = txtId.getText();
                 String nombre = txtNombre.getText();
                 String cuit = txtCuit.getText();
                 String email = txtEmail.getText();
@@ -133,7 +134,7 @@ public class ClienteUI extends JPanel {
                 double lng = Double.parseDouble(txtLongitud.getText());
 
                 Coordenada coordenada = new Coordenada(lat, lng);
-                clienteController.crearNuevoCliente(id,nombre, cuit, email, direccion, coordenada);
+                clienteController.crearNuevoCliente(id, nombre, cuit, email, direccion, coordenada);
                 actualizarTabla(clienteController.obtenerListaClientes().getLast());
                 pedidosUI.actualizarClientesDropDown();
                 txtId.setText("");
@@ -143,7 +144,7 @@ public class ClienteUI extends JPanel {
                 txtDireccion.setText("");
                 txtLatitud.setText("");
                 txtLongitud.setText("");
-                
+
             }
         });
 
@@ -196,9 +197,10 @@ public class ClienteUI extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String id = txtId.getText();
-                actualizarTabla(clienteController.buscarCliente(id));
-                clienteController.eliminarCliente(id);
-            txtId.setText("");
+                Cliente c = clienteController.buscarCliente(id);
+                actualizarTabla(c);
+                clienteController.eliminarCliente(c);
+                txtId.setText("");
                 txtNombre.setText("");
                 txtCuit.setText("");
                 txtEmail.setText("");
@@ -207,14 +209,14 @@ public class ClienteUI extends JPanel {
                 txtLongitud.setText("");
                 pedidosUI.actualizarClientesDropDown();
             }
-           
+
         });
     }
 
     private void actualizarTabla(Cliente c) {
         String[] columnNames = {"ID", "Nombre", "Cuit", "Email", "Dirección", "Latitud", "Longitud"};
-        Object[][] data= new Object[1][7];
-        if(c==null){
+        Object[][] data = new Object[1][7];
+        if (c == null) {
             data[0][0] = " ";
             data[0][1] = " ";
             data[0][2] = " ";
@@ -222,8 +224,7 @@ public class ClienteUI extends JPanel {
             data[0][4] = " ";
             data[0][5] = " ";
             data[0][6] = " ";
-        }
-        else {
+        } else {
             data[0][0] = c.getId();
             data[0][1] = c.getNombre();
             data[0][2] = c.getCuit();
@@ -231,7 +232,7 @@ public class ClienteUI extends JPanel {
             data[0][4] = c.getDireccion();
             data[0][5] = c.getCoordenada().getLat();
             data[0][6] = c.getCoordenada().getLng();
-                }
+        }
         tableClientes.setModel(new javax.swing.table.DefaultTableModel(data, columnNames));
     }
 }

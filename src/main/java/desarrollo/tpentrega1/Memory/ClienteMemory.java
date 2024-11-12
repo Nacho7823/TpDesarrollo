@@ -3,6 +3,8 @@ package desarrollo.tpentrega1.Memory;
 
 import desarrollo.tpentrega1.dao.ClienteDAO;
 import desarrollo.tpentrega1.entidades.Cliente;
+import desarrollo.tpentrega1.entidades.Vendedor;
+import desarrollo.tpentrega1.exceptions.DAOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,14 +16,14 @@ private static List<Cliente> clientes = new ArrayList<>();
         return clientes;
     }
 
-    @Override
-    public void listarCliente() {
-        for (Cliente c : clientes) {
-            System.out.println("ID: " + c.getId() + ", Nombre: " + c.getNombre() + 
-                               ", CUIT: " + c.getCuit() + ", Email: " + c.getEmail() + 
-                               ", Dirección: " + c.getDireccion());
-        }
-    }
+//    @Override
+//    public void listarCliente() {
+//        for (Cliente c : clientes) {
+//            System.out.println("ID: " + c.getId() + ", Nombre: " + c.getNombre() + 
+//                               ", CUIT: " + c.getCuit() + ", Email: " + c.getEmail() + 
+//                               ", Dirección: " + c.getDireccion());
+//        }
+//    }
 
     @Override
     public void crearCliente(Cliente cliente) {
@@ -42,7 +44,7 @@ private static List<Cliente> clientes = new ArrayList<>();
     }
 
     @Override
-    public void eliminarCliente(String id) {
+    public void eliminarCliente(Cliente id) {
         boolean existe= clientes.stream().anyMatch(c ->c.getId().equals(id));
         if(existe){
         clientes.removeIf(c -> c.getId().equals(id));
@@ -59,6 +61,12 @@ private static List<Cliente> clientes = new ArrayList<>();
         }
         
         return null;
+    }
+
+
+    @Override
+    public List<Cliente> obtenerClientes() throws DAOException {
+        return clientes;
     }
     
     
