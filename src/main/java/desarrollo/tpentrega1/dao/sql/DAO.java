@@ -1,9 +1,11 @@
 
 package desarrollo.tpentrega1.dao.sql;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import org.springframework.stereotype.Component;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 
 
 /**
@@ -12,31 +14,71 @@ import org.springframework.stereotype.Component;
  * @param <T> Tipo de entidad.
  */
 
-@Component
 public class DAO<T> {
 
-    @PersistenceContext
-    protected EntityManager em;
-
-    // OBJETIVO: persistir un objeto en la base de datos.
-    // Toma como parámetro el objeto a persistir, genérico, 
-    // lo que puede aceptar cualquier tipo de objeto (Dirección, Mascota, Persona)
-    public void guardar(T objeto) {
-        em.persist(objeto);
-    }
-
-    // OBJETIVO: modificar una tupla de una base de datos.
-    // Recibe como parámetro el objeto con los datos cambiados (debe mantener
-    // la misma llave primaria) y lo reemplaza por el anterior.
-    public void editar(T objeto) {
-        em.merge(objeto);
-    }
-
-    // OBJETIVO: eliminar un registro de la base de datos.
-    // Como parámetro se pasa el objeto a eliminar de la base de datos.
-    // Se busca en la base de datos el registro que contenga la misma información
-    // que el parámetro recibido, y se elimina.
-    public void eliminar(T objeto) {
-        em.remove(objeto);
-    }
+        protected Connection conexion = null;
+        protected ResultSet resultado = null;
+        protected Statement sentencia = null;
+        
+        private final String USER = "root";
+        private final String PASSWORD = "root";
+        private final String DATABASE = "tienda";
+        private final String DRIVER = "com.mysql.jdbc.Driver";
+        
+        protected void ConectarBase() throws SQLException, ClassNotFoundException {
+            try {
+                Class.forName(DRIVER);
+                String urlBaseDeDatos = "jdbc:mysql://localhost:3306/" + DATABASE + "?useSSL=false";
+                conexion = DriverManager.getConnection(urlBaseDeDatos, USER, PASSWORD);
+                
+            } catch (ClassNotFoundException | SQLException ex) {
+                throw ex;
+            }
+        }
+        
+        protected void desconectarBase() throws Exception {
+            try {
+                if (resultado != null) {
+                    resultado.close();
+                    
+                }
+                if (sentencia != null) {
+                    sentencia.close();
+                }
+                if (conexion != null) {
+                    conexion.close();
+                }
+            } catch (Exception e) {
+                throw e;
+            }
+        }
+        
+        protected void insertarModificarEliminar(String sql) throws Exception {
+            //recibe la consulta a realizar
+            try {
+                ConectarBase();
+                sentencia = conexion.createStatement();
+                sentencia.executeUpdate(sql);
+                
+            } catch (ClassNotFoundException | SQLException ex) {
+                //conexion.rollback(); hace que no se modifique
+                throw ex;
+            } finally {
+                desconectarBase();
+            }
+            
+        }
+        
+        protected void consultarBase(String sql) throws Exception {
+            try {
+                ConectarBase();
+                sentencia = conexion.createStatement();
+                resultado = sentencia.executeQuery(sql);
+                
+            } catch (Exception e) {
+                throw e;
+            }
+        }
+          
+ 
 }
