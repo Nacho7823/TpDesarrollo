@@ -318,8 +318,8 @@ public class TPEntrega1 {
         ItemsMenuController itemsMenuController= new ItemsMenuController(itemsMenuMemory);
         
         // Cargar datos de prueba para clientes
-        clienteController.crearNuevoCliente("2","Juan Pérez", "20-12345678-9", "juan@example.com", "Calle Falsa 123", new Coordenada(-34.603722, -58.381592));
-        clienteController.crearNuevoCliente("3","María Gómez", "27-87654321-0", "maria@example.com", "Avenida Siempre Viva 742", new Coordenada(-34.609722, -58.392592));
+//        clienteController.crearNuevoCliente("2","Juan Pérez", "20123456789", "juan@example.com", "Calle Falsa 123", new Coordenada(-34.603722, -58.381592));
+//        clienteController.crearNuevoCliente("3","María Gómez", "27876543210", "maria@example.com", "Avenida Siempre Viva 742", new Coordenada(-34.609722, -58.392592));
 
         // Cargar datos de prueba para vendedores
 //        vendedorController.crearNuevoVendedor("2","Supermercado ABC", "Av. Corrientes 1500", new Coordenada(-34.603532, -58.383222));

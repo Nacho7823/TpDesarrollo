@@ -1,55 +1,80 @@
-
 package desarrollo.tpentrega1.controllers;
 
 import desarrollo.tpentrega1.Memory.ClienteMemory;
+import desarrollo.tpentrega1.dao.ClienteDAO;
+import desarrollo.tpentrega1.dao.sql.ClienteDAOSql;
 import desarrollo.tpentrega1.entidades.Cliente;
 import desarrollo.tpentrega1.entidades.Coordenada;
+import desarrollo.tpentrega1.exceptions.DAOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ClienteController {
-     private ClienteMemory clienteDAO = new ClienteMemory();
+//     private ClienteDAO clienteDAO = new ClienteMemory();
+
+    private ClienteDAO clienteDAO;
 
     public ClienteController(ClienteMemory c) {
-        this.clienteDAO=c;
+        try {
+            clienteDAO = new ClienteDAOSql();
+//        this.clienteDAO=c;
+        } catch (SQLException ex) {
+            throw new RuntimeException("no se pudo conectar a la base de datos");
+        }
     }
 
-    
     // Mostrar lista de todos los clientes
 //    public void mostrarListaClientes() {
 //        System.out.println("Lista de Clientes:");
 //        clienteDAO.listarCliente();
 //    }
-
-    public void crearNuevoCliente(String id,String nombre, String cuit, String email, String direccion, Coordenada coordenada) {
+    public void crearNuevoCliente(String id, String nombre, String cuit, String email, String direccion, Coordenada coordenada) {
         Cliente nuevoCliente = new Cliente(id, nombre, cuit, email, direccion, coordenada);
-        clienteDAO.crearCliente(nuevoCliente);
+        try {
+            clienteDAO.crearCliente(nuevoCliente);
+        } catch (DAOException ex) {
+            // TODO
+            Logger.getLogger(ClienteController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     // Modificar un cliente existente
     public void modificarCliente(String id, String nombre, String cuit, String email, String direccion, Coordenada coordenada) {
-        Cliente clienteExistente = clienteDAO.buscarCliente(id);
-        if (clienteExistente != null) {
-            clienteExistente.setNombre(nombre);
-            clienteExistente.setCuit(cuit);
-            clienteExistente.setEmail(email);
-            clienteExistente.setDireccion(direccion);
-            clienteExistente.setCoordenadas(coordenada);
-            clienteDAO.actualizarCliente(clienteExistente);
-            System.out.println("Cliente modificado: " + nombre);
-        } else {
-            System.out.println("Cliente no encontrado para modificar.");
+        try {
+            Cliente clienteExistente = clienteDAO.buscarCliente(id);
+
+            if (clienteExistente != null) {
+                clienteExistente.setNombre(nombre);
+                clienteExistente.setCuit(cuit);
+                clienteExistente.setEmail(email);
+                clienteExistente.setDireccion(direccion);
+                clienteExistente.setCoordenadas(coordenada);
+                clienteDAO.actualizarCliente(clienteExistente);
+                System.out.println("Cliente modificado: " + nombre);
+            } else {
+                System.out.println("Cliente no encontrado para modificar.");
+            }
+        } catch (DAOException ex) {
+            Logger.getLogger(ClienteController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     // Eliminar un cliente por ID
     public void eliminarCliente(Cliente id) {
-        clienteDAO.eliminarCliente(id);
-        
+        try {
+            clienteDAO.eliminarCliente(id);
+        } catch (DAOException ex) {
+            Logger.getLogger(ClienteController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     // Buscar un cliente por ID
     public Cliente buscarCliente(String id) {
+        try {
         Cliente cliente = clienteDAO.buscarCliente(id);
         if (cliente != null) {
             System.out.println("Cliente encontrado: " + cliente.getNombre());
@@ -58,9 +83,18 @@ public class ClienteController {
             System.out.println("Cliente no encontrado con ID: " + id);
             return null;
         }
+        } catch (DAOException ex) {
+            Logger.getLogger(ClienteController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     public List<Cliente> obtenerListaClientes() {
-        return clienteDAO.getClientes();
+        try {
+            return clienteDAO.obtenerClientes();
+        } catch (DAOException ex) {
+            Logger.getLogger(ClienteController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return new ArrayList<Cliente>();
     }
 }
