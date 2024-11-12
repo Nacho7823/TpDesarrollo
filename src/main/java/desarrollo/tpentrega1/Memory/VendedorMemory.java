@@ -3,6 +3,7 @@ package desarrollo.tpentrega1.Memory;
 
 import desarrollo.tpentrega1.dao.VendedorDAO;
 import desarrollo.tpentrega1.entidades.Vendedor;
+import desarrollo.tpentrega1.exceptions.DAOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,14 +15,14 @@ public class VendedorMemory implements VendedorDAO{
         return vendedores;
     }
     
-    @Override
-    public void listarVendedor() {
-        for (Vendedor v : vendedores) {
-            System.out.println("ID: " + v.getId() + ", Nombre: " + v.getNombre() +
-                               ", Dirección: " + v.getDireccion() +
-                               ", Coordenada: " + v.getCoordenada());
-        }
-    }
+//    @Override
+//    public void listarVendedor() {
+//        for (Vendedor v : vendedores) {
+//            System.out.println("ID: " + v.getId() + ", Nombre: " + v.getNombre() +
+//                               ", Dirección: " + v.getDireccion() +
+//                               ", Coordenada: " + v.getCoordenada());
+//        }
+//    }
 
     @Override
     public void crearVendedor(Vendedor vendedor) {
@@ -41,8 +42,8 @@ public class VendedorMemory implements VendedorDAO{
     }
 
 @Override
-public void eliminarVendedor(String id) {
-    boolean existe = vendedores.stream().anyMatch(v -> v.getId().equals(id));
+public void eliminarVendedor(Vendedor id) {
+    boolean existe = vendedores.stream().anyMatch(v -> v.getId().equals(id.getId()));
     
     if (existe) {
         vendedores.removeIf(v -> v.getId().equals(id));
@@ -61,6 +62,11 @@ public void eliminarVendedor(String id) {
         
         return null;
        
+    }
+
+    @Override
+    public List<Vendedor> obtenerVendedores() throws DAOException {
+        return vendedores;
     }
     
 }

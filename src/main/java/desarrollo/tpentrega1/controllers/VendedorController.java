@@ -1,51 +1,76 @@
-
 package desarrollo.tpentrega1.controllers;
 
 import desarrollo.tpentrega1.entidades.Vendedor;
 import desarrollo.tpentrega1.Memory.VendedorMemory;
+import desarrollo.tpentrega1.dao.VendedorDAO;
+import desarrollo.tpentrega1.dao.sql.VendedorDAOSql;
 import desarrollo.tpentrega1.entidades.Coordenada;
+import desarrollo.tpentrega1.exceptions.DAOException;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class VendedorController {
-    private VendedorMemory vendedorDAO = new VendedorMemory();
+//    private VendedorDAO vendedorDAO = new VendedorMemory();
+
+    private VendedorDAO vendedorDAO;
 
     public VendedorController(VendedorMemory vendedorMemory) {
-       this.vendedorDAO=vendedorMemory;
+//        this.vendedorDAO = vendedorMemory;
+        try {
+            this.vendedorDAO = new VendedorDAOSql();
+        } catch (SQLException ex) {
+            throw new RuntimeException("cant open db");
+        }
     }
 
     // Mostrar la lista de todos los vendedores
-    public void mostrarListaVendedor() {
-        System.out.println("Lista de Vendedores:");
-        vendedorDAO.listarVendedor();
-    }
-
+//    public void mostrarListaVendedor() {
+//        System.out.println("Lista de Vendedores:");
+//        vendedorDAO.listarVendedor();
+//    }
     // Crear un nuevo vendedor con generación automática de ID
-    public void crearNuevoVendedor(String id,String nombre, String direccion, Coordenada coordenada) {
+    public void crearNuevoVendedor(String id, String nombre, String direccion, Coordenada coordenada) {
         Vendedor nuevoVendedor = new Vendedor(id, nombre, direccion, coordenada);
-        vendedorDAO.crearVendedor(nuevoVendedor);
+        try {
+            vendedorDAO.crearVendedor(nuevoVendedor);
+        } catch (DAOException ex) {
+            Logger.getLogger(VendedorController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     // Modificar un vendedor existente (asumiendo que se identifica por nombre, dirección, coordenada)
     public void modificarVendedor(String id, String nombre, String direccion, Coordenada coordenada) {
-        Vendedor vendedorExistente = vendedorDAO.buscarVendedor(id);
-        if (vendedorExistente != null) {
-            vendedorExistente.setNombre(nombre);
-            vendedorExistente.setDireccion(direccion);
-            vendedorExistente.setCoordenada(coordenada);
-            vendedorDAO.actualizarVendedor(vendedorExistente);
-            System.out.println("Vendedor modificado: " + nombre);
-        } else {
-            System.out.println("Vendedor no encontrado para modificar.");
+        Vendedor vendedorExistente;
+        try {
+            vendedorExistente = vendedorDAO.buscarVendedor(id);
+            if (vendedorExistente != null) {
+                vendedorExistente.setNombre(nombre);
+                vendedorExistente.setDireccion(direccion);
+                vendedorExistente.setCoordenada(coordenada);
+                vendedorDAO.actualizarVendedor(vendedorExistente);
+                System.out.println("Vendedor modificado: " + nombre);
+            } else {
+                System.out.println("Vendedor no encontrado para modificar.");
+            }
+        } catch (DAOException ex) {
+            Logger.getLogger(VendedorController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     // Eliminar un vendedor por ID
-    public void eliminarVendedor(String id) {
-        vendedorDAO.eliminarVendedor(id);
+    public void eliminarVendedor(Vendedor vendedor) {
+        try {
+            vendedorDAO.eliminarVendedor(vendedor);
+        } catch (DAOException ex) {
+            Logger.getLogger(VendedorController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     // Buscar un vendedor por ID
     public Vendedor buscarVendedor(String id) {
+        try {
         Vendedor vendedor = vendedorDAO.buscarVendedor(id);
         if (vendedor != null) {
             System.out.println("Vendedor encontrado: " + vendedor.getNombre());
@@ -54,9 +79,18 @@ public class VendedorController {
             System.out.println("Vendedor no encontrado con ID " + id);
             return null;
         }
+        } catch(Exception e){
+            System.out.println("" + e.getMessage());
+        }
+        return null;
     }
 
     public List<Vendedor> obtenerListaVendedores() {
-        return vendedorDAO.getVendedores();
+        try {
+            return vendedorDAO.obtenerVendedores();
+        } catch (DAOException ex) {
+            Logger.getLogger(VendedorController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 }

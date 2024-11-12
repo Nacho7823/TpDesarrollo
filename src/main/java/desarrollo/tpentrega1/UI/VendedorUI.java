@@ -157,8 +157,9 @@ layout.setVerticalGroup(layout.createSequentialGroup()
             @Override
             public void actionPerformed(ActionEvent e) {
                 String id = txtId.getText();
-                actualizarTabla(vendedorController.buscarVendedor(id));
-                vendedorController.eliminarVendedor(id);
+                Vendedor v = vendedorController.buscarVendedor(id);
+                actualizarTabla(v);
+                vendedorController.eliminarVendedor(v);
                 pedidosUI.actualizarVendedoresDropDown();
             }
         });

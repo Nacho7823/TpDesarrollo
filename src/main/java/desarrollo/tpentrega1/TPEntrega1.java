@@ -297,11 +297,14 @@ import desarrollo.tpentrega1.entidades.Transferencia;
 import desarrollo.tpentrega1.enums.EstadoPedido;
 import desarrollo.tpentrega1.interfaces.FormaDePago;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.*;
 
 public class TPEntrega1 {
     public static void main(String[] args) {
+        
         // Crear instancias de memoria (simulando bases de datos en memoria)
         ClienteMemory clienteMemory = new ClienteMemory();
         VendedorMemory vendedorMemory = new VendedorMemory();
@@ -319,8 +322,8 @@ public class TPEntrega1 {
         clienteController.crearNuevoCliente("3","María Gómez", "27-87654321-0", "maria@example.com", "Avenida Siempre Viva 742", new Coordenada(-34.609722, -58.392592));
 
         // Cargar datos de prueba para vendedores
-        vendedorController.crearNuevoVendedor("2","Supermercado ABC", "Av. Corrientes 1500", new Coordenada(-34.603532, -58.383222));
-        vendedorController.crearNuevoVendedor("3","Verdulería El Tomate", "Calle Libertad 2300", new Coordenada(-34.606732, -58.384752));
+//        vendedorController.crearNuevoVendedor("2","Supermercado ABC", "Av. Corrientes 1500", new Coordenada(-34.603532, -58.383222));
+//        vendedorController.crearNuevoVendedor("3","Verdulería El Tomate", "Calle Libertad 2300", new Coordenada(-34.606732, -58.384752));
         
         itemsMenuController.crearNuevaBebida("1","Heineken", "Cerveza", 2300, "Bebida", 70, 2.0);
         itemsMenuController.crearNuevoPlato("2", "Guaymallen", "Alfajor", 700, "Plato", 200, false, false, 120);
