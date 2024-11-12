@@ -293,7 +293,6 @@ import desarrollo.tpentrega1.UI.MenuGeneral;
 import desarrollo.tpentrega1.controllers.ItemsMenuController;
 import desarrollo.tpentrega1.entidades.Coordenada;
 import desarrollo.tpentrega1.entidades.ItemMenu;
-import desarrollo.tpentrega1.entidades.PedidoDetalle;
 import desarrollo.tpentrega1.entidades.Transferencia;
 import desarrollo.tpentrega1.enums.EstadoPedido;
 import desarrollo.tpentrega1.interfaces.FormaDePago;
