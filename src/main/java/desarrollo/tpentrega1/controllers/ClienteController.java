@@ -6,7 +6,6 @@ import desarrollo.tpentrega1.dao.sql.ClienteDAOSql;
 import desarrollo.tpentrega1.entidades.Cliente;
 import desarrollo.tpentrega1.entidades.Coordenada;
 import desarrollo.tpentrega1.exceptions.DAOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -21,12 +20,12 @@ public class ClienteController {
         try {
             clienteDAO = new ClienteDAOSql();
 //        this.clienteDAO=c;
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             throw new RuntimeException("no se pudo conectar a la base de datos");
         }
     }
 
-    // Mostrar lista de todos los clientes
+  
 //    public void mostrarListaClientes() {
 //        System.out.println("Lista de Clientes:");
 //        clienteDAO.listarCliente();
@@ -36,7 +35,7 @@ public class ClienteController {
         try {
             clienteDAO.crearCliente(nuevoCliente);
         } catch (DAOException ex) {
-            // TODO
+            
             Logger.getLogger(ClienteController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

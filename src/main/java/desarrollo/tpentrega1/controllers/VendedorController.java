@@ -20,7 +20,7 @@ public class VendedorController {
 //        this.vendedorDAO = vendedorMemory;
         try {
             this.vendedorDAO = new VendedorDAOSql();
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             throw new RuntimeException("cant open db");
         }
     }

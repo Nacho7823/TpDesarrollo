@@ -104,4 +104,8 @@ public class Pedido {
         this.items.remove(item);
     }
 
+    public Iterable<Observador> getObservadores() {
+        return observadores;
+    }
+
 }
