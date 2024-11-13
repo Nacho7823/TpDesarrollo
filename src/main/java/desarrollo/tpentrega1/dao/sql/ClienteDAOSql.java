@@ -4,15 +4,11 @@ import desarrollo.tpentrega1.dao.ClienteDAO;
 import desarrollo.tpentrega1.entidades.Cliente;
 import desarrollo.tpentrega1.entidades.Coordenada;
 import desarrollo.tpentrega1.exceptions.DAOException;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 public class ClienteDAOSql extends DAO<Cliente> implements ClienteDAO {
 
@@ -38,15 +34,15 @@ public class ClienteDAOSql extends DAO<Cliente> implements ClienteDAO {
             String sql = "UPDATE cliente SET nombre = ?, cuit = ?, email = ?, direccion = ?, longitud = ?, latitud = ? WHERE id_cliente = ?";
 
         try {
-        // Llamada a insertarModificarEliminar con los valores actualizados del cliente
+        
             insertarModificarEliminar(sql, 
-            cliente.getNombre(),       // nombre
-            cliente.getCuit(),         // cuit
-            cliente.getEmail(),        // email
-            cliente.getDireccion(),    // direccion
-            cliente.getCoordenada().getLng(),     // longitud
-            cliente.getCoordenada().getLat(),      // latitud
-            cliente.getId()     // id_cliente, usado en la cláusula WHERE
+            cliente.getNombre(),       
+            cliente.getCuit(),       
+            cliente.getEmail(),        
+            cliente.getDireccion(),   
+            cliente.getCoordenada().getLng(),     
+            cliente.getCoordenada().getLat(),     
+            cliente.getId()     
         );
 
         } catch (Exception ex) {
@@ -60,8 +56,8 @@ public class ClienteDAOSql extends DAO<Cliente> implements ClienteDAO {
         String sql = "DELETE FROM cliente WHERE id_cliente = ?";
     
         try {
-        // Llamada a insertarModificarEliminar con el ID del cliente que se va a eliminar
-        insertarModificarEliminar(sql, cliente.getId());  // Pasa el id_cliente como parámetro
+        
+        insertarModificarEliminar(sql, cliente.getId());  
         } catch (Exception ex) {
         throw new DAOException("No se pudo eliminar el cliente: \n" + ex.getMessage());
     }
@@ -75,10 +71,10 @@ public class ClienteDAOSql extends DAO<Cliente> implements ClienteDAO {
     try {
         ConectarBase();
         PreparedStatement preparedStatement = conexion.prepareStatement(sql);
-        preparedStatement.setString(1, id);  // Pasa el id_cliente como parámetro
+        preparedStatement.setString(1, id);  
         resultado = preparedStatement.executeQuery();
 
-        // Procesa el ResultSet para construir el objeto Cliente
+        
         if (resultado.next()) {
             cliente = new Cliente();
             cliente.setId(resultado.getString("id_cliente"));
