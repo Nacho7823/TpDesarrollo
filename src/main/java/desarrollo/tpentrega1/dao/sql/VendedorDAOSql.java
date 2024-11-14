@@ -11,12 +11,10 @@ import java.util.List;
 
 public class VendedorDAOSql extends DAO<Vendedor> implements VendedorDAO {
 
-<<<<<<< Updated upstream
-=======
+
 
 
     
->>>>>>> Stashed changes
     @Override
     public void crearVendedor(Vendedor vendedor) throws DAOException {
 

@@ -1,7 +1,6 @@
 package desarrollo.tpentrega1.controllers;
 
 import desarrollo.tpentrega1.entidades.Vendedor;
-import desarrollo.tpentrega1.Memory.VendedorMemory;
 import desarrollo.tpentrega1.dao.sql.VendedorDAOSql;
 import desarrollo.tpentrega1.entidades.Coordenada;
 import desarrollo.tpentrega1.exceptions.DAOException;
@@ -10,24 +9,20 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class VendedorController {
-//    private VendedorDAO vendedorDAO = new VendedorMemory();
 
     private VendedorDAOSql vendedorDAOSql;
 
-    public VendedorDAO getVendedorDAO() {
-        return vendedorDAO;
+    public VendedorDAOSql getVendedorDAO() {
+        return vendedorDAOSql;
     }
     
     
 
-    public VendedorController(VendedorMemory vendedorMemory) {
+    public VendedorController() {
         try {
-<<<<<<< Updated upstream
-//            this.vendedorDAO = vendedorMemory;
-            this.vendedorDAO = new VendedorDAOSql();
-=======
+
+
             this.vendedorDAOSql = new VendedorDAOSql();
->>>>>>> Stashed changes
         } catch (Exception ex) {
             throw new RuntimeException("cant open db");
         }
@@ -64,7 +59,7 @@ public class VendedorController {
     
     public void modificarVendedor(Vendedor vendedor) {
         try {
-            vendedorDAO.actualizarVendedor(vendedor);
+            vendedorDAOSql.actualizarVendedor(vendedor);
         } catch (DAOException ex) {
             Logger.getLogger(VendedorController.class.getName()).log(Level.SEVERE, null, ex);
         }
