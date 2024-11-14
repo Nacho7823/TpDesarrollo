@@ -190,7 +190,8 @@ public class ItemMenuDAOSql extends DAO<ItemMenu> implements ItemsMenuDAO {
         Bebida bebida = pbuscarBebida(id);
         if (bebida != null) {
             ItemMenu item = pbuscarItemMenu(id, vdao);
-            bebida.setNombre(item.getId());
+            bebida.setId(item.getId());
+            bebida.setNombre(item.getNombre());
             bebida.setDescripcion(item.getDescripcion());
             bebida.setPrecio(item.getPrecio());
             bebida.setDescripcion(item.getCategoria());
@@ -201,7 +202,8 @@ public class ItemMenuDAOSql extends DAO<ItemMenu> implements ItemsMenuDAO {
         Plato plato = pbuscarPlato(id);
         if(plato != null) {
             ItemMenu item = pbuscarItemMenu(id, vdao);
-            plato.setNombre(item.getId());
+            plato.setId(item.getId());
+            plato.setNombre(item.getNombre());
             plato.setDescripcion(item.getDescripcion());
             plato.setPrecio(item.getPrecio());
             plato.setDescripcion(item.getCategoria());
@@ -364,7 +366,8 @@ public class ItemMenuDAOSql extends DAO<ItemMenu> implements ItemsMenuDAO {
             Bebida bebida = pbuscarBebida(currentItem.getId());
             
             if (bebida != null) {
-                bebida.setNombre(currentItem.getId());
+                bebida.setId(currentItem.getId());
+                bebida.setNombre(currentItem.getNombre());
                 bebida.setDescripcion(currentItem.getDescripcion());
                 bebida.setPrecio(currentItem.getPrecio());
                 bebida.setDescripcion(currentItem.getCategoria());
@@ -377,7 +380,8 @@ public class ItemMenuDAOSql extends DAO<ItemMenu> implements ItemsMenuDAO {
             Plato plato = pbuscarPlato(currentItem.getId());
             
             if (plato != null) {
-                plato.setNombre(currentItem.getId());
+                plato.setId(currentItem.getId());
+                plato.setNombre(currentItem.getNombre());
                 plato.setDescripcion(currentItem.getDescripcion());
                 plato.setPrecio(currentItem.getPrecio());
                 plato.setDescripcion(currentItem.getCategoria());
