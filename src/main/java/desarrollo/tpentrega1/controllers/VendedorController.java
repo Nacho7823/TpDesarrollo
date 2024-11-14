@@ -16,28 +16,29 @@ public class VendedorController {
 
     private VendedorDAO vendedorDAO;
 
+    public VendedorDAO getVendedorDAO() {
+        return vendedorDAO;
+    }
+    
+    
+
     public VendedorController(VendedorMemory vendedorMemory) {
-        this.vendedorDAO = vendedorMemory;
         try {
-//            this.vendedorDAO = new VendedorDAOSql();
+//            this.vendedorDAO = vendedorMemory;
+            this.vendedorDAO = new VendedorDAOSql();
         } catch (Exception ex) {
             throw new RuntimeException("cant open db");
         }
     }
 
-    // Mostrar la lista de todos los vendedores
-//    public void mostrarListaVendedor() {
-//        System.out.println("Lista de Vendedores:");
-//        vendedorDAO.listarVendedor();
-//    }
-    // Crear un nuevo vendedor con generación automática de ID
-    public void crearNuevoVendedor(String id, String nombre, String direccion, Coordenada coordenada) {
+    public Vendedor crearNuevoVendedor(String id, String nombre, String direccion, Coordenada coordenada) {
         Vendedor nuevoVendedor = new Vendedor(id, nombre, direccion, coordenada);
         try {
             vendedorDAO.crearVendedor(nuevoVendedor);
         } catch (DAOException ex) {
             Logger.getLogger(VendedorController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return nuevoVendedor;
     }
 
     // Modificar un vendedor existente (asumiendo que se identifica por nombre, dirección, coordenada)
@@ -54,6 +55,14 @@ public class VendedorController {
             } else {
                 System.out.println("Vendedor no encontrado para modificar.");
             }
+        } catch (DAOException ex) {
+            Logger.getLogger(VendedorController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void modificarVendedor(Vendedor vendedor) {
+        try {
+            vendedorDAO.actualizarVendedor(vendedor);
         } catch (DAOException ex) {
             Logger.getLogger(VendedorController.class.getName()).log(Level.SEVERE, null, ex);
         }

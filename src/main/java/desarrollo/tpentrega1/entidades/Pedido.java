@@ -34,6 +34,86 @@ public class Pedido {
         this.formaDePago = formaDePago;
         this.items=items;
     }
+    
+    
+    
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+    
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+    
+    public Vendedor getVendedor(){
+        return this.vendedor;
+    }
+
+    public void setVendedor(Vendedor vendedor) {
+        this.vendedor = vendedor;
+    }
+    
+    public EstadoPedido getEstado() {
+        return estado;
+    }
+    
+    public void setEstado(EstadoPedido nuevoEstado) {
+        this.estado = nuevoEstado;
+        notificarObservadores();
+    }
+    
+    public FormaDePago getFormaDePago(){
+        return this.formaDePago;
+    }
+
+    public void setFormaDePago(FormaDePago formaDePago) {
+        this.formaDePago = formaDePago;
+    }
+    
+    public List<ItemMenu> getItems(){
+        return items;
+    }
+
+    public void setItems(List<ItemMenu> items) {
+        this.items = items;
+    }
+    
+    // funcs
+    
+    public void addItem(ItemMenu item){
+        this.items.add(item);
+    }
+    
+    public void removeItem(ItemMenu item){
+        this.items.remove(item);
+    }
+    
+    public void agregarObservador(Observador observador) {
+        observadores.add(observador);
+    }
+
+    public void eliminarObservador(Observador observador) {
+        observadores.remove(observador);
+    }
+
+    public Iterable<Observador> getObservadores() {
+        return observadores;
+    }
+    
+    private void notificarObservadores() {
+        for (Observador observador : observadores) {
+            observador.actualizar(this);
+        }
+    }
+    
     private boolean validarItemsUnVendedor(List<ItemMenu> items, Vendedor vendedor) {
         List<ItemMenu> itemsVendedor = vendedor.getItemsMenu();
 
@@ -49,81 +129,8 @@ public class Pedido {
         return this.total;
     }
     
-    public void agregarObservador(Observador observador) {
-        observadores.add(observador);
-    }
-
-    public void eliminarObservador(Observador observador) {
-        observadores.remove(observador);
-    }
-
-    public void setEstado(EstadoPedido nuevoEstado) {
-        this.estado = nuevoEstado;
-        notificarObservadores();
-    }
-
-    public EstadoPedido getEstado() {
-        return estado;
-    }
-
-    private void notificarObservadores() {
-        for (Observador observador : observadores) {
-            observador.actualizar(this);
-        }
-    }
-
     public double getTotal() {
         return this.calcularTotal();
-    }
-    
-    public Vendedor getVendedor(){
-        return this.vendedor;
-    }
-
-    public void setVendedor(Vendedor vendedor) {
-        this.vendedor = vendedor;
-    }
-    
-    public FormaDePago getFormaDePago(){
-        return this.formaDePago;
-    }
-
-    public void setFormaDePago(FormaDePago formaDePago) {
-        this.formaDePago = formaDePago;
-    }
-    
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-    
-    public List<ItemMenu> getItems(){
-        return items;
-    }
-    
-    public void addItem(ItemMenu item){
-        this.items.add(item);
-    }
-    
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-    
-    
-    
-    public void removeItem(ItemMenu item){
-        this.items.remove(item);
-    }
-
-    public Iterable<Observador> getObservadores() {
-        return observadores;
     }
 
 }

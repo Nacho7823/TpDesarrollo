@@ -121,7 +121,9 @@ layout.setVerticalGroup(layout.createSequentialGroup()
 
                 Coordenada coordenada = new Coordenada(lat, lng);
                 vendedorController.crearNuevoVendedor(id,nombre, direccion, coordenada);
-                actualizarTabla(vendedorController.buscarVendedor(id));
+                Vendedor v = vendedorController.buscarVendedor(id);
+                System.out.println(v.toString());
+                actualizarTabla(v);
             }
         });
 

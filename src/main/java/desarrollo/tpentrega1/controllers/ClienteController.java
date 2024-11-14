@@ -14,23 +14,15 @@ import java.util.logging.Logger;
 public class ClienteController {
      private ClienteDAO clienteDAO;
 
-//    private ClienteDAO clienteDAO;
-
     public ClienteController(ClienteMemory c) {
         try {
-            clienteDAO = new ClienteMemory();
-//            clienteDAO = new ClienteDAOSql();
-//        this.clienteDAO=c;
+//            clienteDAO = new ClienteMemory();
+            clienteDAO = new ClienteDAOSql();
         } catch (Exception ex) {
             throw new RuntimeException("no se pudo conectar a la base de datos");
         }
     }
 
-  
-//    public void mostrarListaClientes() {
-//        System.out.println("Lista de Clientes:");
-//        clienteDAO.listarCliente();
-//    }
     public void crearNuevoCliente(String id, String nombre, String cuit, String email, String direccion, Coordenada coordenada) {
         Cliente nuevoCliente = new Cliente(id, nombre, cuit, email, direccion, coordenada);
         try {

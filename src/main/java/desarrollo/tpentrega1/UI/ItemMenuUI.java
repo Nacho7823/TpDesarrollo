@@ -1,28 +1,35 @@
 package desarrollo.tpentrega1.UI;
 
 import desarrollo.tpentrega1.controllers.ItemsMenuController;
+import desarrollo.tpentrega1.controllers.VendedorController;
 import desarrollo.tpentrega1.entidades.Bebida;
 import desarrollo.tpentrega1.entidades.ItemMenu;
 import desarrollo.tpentrega1.entidades.Plato;
+import desarrollo.tpentrega1.entidades.Vendedor;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 import javax.swing.*;
 import javax.swing.table.JTableHeader;
 
 public class ItemMenuUI extends JPanel {
 
-    private JTextField txtId, txtNombre, txtDescripcion, txtPrecio, txtIdVendedor;
-    private JTextField txtCalorias, txtPeso, txtGraduacionAlcoholica, txtTamaño;
+    private JTextField txtId, txtNombre, txtDescripcion, txtPrecio;
+//    private JTextField txtCalorias, txtPeso, txtGraduacionAlcoholica, txtTamaño;
     private JButton btnCrear, btnBuscar, btnEditar, btnEliminar;
     private JRadioButton rbtnPlato, rbtnBebida;
     private JTable tableBebida, tablePlato;
+    private JComboBox<String> ddIdVendedor;
+
     private ItemsMenuController itemsMenuController;
+    private VendedorController vendedorController;
     private ItemType cardPanel;
 
-    public ItemMenuUI(ItemsMenuController itemsMenuController) {
+    public ItemMenuUI(ItemsMenuController itemsMenuController, VendedorController vendedorController) {
         this.itemsMenuController = itemsMenuController;
+        this.vendedorController = vendedorController;
 
         JLabel lblId = new JLabel("ID:");
         JLabel lblNombre = new JLabel("Nombre:");
@@ -44,18 +51,7 @@ public class ItemMenuUI extends JPanel {
         txtNombre = new JTextField(20);
         txtDescripcion = new JTextField(20);
         txtPrecio = new JTextField(20);
-        txtIdVendedor = new JTextField(20);
-
-        //para comida
-        JTextField txtCalorias = new JTextField(3);
-        JTextField txtPeso = new JTextField(3);
-        //para bebida
-        JTextField txtGraduacion = new JTextField(3);
-        JTextField txtTamaño = new JTextField(3);
-
-        //para comida
-        JCheckBox ApCeCheckBox = new JCheckBox();
-        JCheckBox ApVeCheckBox = new JCheckBox();
+        ddIdVendedor = new JComboBox();
 
         btnCrear = new JButton("Crear");
         btnBuscar = new JButton("Buscar");
@@ -125,7 +121,7 @@ public class ItemMenuUI extends JPanel {
                                 .addComponent(txtNombre)
                                 .addComponent(txtDescripcion)
                                 .addComponent(txtPrecio)
-                                .addComponent(txtIdVendedor)
+                                .addComponent(ddIdVendedor)
                                 .addGroup(layout.createSequentialGroup().addComponent(rbtnBebida).addComponent(rbtnPlato))
                                 // Establece el tamaño preferido de cardPanel
                                 .addComponent(cardPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -154,7 +150,7 @@ public class ItemMenuUI extends JPanel {
                                 .addComponent(txtPrecio))
                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                 .addComponent(lblIdVendedor)
-                                .addComponent(txtIdVendedor))
+                                .addComponent(ddIdVendedor))
                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                 .addComponent(lblCategoria)
                                 .addComponent(rbtnBebida)
@@ -171,14 +167,54 @@ public class ItemMenuUI extends JPanel {
                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(tablePanelP)
         );
-
+        update();
         configurarAcciones();
     }
 
     public void update() {
-        
+        List<Vendedor> vendedores = vendedorController.obtenerListaVendedores();
+        if (vendedores.size() == 0) {
+            setUIEnable(false);
+            return;
+        }
+        setUIEnable(true);
+
+        ddIdVendedor.setMaximumRowCount(2);
+        for (Vendedor v : vendedores) {
+            ddIdVendedor.addItem(v.getNombre());
+        }
+        cardPanel.resetAptoCeliacos();
+        cardPanel.resetAptoVegano();
+        cardPanel.resetCalorias();
+        cardPanel.resetGraduacionAlcoholica();
+        cardPanel.resetPeso();
+        cardPanel.resetTamaño();
+
     }
-    
+
+    private void setUIEnable(boolean e) {
+        /*private JTextField txtId, txtNombre, txtDescripcion, txtPrecio;
+    private JTextField txtCalorias, txtPeso, txtGraduacionAlcoholica, txtTamaño;
+    private JButton btnCrear, btnBuscar, btnEditar, btnEliminar;
+    private JRadioButton rbtnPlato, rbtnBebida;
+    private JTable tableBebida, tablePlato;
+    private JComboBox<String> ddIdVendedor;
+         */
+
+        txtId.setEnabled(e);
+        txtNombre.setEnabled(e);
+        txtDescripcion.setEnabled(e);
+        txtPrecio.setEnabled(e);
+        cardPanel.setUIEnable(e);
+        rbtnPlato.setEnabled(e);
+        rbtnBebida.setEnabled(e);
+        btnCrear.setEnabled(e);
+        btnEditar.setEnabled(e);
+        btnBuscar.setEnabled(e);
+        btnEliminar.setEnabled(e);
+        ddIdVendedor.setEnabled(e);
+    }
+
     private void configurarAcciones() {
         btnCrear.addActionListener(new ActionListener() {
             @Override
@@ -187,20 +223,7 @@ public class ItemMenuUI extends JPanel {
                 String nombre = txtNombre.getText();
                 String descripcion = txtDescripcion.getText();
                 double precio = Double.parseDouble(txtPrecio.getText());
-                String idVendedor = txtIdVendedor.getText();
-
-                txtId.setText("");
-                txtNombre.setText("");
-                txtDescripcion.setText("");
-                txtPrecio.setText("");
-                txtIdVendedor.setText("");
-
-                cardPanel.resetCalorias();
-                cardPanel.resetGraduacionAlcoholica();
-                cardPanel.resetPeso();
-                cardPanel.resetTamaño();
-                cardPanel.resetAptoCeliacos();
-                cardPanel.resetAptoVegano();
+                Vendedor vendedor = vendedorController.obtenerListaVendedores().get(ddIdVendedor.getSelectedIndex());
 
                 String categoria = "";  // ??? FIXME:
 
@@ -209,21 +232,35 @@ public class ItemMenuUI extends JPanel {
                     boolean aptoCeliaco = cardPanel.getAptoCeliaco();
                     boolean aptoVegano = cardPanel.getAptoVegano();
                     double peso = cardPanel.getPeso();
+                    
+                    System.out.println("cel: " + aptoCeliaco);
+                    System.out.println("veg: " + aptoVegano);
 
                     // TODO: add vendedor
-                    itemsMenuController.crearNuevoPlato(id, nombre, descripcion, precio, categoria,
-                            calorias, aptoCeliaco, aptoVegano, peso);;
-//                    itemsMenuController.crearNuevoPlato(id, nombre, descripcion, precio, categoria, idVendedor, 
-//                            calorias, aptoCeliaco, aptoVegano, peso);
+                    Plato plato = itemsMenuController.crearNuevoPlato(id, nombre, descripcion, precio, categoria, vendedor,
+                            calorias, aptoCeliaco, aptoVegano, peso);
+
+                    System.out.println(plato.toString());
                 } else {
                     double tamaño = cardPanel.getTamaño();
                     double graduacionAlcoholica = cardPanel.getGraduacionAlcoholica();
                     // TODO: add vendedor
-                    itemsMenuController.crearNuevaBebida(id, nombre, descripcion, precio, categoria,
+                    Bebida bebida = itemsMenuController.crearNuevaBebida(id, nombre, descripcion, precio, categoria, vendedor,
                             tamaño, graduacionAlcoholica);
-//                    itemsMenuController.crearNuevaBebida(id, nombre, descripcion, precio, categoria, idVendedor, 
-//                            tamaño, graduacionAlcoholica);
+
+                    System.out.println(bebida.toString());
                 }
+                txtId.setText("");
+                txtNombre.setText("");
+                txtDescripcion.setText("");
+                txtPrecio.setText("");
+
+                cardPanel.resetCalorias();
+                cardPanel.resetGraduacionAlcoholica();
+                cardPanel.resetPeso();
+                cardPanel.resetTamaño();
+                cardPanel.resetAptoCeliacos();
+                cardPanel.resetAptoVegano();
 
             }
         });
@@ -236,11 +273,17 @@ public class ItemMenuUI extends JPanel {
                 if (itemMenu != null) {
                     ItemMenu item = itemsMenuController.buscarItemsMenu(id);
 
+                    txtId.setText(id);
+                    txtNombre.setText(item.getNombre());
+                    txtDescripcion.setText(item.getDescripcion());
+                    txtPrecio.setText(item.getPrecio() + "");
+                    List<Vendedor> vendedores = vendedorController.obtenerListaVendedores();
+                    for (int i = 0; i < vendedores.size(); i++) {
+                        if (vendedores.get(i).getItemsMenu().contains(item)) {
+                            ddIdVendedor.setSelectedIndex(i);
+                        }
+                    }
                     if (item instanceof Bebida) {
-                        txtId.setText(id);
-                        txtNombre.setText(item.getNombre());
-                        txtDescripcion.setText(item.getDescripcion());
-                        txtPrecio.setText(item.getPrecio() + "");
 
                         rbtnBebida.setSelected(true);
                         rbtnPlato.setSelected(false);
@@ -347,7 +390,7 @@ public class ItemMenuUI extends JPanel {
                     actualizarTabla(tableBebida, null);
                     actualizarTabla(tablePlato, item);
                 }
-                itemsMenuController.eliminarItemsMenu(id);
+                itemsMenuController.eliminarItemsMenu(item);
                 txtId.setText("");
                 txtNombre.setText("");
                 txtDescripcion.setText("");

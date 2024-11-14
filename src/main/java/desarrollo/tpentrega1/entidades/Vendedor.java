@@ -4,6 +4,7 @@ package desarrollo.tpentrega1.entidades;
 
 import desarrollo.tpentrega1.enums.EstadoPedido;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class Vendedor {
@@ -76,6 +77,16 @@ public class Vendedor {
     public void setItemMenu(ArrayList<ItemMenu> itemsMenu){
         this.itemsMenu = itemsMenu;
     }
+
+    public ArrayList<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(ArrayList<Pedido> pedidos) {
+        this.pedidos = pedidos;
+    }
+    
+    // 
 
     public void addItemMenu(ItemMenu item){
         this.itemsMenu.add(item);
@@ -160,13 +171,23 @@ public class Vendedor {
       public void cambiarEstadoPedido(Pedido pedido, EstadoPedido nuevoEstado) {
         pedido.setEstado(nuevoEstado); // Cambiar el estado notifica automáticamente a los observadores
         System.out.println("El vendedor ha cambiado el estado del pedido a " + nuevoEstado);
-        System.out.println();
     }
+
 //buscar pedido por estado
-    public void buscarPedidoPorEstado(ArrayList<Pedido> pedido, EstadoPedido estado){
-        for (Pedido pedido1 : pedidos) {
-            if(pedido1.getEstado()==estado) pedido.add(pedido1);
-        }
+    public List<Pedido> buscarPedidoPorEstado(EstadoPedido estado){
+        ArrayList<Pedido> pedidosBuscados = new ArrayList<Pedido>();
+        for (Pedido pedido1 : pedidos) 
+            if(pedido1.getEstado()==estado) 
+                pedidosBuscados.add(pedido1);
+        
+        return pedidosBuscados;
     }
+
+    @Override
+    public String toString() {
+        return "Vendedor{" + "id=" + id + ", nombre=" + nombre + ", direccion=" + direccion + ", coordenada=" + coordenada + '}';
+    }
+    
+    
     
 }

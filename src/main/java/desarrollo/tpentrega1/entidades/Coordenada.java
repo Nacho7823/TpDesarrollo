@@ -36,4 +36,9 @@ public class Coordenada {
         this.lng = lng;
     }
     
+    
+    @Override
+    public String toString() {
+        return "Coordenada{" + "lat=" + lat + ", lng=" + lng + '}';
+    }
 }

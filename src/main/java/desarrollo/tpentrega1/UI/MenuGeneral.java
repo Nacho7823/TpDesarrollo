@@ -17,7 +17,7 @@ public class MenuGeneral extends JFrame{
         PedidoUI pedidoUI =new PedidoUI(pedidoController,clienteController, vendedorController, itemsMenuController);
         VendedorUI vendedorUI = new VendedorUI(vendedorController);
         ClienteUI clienteUI = new ClienteUI(clienteController);
-        ItemMenuUI itemMenuUI = new ItemMenuUI(itemsMenuController);
+        ItemMenuUI itemMenuUI = new ItemMenuUI(itemsMenuController, vendedorController);
         
         tabbedPane.addTab("Cliente",clienteUI );
         tabbedPane.addTab("Vendedor", vendedorUI);
@@ -28,7 +28,6 @@ public class MenuGeneral extends JFrame{
             @Override
             public void stateChanged(ChangeEvent e) {
                 int selectedIndex = tabbedPane.getSelectedIndex();
-                System.out.println(""+ selectedIndex);
                 if (selectedIndex == 0)
                     clienteUI.update();
                 else if (selectedIndex == 1)

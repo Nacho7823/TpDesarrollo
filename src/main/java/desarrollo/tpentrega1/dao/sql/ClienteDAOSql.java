@@ -65,7 +65,7 @@ public class ClienteDAOSql extends DAO<Cliente> implements ClienteDAO {
 
     @Override
     public Cliente buscarCliente(String id) throws DAOException {
-    String sql = "SELECT * FROM cliente WHERE id_cliente = ?";
+    String sql = "SELECT id_cliente, nombre, cuit, email, direccion, longitud, latitud FROM cliente WHERE id_cliente = ?";
     Cliente cliente = null;
 
     try {
@@ -76,14 +76,13 @@ public class ClienteDAOSql extends DAO<Cliente> implements ClienteDAO {
 
         
         if (resultado.next()) {
-            cliente = new Cliente();
-            cliente.setId(resultado.getString("id_cliente"));
-            cliente.setNombre(resultado.getString("nombre"));
-            cliente.setCuit(resultado.getString("cuit"));
-            cliente.setEmail(resultado.getString("email"));
-            cliente.setDireccion(resultado.getString("direccion"));
-            cliente.setCoordenadas(new Coordenada(resultado.getDouble("latitud"), resultado.getDouble("longitud")));
-            
+            cliente = new Cliente(
+                    resultado.getString("id_cliente"), 
+                    resultado.getString("nombre"), 
+                    resultado.getString("cuit"), 
+                    resultado.getString("email"), 
+                    resultado.getString("direccion"), 
+                    new Coordenada(resultado.getDouble("latitud"), resultado.getDouble("longitud")));
         }
 
         preparedStatement.close();

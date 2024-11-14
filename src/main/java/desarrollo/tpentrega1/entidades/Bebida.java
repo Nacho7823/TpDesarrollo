@@ -7,17 +7,32 @@ public class Bebida extends ItemMenu {
 
     public Bebida(){}
 
+//    public Bebida(String id,
+//                String nombre,
+//                String descripcion,
+//                double precio,
+//                String categoria,
+//                double tamaño,
+//                double graduacionAlcoholica) {
+//        super(id, nombre, descripcion, precio, categoria);
+//        this.graduacionAlcoholica = graduacionAlcoholica;
+//        this.tamaño = tamaño;
+//    }
+    
     public Bebida(String id,
                 String nombre,
                 String descripcion,
                 double precio,
                 String categoria,
+                Vendedor vendedor,
                 double tamaño,
                 double graduacionAlcoholica) {
-        super(id, nombre, descripcion, precio, categoria);
+        super(id, nombre, descripcion, precio, categoria, vendedor);
         this.graduacionAlcoholica = graduacionAlcoholica;
         this.tamaño = tamaño;
     }
+    
+    
 
     public Bebida(double tamaño, double graduacionAlcoholica) {
         this.graduacionAlcoholica = graduacionAlcoholica;

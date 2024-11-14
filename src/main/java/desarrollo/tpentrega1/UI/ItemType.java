@@ -15,6 +15,17 @@ public class ItemType extends javax.swing.JPanel {
         mostrarPlato();
     }
     
+    public void setUIEnable(boolean e) {
+        tfTamaño.setEnabled(e);
+        tfGraduacionAlcoholica.setEnabled(e);
+        
+        tfCalorias.setEnabled(e);
+        tfPeso.setEnabled(e);
+        rbtnAptoCeliacos.setEnabled(e);
+        rbtnAptoVegano.setEnabled(e);
+        
+    }
+    
     public void mostrarBebida() {
         ((CardLayout)getLayout()).show(this, "card3");
         this.setMinimumSize(new Dimension(200, 150));
@@ -105,10 +116,10 @@ public class ItemType extends javax.swing.JPanel {
         tfGraduacionAlcoholica.setText("");
     }
     public void resetAptoCeliacos() {
-        rbtnAptoCeliacos.setSelected(false);
+        rbtnAptoCeliacos.setSelected(true);
     }
     public void resetAptoVegano() {
-        rbtnAptoCeliacos.setSelected(false);
+        rbtnAptoCeliacos.setSelected(true);
     }
     
 

@@ -15,6 +15,7 @@ public class ClienteUI extends JPanel {
     private JButton btnCrear, btnBuscar, btnEditar, btnEliminar;
     private JTable tableClientes;
     private ClienteController clienteController;
+    
 
     public ClienteUI(ClienteController clienteController) {
         this.clienteController = clienteController;
@@ -134,10 +135,12 @@ public class ClienteUI extends JPanel {
                 String direccion = txtDireccion.getText();
                 double lat = Double.parseDouble(txtLatitud.getText());
                 double lng = Double.parseDouble(txtLongitud.getText());
-
+                
                 Coordenada coordenada = new Coordenada(lat, lng);
                 clienteController.crearNuevoCliente(id, nombre, cuit, email, direccion, coordenada);
-                actualizarTabla(clienteController.obtenerListaClientes().getLast());
+                Cliente c = clienteController.buscarCliente(id);
+                System.out.println(c.toString());
+                actualizarTabla(c);
                 txtId.setText("");
                 txtNombre.setText("");
                 txtCuit.setText("");

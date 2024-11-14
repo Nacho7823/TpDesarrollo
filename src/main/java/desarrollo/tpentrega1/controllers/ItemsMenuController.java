@@ -5,86 +5,131 @@
 package desarrollo.tpentrega1.controllers;
 
 import desarrollo.tpentrega1.Memory.ItemsMenuMemory;
+import desarrollo.tpentrega1.dao.ItemsMenuDAO;
+import desarrollo.tpentrega1.dao.sql.ItemMenuDAOSql;
 import desarrollo.tpentrega1.entidades.ItemMenu;
 import desarrollo.tpentrega1.entidades.Plato;
 import desarrollo.tpentrega1.entidades.Bebida;
+import desarrollo.tpentrega1.entidades.Vendedor;
+import desarrollo.tpentrega1.exceptions.DAOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ItemsMenuController {
 
-    private ItemsMenuMemory itemMenuDAO = new ItemsMenuMemory();
+    private ItemsMenuDAO itemMenuDAO;
+    private VendedorController vendedorController;
 
-    public ItemsMenuController(ItemsMenuMemory itemsMenuMemory){
-        this.itemMenuDAO=itemsMenuMemory;
-    }
-    public List<ItemMenu> obtenerListaItemsMenu(){
-        return itemMenuDAO.getItemsMenu();
-    }
-    
-    // Mostrar lista de todos los ítems de menú
-    public void mostrarListaItemsMenu() {
-        System.out.println("Lista de Ítems de Menú:");
-        itemMenuDAO.listarItemsMenu();
+    public ItemsMenuController(ItemsMenuMemory itemsMenuMemory, VendedorController vendedorController) {
+//        this.itemMenuDAO = itemsMenuMemory;
+//        this.itemMenuDAO =  new ItemsMenuMemory();
+        this.itemMenuDAO =  new ItemMenuDAOSql();
+        this.vendedorController = vendedorController;
     }
 
-    // Crear un nuevo plato
-    
-    
-    
-    public void crearNuevoPlato(String id,String nombre, String descripcion, double precio, String categoria,
-                                double calorias, boolean aptoCeliaco, boolean aptoVegano, double peso) {
-        //String id = UUID.randomUUID().toString(); // Generación automática de ID
-        Plato nuevoPlato = new Plato(id, nombre, descripcion, precio, categoria, calorias, aptoCeliaco, aptoVegano, peso);
-        itemMenuDAO.crearItemsMenu(nuevoPlato);
+    public List<ItemMenu> obtenerListaItemsMenu() {
+        try {
+            return itemMenuDAO.obtenerItemMenus(vendedorController.getVendedorDAO());
+        } catch (DAOException ex) {
+            Logger.getLogger(ItemsMenuController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return new ArrayList<ItemMenu>();
+    }
+
+    public Plato crearNuevoPlato(String id, String nombre, String descripcion, double precio, String categoria, Vendedor vendedor,
+            double calorias, boolean aptoCeliaco, boolean aptoVegano, double peso) {
+//        Plato nuevoPlato = new Plato(id, nombre, descripcion, precio, categoria, calorias, aptoCeliaco, aptoVegano, peso);
+        Plato nuevoPlato = new Plato(id, nombre, descripcion, precio, categoria, vendedor, calorias, aptoCeliaco, aptoVegano, peso);
+        vendedor.addItemMenu(nuevoPlato);
+        vendedorController.modificarVendedor(vendedor);
+        try {
+            itemMenuDAO.crearItemMenu(nuevoPlato);
+        } catch (DAOException ex) {
+            Logger.getLogger(ItemsMenuController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return nuevoPlato;
     }
 
     // Crear una nueva bebida
-    public void crearNuevaBebida(String id,String nombre, String descripcion, double precio, String categoria,
-                                 double tamaño, double graduacionAlcoholica) {
-        //String id = UUID.randomUUID().toString(); // Generación automática de ID
-        Bebida nuevaBebida = new Bebida(id, nombre, descripcion, precio, categoria, tamaño, graduacionAlcoholica);
-        itemMenuDAO.crearItemsMenu(nuevaBebida);
+    public Bebida crearNuevaBebida(String id, String nombre, String descripcion, double precio, String categoria, Vendedor vendedor,
+            double tamaño, double graduacionAlcoholica) {
+//        Bebida nuevaBebida = new Bebida(id, nombre, descripcion, precio, categoria, tamaño, graduacionAlcoholica);
+        Bebida nuevaBebida = new Bebida(id, nombre, descripcion, precio, categoria, vendedor, tamaño, graduacionAlcoholica);
+        vendedor.addItemMenu(nuevaBebida);
+        vendedorController.modificarVendedor(vendedor);
+        try {
+            itemMenuDAO.crearItemMenu(nuevaBebida);
+        } catch (DAOException ex) {
+            Logger.getLogger(ItemsMenuController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return nuevaBebida;
     }
 
     // Modificar un ítem de menú existente
     public void modificarItemsMenu(String id, String nombre, String descripcion, double precio, String categoria) {
-        ItemMenu itemExistente = itemMenuDAO.buscarItemsMenu(id);
-        if (itemExistente != null) {
-            itemExistente.setNombre(nombre);
-            itemExistente.setDescripcion(descripcion);
-            itemExistente.setPrecio(precio);
-            itemExistente.setCategoria(categoria);
-            itemMenuDAO.actualizarItemsMenu(itemExistente);
-            System.out.println("Item de menú modificado: " + nombre);
-        } else {
-            System.out.println("Item de menú no encontrado para modificar.");
+        try {
+            ItemMenu itemExistente;
+            itemExistente = itemMenuDAO.buscarItemMenu(id, vendedorController.getVendedorDAO());
+            if (itemExistente != null) {
+                itemExistente.setNombre(nombre);
+                itemExistente.setDescripcion(descripcion);
+                itemExistente.setPrecio(precio);
+                itemExistente.setCategoria(categoria);
+                itemMenuDAO.actualizarItemMenu(itemExistente);
+                System.out.println("Item de menú modificado: " + nombre);
+            } else {
+                System.out.println("Item de menú no encontrado para modificar.");
+            }
+        } catch (DAOException ex) {
+            Logger.getLogger(ItemsMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void modificarPlato(Plato plato) {
-        itemMenuDAO.actualizarItemsMenu(plato);
+        try {
+            itemMenuDAO.actualizarItemMenu(plato);
+        } catch (DAOException ex) {
+            Logger.getLogger(ItemsMenuController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-    
+
     public void modificarBebida(Bebida bebida) {
-        itemMenuDAO.actualizarItemsMenu(bebida);
+        try {
+            itemMenuDAO.actualizarItemMenu(bebida);
+        } catch (DAOException ex) {
+            Logger.getLogger(ItemsMenuController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     // Eliminar un ítem de menú por ID
-    public void eliminarItemsMenu(String id) {
-        itemMenuDAO.eliminarItemsMenu(id);
-        
+    public void eliminarItemsMenu(ItemMenu id) {
+
+        try {
+            itemMenuDAO.eliminarItemMenu(id);
+        } catch (DAOException ex) {
+            Logger.getLogger(ItemsMenuController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     // Buscar un ítem de menú por ID
     public ItemMenu buscarItemsMenu(String id) {
-        ItemMenu item = itemMenuDAO.buscarItemsMenu(id);
-        if (item != null) {
-            System.out.println("Item de menú encontrado: " + item.getNombre());
-                    return item;
-        } else {
-            System.out.println("Item de menú no encontrado con ID: " + id);
-                    return null;
+        try {
+            ItemMenu item;
+            item = itemMenuDAO.buscarItemMenu(id, vendedorController.getVendedorDAO());
+            if (item != null) {
+                System.out.println("Item de menú encontrado: " + item.getNombre());
+                return item;
+            } else {
+                System.out.println("Item de menú no encontrado con ID: " + id);
+                return null;
+            }
+        } catch (DAOException ex) {
+            Logger.getLogger(ItemsMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return null;
     }
 }

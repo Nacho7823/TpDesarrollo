@@ -162,7 +162,7 @@ public class PedidoUI extends javax.swing.JPanel {
         tfTotal.setText(pedido.getTotal() + "");
 
         updateCurrentTable(pedido.getItems());
-        updateAddTable(obtenerFaltantes(pedido));
+        updateAddTable(pedido.getVendedor().getItemsMenu());
 
     }
 
@@ -213,7 +213,7 @@ public class PedidoUI extends javax.swing.JPanel {
         tableCurrentItems.setModel(new javax.swing.table.DefaultTableModel(data, columnNames));
 
     }
-
+/*
     private List<ItemMenu> obtenerFaltantes(Pedido pedido) {
         List<ItemMenu> vitems = pedido.getVendedor().getItemsMenu();
         ArrayList<ItemMenu> faltantes = new ArrayList<>();
@@ -225,7 +225,7 @@ public class PedidoUI extends javax.swing.JPanel {
         }
         return faltantes;
     }
-
+*/
     private void updateAddTable(List<ItemMenu> faltantes) {
 
         String[] columnNames = {
@@ -626,7 +626,7 @@ public class PedidoUI extends javax.swing.JPanel {
             return;
         }
 
-        ItemMenu it = obtenerFaltantes(pedido).get(idx);
+        ItemMenu it = pedido.getVendedor().getItemsMenu().get(idx);
         pedido.addItem(it);
         updateAll(pedido);
 

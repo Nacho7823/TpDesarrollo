@@ -12,13 +12,15 @@ public class MercadoPago implements FormaDePago{
     
     public MercadoPago(){}
 
+    public String getAlias() {
+        return alias;
+    }
+
     @Override
     public double aplicarRecargo(double total) {
         return total * 0.04; // Recargo del 4%
     }
-
-    public String getAlias() {
-        return alias;
-    }
+    
+    
 
 }

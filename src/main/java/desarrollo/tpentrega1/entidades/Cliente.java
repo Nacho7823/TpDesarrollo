@@ -11,6 +11,7 @@ public class Cliente implements Observador{
     private String email;
     private String direccion;
     private Coordenada coordenada;
+    private Pago pago;
 
     public Cliente(String id, String nombre, String cuit, String email, String direccion, Coordenada coordenada) {
         this.id = id;
@@ -22,9 +23,6 @@ public class Cliente implements Observador{
     }
 
     public Cliente() {
-    }
-    
-    public void update() {
         
     }
 
@@ -75,6 +73,8 @@ public class Cliente implements Observador{
     public void setCoordenadas(Coordenada coordenada) {
         this.coordenada = coordenada;
     }
+    
+    // funcs
 
     @Override
     public void actualizar(Pedido pedido) {
@@ -87,12 +87,24 @@ public class Cliente implements Observador{
         }
     }
 
-    private Pago generarPago(Pedido pedido) {
-        Pago nuevoPago = new Pago(pedido.getTotal());
+    private void generarPago(Pedido pedido) {
+        pago = new Pago(pedido.getTotal());
         System.out.println("Pago generado por el pedido " + pedido.getEstado());
-        return nuevoPago;
-
     }
+
+    @Override
+    public String toString() {
+        return "Cliente{" + 
+        "id=" + id + 
+        ", nombre=" + nombre + 
+        ", cuit=" + cuit + 
+        ", email=" + email + 
+        ", direccion=" + direccion + 
+        ", coordenada=" + coordenada + '}';
+    }
+    
+    
+    
 }
     
 

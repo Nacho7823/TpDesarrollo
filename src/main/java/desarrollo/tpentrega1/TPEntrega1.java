@@ -1,4 +1,3 @@
-
 //package desarrollo.tpentrega1;
 //
 //import desarrollo.tpentrega1.interfaces.FormaDePago;
@@ -294,6 +293,7 @@ import desarrollo.tpentrega1.controllers.ItemsMenuController;
 import desarrollo.tpentrega1.entidades.Coordenada;
 import desarrollo.tpentrega1.entidades.ItemMenu;
 import desarrollo.tpentrega1.entidades.Transferencia;
+import desarrollo.tpentrega1.entidades.Vendedor;
 import desarrollo.tpentrega1.enums.EstadoPedido;
 import desarrollo.tpentrega1.interfaces.FormaDePago;
 import java.util.List;
@@ -303,57 +303,65 @@ import java.util.logging.Logger;
 import javax.swing.*;
 
 public class TPEntrega1 {
+
     public static void main(String[] args) {
-        
+
         // Crear instancias de memoria (simulando bases de datos en memoria)
         ClienteMemory clienteMemory = new ClienteMemory();
         VendedorMemory vendedorMemory = new VendedorMemory();
         PedidoMemory pedidoMemory = new PedidoMemory();
-        ItemsMenuMemory itemsMenuMemory= new ItemsMenuMemory();
+        ItemsMenuMemory itemsMenuMemory = new ItemsMenuMemory();
 
         // Crear instancias de controladores
         ClienteController clienteController = new ClienteController(clienteMemory);
         VendedorController vendedorController = new VendedorController(vendedorMemory);
         PedidoController pedidoController = new PedidoController(pedidoMemory);
-        ItemsMenuController itemsMenuController= new ItemsMenuController(itemsMenuMemory);
-        
+        ItemsMenuController itemsMenuController = new ItemsMenuController(itemsMenuMemory, vendedorController);
+
         // Cargar datos de prueba para clientes
-        clienteController.crearNuevoCliente("2","Juan Pérez", "20123456789", "juan@example.com", "Calle Falsa 123", new Coordenada(-34.603722, -58.381592));
-        clienteController.crearNuevoCliente("3","María Gómez", "27876543210", "maria@example.com", "Avenida Siempre Viva 742", new Coordenada(-34.609722, -58.392592));
+        if (clienteController.buscarCliente("2") == null) {
+            clienteController.crearNuevoCliente("2", "Juan Pérez", "20123456789", "juan@example.com", "Calle Falsa 123", new Coordenada(-34.603722, -58.381592));
+            clienteController.crearNuevoCliente("3", "María Gómez", "27876543210", "maria@example.com", "Avenida Siempre Viva 742", new Coordenada(-34.609722, -58.392592));
+        }
+        
 
         // Cargar datos de prueba para vendedores
-        vendedorController.crearNuevoVendedor("2","Supermercado ABC", "Av. Corrientes 1500", new Coordenada(-34.603532, -58.383222));
-        vendedorController.crearNuevoVendedor("3","Verdulería El Tomate", "Calle Libertad 2300", new Coordenada(-34.606732, -58.384752));
-        
-        itemsMenuController.crearNuevaBebida("1","Heineken", "Cerveza", 2300, "Bebida", 70, 2.0);
-        itemsMenuController.crearNuevaBebida("3","CocaCola", "Gaseosa", 2100, "Bebida", 70, 0.0);
-        itemsMenuController.crearNuevoPlato("2", "Guaymallen", "Alfajor", 700, "Plato", 200, false, false, 120);
-        
+        Vendedor v1 = vendedorController.buscarVendedor("2");
+        Vendedor v2 = vendedorController.buscarVendedor("3");
+        if (vendedorController.buscarVendedor("2") == null) {
+            v1 = vendedorController.crearNuevoVendedor("2", "Supermercado ABC", "Av. Corrientes 1500", new Coordenada(-34.603532, -58.383222));
+            v2 = vendedorController.crearNuevoVendedor("3", "Verdulería El Tomate", "Calle Libertad 2300", new Coordenada(-34.606732, -58.384752));
+        }
+
+        itemsMenuController.crearNuevaBebida("1", "Heineken", "Cerveza", 2300, "Bebida", v1, 70, 2.0);
+        itemsMenuController.crearNuevaBebida("3", "CocaCola", "Gaseosa", 2100, "Bebida", v1, 70, 0.0);
+        itemsMenuController.crearNuevoPlato("2", "Guaymallen", "Alfajor", 700, "Plato", v2, 200, false, false, 120);
+
         vendedorController.buscarVendedor("2").addItemMenu(itemsMenuController.buscarItemsMenu("1"));
         vendedorController.buscarVendedor("2").addItemMenu(itemsMenuController.buscarItemsMenu("3"));
-        vendedorController.buscarVendedor("3").addItemMenu(itemsMenuController.buscarItemsMenu("2"));        
-        
+        vendedorController.buscarVendedor("3").addItemMenu(itemsMenuController.buscarItemsMenu("2"));
+
         ItemsPedidoMemory itemsPedidoMemory = new ItemsPedidoMemory();
         itemsPedidoMemory.setItems(vendedorController.obtenerListaVendedores().get(0).getItemsMenu());
-        
+
         itemsPedidoMemory.buscarBebidas();
         itemsPedidoMemory.buscarPrecio(250);
         List<ItemMenu> items = itemsPedidoMemory.getItems();
 
         FormaDePago formaDePago = new Transferencia("20346572182", "0000003100092901454053");
 
-        pedidoController.newPedido("1",clienteController.obtenerListaClientes().get(0),
+        pedidoController.newPedido("1", clienteController.obtenerListaClientes().get(0),
                 vendedorController.obtenerListaVendedores().get(0),
-            items, 
-            formaDePago, 
-            EstadoPedido.RECIBIDO
-            );
+                items,
+                formaDePago,
+                EstadoPedido.RECIBIDO
+        );
 
         // Configurar UI de Cliente y Vendedor
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                MenuGeneral menu= new MenuGeneral(clienteController,vendedorController,itemsMenuController, pedidoController);
+                MenuGeneral menu = new MenuGeneral(clienteController, vendedorController, itemsMenuController, pedidoController);
                 menu.setVisible(true);
 
             }
