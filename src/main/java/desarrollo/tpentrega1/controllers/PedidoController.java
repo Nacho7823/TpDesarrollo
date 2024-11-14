@@ -53,13 +53,14 @@ public class PedidoController {
     }
 
     // Buscar un pedido por ID
-    public void buscarPedido(String id) {
+    public Pedido buscarPedido(String id) {
         Pedido pedido = pedidoDAO.buscarPedido(id);
         if (pedido != null) {
             System.out.println("Pedido encontrado con ID: " + pedido.getId());
         } else {
             System.out.println("Pedido no encontrado con ID: " + id);
         }
+        return pedido;
     }
     public Pedido buscarYDevolverPedido(String id){
         return pedidoDAO.buscarPedido(id);

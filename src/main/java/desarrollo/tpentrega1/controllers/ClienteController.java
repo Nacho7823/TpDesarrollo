@@ -12,13 +12,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ClienteController {
-//     private ClienteDAO clienteDAO = new ClienteMemory();
+     private ClienteDAO clienteDAO;
 
-    private ClienteDAO clienteDAO;
+//    private ClienteDAO clienteDAO;
 
     public ClienteController(ClienteMemory c) {
         try {
-            clienteDAO = new ClienteDAOSql();
+            clienteDAO = new ClienteMemory();
+//            clienteDAO = new ClienteDAOSql();
 //        this.clienteDAO=c;
         } catch (Exception ex) {
             throw new RuntimeException("no se pudo conectar a la base de datos");

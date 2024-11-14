@@ -318,17 +318,19 @@ public class TPEntrega1 {
         ItemsMenuController itemsMenuController= new ItemsMenuController(itemsMenuMemory);
         
         // Cargar datos de prueba para clientes
-//        clienteController.crearNuevoCliente("2","Juan Pérez", "20123456789", "juan@example.com", "Calle Falsa 123", new Coordenada(-34.603722, -58.381592));
-//        clienteController.crearNuevoCliente("3","María Gómez", "27876543210", "maria@example.com", "Avenida Siempre Viva 742", new Coordenada(-34.609722, -58.392592));
+        clienteController.crearNuevoCliente("2","Juan Pérez", "20123456789", "juan@example.com", "Calle Falsa 123", new Coordenada(-34.603722, -58.381592));
+        clienteController.crearNuevoCliente("3","María Gómez", "27876543210", "maria@example.com", "Avenida Siempre Viva 742", new Coordenada(-34.609722, -58.392592));
 
         // Cargar datos de prueba para vendedores
-//        vendedorController.crearNuevoVendedor("2","Supermercado ABC", "Av. Corrientes 1500", new Coordenada(-34.603532, -58.383222));
-//        vendedorController.crearNuevoVendedor("3","Verdulería El Tomate", "Calle Libertad 2300", new Coordenada(-34.606732, -58.384752));
+        vendedorController.crearNuevoVendedor("2","Supermercado ABC", "Av. Corrientes 1500", new Coordenada(-34.603532, -58.383222));
+        vendedorController.crearNuevoVendedor("3","Verdulería El Tomate", "Calle Libertad 2300", new Coordenada(-34.606732, -58.384752));
         
         itemsMenuController.crearNuevaBebida("1","Heineken", "Cerveza", 2300, "Bebida", 70, 2.0);
+        itemsMenuController.crearNuevaBebida("3","CocaCola", "Gaseosa", 2100, "Bebida", 70, 0.0);
         itemsMenuController.crearNuevoPlato("2", "Guaymallen", "Alfajor", 700, "Plato", 200, false, false, 120);
         
         vendedorController.buscarVendedor("2").addItemMenu(itemsMenuController.buscarItemsMenu("1"));
+        vendedorController.buscarVendedor("2").addItemMenu(itemsMenuController.buscarItemsMenu("3"));
         vendedorController.buscarVendedor("3").addItemMenu(itemsMenuController.buscarItemsMenu("2"));        
         
         ItemsPedidoMemory itemsPedidoMemory = new ItemsPedidoMemory();

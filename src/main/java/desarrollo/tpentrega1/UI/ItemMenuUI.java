@@ -175,6 +175,10 @@ public class ItemMenuUI extends JPanel {
         configurarAcciones();
     }
 
+    public void update() {
+        
+    }
+    
     private void configurarAcciones() {
         btnCrear.addActionListener(new ActionListener() {
             @Override

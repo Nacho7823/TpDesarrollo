@@ -23,6 +23,10 @@ public class Cliente implements Observador{
 
     public Cliente() {
     }
+    
+    public void update() {
+        
+    }
 
     public String getId() {
         return id;

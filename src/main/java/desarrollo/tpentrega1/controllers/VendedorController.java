@@ -17,9 +17,9 @@ public class VendedorController {
     private VendedorDAO vendedorDAO;
 
     public VendedorController(VendedorMemory vendedorMemory) {
-//        this.vendedorDAO = vendedorMemory;
+        this.vendedorDAO = vendedorMemory;
         try {
-            this.vendedorDAO = new VendedorDAOSql();
+//            this.vendedorDAO = new VendedorDAOSql();
         } catch (Exception ex) {
             throw new RuntimeException("cant open db");
         }

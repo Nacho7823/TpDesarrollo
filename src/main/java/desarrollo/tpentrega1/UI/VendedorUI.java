@@ -15,11 +15,9 @@ public class VendedorUI extends JPanel {
     private JButton btnCrear, btnBuscar, btnEditar, btnEliminar;
     private JTable tableVendedores;
     private VendedorController vendedorController;
-    private PedidoUI pedidosUI;
 
-    public VendedorUI(VendedorController vendedorController,PedidoUI pedidosUI) {
+    public VendedorUI(VendedorController vendedorController) {
         this.vendedorController = vendedorController;
-        this.pedidosUI=pedidosUI;
         
         // Crear los componentes
         JLabel lblId = new JLabel("ID:");
@@ -106,6 +104,10 @@ layout.setVerticalGroup(layout.createSequentialGroup()
 
         configurarAcciones();
     }
+    
+    public void update(){
+        
+    }
 
     private void configurarAcciones() {
         btnCrear.addActionListener(new ActionListener() {
@@ -120,7 +122,6 @@ layout.setVerticalGroup(layout.createSequentialGroup()
                 Coordenada coordenada = new Coordenada(lat, lng);
                 vendedorController.crearNuevoVendedor(id,nombre, direccion, coordenada);
                 actualizarTabla(vendedorController.buscarVendedor(id));
-                pedidosUI.actualizarVendedoresDropDown();
             }
         });
 
@@ -165,7 +166,6 @@ layout.setVerticalGroup(layout.createSequentialGroup()
                 Vendedor v = vendedorController.buscarVendedor(id);
                 actualizarTabla(v);
                 vendedorController.eliminarVendedor(v);
-                pedidosUI.actualizarVendedoresDropDown();
             }
         });
     }
