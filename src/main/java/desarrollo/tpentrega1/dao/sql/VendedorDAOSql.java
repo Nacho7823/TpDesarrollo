@@ -5,13 +5,18 @@ import desarrollo.tpentrega1.entidades.Coordenada;
 import desarrollo.tpentrega1.entidades.Vendedor;
 import desarrollo.tpentrega1.exceptions.DAOException;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class VendedorDAOSql extends DAO<Vendedor> implements VendedorDAO {
 
+<<<<<<< Updated upstream
+=======
+
+
+    
+>>>>>>> Stashed changes
     @Override
     public void crearVendedor(Vendedor vendedor) throws DAOException {
 
