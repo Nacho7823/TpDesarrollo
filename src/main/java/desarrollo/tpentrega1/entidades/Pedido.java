@@ -19,6 +19,9 @@ public class Pedido {
     private double total;
     private EstadoPedido estado;
     private List<Observador> observadores = new ArrayList<>();
+
+    public Pedido() {
+    }
     
 
     
