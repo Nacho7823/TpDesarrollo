@@ -280,41 +280,42 @@
 //}
 package desarrollo.tpentrega1;
 
-import desarrollo.tpentrega1.Memory.ClienteMemory;
-import desarrollo.tpentrega1.Memory.ItemsMenuMemory;
 import desarrollo.tpentrega1.Memory.ItemsPedidoMemory;
-import desarrollo.tpentrega1.Memory.PedidoMemory;
-import desarrollo.tpentrega1.Memory.VendedorMemory;
 import desarrollo.tpentrega1.controllers.ClienteController;
 import desarrollo.tpentrega1.controllers.PedidoController;
 import desarrollo.tpentrega1.controllers.VendedorController;
 import desarrollo.tpentrega1.UI.MenuGeneral;
 import desarrollo.tpentrega1.controllers.ItemsMenuController;
+import desarrollo.tpentrega1.dao.sql.ClienteDAOSql;
+import desarrollo.tpentrega1.dao.sql.ItemMenuDAOSql;
+import desarrollo.tpentrega1.dao.sql.PedidoDAOSql;
+import desarrollo.tpentrega1.dao.sql.VendedorDAOSql;
 import desarrollo.tpentrega1.entidades.Coordenada;
 import desarrollo.tpentrega1.entidades.ItemMenu;
 import desarrollo.tpentrega1.entidades.Pago;
 import desarrollo.tpentrega1.entidades.Transferencia;
 import desarrollo.tpentrega1.entidades.Vendedor;
 import desarrollo.tpentrega1.enums.EstadoPedido;
+import desarrollo.tpentrega1.exceptions.DAOException;
 import java.util.List;
 
 import javax.swing.*;
 
 public class TPEntrega1 {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws DAOException {
 
         // Crear instancias de memoria (simulando bases de datos en memoria)
-        ClienteMemory clienteMemory = new ClienteMemory();
-        VendedorMemory vendedorMemory = new VendedorMemory();
-        PedidoMemory pedidoMemory = new PedidoMemory();
-        ItemsMenuMemory itemsMenuMemory = new ItemsMenuMemory();
+        ClienteDAOSql clienteDAOSql = new ClienteDAOSql();
+        VendedorDAOSql vendedorDAOSql = new VendedorDAOSql();
+        PedidoDAOSql pedidoDAOSql = new PedidoDAOSql();
+        ItemMenuDAOSql itemMenuDAOSql = new ItemMenuDAOSql();
 
         // Crear instancias de controladores
-        ClienteController clienteController = new ClienteController(clienteMemory);
-        VendedorController vendedorController = new VendedorController();
-        PedidoController pedidoController = new PedidoController(pedidoMemory);
-        ItemsMenuController itemsMenuController = new ItemsMenuController( vendedorController);
+        ClienteController clienteController = new ClienteController(clienteDAOSql);
+        VendedorController vendedorController = new VendedorController(vendedorDAOSql);
+        PedidoController pedidoController = new PedidoController(pedidoDAOSql);
+        ItemsMenuController itemsMenuController = new ItemsMenuController(itemMenuDAOSql, vendedorController);
 
         // Cargar datos de prueba para clientes
 

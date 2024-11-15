@@ -15,12 +15,11 @@ import java.util.logging.Logger;
 
 public class ItemsMenuController {
 
-    private ItemsMenuDAO itemMenuDAO;
+    private ItemMenuDAOSql itemMenuDAO;
     private VendedorController vendedorController;
 
-    public ItemsMenuController(VendedorController vendedorController) {
-
-        this.itemMenuDAO =  new ItemMenuDAOSql();
+    public ItemsMenuController(ItemMenuDAOSql itemMenuDAOSql, VendedorController vendedorController) {
+        this.itemMenuDAO =  itemMenuDAOSql;
         this.vendedorController = vendedorController;
     }
 

@@ -16,13 +16,9 @@ public class VendedorController {
         return vendedorDAOSql;
     }
     
-    
-
-    public VendedorController() {
+    public VendedorController(VendedorDAOSql vendedorDAOSql) {
         try {
-
-
-            this.vendedorDAOSql = new VendedorDAOSql();
+            this.vendedorDAOSql = vendedorDAOSql;
         } catch (Exception ex) {
             throw new RuntimeException("cant open db");
         }

@@ -60,7 +60,7 @@ public class VendedorDAOSql extends DAO<Vendedor> implements VendedorDAO {
                     vendedor.getDireccion(),
                     vendedor.getCoordenada().getLng(),
                     vendedor.getCoordenada().getLat(),
-                    vendedor.getId()
+                    Integer.valueOf(vendedor.getId())
             );
 
         } catch (Exception ex) {
@@ -74,9 +74,7 @@ public class VendedorDAOSql extends DAO<Vendedor> implements VendedorDAO {
         String sql = "DELETE FROM vendedor WHERE id_vendedor = ?";
 
         try {
-
-            insertarModificarEliminar(sql, vendedor.getId());
-
+            insertarModificarEliminar(sql, Integer.valueOf(vendedor.getId()));
         } catch (Exception ex) {
             throw new DAOException("no se pudo eliminar el vendedor: \n" + ex.getMessage());
         }

@@ -2,30 +2,28 @@
 package desarrollo.tpentrega1.controllers;
 
 import desarrollo.tpentrega1.Memory.PedidoMemory;
+import desarrollo.tpentrega1.dao.sql.PedidoDAOSql;
 import desarrollo.tpentrega1.entidades.Cliente;
 import desarrollo.tpentrega1.entidades.ItemMenu;
 import desarrollo.tpentrega1.entidades.Pago;
 import desarrollo.tpentrega1.entidades.Pedido;
 import desarrollo.tpentrega1.entidades.Vendedor;
 import desarrollo.tpentrega1.enums.EstadoPedido;
+import desarrollo.tpentrega1.exceptions.DAOException;
 import desarrollo.tpentrega1.exceptions.InvalidOrderException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class PedidoController {
-    private PedidoMemory pedidoDAO = new PedidoMemory();
+    private PedidoDAOSql pedidoDAO = null;
 
-    public PedidoController(PedidoMemory pedidoDAO) {
+    public PedidoController(PedidoDAOSql pedidoDAO) {
         this.pedidoDAO = pedidoDAO;
     }
 
-    // Mostrar lista de todos los pedidos
-    public void mostrarListaPedidos() {
-        System.out.println("Lista de Pedidos:");
-        pedidoDAO.listarPedidos();
-    }
-    
-    public void newPedido(String id,Cliente cliente, Vendedor vendedor, List<ItemMenu> items, Pago pago, EstadoPedido estado) {
+    public void newPedido(String id,Cliente cliente, Vendedor vendedor, List<ItemMenu> items, Pago pago, EstadoPedido estado) throws DAOException {
         try {
         Pedido nuevoPedido = new Pedido(id,cliente, vendedor, items, pago, estado);
         pedidoDAO.crearPedido(nuevoPedido);
@@ -35,7 +33,7 @@ public class PedidoController {
     }
 
     // Modificar un pedido existente (cambia su estado)
-    public void modificarPedidoEstado(String id, EstadoPedido nuevoEstado) {
+    public void modificarPedidoEstado(String id, EstadoPedido nuevoEstado) throws DAOException {
         Pedido pedidoExistente = pedidoDAO.buscarPedido(id);
         if (pedidoExistente != null) {
             pedidoExistente.setEstado(nuevoEstado);
@@ -47,7 +45,7 @@ public class PedidoController {
     }
 
     // Eliminar un pedido por ID
-    public void eliminarPedido(String id) {
+    public void eliminarPedido(String id) throws DAOException {
         pedidoDAO.eliminarPedido(id);
         
     }

@@ -116,8 +116,8 @@ public class PedidoDAOSql extends DAO<Pedido> implements PedidoDAO {
             conexion.setAutoCommit(false);
 
             insertarModificarEliminar(sqlPedido,
-                    pedido.getCliente().getId(), pedido.getVendedor().getId(),
-                    pedido.getId(), pedido.getPago(), pedido.getTotal());
+                    Integer.valueOf(pedido.getCliente().getId()), Integer.valueOf(pedido.getVendedor().getId()),
+                    Integer.valueOf(pedido.getId()), pedido.getPago(), pedido.getTotal());
 
             stmtItems = conexion.prepareStatement(sqlItems);
             for (ItemMenu item : pedido.getItems()) {
@@ -171,6 +171,22 @@ public class PedidoDAOSql extends DAO<Pedido> implements PedidoDAO {
     @Override
     public List<Pedido> obtenerPedidos() throws DAOException {
         return null;
+    }
+
+    public List<Pedido> getPedidos() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public List<ItemMenu> getItems(Pedido p) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public void addItem(ItemMenu item, Pedido p) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public void removeItem(ItemMenu item, Pedido p) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

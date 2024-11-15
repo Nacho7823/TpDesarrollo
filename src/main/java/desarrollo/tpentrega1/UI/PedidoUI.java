@@ -14,9 +14,12 @@ import desarrollo.tpentrega1.entidades.Plato;
 import desarrollo.tpentrega1.entidades.Transferencia;
 import desarrollo.tpentrega1.entidades.Vendedor;
 import desarrollo.tpentrega1.enums.EstadoPedido;
+import desarrollo.tpentrega1.exceptions.DAOException;
 import desarrollo.tpentrega1.exceptions.InvalidOrderException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BoxLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -667,12 +670,16 @@ public class PedidoUI extends javax.swing.JPanel {
             pedido.setFormaDePago(new MercadoPago(alias, pedido.getTotal()));
         }
         
-        pedidoController.newPedido(tfId.getText(),
-                pedido.getCliente(), 
-                pedido.getVendedor(), 
-                pedido.getItems(), 
-                (Pago) pedido.getPago(), 
-                pedido.getEstado());
+        try {
+            pedidoController.newPedido(tfId.getText(),
+                    pedido.getCliente(),
+                    pedido.getVendedor(),
+                    pedido.getItems(),
+                    (Pago) pedido.getPago(),
+                    pedido.getEstado());
+        } catch (DAOException ex) {
+            Logger.getLogger(PedidoUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
         actualizarTabla();
     }//GEN-LAST:event_btnCrearActionPerformed
 
@@ -750,7 +757,11 @@ public class PedidoUI extends javax.swing.JPanel {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         if (!(tfId.getText().equals(""))) {
-            pedidoController.eliminarPedido(tfId.getText());
+            try {
+                pedidoController.eliminarPedido(tfId.getText());
+            } catch (DAOException ex) {
+                Logger.getLogger(PedidoUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         update();
         actualizarTabla();

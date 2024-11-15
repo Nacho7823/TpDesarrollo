@@ -60,7 +60,7 @@ public class ItemMenuDAOSql extends DAO<ItemMenu> implements ItemsMenuDAO {
         try {
 
             insertarModificarEliminar(sql,
-                    Integer.parseInt(bebida.getId()),
+                    Integer.valueOf(bebida.getId()),
                     bebida.getGraduacionAlcoholica(),
                     bebida.getTamaño());
 
@@ -75,7 +75,7 @@ public class ItemMenuDAOSql extends DAO<ItemMenu> implements ItemsMenuDAO {
         try {
 
             insertarModificarEliminar(sql,
-                    Integer.parseInt(plato.getId()),
+                    Integer.valueOf(plato.getId()),
                     plato.getCalorias(),
                     plato.aptoCeliaco(),
                     plato.aptoVegano(),
@@ -99,7 +99,7 @@ public class ItemMenuDAOSql extends DAO<ItemMenu> implements ItemsMenuDAO {
                     itemMenu.getDescripcion(),
                     itemMenu.getPrecio(),
                     itemMenu.getCategoria(),
-                    itemMenu.getId());
+                    Integer.valueOf(itemMenu.getId()));
 
         } catch (Exception ex) {
             throw new DAOException("no se pudo actualizar el item_menu: \n" + ex.getMessage());
@@ -148,9 +148,7 @@ public class ItemMenuDAOSql extends DAO<ItemMenu> implements ItemsMenuDAO {
         String sql = "DELETE FROM item_menu WHERE id_item_menu = ?";
 
         try {
-
-            insertarModificarEliminar(sql, Integer.parseInt(id));
-
+            insertarModificarEliminar(sql, Integer.valueOf(id));
         } catch (Exception ex) {
             throw new DAOException("no se pudo eliminar el itemMenu: \n" + ex.getMessage());
         }
@@ -294,8 +292,4 @@ public class ItemMenuDAOSql extends DAO<ItemMenu> implements ItemsMenuDAO {
 
         return listaItemMenus;
     }
-    
-    
-    
-
 }
