@@ -2,16 +2,14 @@
 package desarrollo.tpentrega1.entidades;
 
 import desarrollo.tpentrega1.interfaces.Observador;
-import desarrollo.tpentrega1.enums.EstadoPedido;
 
 public class Cliente implements Observador{
     private String id;
-    private String nombre;          // no esta en el diagrama pero la etapa 1 lo pide
+    private String nombre;
     private String cuit;
     private String email;
     private String direccion;
     private Coordenada coordenada;
-    private Pago pago;
 
     public Cliente(String id, String nombre, String cuit, String email, String direccion, Coordenada coordenada) {
         this.id = id;
@@ -21,10 +19,15 @@ public class Cliente implements Observador{
         this.direccion = direccion;
         this.coordenada = coordenada;
     }
-
-    public Cliente() {
-        
+        public Cliente( String nombre, String cuit, String email, String direccion, Coordenada coordenada) {
+        this.id = null;
+        this.nombre = nombre;
+        this.cuit = cuit;
+        this.email = email;
+        this.direccion = direccion;
+        this.coordenada = coordenada;
     }
+
 
     public String getId() {
         return id;
@@ -80,17 +83,9 @@ public class Cliente implements Observador{
     public void actualizar(Pedido pedido) {
         System.out.println("Cliente " + nombre + " ha sido notificado del cambio de estado del pedido " 
                             + pedido.getEstado());
-        
-        // Si el pedido está en estado 'ENVIADO', generar un pago
-        if (pedido.getEstado().equals(EstadoPedido.ENVIADO)) {
-            generarPago(pedido);
-        }
     }
 
-    private void generarPago(Pedido pedido) {
-        pago = new Pago(pedido.getTotal());
-        System.out.println("Pago generado por el pedido " + pedido.getEstado());
-    }
+
 
     @Override
     public String toString() {

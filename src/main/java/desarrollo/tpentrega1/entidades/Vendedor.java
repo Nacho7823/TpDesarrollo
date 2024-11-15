@@ -12,20 +12,16 @@ public class Vendedor {
     private String nombre;
     private String direccion;
     private Coordenada coordenada;
-    private ArrayList<ItemMenu> itemsMenu;
-    private ArrayList<Pedido> pedidos;
+    private List<ItemMenu> itemsMenu;
 
-    public Vendedor() {
-    }
 
-    public Vendedor(String id, String nombre, String direccion, Coordenada coordenada, ArrayList<ItemMenu> itemsMenu) {
+    public Vendedor(String id, String nombre, String direccion, Coordenada coordenada, List<ItemMenu> itemsMenu) {
         this.id = id;
         this.nombre = nombre;
         this.direccion = direccion;
         this.coordenada = coordenada;
         this.itemsMenu = new ArrayList<>();
         this.itemsMenu = itemsMenu;
-        this.pedidos = new ArrayList<>();
     }
        
     public Vendedor(String id, String nombre, String direccion, Coordenada coordenada) {
@@ -34,7 +30,15 @@ public class Vendedor {
         this.direccion = direccion;
         this.coordenada = coordenada;
         this.itemsMenu = new ArrayList<>();
-        this.pedidos = new ArrayList<>();
+
+    }
+        public Vendedor( String nombre, String direccion, Coordenada coordenada) {
+        this.id = null;
+        this.nombre = nombre;
+        this.direccion = direccion;
+        this.coordenada = coordenada;
+        this.itemsMenu = new ArrayList<>();
+
     }
 
     // getters / setters
@@ -71,19 +75,11 @@ public class Vendedor {
     }
  
     public ArrayList<ItemMenu> getItemsMenu(){
-        return this.itemsMenu;
+        return (ArrayList)this.itemsMenu;
     }
 
     public void setItemMenu(ArrayList<ItemMenu> itemsMenu){
         this.itemsMenu = itemsMenu;
-    }
-
-    public ArrayList<Pedido> getPedidos() {
-        return pedidos;
-    }
-
-    public void setPedidos(ArrayList<Pedido> pedidos) {
-        this.pedidos = pedidos;
     }
     
     // 
@@ -92,10 +88,6 @@ public class Vendedor {
         this.itemsMenu.add(item);
     }
     
-    public void addPedido(Pedido pedido){
-        if(!this.pedidos.contains(pedido)) this.pedidos.add(pedido);
-        
-    }
     
     // funcs
     public double distancia(Cliente cliente) {
@@ -169,18 +161,8 @@ public class Vendedor {
     }
     
       public void cambiarEstadoPedido(Pedido pedido, EstadoPedido nuevoEstado) {
-        pedido.setEstado(nuevoEstado); // Cambiar el estado notifica automáticamente a los observadores
+        pedido.setEstado(nuevoEstado);
         System.out.println("El vendedor ha cambiado el estado del pedido a " + nuevoEstado);
-    }
-
-//buscar pedido por estado
-    public List<Pedido> buscarPedidoPorEstado(EstadoPedido estado){
-        ArrayList<Pedido> pedidosBuscados = new ArrayList<Pedido>();
-        for (Pedido pedido1 : pedidos) 
-            if(pedido1.getEstado()==estado) 
-                pedidosBuscados.add(pedido1);
-        
-        return pedidosBuscados;
     }
 
     @Override

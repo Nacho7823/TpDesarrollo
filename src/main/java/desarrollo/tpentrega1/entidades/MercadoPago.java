@@ -1,16 +1,13 @@
 
 package desarrollo.tpentrega1.entidades;
 
-import desarrollo.tpentrega1.interfaces.FormaDePago;
-
-public class MercadoPago implements FormaDePago{
+public class MercadoPago extends Pago{
     private String alias;
 
-    public MercadoPago(String alias) {
+    public MercadoPago(String alias,double monto) {
+        super(monto);
         this.alias = alias;
     }
-    
-    public MercadoPago(){}
 
     public String getAlias() {
         return alias;

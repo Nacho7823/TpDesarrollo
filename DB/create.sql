@@ -1,78 +1,89 @@
 CREATE TABLE vendedor (
-    id_vendedor INT PRIMARY KEY,
+    id_vendedor BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(20) NOT NULL,
     direccion VARCHAR(20) NOT NULL,
     longitud DECIMAL(9, 6) NOT NULL,
     latitud DECIMAL(9, 6) NOT NULL
-);
+) ENGINE=InnoDB;
 
 CREATE TABLE cliente (
-    id_cliente INT PRIMARY KEY,
+    id_cliente BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(20) NOT NULL,
     cuit VARCHAR(20) NOT NULL,
     email VARCHAR(20) NOT NULL,
     direccion VARCHAR(20) NOT NULL,
     longitud DECIMAL(9, 6) NOT NULL,
     latitud DECIMAL(9, 6) NOT NULL
-);
+) ENGINE=InnoDB;
 
 CREATE TABLE item_menu (
-    id_item_menu INT PRIMARY KEY,
+    id_item_menu BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(20) NOT NULL,
     descripcion VARCHAR(20) NOT NULL,
     precio DECIMAL(10, 2) NOT NULL,
     categoria VARCHAR(20) NOT NULL
-);
+) ENGINE=InnoDB;
 
 CREATE TABLE vende (
-    id_item_menu INT REFERENCES item_menu(id_item_menu),
-    id_vendedor INT REFERENCES vendedor(id_vendedor),
-    PRIMARY KEY(id_item_menu, id_vendedor)
-);
+    id_item_menu BIGINT UNSIGNED,
+    id_vendedor BIGINT UNSIGNED,
+    PRIMARY KEY(id_item_menu, id_vendedor),
+    FOREIGN KEY (id_item_menu) REFERENCES item_menu(id_item_menu),
+    FOREIGN KEY (id_vendedor) REFERENCES vendedor(id_vendedor)
+) ENGINE=InnoDB;
 
 CREATE TABLE plato (
-    id_item_menu INT PRIMARY KEY REFERENCES item_menu(id_item_menu),
+    id_item_menu BIGINT UNSIGNED PRIMARY KEY,
     calorias DECIMAL(5, 2) NOT NULL,
     apto_celiaco BOOLEAN,
     apto_vegano BOOLEAN,
-    peso DECIMAL(5, 2) NOT NULL
-);
+    peso DECIMAL(5, 2) NOT NULL,
+    FOREIGN KEY (id_item_menu) REFERENCES item_menu(id_item_menu) ON DELETE CASCADE
+) ENGINE=InnoDB;
 
 CREATE TABLE bebida (
-    id_item_menu INT PRIMARY KEY REFERENCES item_menu(id_item_menu),
+    id_item_menu BIGINT UNSIGNED PRIMARY KEY,
     graduacion_alcoholica DECIMAL(5, 2) NOT NULL,
-    tamanio DECIMAL(5, 2) NOT NULL
-);
+    tamanio DECIMAL(5, 2) NOT NULL,
+    FOREIGN KEY (id_item_menu) REFERENCES item_menu(id_item_menu) ON DELETE CASCADE
+) ENGINE=InnoDB;
 
 CREATE TABLE pago (
-    id_pago INT PRIMARY KEY,
+    id_pago BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     monto DECIMAL(10, 2) NOT NULL,
     fecha DATE NOT NULL
-);
+) ENGINE=InnoDB;
 
 CREATE TABLE mercado_pago (
-    id_pago INT PRIMARY KEY REFERENCES pago(id_pago),
-    alias VARCHAR(20) NOT NULL
-);
+    id_pago BIGINT UNSIGNED PRIMARY KEY,
+    alias VARCHAR(20) NOT NULL,
+    FOREIGN KEY (id_pago) REFERENCES pago(id_pago)
+) ENGINE=InnoDB;
 
 CREATE TABLE transferencia (
-    id_pago INT PRIMARY KEY REFERENCES pago(id_pago),
+    id_pago BIGINT UNSIGNED PRIMARY KEY,
     cvu VARCHAR(20) NOT NULL,
-    cuit VARCHAR(20) NOT NULL
-);
+    cuit VARCHAR(20) NOT NULL,
+    FOREIGN KEY (id_pago) REFERENCES pago(id_pago)
+) ENGINE=InnoDB;
 
 CREATE TABLE pedido (
-    id_pedido INT PRIMARY KEY,
+    id_pedido BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     estado INT NOT NULL,
-    id_cliente INT REFERENCES cliente(id_cliente),
-    id_pago INT REFERENCES pago(id_pago),
-    total DECIMAL(10, 2) NOT NULL
-);
+    id_cliente BIGINT UNSIGNED,
+    id_vendedor BIGINT UNSIGNED,
+    id_pago BIGINT UNSIGNED,
+    total DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente),
+    FOREIGN KEY (id_vendedor) REFERENCES vendedor(id_vendedor),
+    FOREIGN KEY (id_pago) REFERENCES pago(id_pago)
+) ENGINE=InnoDB;
 
 CREATE TABLE detalle_pedido (
-    id_pedido INT REFERENCES pedido(id_pedido),
-    id_item_menu INT REFERENCES item_menu(id_item_menu),
+    id_pedido BIGINT UNSIGNED,
+    id_item_menu BIGINT UNSIGNED,
     cantidad INT NOT NULL,
-    PRIMARY KEY (id_pedido, id_item_menu)
-);
-
+    PRIMARY KEY (id_pedido, id_item_menu),
+    FOREIGN KEY (id_pedido) REFERENCES pedido(id_pedido),
+    FOREIGN KEY (id_item_menu) REFERENCES item_menu(id_item_menu)
+) ENGINE=InnoDB;

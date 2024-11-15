@@ -5,26 +5,49 @@ import desarrollo.tpentrega1.entidades.Cliente;
 import desarrollo.tpentrega1.entidades.Coordenada;
 import desarrollo.tpentrega1.exceptions.DAOException;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class ClienteDAOSql extends DAO<Cliente> implements ClienteDAO {
+private static ClienteDAOSql instance;
+     
+    public static ClienteDAOSql getInstance(){
+        if(ClienteDAOSql.instance == null)ClienteDAOSql.instance =  new ClienteDAOSql();
+        return ClienteDAOSql.instance;
+    }
 
-  
-
-    
 
     @Override
    public void crearCliente(Cliente cliente) throws DAOException {
-    String sql = "INSERT INTO cliente (id_cliente, nombre, cuit, email, direccion, longitud, latitud) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    String sql = "INSERT INTO cliente (nombre, cuit, email, direccion, longitud, latitud) VALUES (?, ?, ?, ?, ?, ?)";
     
-    try {
-        insertarModificarEliminar(sql, cliente.getId(), cliente.getNombre(), cliente.getCuit(), cliente.getEmail(), cliente.getDireccion(), cliente.getCoordenada().getLng(), cliente.getCoordenada().getLat());
-    } catch (Exception ex) {
-        throw new DAOException("No se pudo crear el cliente: \n" + ex.getMessage());
-    }
+           try (PreparedStatement stmt = conexion.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            ConectarBase();
+            stmt.setString(1, cliente.getNombre());
+            stmt.setString(2, cliente.getCuit());
+            stmt.setString(3, cliente.getEmail());
+            stmt.setString(4, cliente.getDireccion());
+            stmt.setDouble(5, cliente.getCoordenada().getLng());
+            stmt.setDouble(6, cliente.getCoordenada().getLat());
+        
+            stmt.executeUpdate();
+            
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    int idCliente = generatedKeys.getInt(1);
+                    
+                   cliente.setId(String.valueOf(idCliente));
+                    
+                }
+                }
+                    
+                } catch (Exception ex) {
+            throw new DAOException("no se pudo crear el cliente: \n" + ex.getMessage());
+        }
 }
 
 
@@ -52,12 +75,12 @@ public class ClienteDAOSql extends DAO<Cliente> implements ClienteDAO {
     }
 
     @Override
-    public void eliminarCliente(Cliente cliente) throws DAOException {
+    public void eliminarCliente(String id) throws DAOException {
         String sql = "DELETE FROM cliente WHERE id_cliente = ?";
     
         try {
         
-        insertarModificarEliminar(sql, cliente.getId());  
+        insertarModificarEliminar(sql,id);  
         } catch (Exception ex) {
         throw new DAOException("No se pudo eliminar el cliente: \n" + ex.getMessage());
     }
@@ -65,7 +88,7 @@ public class ClienteDAOSql extends DAO<Cliente> implements ClienteDAO {
 
     @Override
     public Cliente buscarCliente(String id) throws DAOException {
-    String sql = "SELECT id_cliente, nombre, cuit, email, direccion, longitud, latitud FROM cliente WHERE id_cliente = ?";
+    String sql = "SELECT * FROM cliente WHERE id_cliente = ?";
     Cliente cliente = null;
 
     try {
@@ -76,8 +99,7 @@ public class ClienteDAOSql extends DAO<Cliente> implements ClienteDAO {
 
         
         if (resultado.next()) {
-            cliente = new Cliente(
-                    resultado.getString("id_cliente"), 
+            cliente = new Cliente(id, 
                     resultado.getString("nombre"), 
                     resultado.getString("cuit"), 
                     resultado.getString("email"), 
@@ -101,7 +123,7 @@ public class ClienteDAOSql extends DAO<Cliente> implements ClienteDAO {
     
 @Override
 public List<Cliente> obtenerClientes() throws DAOException {
-    String sql = "SELECT id_cliente, nombre, cuit, email, direccion, longitud, latitud FROM cliente";
+    String sql = "SELECT * FROM cliente";
     List<Cliente> listaClientes = new ArrayList<>();
 
     try {

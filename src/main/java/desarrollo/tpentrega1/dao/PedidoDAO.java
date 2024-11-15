@@ -6,7 +6,7 @@ import desarrollo.tpentrega1.exceptions.DAOException;
 import java.util.List;
 
 public interface PedidoDAO {
-    public void listarPedido();
+    public void listarPedidos();
     public void crearPedido(Pedido pedido) throws DAOException;
     public void actualizarPedido(Pedido pedido);
     public void eliminarPedido(String id);

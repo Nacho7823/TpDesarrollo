@@ -15,23 +15,22 @@ public class Pedido {
     private Vendedor vendedor;
     private String id;
     private List<ItemMenu> items;
-    private FormaDePago formaDePago;
+    private Pago pago;
     private double total;
     private EstadoPedido estado;
     private List<Observador> observadores = new ArrayList<>();
     
 
     
-    public Pedido(String id,Cliente cliente, Vendedor vendedor, List<ItemMenu> items, FormaDePago formaDePago, EstadoPedido estado)throws InvalidOrderException {
+    public Pedido(String id,Cliente cliente, Vendedor vendedor, List<ItemMenu> items, Pago pago, EstadoPedido estado)throws InvalidOrderException {
         if (!validarItemsUnVendedor(items, vendedor)) {
             throw new InvalidOrderException("Los ítems deben pertenecer al mismo vendedor");
         }
         this.id = id;
         this.cliente=cliente;
         this.vendedor = vendedor;
-        this.vendedor.addPedido(this);
         this.estado = estado;
-        this.formaDePago = formaDePago;
+        this.pago = pago;
         this.items=items;
     }
     
@@ -70,12 +69,12 @@ public class Pedido {
         notificarObservadores();
     }
     
-    public FormaDePago getFormaDePago(){
-        return this.formaDePago;
+    public FormaDePago getPago(){
+        return this.pago;
     }
 
-    public void setFormaDePago(FormaDePago formaDePago) {
-        this.formaDePago = formaDePago;
+    public void setFormaDePago(Pago pago) {
+        this.pago = pago;
     }
     
     public List<ItemMenu> getItems(){
@@ -125,12 +124,21 @@ public class Pedido {
 
     private double calcularTotal() {
         double totalProductos = items.stream().mapToDouble(ItemMenu::getPrecio).sum();
-        this.total = totalProductos + formaDePago.aplicarRecargo(totalProductos);
+        this.total = totalProductos + pago.aplicarRecargo(totalProductos);
         return this.total;
     }
     
     public double getTotal() {
         return this.calcularTotal();
     }
+    
+    private void generarPago(String alias) {
+            this.pago= new MercadoPago(alias,this.calcularTotal()); 
+    }
+    
+    private void generarPago(String cuit,String cvu) {
+            this.pago= new Transferencia(cuit,cvu,this.calcularTotal()); 
+    }
+    
 
 }

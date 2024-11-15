@@ -8,25 +8,31 @@ public abstract class ItemMenu {
     private String descripcion;
     private double precio;
     private String categoria;
-    private Vendedor vendedor;
+ 
+ protected ItemMenu(Builder<?> builder) {
+        this.id = builder.id;
+        this.nombre = builder.nombre;
+        this.descripcion = builder.descripcion;
+        this.precio = builder.precio;
+        this.categoria = builder.categoria;
+    }
 
-    public ItemMenu() {}
+    public static abstract class Builder<T extends Builder<T>> {
+        private String id;
+        private String nombre;
+        private String descripcion;
+        private double precio;
+        private String categoria;
 
-//    public ItemMenu(String id, String nombre, String descripcion, double precio, String categoria) {
-//        this.id = id;
-//        this.nombre = nombre;
-//        this.descripcion = descripcion;
-//        this.precio = precio;
-//        this.categoria = categoria;
-//    }
-    
-    public ItemMenu(String id, String nombre, String descripcion, double precio, String categoria, Vendedor vendedor) {
-        this.id = id;
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.precio = precio;
-        this.categoria = categoria;
-        this.vendedor = vendedor;
+        public T id(String id) { this.id = id; return self(); }
+        public T nombre(String nombre) { this.nombre = nombre; return self(); }
+        public T descripcion(String descripcion) { this.descripcion = descripcion; return self(); }
+        public T precio(double precio) { this.precio = precio; return self(); }
+        public T categoria(String categoria) { this.categoria = categoria; return self(); }
+
+        protected abstract T self();
+
+        public abstract ItemMenu build();
     }
 
    
@@ -71,13 +77,6 @@ public abstract class ItemMenu {
         this.categoria = categoria;
     }
 
-    public Vendedor getVendedor() {
-        return vendedor;
-    }
-
-    public void setVendedor(Vendedor vendedor) {
-        this.vendedor = vendedor;
-    }
     
     public abstract boolean esComida();
     public abstract boolean esBebida();

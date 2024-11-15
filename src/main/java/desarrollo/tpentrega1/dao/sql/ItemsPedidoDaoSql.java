@@ -1,16 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package desarrollo.tpentrega1.dao.sql;
 
 import desarrollo.tpentrega1.dao.ItemsPedidoDao;
 import desarrollo.tpentrega1.entidades.ItemMenu;
 
-/**
- *
- * @author florh
- */
 public class ItemsPedidoDaoSql extends DAO<ItemMenu> implements ItemsPedidoDao{
 
     @Override

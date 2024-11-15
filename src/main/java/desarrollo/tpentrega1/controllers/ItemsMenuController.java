@@ -1,9 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package desarrollo.tpentrega1.controllers;
 
+import desarrollo.tpentrega1.dao.ItemsMenuDAO;
 import desarrollo.tpentrega1.dao.sql.ItemMenuDAOSql;
 import desarrollo.tpentrega1.entidades.ItemMenu;
 import desarrollo.tpentrega1.entidades.Plato;
@@ -17,28 +15,28 @@ import java.util.logging.Logger;
 
 public class ItemsMenuController {
 
-    private ItemMenuDAOSql itemMenuDAOSql;
+    private ItemsMenuDAO itemMenuDAO;
     private VendedorController vendedorController;
 
     public ItemsMenuController(VendedorController vendedorController) {
 
-        this.itemMenuDAOSql =  new ItemMenuDAOSql();
+        this.itemMenuDAO =  new ItemMenuDAOSql();
         this.vendedorController = vendedorController;
     }
 
     public List<ItemMenu> obtenerListaItemsMenu() {
         try {
-            return itemMenuDAOSql.obtenerItemMenus(vendedorController.getVendedorDAO());
+            return itemMenuDAO.obtenerItemsMenu(vendedorController.getVendedorDAO());
         } catch (DAOException ex) {
             Logger.getLogger(ItemsMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return new ArrayList<>();
     }
 
-    public Plato crearNuevoPlato(String id, String nombre, String descripcion, double precio, String categoria, Vendedor vendedor,
+    public Plato crearNuevoItem(String nombre, String descripcion, double precio, String categoria,
             double calorias, boolean aptoCeliaco, boolean aptoVegano, double peso) {
-//        Plato nuevoPlato = new Plato(id, nombre, descripcion, precio, categoria, calorias, aptoCeliaco, aptoVegano, peso);
-        Plato nuevoPlato = new Plato(id, nombre, descripcion, precio, categoria, vendedor, calorias, aptoCeliaco, aptoVegano, peso);
+        Plato nuevoPlato = new Plato(nombre, descripcion, precio, categoria, calorias, aptoCeliaco, aptoVegano, peso);
+
         vendedor.addItemMenu(nuevoPlato);
         vendedorController.modificarVendedor(vendedor);
         try {

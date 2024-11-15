@@ -1,37 +1,52 @@
 package desarrollo.tpentrega1.dao.sql;
 
+import desarrollo.tpentrega1.dao.ItemsMenuDAO;
 import desarrollo.tpentrega1.dao.VendedorDAO;
 import desarrollo.tpentrega1.entidades.Coordenada;
 import desarrollo.tpentrega1.entidades.Vendedor;
 import desarrollo.tpentrega1.exceptions.DAOException;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 public class VendedorDAOSql extends DAO<Vendedor> implements VendedorDAO {
-
-
-
-
+    private ItemsMenuDAO itemsMenuDAO= ItemMenuDAOSql.getInstance();
+     private static VendedorDAOSql instance;
+     
+    public static VendedorDAOSql getInstance(){
+        if(VendedorDAOSql.instance == null)VendedorDAOSql.instance =  new VendedorDAOSql();
+        return VendedorDAOSql.instance;
+    }
     
     @Override
     public void crearVendedor(Vendedor vendedor) throws DAOException {
 
-        String sql = "INSERT INTO vendedor (id_vendedor, nombre, direccion, longitud, latitud) VALUES (?, ?, ?, ?, ?)";
-        try {
-
-            insertarModificarEliminar(sql,
-                    vendedor.getId(),
-                    vendedor.getNombre(),
-                    vendedor.getDireccion(),
-                    vendedor.getCoordenada().getLng(),
-                    vendedor.getCoordenada().getLat());
-        } catch (Exception ex) {
+        String sql = "INSERT INTO vendedor (nombre, direccion, longitud, latitud) VALUES (?, ?, ?, ?)";
+        try (PreparedStatement stmt = conexion.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            ConectarBase();
+            stmt.setString(1, vendedor.getNombre());
+            stmt.setString(2, vendedor.getDireccion());
+            stmt.setDouble(3, vendedor.getCoordenada().getLng());
+            stmt.setDouble(4, vendedor.getCoordenada().getLat());
+        
+            stmt.executeUpdate();
+            
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    int idVendedor = generatedKeys.getInt(1);
+                    
+                   vendedor.setId(String.valueOf(idVendedor));
+                    
+                }
+                }
+                    
+                } catch (Exception ex) {
             throw new DAOException("no se pudo crear el vendedor: \n" + ex.getMessage());
         }
-
-    }
+        }
 
     @Override
     public void actualizarVendedor(Vendedor vendedor) throws DAOException {
@@ -75,21 +90,21 @@ public class VendedorDAOSql extends DAO<Vendedor> implements VendedorDAO {
 
         try {
             ConectarBase();
-            PreparedStatement preparedStatement = conexion.prepareStatement(sql);
-            preparedStatement.setInt(1, Integer.parseInt(id));  
-            resultado = preparedStatement.executeQuery();
-
-            if (resultado.next()) {
-                vendedor = new Vendedor(
-                        id, 
-                        resultado.getString("nombre"), 
-                        resultado.getString("direccion"), 
-                        new Coordenada(resultado.getDouble("latitud"), resultado.getDouble("longitud")));
-                // TODO: add items menu
+            try (PreparedStatement preparedStatement = conexion.prepareStatement(sql)) {
+                preparedStatement.setInt(1, Integer.parseInt(id));
+                resultado = preparedStatement.executeQuery();
                 
+                if (resultado.next()) {
+                    vendedor = new Vendedor(
+                            id,
+                            resultado.getString("nombre"),
+                            resultado.getString("direccion"),
+                            new Coordenada(resultado.getDouble("latitud"), resultado.getDouble("longitud")),
+                            itemsMenuDAO.obtenerItemsMenu(id));
+                            
+                            
+                }
             }
-
-            preparedStatement.close();
         } catch (SQLException | ClassNotFoundException ex) {
             throw new DAOException("No se pudo buscar el vendedor: \n" + ex.getMessage());
         } finally {
@@ -101,13 +116,13 @@ public class VendedorDAOSql extends DAO<Vendedor> implements VendedorDAO {
         }
 
         return vendedor;
-
     }
 
+    
     @Override
     public List<Vendedor> obtenerVendedores() throws DAOException {
 
-        String sql = "SELECT id_vendedor, nombre, direccion, longitud, latitud FROM vendedor";
+        String sql = "SELECT * FROM vendedor";
         List<Vendedor> listaVendedores = new ArrayList<>();
 
         try {
@@ -115,7 +130,7 @@ public class VendedorDAOSql extends DAO<Vendedor> implements VendedorDAO {
             consultarBase(sql);
 
             while (resultado.next()) {
-                String id = resultado.getString("id_vendedor");
+                String id = String.valueOf(resultado.getInt("id_vendedor"));
                 String nombre = resultado.getString("nombre");
                 String direccion = resultado.getString("direccion");
                 double longitud = resultado.getDouble("longitud");

@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package desarrollo.tpentrega1.entidades;
 
 
@@ -11,47 +8,37 @@ public class Plato extends ItemMenu {
     private boolean aptoVegano;
     private double peso;
 
-    public Plato() {
+
+    private Plato(Builder builder) {
+        super(builder);
+        this.calorias = builder.calorias;
+        this.aptoCeliaco = builder.aptoCeliaco;
+        this.aptoVegano = builder.aptoVegano;
+        this.peso = builder.peso;
     }
 
-//    public Plato(String id,
-//                String nombre,
-//                String descripcion,
-//                double precio,
-//                String categoria,
-//                double calorias,
-//                boolean aptoCeliaco,
-//                boolean aptoVegano,
-//                double peso) {
-//        super(id, nombre, descripcion, precio, categoria);
-//        this.calorias = calorias;
-//        this.aptoCeliaco = aptoCeliaco;
-//        this.aptoVegano = aptoVegano;
-//        this.peso = peso;
-//    }
-    public Plato(String id,
-                String nombre,
-                String descripcion,
-                double precio,
-                String categoria,
-                Vendedor vendedor,
-                double calorias,
-                boolean aptoCeliaco,
-                boolean aptoVegano,
-                double peso) {
-        super(id, nombre, descripcion, precio, categoria, vendedor);
-        this.calorias = calorias;
-        this.aptoCeliaco = aptoCeliaco;
-        this.aptoVegano = aptoVegano;
-        this.peso = peso;
+    public static class Builder extends ItemMenu.Builder<Builder> {
+        private double calorias;
+        private boolean aptoCeliaco;
+        private boolean aptoVegano;
+        private double peso;
+
+        public Builder calorias(double calorias) { this.calorias = calorias; return this; }
+        public Builder aptoCeliaco(boolean aptoCeliaco) { this.aptoCeliaco = aptoCeliaco; return this; }
+        public Builder aptoVegano(boolean aptoVegano) { this.aptoVegano = aptoVegano; return this; }
+        public Builder peso(double peso) { this.peso = peso; return this; }
+
+        @Override
+        protected Builder self() {
+            return this;
+        }
+
+        @Override
+        public Plato build() {
+            return new Plato(this);
+        }
     }
 
-    public Plato(double calorias, boolean aptoCeliaco, boolean aptoVegano, double peso) {
-        this.calorias = calorias;
-        this.aptoCeliaco = aptoCeliaco;
-        this.aptoVegano = aptoVegano;
-        this.peso = peso;
-    }
 
     // getters / setters
 
@@ -77,10 +64,12 @@ public class Plato extends ItemMenu {
 
     // funcs
 
+    @Override
     public double peso() {
         return (peso + ((peso * 10) / 100));
     };
 
+    @Override
     public boolean aptoVegano() { // consultar método
         return aptoVegano;
     };
@@ -88,14 +77,17 @@ public class Plato extends ItemMenu {
         return aptoCeliaco;
     };
 
+    @Override
     public boolean esBebida() {
         return false;
     };
 
+    @Override
     public boolean esComida() {
         return true;
     };
 
+    @Override
     public String toString() {
     return "Plato{" +
             "calorias=" + calorias +

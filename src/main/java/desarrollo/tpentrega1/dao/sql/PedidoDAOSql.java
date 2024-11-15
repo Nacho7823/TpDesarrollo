@@ -1,39 +1,29 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package desarrollo.tpentrega1.dao.sql;
 
 import desarrollo.tpentrega1.dao.PedidoDAO;
-import desarrollo.tpentrega1.entidades.Cliente;
 import desarrollo.tpentrega1.entidades.ItemMenu;
 import desarrollo.tpentrega1.entidades.Pedido;
 import desarrollo.tpentrega1.exceptions.DAOException;
-import desarrollo.tpentrega1.interfaces.Observador;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author florh
- */
+
 public class PedidoDAOSql extends DAO<Pedido> implements PedidoDAO {
 
     @Override
-    public void listarPedido() {
+    public void listarPedidos() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     @Override
     public void crearPedido(Pedido pedido) throws DAOException{
-    String sqlPedido = "INSERT INTO pedido (cliente, vendedor, id, formaDePago, total) VALUES (?, ?, ?, ?, ?)";
-    String sqlItems = "INSERT INTO pedido_items (pedido_id, item_id) VALUES (?, ?)";
-    String sqlObservadores = "INSERT INTO pedido_observadores (pedido_id, observador_id) VALUES (?, ?)";
+    String sqlPedido = "INSERT INTO pedido (estado,id_cliente, id_vendedor, id_pago, total) VALUES (?, ?, ?, ?, ?)";
+    String sqlItems = "INSERT INTO items_pedido (pedido_id, item_id,cantidad) VALUES (?, ?, ?)";
     
     PreparedStatement stmtItems = null;
-    PreparedStatement stmtObservadores = null;
     
     try {
        
@@ -42,7 +32,7 @@ public class PedidoDAOSql extends DAO<Pedido> implements PedidoDAO {
         
        
         insertarModificarEliminar(sqlPedido, pedido.getCliente().getId(), pedido.getVendedor().getId(), 
-                                  pedido.getId(), pedido.getFormaDePago(), pedido.getTotal());
+                                  pedido.getId(), pedido.getPago(), pedido.getTotal());
         
        
         stmtItems = conexion.prepareStatement(sqlItems);
@@ -53,14 +43,6 @@ public class PedidoDAOSql extends DAO<Pedido> implements PedidoDAO {
         }
         stmtItems.executeBatch();
         
-        
-        stmtObservadores = conexion.prepareStatement(sqlObservadores);
-        for (Observador observador : pedido.getObservadores()) {
-            stmtObservadores.setString(1, (String) pedido.getId());
-            stmtObservadores.setString(2, ((Cliente)observador).getId());
-            stmtObservadores.addBatch();
-        }
-        stmtObservadores.executeBatch();
         
         
         conexion.commit();
@@ -84,7 +66,6 @@ public class PedidoDAOSql extends DAO<Pedido> implements PedidoDAO {
         try {
             // Cerrar los recursos
             if (stmtItems != null) stmtItems.close();
-            if (stmtObservadores != null) stmtObservadores.close();
             desconectarBase();
         } catch (Exception ex) {
             throw new DAOException("Error al cerrar recursos: " + ex.getMessage());

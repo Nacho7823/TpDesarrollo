@@ -24,7 +24,7 @@ public class DAO<T> {
         protected Statement sentencia = null;
         
         private final String USER = "root";
-        private final String PASSWORD = "";
+        private final String PASSWORD = "C0NTR4S3Ñ4";
         private final String DATABASE = "tienda";
         private final String DRIVER = "com.mysql.jdbc.Driver";
         
@@ -33,6 +33,7 @@ public class DAO<T> {
                 Class.forName(DRIVER);
                 String urlBaseDeDatos = "jdbc:mysql://localhost:3306/" + DATABASE + "?useSSL=false";
                 conexion = DriverManager.getConnection(urlBaseDeDatos, USER, PASSWORD);
+                System.out.println("Conexión exitosa");
                 
             } catch (ClassNotFoundException | SQLException ex) {
                 throw ex;

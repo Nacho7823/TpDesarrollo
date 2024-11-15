@@ -4,11 +4,11 @@ package desarrollo.tpentrega1.controllers;
 import desarrollo.tpentrega1.Memory.PedidoMemory;
 import desarrollo.tpentrega1.entidades.Cliente;
 import desarrollo.tpentrega1.entidades.ItemMenu;
+import desarrollo.tpentrega1.entidades.Pago;
 import desarrollo.tpentrega1.entidades.Pedido;
 import desarrollo.tpentrega1.entidades.Vendedor;
 import desarrollo.tpentrega1.enums.EstadoPedido;
 import desarrollo.tpentrega1.exceptions.InvalidOrderException;
-import desarrollo.tpentrega1.interfaces.FormaDePago;
 import java.util.List;
 
 
@@ -25,9 +25,9 @@ public class PedidoController {
         pedidoDAO.listarPedido();
     }
     
-    public void newPedido(String id,Cliente cliente, Vendedor vendedor, List<ItemMenu> items, FormaDePago formaDePago, EstadoPedido estado) {
+    public void newPedido(String id,Cliente cliente, Vendedor vendedor, List<ItemMenu> items, Pago pago, EstadoPedido estado) {
         try {
-        Pedido nuevoPedido = new Pedido(id,cliente, vendedor, items, formaDePago, estado);
+        Pedido nuevoPedido = new Pedido(id,cliente, vendedor, items, pago, estado);
         pedidoDAO.crearPedido(nuevoPedido);
         } catch (InvalidOrderException e) {
             System.out.println("Error al crear el pedido: " + e.getMessage());

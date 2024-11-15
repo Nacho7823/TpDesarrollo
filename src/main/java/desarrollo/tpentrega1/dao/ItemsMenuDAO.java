@@ -10,10 +10,12 @@ public interface ItemsMenuDAO {
 
     public void actualizarItemMenu(ItemMenu itemMenu) throws DAOException;
 
-    public void eliminarItemMenu(ItemMenu itemMenu) throws DAOException;
+    public void eliminarItemMenu(String id) throws DAOException;
 
-    public ItemMenu buscarItemMenu(String id, VendedorDAO vdao) throws DAOException;
+    public ItemMenu buscarItemMenu(String id) throws DAOException;
     
-    public List<ItemMenu> obtenerItemMenus(VendedorDAO vdao) throws DAOException;
+    public List<ItemMenu> obtenerItemsMenu(String id) throws DAOException;
+    
+    
     
 }
