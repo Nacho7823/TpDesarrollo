@@ -43,8 +43,8 @@ private static List<Cliente> clientes = new ArrayList<>();
         System.out.println("Cliente no encontrado para actualizar.");
     }
 
-    @Override
-    public void eliminarCliente(Cliente id) {
+@Override
+    public void eliminarCliente(String id) {
         boolean existe= clientes.stream().anyMatch(c ->c.getId().equals(id));
         if(existe){
         clientes.removeIf(c -> c.getId().equals(id));
