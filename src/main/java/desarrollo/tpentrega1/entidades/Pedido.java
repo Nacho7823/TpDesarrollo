@@ -69,7 +69,7 @@ public class Pedido {
         notificarObservadores();
     }
     
-    public FormaDePago getPago(){
+    public Pago getPago(){
         return this.pago;
     }
 
