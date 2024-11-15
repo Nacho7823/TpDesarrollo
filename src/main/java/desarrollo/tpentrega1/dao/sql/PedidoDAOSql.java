@@ -251,6 +251,40 @@ public List<Pedido> obtenerPedidos() throws DAOException {
     return pedidos;
 }
 
+    public void removeItem(ItemMenu item, Pedido p) throws DAOException {
+        String sql = "DELETE FROM items_pedido WHERE pedido_id = ? AND item_id = ?";
+
+    try {
+        ConectarBase();
+        insertarModificarEliminar(sql, p.getId(), item.getId());
+    } catch (Exception e) {
+        throw new DAOException("Error al eliminar ítem del pedido: " + e.getMessage());
+    } finally {
+        try {
+            desconectarBase();
+        } catch (Exception e) {
+            throw new DAOException("Error al cerrar la conexión: " + e.getMessage());
+        }
+    }
+    }
+
+    public void addItem(ItemMenu item, Pedido p) throws DAOException {
+         String sql = "INSERT INTO items_pedido (pedido_id, item_id, cantidad) VALUES (?, ?, ?)";
+
+    try {
+        ConectarBase();
+        insertarModificarEliminar(sql, p.getId(), item.getId(), 1); // Suponiendo cantidad = 1
+    } catch (Exception e) {
+        throw new DAOException("Error al añadir ítem al pedido: " + e.getMessage());
+    } finally {
+        try {
+            desconectarBase();
+        } catch (Exception e) {
+            throw new DAOException("Error al cerrar la conexión: " + e.getMessage());
+        }
+    }
+    }
+
 
     
 

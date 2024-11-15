@@ -1,7 +1,7 @@
 
 package desarrollo.tpentrega1.controllers;
 
-import desarrollo.tpentrega1.Memory.PedidoMemory;
+
 import desarrollo.tpentrega1.dao.sql.PedidoDAOSql;
 import desarrollo.tpentrega1.entidades.Cliente;
 import desarrollo.tpentrega1.entidades.ItemMenu;
@@ -12,8 +12,8 @@ import desarrollo.tpentrega1.enums.EstadoPedido;
 import desarrollo.tpentrega1.exceptions.DAOException;
 import desarrollo.tpentrega1.exceptions.InvalidOrderException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+
 
 
 public class PedidoController {
@@ -64,19 +64,20 @@ public class PedidoController {
         return pedidoDAO.buscarPedido(id);
     }
     //public void editarPedido(int id, )
-    public List<Pedido> obtenerListaPedidos() {
-        return pedidoDAO.getPedidos();
+    public List<Pedido> obtenerListaPedidos() throws DAOException {
+        return pedidoDAO.obtenerPedidos();
     }
     
-    public void addItem(ItemMenu item, Pedido p){
+    public void addItem(ItemMenu item, Pedido p) throws DAOException{
         pedidoDAO.addItem(item, p);
     }
     
     public List<ItemMenu> getItems(Pedido p){
-        return pedidoDAO.getItems(p);
+        Pedido p1= pedidoDAO.buscarPedido(p.getId());
+        return p1.getItems();
     }
     
-    public void removeItem(ItemMenu item, Pedido p){
+    public void removeItem(ItemMenu item, Pedido p) throws DAOException{
         pedidoDAO.removeItem(item,p);
     }
 }
