@@ -6,6 +6,15 @@ import java.time.LocalDate;
 public abstract class Pago implements FormaDePago{
     private double monto;
     private LocalDate fecha;
+    private String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public Pago(double monto) {
         this.monto = monto;
