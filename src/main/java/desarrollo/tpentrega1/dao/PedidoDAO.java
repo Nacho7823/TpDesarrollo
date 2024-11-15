@@ -10,7 +10,7 @@ public interface PedidoDAO {
 
     public void actualizarPedido(Pedido pedido) throws DAOException;
 
-    public void eliminarPedido(Pedido pedido) throws DAOException;
+    public void eliminarPedido(String id) throws DAOException;
 
     public Pedido buscarPedido(String id) throws DAOException;
     

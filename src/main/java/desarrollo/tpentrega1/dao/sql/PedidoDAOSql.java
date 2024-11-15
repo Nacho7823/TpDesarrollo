@@ -102,7 +102,7 @@ public class PedidoDAOSql extends DAO<Pedido> implements PedidoDAO {
     }
 
     @Override
-    public void actualizarPedido(Pedido pedido) {
+    public void actualizarPedido(Pedido pedido) throws DAOException {
         //update pedido set estado = ?, id_cliente = ?, id_pago = ?, id_vendedor = ? where id_pedido = ?;
         //update pedido_detalle set id_item_menu = ? where id_pedido = ?;
         String sqlPedido = "update pedido set estado = ?, id_cliente = ?, id_pago = ?, id_vendedor = ? where id_pedido = ?;";
@@ -159,7 +159,7 @@ public class PedidoDAOSql extends DAO<Pedido> implements PedidoDAO {
     }
 
     @Override
-    public void eliminarPedido(Pedido pedido) throws DAOException {
+    public void eliminarPedido(String id) throws DAOException {
 
     }
 

@@ -4,6 +4,7 @@ package desarrollo.tpentrega1.Memory;
 import desarrollo.tpentrega1.dao.PedidoDAO;
 import desarrollo.tpentrega1.entidades.ItemMenu;
 import desarrollo.tpentrega1.entidades.Pedido;
+import desarrollo.tpentrega1.exceptions.DAOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +15,6 @@ public class PedidoMemory implements PedidoDAO{
         return pedidos;
     }
  
-    @Override
     public void listarPedidos() {
         for (Pedido p : pedidos) {
             System.out.println("ID: " + p.getId() + ", Estado: " + p.getEstado() +
@@ -71,5 +71,10 @@ public class PedidoMemory implements PedidoDAO{
     
     public void removeItem(ItemMenu item, Pedido p){
         p.removeItem(item);
+    }
+
+    @Override
+    public List<Pedido> obtenerPedidos() throws DAOException {
+        return pedidos;
     }
 }
