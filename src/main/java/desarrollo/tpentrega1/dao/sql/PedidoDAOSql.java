@@ -1,18 +1,24 @@
 package desarrollo.tpentrega1.dao.sql;
 
 import desarrollo.tpentrega1.dao.PedidoDAO;
+import desarrollo.tpentrega1.entidades.Cliente;
 import desarrollo.tpentrega1.entidades.ItemMenu;
 import desarrollo.tpentrega1.entidades.MercadoPago;
 import desarrollo.tpentrega1.entidades.Pago;
 import desarrollo.tpentrega1.entidades.Pedido;
 import desarrollo.tpentrega1.entidades.Transferencia;
+import desarrollo.tpentrega1.entidades.Vendedor;
+import desarrollo.tpentrega1.enums.EstadoPedido;
 import desarrollo.tpentrega1.exceptions.DAOException;
+import desarrollo.tpentrega1.dao.sql.ClienteDAOSql;
+import desarrollo.tpentrega1.dao.sql.VendedorDAOSql;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.ZoneId;
 import static java.time.temporal.TemporalQueries.localDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -72,16 +78,8 @@ public class PedidoDAOSql extends DAO<Pedido> implements PedidoDAO {
             }
             stmtItems.executeBatch();
 
-//            conexion.commit();
         } catch (SQLException ex) {
 
-//            try {
-//                if (conexion != null) {
-//                    conexion.rollback();
-//                }
-//            } catch (SQLException e) {
-//                throw new DAOException("Error al hacer rollback: " + e.getMessage());
-//            }
             throw new DAOException("No se pudo crear el pedido: " + ex.getMessage());
 
         } catch (ClassNotFoundException ex) {
@@ -160,33 +158,100 @@ public class PedidoDAOSql extends DAO<Pedido> implements PedidoDAO {
 
     @Override
     public void eliminarPedido(String id) throws DAOException {
-
+         String sql = "DELETE FROM Pedidos WHERE id = ?";
+        try {
+            insertarModificarEliminar(sql, id);
+            System.out.println("Pedido con ID " + id + " eliminado exitosamente.");
+        } catch (Exception e) {
+            System.err.println("Error al eliminar el pedido con ID " + id + ": " + e.getMessage());
+        }
     }
 
     @Override
     public Pedido buscarPedido(String id) {
-        return null;
+    Pedido pedido = null;
+    String sql = "SELECT * FROM Pedidos WHERE id = ?";
+    ClienteDAOSql cdsql= new ClienteDAOSql();
+    VendedorDAOSql vdsql= new VendedorDAOSql();
+    ItemMenuDAOSql imdsql= new ItemMenuDAOSql();
+    
+    
+    try {
+        ConectarBase();
+        PreparedStatement preparedStatement = conexion.prepareStatement(sql);
+        preparedStatement.setString(1, id); 
+        resultado = preparedStatement.executeQuery();
+
+        if (resultado.next()) {
+       
+            String clienteId = resultado.getString("cliente_id");
+            String vendedorId = resultado.getString("vendedor_id");
+            String estadoStr = resultado.getString("estado");
+          
+            
+            Cliente cliente = cdsql.buscarCliente(clienteId);
+            Vendedor vendedor = vdsql.buscarVendedor(vendedorId);
+            EstadoPedido estado = EstadoPedido.valueOf(estadoStr); 
+            List<ItemMenu> items = imdsql.obtenerItemsMenuDeVendedor(vendedor.getId());
+            Pago pago = null; //buscarPagoPorPedidoId(id); //terminar de implementar cuando esté listo el pagoDAOSql
+            
+            pedido = new Pedido(id, cliente, vendedor, items, pago, estado);
+        }
+    } catch (Exception e) {
+        System.err.println("Error al buscar el pedido con ID " + id + ": " + e.getMessage());
+    } finally {
+        try {
+            desconectarBase();
+        } catch (Exception e) {
+            System.err.println("Error al cerrar la conexión: " + e.getMessage());
+        }
     }
+    return pedido;
+}
 
     @Override
-    public List<Pedido> obtenerPedidos() throws DAOException {
-        return null;
+public List<Pedido> obtenerPedidos() throws DAOException {
+    List<Pedido> pedidos = new ArrayList<>();
+    String sql = "SELECT * FROM Pedidos";
+
+    try {
+        ConectarBase();
+        Statement statement = conexion.createStatement();
+        ResultSet rs = statement.executeQuery(sql);
+
+        ClienteDAOSql clienteDAOSql = new ClienteDAOSql();
+        VendedorDAOSql vendedorDAOSql = new VendedorDAOSql();
+        ItemMenuDAOSql itemMenuDAOSql = new ItemMenuDAOSql();
+
+        while (rs.next()) {
+            String id = rs.getString("id");
+            String clienteId = rs.getString("cliente_id");
+            String vendedorId = rs.getString("vendedor_id");
+            String estadoStr = rs.getString("estado");
+
+            Cliente cliente = clienteDAOSql.buscarCliente(clienteId);
+            Vendedor vendedor = vendedorDAOSql.buscarVendedor(vendedorId);
+            EstadoPedido estado = EstadoPedido.valueOf(estadoStr);
+            List<ItemMenu> items = itemMenuDAOSql.obtenerItemsMenuDeVendedor(vendedor.getId());
+            Pago pago = null; //buscarPagoPorPedidoId(id);  //terminar de implementar cuando esté listo el pagoDAOSql
+
+            Pedido pedido = new Pedido(id, cliente, vendedor, items, pago, estado);
+            pedidos.add(pedido);
+        }
+    } catch (Exception e) {
+        throw new DAOException("Error al obtener pedidos: " + e.getMessage());
+    } finally {
+        try {
+            desconectarBase();
+        } catch (Exception e) {
+            throw new DAOException("Error al cerrar la conexión: " + e.getMessage());
+        }
     }
 
-    public List<Pedido> getPedidos() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    return pedidos;
+}
 
-    public List<ItemMenu> getItems(Pedido p) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
-    public void addItem(ItemMenu item, Pedido p) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    public void removeItem(ItemMenu item, Pedido p) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    
 
 }
