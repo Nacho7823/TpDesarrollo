@@ -14,7 +14,7 @@ public interface ItemsMenuDAO {
 
     public ItemMenu buscarItemMenu(String id) throws DAOException;
     
-    public List<ItemMenu> obtenerItemsMenu(String id) throws DAOException;
+    public List<ItemMenu> obtenerItemsMenuDeVendedor(String id) throws DAOException;
     
     
     

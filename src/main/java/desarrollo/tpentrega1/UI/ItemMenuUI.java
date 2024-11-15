@@ -237,8 +237,9 @@ public class ItemMenuUI extends JPanel {
                     System.out.println("veg: " + aptoVegano);
 
                     // TODO: add vendedor
-                    Plato plato = itemsMenuController.crearNuevoPlato(nombre, descripcion, precio, categoria, vendedor,
+                    Plato plato = itemsMenuController.crearNuevoItem(nombre, descripcion, precio, categoria,
                             calorias, aptoCeliaco, aptoVegano, peso);
+                    vendedor.addItemMenu(plato);
 
                     System.out.println(plato.toString());
                 } else {

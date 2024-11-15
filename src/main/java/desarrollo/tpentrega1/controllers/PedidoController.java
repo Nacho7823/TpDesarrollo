@@ -22,7 +22,7 @@ public class PedidoController {
     // Mostrar lista de todos los pedidos
     public void mostrarListaPedidos() {
         System.out.println("Lista de Pedidos:");
-        pedidoDAO.listarPedido();
+        pedidoDAO.listarPedidos();
     }
     
     public void newPedido(String id,Cliente cliente, Vendedor vendedor, List<ItemMenu> items, Pago pago, EstadoPedido estado) {

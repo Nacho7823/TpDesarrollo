@@ -85,8 +85,6 @@ public class Pedido {
         this.items = items;
     }
     
-    // funcs
-    
     public void addItem(ItemMenu item){
         this.items.add(item);
     }

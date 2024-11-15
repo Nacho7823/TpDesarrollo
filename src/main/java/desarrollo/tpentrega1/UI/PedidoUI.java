@@ -8,17 +8,15 @@ import desarrollo.tpentrega1.entidades.Bebida;
 import desarrollo.tpentrega1.entidades.Cliente;
 import desarrollo.tpentrega1.entidades.ItemMenu;
 import desarrollo.tpentrega1.entidades.MercadoPago;
+import desarrollo.tpentrega1.entidades.Pago;
 import desarrollo.tpentrega1.entidades.Pedido;
 import desarrollo.tpentrega1.entidades.Plato;
 import desarrollo.tpentrega1.entidades.Transferencia;
 import desarrollo.tpentrega1.entidades.Vendedor;
 import desarrollo.tpentrega1.enums.EstadoPedido;
 import desarrollo.tpentrega1.exceptions.InvalidOrderException;
-import desarrollo.tpentrega1.interfaces.FormaDePago;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.BoxLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -91,7 +89,7 @@ public class PedidoUI extends javax.swing.JPanel {
                         listaClientes.get(0),
                         listaVendedores.get(0),
                         new ArrayList<>(),
-                        new Transferencia("", ""),
+                        new Transferencia("", "", 0),
                         EstadoPedido.ENVIADO);
                 updateAll(pedido);
 
@@ -149,13 +147,13 @@ public class PedidoUI extends javax.swing.JPanel {
         ddVendedor.setSelectedItem(pedido.getVendedor());
         ddEstado.setSelectedItem(pedido.getEstado().toString());
 
-        if (pedido.getFormaDePago() instanceof Transferencia) {
-            Transferencia t = (Transferencia) pedido.getFormaDePago();
+        if (pedido.getPago() instanceof Transferencia) {
+            Transferencia t = (Transferencia) pedido.getPago();
             showTransferencia();
             tfFormaPago1.setText(t.getCuit());
             tfFormaPago2.setText(t.getCvu());
         } else {
-            MercadoPago t = (MercadoPago) pedido.getFormaDePago();
+            MercadoPago t = (MercadoPago) pedido.getPago();
             showMp();
             tfFormaPago1.setText(t.getAlias());
         }
@@ -276,14 +274,14 @@ public class PedidoUI extends javax.swing.JPanel {
     }
     
     private Pedido clonarPedido(Pedido p) {
-        FormaDePago formaDePago;
-        if (p.getFormaDePago() instanceof Transferencia){
-            Transferencia t = (Transferencia) p.getFormaDePago();
-            formaDePago = new Transferencia(t.getCuit() + "", t.getCvu() + "");
+        Pago formaDePago;
+        if (p.getPago() instanceof Transferencia){
+            Transferencia t = (Transferencia) p.getPago();
+            formaDePago = new Transferencia(t.getCuit() + "", t.getCvu() + "", t.getMonto());
         }
         else {
-            MercadoPago t = (MercadoPago) p.getFormaDePago();
-            formaDePago = new MercadoPago(t.getAlias() + "");
+            MercadoPago t = (MercadoPago) p.getPago();
+            formaDePago = new MercadoPago(t.getAlias() + "", t.getMonto());
         }
         try {
             Pedido p1 = new Pedido(p.getId() + "",
@@ -661,19 +659,19 @@ public class PedidoUI extends javax.swing.JPanel {
             String cuit = tfFormaPago1.getText();
             String cvu = tfFormaPago2.getText();
             // TODO: verify
-            pedido.setFormaDePago(new Transferencia(cuit, cvu));
+            pedido.setFormaDePago(new Transferencia(cuit, cvu, pedido.getTotal()));
         }
         else {
             String alias = tfFormaPago1.getText();
             // TODO: verify
-            pedido.setFormaDePago(new MercadoPago(alias));
+            pedido.setFormaDePago(new MercadoPago(alias, pedido.getTotal()));
         }
         
         pedidoController.newPedido(tfId.getText(),
                 pedido.getCliente(), 
                 pedido.getVendedor(), 
                 pedido.getItems(), 
-                pedido.getFormaDePago(), 
+                (Pago) pedido.getPago(), 
                 pedido.getEstado());
         actualizarTabla();
     }//GEN-LAST:event_btnCrearActionPerformed
@@ -810,7 +808,7 @@ public class PedidoUI extends javax.swing.JPanel {
             data[i][1] = pedidos.get(i).getCliente();
             data[i][2] = pedidos.get(i).getVendedor().getNombre();
             data[i][3] = pedidos.get(i).getEstado().toString();
-            data[i][4] = pedidos.get(i).getFormaDePago().getClass();
+            data[i][4] = pedidos.get(i).getPago().getClass();
             data[i][5] = pedidos.get(i).getTotal();
             for (ItemMenu item : pedidos.get(i).getItems()) {
                 items1.add(item.getNombre());

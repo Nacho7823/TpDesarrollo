@@ -15,7 +15,7 @@ public class PedidoMemory implements PedidoDAO{
     }
  
     @Override
-    public void listarPedido() {
+    public void listarPedidos() {
         for (Pedido p : pedidos) {
             System.out.println("ID: " + p.getId() + ", Estado: " + p.getEstado() +
                                ", Total: " + p.getTotal() +

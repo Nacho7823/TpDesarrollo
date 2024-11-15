@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VendedorDAOSql extends DAO<Vendedor> implements VendedorDAO {
-    private ItemsMenuDAO itemsMenuDAO= ItemMenuDAOSql.getInstance();
+    private ItemsMenuDAO itemsMenuDAO = ItemMenuDAOSql.getInstance();
      private static VendedorDAOSql instance;
      
     public static VendedorDAOSql getInstance(){
@@ -94,13 +94,13 @@ public class VendedorDAOSql extends DAO<Vendedor> implements VendedorDAO {
                 preparedStatement.setInt(1, Integer.parseInt(id));
                 resultado = preparedStatement.executeQuery();
                 
-                if (resultado.next()) {
+                if (resultado.next()){
                     vendedor = new Vendedor(
                             id,
                             resultado.getString("nombre"),
                             resultado.getString("direccion"),
                             new Coordenada(resultado.getDouble("latitud"), resultado.getDouble("longitud")),
-                            itemsMenuDAO.obtenerItemsMenu(id));
+                            itemsMenuDAO.obtenerItemsMenuDeVendedor(id));
                             
                             
                 }

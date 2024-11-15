@@ -225,7 +225,7 @@ public class ItemMenuDAOSql extends DAO<ItemMenu> implements ItemsMenuDAO {
  
     
     @Override
-    public List<ItemMenu> obtenerItemsMenu(String id) throws DAOException {
+    public List<ItemMenu> obtenerItemsMenuDeVendedor(String id) throws DAOException {
 
         String sql = "SELECT * FROM item_menu I JOIN bebida B ON I.id_item_menu=B.id_item_menu JOIN plato P ON"
                 + " I.id_item_menu=P.id_item_menu WHERE EXISTS (SELECT * FROM vende V WHERE V.id_item_menu=I.id_item_menu"

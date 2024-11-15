@@ -3,7 +3,6 @@ package desarrollo.tpentrega1.Memory;
 
 import desarrollo.tpentrega1.entidades.ItemMenu;
 import desarrollo.tpentrega1.dao.ItemsMenuDAO;
-import desarrollo.tpentrega1.dao.VendedorDAO;
 import desarrollo.tpentrega1.exceptions.DAOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,30 +37,27 @@ public class ItemsMenuMemory implements ItemsMenuDAO {
     }
 
     @Override
-    public void eliminarItemMenu(ItemMenu itemMenu) throws DAOException {
-        boolean existe= itemsMenu.stream().anyMatch(c -> c.getId().equals(String.valueOf(itemMenu.getId())));
+    public void eliminarItemMenu(String id) throws DAOException {
+        boolean existe= itemsMenu.stream().anyMatch(c -> c.getId().equals(String.valueOf(id)));
         if(existe){
-        itemsMenu.removeIf(item -> item.getId().equals(itemMenu.getId()));
-        System.out.println("Item de menú eliminado con ID: " + itemMenu.getId());
+        itemsMenu.removeIf(item -> item.getId().equals(id));
+        System.out.println("Item de menú eliminado con ID: " + id);
        }
     }
 
     @Override
-    public ItemMenu buscarItemMenu(String id, VendedorDAO vdao) throws DAOException {
+    public ItemMenu buscarItemMenu(String id) throws DAOException {
         for (ItemMenu item : itemsMenu) {
             if (item.getId().equals(id)) {
-                
                 return item;
             }
         }
-        
         return null;
     }
 
     @Override
-    public List<ItemMenu> obtenerItemMenus(VendedorDAO vdao) throws DAOException {
+    public List<ItemMenu> obtenerItemsMenuDeVendedor(String id) throws DAOException {
+        
         return itemsMenu;
     }
-
-    
 }

@@ -24,9 +24,9 @@ public class ItemsMenuController {
         this.vendedorController = vendedorController;
     }
 
-    public List<ItemMenu> getItemsMenuDeVendedor(String id) {
+    public List<ItemMenu> obtenerItemsMenuDeVendedor(String id) {
         try {
-            return itemMenuDAO.obtenerItemsMenu(id); //le estas pasando el daosql pero espera el id de un vendedor
+            return itemMenuDAO.obtenerItemsMenuDeVendedor(id);
         } catch (DAOException ex) {
             Logger.getLogger(ItemsMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
