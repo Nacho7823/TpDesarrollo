@@ -24,9 +24,9 @@ public class ItemsMenuController {
         this.vendedorController = vendedorController;
     }
 
-    public List<ItemMenu> obtenerListaItemsMenu() {
+    public List<ItemMenu> getItemsMenuDeVendedor(String id) {
         try {
-            return itemMenuDAO.obtenerItemsMenu(vendedorController.getVendedorDAO());
+            return itemMenuDAO.obtenerItemsMenu(id); //le estas pasando el daosql pero espera el id de un vendedor
         } catch (DAOException ex) {
             Logger.getLogger(ItemsMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -35,27 +35,41 @@ public class ItemsMenuController {
 
     public Plato crearNuevoItem(String nombre, String descripcion, double precio, String categoria,
             double calorias, boolean aptoCeliaco, boolean aptoVegano, double peso) {
-        Plato nuevoPlato = new Plato(nombre, descripcion, precio, categoria, calorias, aptoCeliaco, aptoVegano, peso);
-
-        vendedor.addItemMenu(nuevoPlato);
-        vendedorController.modificarVendedor(vendedor);
+        Plato p = new Plato.Builder()
+                .nombre(nombre)
+                .descripcion(descripcion)
+                .precio(precio)
+                .categoria(categoria)
+                .calorias(calorias)
+                .aptoCeliaco(aptoCeliaco)
+                .aptoVegano(aptoVegano)
+                .build();
+        //vendedor.addItemMenu(nuevoPlato);//como agregar este item al vendedor correspondiente o hacerlo afuera despues de llamar este metodo
+        //vendedorController.modificarVendedor(vendedor);
         try {
-            itemMenuDAOSql.crearItemMenu(nuevoPlato);
+            this.itemMenuDAO.crearItemMenu(p);
         } catch (DAOException ex) {
             Logger.getLogger(ItemsMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return nuevoPlato;
+        return p;
     }
-
+//a crear bebida le pasan vendedor pero a crear plato no?
     // Crear una nueva bebida
     public Bebida crearNuevaBebida(String id, String nombre, String descripcion, double precio, String categoria, Vendedor vendedor,
-            double tamaño, double graduacionAlcoholica) {
-//        Bebida nuevaBebida = new Bebida(id, nombre, descripcion, precio, categoria, tamaño, graduacionAlcoholica);
-        Bebida nuevaBebida = new Bebida(id, nombre, descripcion, precio, categoria, vendedor, tamaño, graduacionAlcoholica);
+            double tamaño, double graduacionAlcoholica) {        
+        Bebida nuevaBebida = new Bebida.Builder()
+                .id(id)
+                .nombre(nombre)
+                .descripcion(descripcion)
+                .precio(precio)
+                .categoria(categoria)
+                .tamaño(tamaño)
+                .graduacionAlcoholica(graduacionAlcoholica)
+                .build();
         vendedor.addItemMenu(nuevaBebida);
         vendedorController.modificarVendedor(vendedor);
         try {
-            itemMenuDAOSql.crearItemMenu(nuevaBebida);
+            itemMenuDAO.crearItemMenu(nuevaBebida);
         } catch (DAOException ex) {
             Logger.getLogger(ItemsMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -66,13 +80,13 @@ public class ItemsMenuController {
     public void modificarItemsMenu(String id, String nombre, String descripcion, double precio, String categoria) {
         try {
             ItemMenu itemExistente;
-            itemExistente = itemMenuDAOSql.buscarItemMenu(id, vendedorController.getVendedorDAO());
+            itemExistente = itemMenuDAO.buscarItemMenu(id);
             if (itemExistente != null) {
                 itemExistente.setNombre(nombre);
                 itemExistente.setDescripcion(descripcion);
                 itemExistente.setPrecio(precio);
                 itemExistente.setCategoria(categoria);
-                itemMenuDAOSql.actualizarItemMenu(itemExistente);
+                itemMenuDAO.actualizarItemMenu(itemExistente);
                 System.out.println("Item de menú modificado: " + nombre);
             } else {
                 System.out.println("Item de menú no encontrado para modificar.");
@@ -84,7 +98,7 @@ public class ItemsMenuController {
 
     public void modificarPlato(Plato plato) {
         try {
-            itemMenuDAOSql.actualizarItemMenu(plato);
+            itemMenuDAO.actualizarItemMenu(plato);
         } catch (DAOException ex) {
             Logger.getLogger(ItemsMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -92,7 +106,7 @@ public class ItemsMenuController {
 
     public void modificarBebida(Bebida bebida) {
         try {
-            itemMenuDAOSql.actualizarItemMenu(bebida);
+            itemMenuDAO.actualizarItemMenu(bebida);
         } catch (DAOException ex) {
             Logger.getLogger(ItemsMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -100,9 +114,9 @@ public class ItemsMenuController {
 
     // Eliminar un ítem de menú por ID
     public void eliminarItemsMenu(ItemMenu id) {
-
+//pq un itemmenu y no un string?
         try {
-            itemMenuDAOSql.eliminarItemMenu(id);
+            itemMenuDAO.eliminarItemMenu(id.getId());
         } catch (DAOException ex) {
             Logger.getLogger(ItemsMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -113,7 +127,7 @@ public class ItemsMenuController {
     public ItemMenu buscarItemsMenu(String id) {
         try {
             ItemMenu item;
-            item = itemMenuDAOSql.buscarItemMenu(id, vendedorController.getVendedorDAO());
+            item = itemMenuDAO.buscarItemMenu(id);
             if (item != null) {
                 System.out.println("Item de menú encontrado: " + item.getNombre());
                 return item;

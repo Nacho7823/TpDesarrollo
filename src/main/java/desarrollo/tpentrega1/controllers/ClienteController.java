@@ -57,7 +57,7 @@ public class ClienteController {
     // Eliminar un cliente por ID
     public void eliminarCliente(Cliente id) {
         try {
-            clienteDAO.eliminarCliente(id);
+            clienteDAO.eliminarCliente(id.getId());
         } catch (DAOException ex) {
             Logger.getLogger(ClienteController.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -334,8 +334,7 @@ public class TPEntrega1 {
 
         itemsMenuController.crearNuevaBebida("1", "Heineken", "Cerveza", 2300, "Bebida", v1, 70, 2.0);
         itemsMenuController.crearNuevaBebida("3", "CocaCola", "Gaseosa", 2100, "Bebida", v1, 70, 0.0);
-        itemsMenuController.crearNuevoPlato("2", "Guaymallen", "Alfajor", 700, "Plato", v2, 200, false, false, 120);
-
+        itemsMenuController.crearNuevoItem("Guaymallen", "Alfajor", 700, "Plato", 200, false, false, 120);
 
        clienteController.crearNuevoCliente("2","Juan Pérez", "20123456789", "juan@example.com", "Calle Falsa 123", new Coordenada(-34.603722, -58.381592));
        clienteController.crearNuevoCliente("3","María Gómez", "27876543210", "maria@example.com", "Avenida Siempre Viva 742", new Coordenada(-34.609722, -58.392592));
