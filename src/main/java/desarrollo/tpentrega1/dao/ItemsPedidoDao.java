@@ -1,28 +1,32 @@
 package desarrollo.tpentrega1.dao;
 
+import desarrollo.tpentrega1.entidades.Bebida;
+import desarrollo.tpentrega1.entidades.ItemMenu;
+import desarrollo.tpentrega1.entidades.Plato;
+import java.util.List;
+
 
 public interface ItemsPedidoDao {
 
-    public void buscarPorNombre(String nombre);
-    public void buscarDescripcion(String descripcion);
-    public void buscarPrecioEntre(int precioMin, int precioMax);
-    public void buscarPrecio(int precio);
-    public void buscarCategoria(String categoria);
-    
-        public void buscarBebidas();
-    public void buscarPlatos();
+    public ItemMenu buscarPorNombre(String nombre);
+    public List<ItemMenu> buscarDescripcion(String descripcion);
+    public List<ItemMenu> buscarPrecioEntre(int precioMin, int precioMax);
+    public List<ItemMenu> buscarPrecio(int precio);
+    public List<ItemMenu> buscarCategoria(String categoria);
+    public List<ItemMenu> buscarBebidas();
+    public List<ItemMenu> buscarPlatos();
 
     // plato
-    public void buscarComidaPeso(double peso);
-    public void buscarCeliacos();
-    public void buscarNoCeliacos();
-    public void buscarVeganos();
-    public void buscarNoVeganos();
-    public void buscarComidaCalorias(int calorias);
+    public List<ItemMenu> buscarComidaPeso(double peso);
+    public List<ItemMenu> buscarCeliacos();
+    public List<ItemMenu> buscarNoCeliacos();
+    public List<ItemMenu> buscarVeganos();
+    public List<ItemMenu> buscarNoVeganos();
+    public List<ItemMenu> buscarComidaCalorias(int calorias);
 
     // bebida
-    public void buscarBebidaTamaño(double tamaño);
-    public void buscarBebidaGraduacion(double graduacion);
+    public List<ItemMenu> buscarBebidaTamaño(double tamaño);
+    public List<ItemMenu> buscarBebidaGraduacion(double graduacion);
 
     
 }
