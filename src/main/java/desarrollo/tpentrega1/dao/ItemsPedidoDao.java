@@ -1,12 +1,10 @@
 package desarrollo.tpentrega1.dao;
 
-import desarrollo.tpentrega1.entidades.Bebida;
 import desarrollo.tpentrega1.entidades.ItemMenu;
-import desarrollo.tpentrega1.entidades.Plato;
 import java.util.List;
 
 
-public interface ItemsPedidoDao {
+public interface ItemsPedidoDAO {
 
     public ItemMenu buscarPorNombre(String nombre);
     public List<ItemMenu> buscarDescripcion(String descripcion);

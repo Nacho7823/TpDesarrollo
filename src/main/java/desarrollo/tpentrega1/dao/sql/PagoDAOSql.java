@@ -22,7 +22,7 @@ public class PagoDAOSql extends DAO implements PagoDAO{
     }
 
     @Override
-    public void crearPago(Pago pago) throws DAOException {
+    public void crearPago(Pago pago) throws DAOException,Exception {
                 String sql = "INSERT INTO pago (monto, fecha) VALUES (?, ?)";
          try (PreparedStatement stmt = conexion.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ConectarBase();
@@ -49,7 +49,7 @@ public class PagoDAOSql extends DAO implements PagoDAO{
             crearTransferencia((Transferencia) pago);
         }
     }
-    public void crearMercadoPago(MercadoPago mp)throws DAOException {
+    public void crearMercadoPago(MercadoPago mp)throws DAOException,Exception {
         
         String sql = "INSERT INTO mercado_pago (id_pago,alias) VALUES ( ?, ?)";
         try {
@@ -61,8 +61,9 @@ public class PagoDAOSql extends DAO implements PagoDAO{
         } catch (Exception ex) {
             throw new DAOException("no se pudo crear el pago de MercadoPago: \n" + ex.getMessage());
         }
+        desconectarBase();
     }
-    public void crearTransferencia(Transferencia transferencia)throws DAOException{
+    public void crearTransferencia(Transferencia transferencia)throws DAOException,Exception{
         
         String sql = "INSERT INTO transferencia (id_pago, cvu, cuit) VALUES (?, ?, ?)";
         try {
@@ -75,6 +76,7 @@ public class PagoDAOSql extends DAO implements PagoDAO{
         } catch (Exception ex) {
             throw new DAOException("no se pudo crear el plato: \n" + ex.getMessage());
         }
+        desconectarBase();
     }
 
     @Override

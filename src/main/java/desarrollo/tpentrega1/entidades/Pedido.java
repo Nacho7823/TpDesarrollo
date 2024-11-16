@@ -76,7 +76,7 @@ public class Pedido {
         return this.pago;
     }
 
-    public void setFormaDePago(Pago pago) {
+    public void setPago(Pago pago) {
         this.pago = pago;
     }
     
@@ -133,11 +133,11 @@ public class Pedido {
         return this.calcularTotal();
     }
     
-    private void generarPago(String alias) {
+    public void generarPago(String alias) {
             this.pago= new MercadoPago(alias,this.calcularTotal()); 
     }
     
-    private void generarPago(String cuit,String cvu) {
+    public void generarPago(String cuit,String cvu) {
             this.pago= new Transferencia(cuit,cvu,this.calcularTotal()); 
     }
     

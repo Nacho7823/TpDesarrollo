@@ -662,12 +662,12 @@ public class PedidoUI extends javax.swing.JPanel {
             String cuit = tfFormaPago1.getText();
             String cvu = tfFormaPago2.getText();
             // TODO: verify
-            pedido.setFormaDePago(new Transferencia(cuit, cvu, pedido.getTotal()));
+            pedido.generarPago(cuit, cvu);
         }
         else {
             String alias = tfFormaPago1.getText();
             // TODO: verify
-            pedido.setFormaDePago(new MercadoPago(alias, pedido.getTotal()));
+            pedido.generarPago(alias);
         }
         
         try {

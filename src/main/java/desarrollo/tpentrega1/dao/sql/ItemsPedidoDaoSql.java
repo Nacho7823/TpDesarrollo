@@ -1,6 +1,6 @@
 package desarrollo.tpentrega1.dao.sql;
 
-import desarrollo.tpentrega1.dao.ItemsPedidoDao;
+import desarrollo.tpentrega1.dao.ItemsPedidoDAO;
 import desarrollo.tpentrega1.entidades.Bebida;
 import desarrollo.tpentrega1.entidades.ItemMenu;
 import desarrollo.tpentrega1.entidades.Plato; 
@@ -13,21 +13,26 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ItemsPedidoDAOSql extends DAO<ItemMenu> implements ItemsPedidoDao {
-
+public class ItemsPedidoDAOSql extends DAO<ItemMenu> implements ItemsPedidoDAO {
+         private static ItemsPedidoDAOSql instance;
+     
+    public static ItemsPedidoDAOSql getInstance(){
+        if(ItemsPedidoDAOSql.instance == null)ItemsPedidoDAOSql.instance =  new ItemsPedidoDAOSql();
+        return ItemsPedidoDAOSql.instance;}
+    
+    
   
     private ItemMenu mapearItemMenu(ResultSet rs) throws DAOException {
         try {
-            String tipo = rs.getString("tipo");
             String id = rs.getString("id");
             String nombre = rs.getString("nombre");
             String descripcion = rs.getString("descripcion");
             double precio = rs.getDouble("precio");
             String categoria = rs.getString("categoria");
             
-            if ("bebida".equalsIgnoreCase(tipo)) {
+            if ("bebida".equalsIgnoreCase(categoria)) {
                 double graduacionAlcoholica = rs.getDouble("graduacion_alcoholica");
-                double tamaño = rs.getDouble("tamaño");
+                double tamaño = rs.getDouble("tamanio");
                 return new Bebida.Builder()
                         .id(id)
                         .nombre(nombre)
@@ -37,7 +42,7 @@ public class ItemsPedidoDAOSql extends DAO<ItemMenu> implements ItemsPedidoDao {
                         .graduacionAlcoholica(graduacionAlcoholica)
                         .tamaño(tamaño)
                         .build();
-            } else if ("plato".equalsIgnoreCase(tipo)) {
+            } else if ("plato".equalsIgnoreCase(categoria)) {
                 double calorias = rs.getDouble("calorias");
                 boolean aptoCeliaco = rs.getBoolean("apto_celiaco");
                 boolean aptoVegano = rs.getBoolean("apto_vegano");
@@ -54,7 +59,7 @@ public class ItemsPedidoDAOSql extends DAO<ItemMenu> implements ItemsPedidoDao {
                         .peso(peso)
                         .build();
             } else {
-                throw new DAOException("Tipo de ItemMenu desconocido: " + tipo);
+                throw new DAOException("Tipo de ItemMenu desconocido: " + categoria);
                 
             }
         } catch (SQLException ex) {
@@ -74,7 +79,6 @@ public class ItemsPedidoDAOSql extends DAO<ItemMenu> implements ItemsPedidoDao {
             ConectarBase();
             pstmt = conexion.prepareStatement(sql);
 
-            // Asignar parámetros
             for (int i = 0; i < parametros.length; i++) {
                 pstmt.setObject(i + 1, parametros[i]);
             }
@@ -101,6 +105,17 @@ public class ItemsPedidoDAOSql extends DAO<ItemMenu> implements ItemsPedidoDao {
         return items;
     }
 
+    public List<ItemMenu> buscarPorIdPedido(String id){
+        String sql= "SELECT * FROM item_menu I LEFT JOIN items_pedido IP ON I.id_item_menu=IP.id_item_menu"
+                + "LEFT JOIN pedido P ON IP.id_pedido= P.id_pedido WHERE P.id_pedido= ?";
+        try {
+            return ejecutarConsulta(sql, id);
+        } catch (DAOException ex) {
+            Logger.getLogger(ItemsPedidoDAOSql.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    
     @Override
     public ItemMenu buscarPorNombre(String nombre) {
         String sql = "SELECT * FROM items_menu WHERE LOWER(nombre) = LOWER(?)";
@@ -159,7 +174,7 @@ public class ItemsPedidoDAOSql extends DAO<ItemMenu> implements ItemsPedidoDao {
 
     @Override
     public List<ItemMenu> buscarBebidas() {
-        String sql = "SELECT * FROM items_menu WHERE tipo = 'bebida'";
+        String sql = "SELECT * FROM items_menu I LEFT JOIN bebida B ON I.id_item_menu=B.id_item_menu WHERE categoria LIKE 'Bebida'";
         try {
             return ejecutarConsulta(sql);
         } catch (DAOException ex) {
@@ -171,7 +186,7 @@ public class ItemsPedidoDAOSql extends DAO<ItemMenu> implements ItemsPedidoDao {
     @Override
     public List<ItemMenu> buscarPlatos() {
         try {
-            String sql = "SELECT * FROM items_menu WHERE tipo = 'plato'";
+            String sql = "SELECT * FROM items_menu I LEFT JOIN plato P ON I.id_item_menu=P.id_item_menu WHERE categoria LIKE 'Plato'";
             return ejecutarConsulta(sql);
         } catch (DAOException ex) {
             Logger.getLogger(ItemsPedidoDAOSql.class.getName()).log(Level.SEVERE, null, ex);
@@ -182,7 +197,7 @@ public class ItemsPedidoDAOSql extends DAO<ItemMenu> implements ItemsPedidoDao {
     @Override
     public List<ItemMenu> buscarComidaPeso(double peso) {
         try {
-            String sql = "SELECT * FROM items_menu WHERE tipo = 'plato' AND peso >= ?";
+            String sql = "SELECT * FROM items_menu I LEFT JOIN plato P ON I.id_item_menu=P.id_item_menu WHERE categoria LIKE 'Plato' AND P.peso >= ?";
             return ejecutarConsulta(sql, peso);
         } catch (DAOException ex) {
             Logger.getLogger(ItemsPedidoDAOSql.class.getName()).log(Level.SEVERE, null, ex);
@@ -192,7 +207,7 @@ public class ItemsPedidoDAOSql extends DAO<ItemMenu> implements ItemsPedidoDao {
 
     @Override
     public List<ItemMenu> buscarCeliacos() {
-        String sql = "SELECT * FROM items_menu WHERE  tipo = 'plato' AND apto_celiaco = TRUE";
+        String sql = "SELECT * FROM items_menu I LEFT JOIN plato P ON I.id_item_menu=P.id_item_menu WHERE  categoria LIKE 'Plato' AND P.apto_celiaco = TRUE";
         try {
             return ejecutarConsulta(sql);
         } catch (DAOException ex) {
@@ -203,7 +218,7 @@ public class ItemsPedidoDAOSql extends DAO<ItemMenu> implements ItemsPedidoDao {
 
     @Override
     public List<ItemMenu> buscarNoCeliacos() {
-        String sql = "SELECT * FROM items_menu WHERE tipo = 'plato' AND apto_celiaco = FALSE";
+        String sql = "SELECT * FROM items_menu I LEFT JOIN plato P ON I.id_item_menu=P.id_item_menu WHERE categoria LIKE 'Plato' AND P.apto_celiaco = FALSE";
         try {
             return ejecutarConsulta(sql);
         } catch (DAOException ex) {
@@ -215,7 +230,7 @@ public class ItemsPedidoDAOSql extends DAO<ItemMenu> implements ItemsPedidoDao {
     @Override
     public List<ItemMenu> buscarVeganos() {
         try {
-            String sql = "SELECT * FROM items_menu WHERE apto_vegano = TRUE";
+            String sql = "SELECT * FROM items_menu I LEFT JOIN plato P ON I.id_item_menu=P.id_item_menu WHERE P.apto_vegano = TRUE";
             return ejecutarConsulta(sql);
         } catch (DAOException ex) {
             Logger.getLogger(ItemsPedidoDAOSql.class.getName()).log(Level.SEVERE, null, ex);
@@ -226,7 +241,7 @@ public class ItemsPedidoDAOSql extends DAO<ItemMenu> implements ItemsPedidoDao {
     @Override
     public List<ItemMenu> buscarNoVeganos() {
         try {
-            String sql = "SELECT * FROM items_menu WHERE apto_vegano = FALSE";
+            String sql = "SELECT * FROM items_menu I LEFT JOIN plato P ON I.id_item_menu=P.id_item_menu WHERE P.apto_vegano = FALSE";
             return ejecutarConsulta(sql);
         } catch (DAOException ex) {
             Logger.getLogger(ItemsPedidoDAOSql.class.getName()).log(Level.SEVERE, null, ex);
@@ -236,7 +251,7 @@ public class ItemsPedidoDAOSql extends DAO<ItemMenu> implements ItemsPedidoDao {
 
     @Override
     public List<ItemMenu> buscarComidaCalorias(int calorias) {
-        String sql = "SELECT * FROM items_menu WHERE tipo = 'plato' AND calorias <= ?";
+        String sql = "SELECT * FROM items_menu I LEFT JOIN plato P ON I.id_item_menu=P.id_item_menu WHERE categoria LIKE 'Plato' AND P.calorias <= ?";
         try {
             return ejecutarConsulta(sql, calorias);
         } catch (DAOException ex) {
@@ -249,7 +264,7 @@ public class ItemsPedidoDAOSql extends DAO<ItemMenu> implements ItemsPedidoDao {
     @Override
     public List<ItemMenu> buscarBebidaTamaño(double tamaño) {
         try {
-            String sql = "SELECT * FROM items_menu WHERE tipo = 'bebida' AND tamaño >= ?";
+            String sql = "SELECT * FROM items_menu I LEFT JOIN bebida B ON I.id_item_menu=B.id_item_menu WHERE categoria LIKE 'Bebida' AND B.tamaño >= ?";
             return ejecutarConsulta(sql, tamaño);
         } catch (DAOException ex) {
             Logger.getLogger(ItemsPedidoDAOSql.class.getName()).log(Level.SEVERE, null, ex);
@@ -260,7 +275,7 @@ public class ItemsPedidoDAOSql extends DAO<ItemMenu> implements ItemsPedidoDao {
     @Override
     public List<ItemMenu> buscarBebidaGraduacion(double graduacion) {
         try {
-            String sql = "SELECT * FROM items_menu WHERE tipo = 'bebida' AND graduacion_alcoholica >= ?";
+            String sql = "SELECT * FROM items_menu I LEFT JOIN bebida B ON I.id_item_menu=B.id_item_menu WHERE categoria LIKE 'Bebida' AND B.graduacion_alcoholica >= ?";
             return ejecutarConsulta(sql, graduacion);
         } catch (DAOException ex) {
             Logger.getLogger(ItemsPedidoDAOSql.class.getName()).log(Level.SEVERE, null, ex);

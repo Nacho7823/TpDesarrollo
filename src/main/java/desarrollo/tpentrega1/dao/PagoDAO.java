@@ -6,7 +6,7 @@ import desarrollo.tpentrega1.exceptions.DAOException;
 import java.util.List;
 
 public interface PagoDAO {
-        public void crearPago(Pago pago) throws DAOException;
+        public void crearPago(Pago pago) throws DAOException,Exception;
 
     public void eliminarPago(String id) throws DAOException;
 

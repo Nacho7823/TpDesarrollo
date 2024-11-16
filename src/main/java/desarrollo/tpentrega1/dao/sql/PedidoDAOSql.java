@@ -1,37 +1,40 @@
 package desarrollo.tpentrega1.dao.sql;
 
+import desarrollo.tpentrega1.dao.ClienteDAO;
+import desarrollo.tpentrega1.dao.ItemsPedidoDAO;
+import desarrollo.tpentrega1.dao.PagoDAO;
 import desarrollo.tpentrega1.dao.PedidoDAO;
+import desarrollo.tpentrega1.dao.VendedorDAO;
 import desarrollo.tpentrega1.entidades.Cliente;
 import desarrollo.tpentrega1.entidades.ItemMenu;
-import desarrollo.tpentrega1.entidades.MercadoPago;
 import desarrollo.tpentrega1.entidades.Pago;
 import desarrollo.tpentrega1.entidades.Pedido;
-import desarrollo.tpentrega1.entidades.Transferencia;
 import desarrollo.tpentrega1.entidades.Vendedor;
 import desarrollo.tpentrega1.enums.EstadoPedido;
 import desarrollo.tpentrega1.exceptions.DAOException;
-import desarrollo.tpentrega1.dao.sql.ClienteDAOSql;
-import desarrollo.tpentrega1.dao.sql.VendedorDAOSql;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.ZoneId;
-import static java.time.temporal.TemporalQueries.localDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class PedidoDAOSql extends DAO<Pedido> implements PedidoDAO {
-
+    private VendedorDAO vendedorDAO = VendedorDAOSql.getInstance();
+    private ClienteDAO clienteDAO = ClienteDAOSql.getInstance();
+    private PagoDAO pagoDAO = PagoDAOSql.getInstance(); 
+    private ItemsPedidoDAO itemsPedidoDAO= ItemsPedidoDAOSql.getInstance();
+     private static PedidoDAOSql instance;
+     
+    public static PedidoDAOSql getInstance(){
+        if(PedidoDAOSql.instance == null)PedidoDAOSql.instance =  new PedidoDAOSql();
+        return PedidoDAOSql.instance;}
+    
+    
     @Override
     public void crearPedido(Pedido pedido) throws DAOException {
-        String sqlPago = "insert into pago (monto, fecha) VALUES (?, ?);";
-        String sqlPago2 = "select id_pago from pago where ";
-        String sqlMp = "insert into mercado_pago (id_pago, alias) VALUES (?, ?);";
-        String sqlTransferencia = "insert into transferencia (id_pago, cuit, cvu) VALUES (?, ?, ?);";
 
         String sqlPedido = "insert into pedido (estado,id_cliente, id_vendedor, id_pago, total) VALUES (?, ?, ?, ?, ?)";
         String sqlItems = "insert into items_pedido (pedido_id, item_id,cantidad) VALUES (?, ?, ?)";
@@ -39,41 +42,37 @@ public class PedidoDAOSql extends DAO<Pedido> implements PedidoDAO {
         PreparedStatement stmtItems = null;
 
         try {
-
-            ConectarBase();
-//            conexion.setAutoCommit(false);
             Pago pago = pedido.getPago();
-            PreparedStatement stmt = conexion.prepareStatement(sqlPago, Statement.RETURN_GENERATED_KEYS);
-            stmt.setDouble(0, pago.getMonto());
-            Date date = Date.from(pago.getFecha().atStartOfDay(ZoneId.systemDefault()).toInstant());
-            stmt.setDate(1, (java.sql.Date) date);
+            pagoDAO.crearPago(pago);
+            pedido.setPago(pago);
 
-            ResultSet generatedKeys = stmt.getGeneratedKeys();
-            int idPago;
-            if (!generatedKeys.next()) {
-                throw new DAOException("no se pudo cargar el pago");
-            }
-            idPago = generatedKeys.getInt(1);
-
-            if (pago instanceof MercadoPago) {
-                MercadoPago mp = (MercadoPago) pago;
-                insertarModificarEliminar(sqlMp, idPago, mp.getAlias());
-            } else {
-                Transferencia t = (Transferencia) pago;
-                insertarModificarEliminar(sqlTransferencia, t.getCuit(), t.getCvu());
-            }
-
-            insertarModificarEliminar(sqlPedido,
-                    pedido.getEstado(),
-                    pedido.getCliente().getId(),
-                    pedido.getVendedor().getId(),
-                    idPago,
-                    pedido.getTotal());
+         try (PreparedStatement stmt = conexion.prepareStatement(sqlPedido, Statement.RETURN_GENERATED_KEYS)) {
+            ConectarBase();
+            stmt.setString(1,pedido.getEstado().toString());
+            stmt.setInt(2,Integer.parseInt(pedido.getCliente().getId()));
+            stmt.setInt(3,Integer.parseInt(pedido.getVendedor().getId()));
+            stmt.setInt(4,Integer.parseInt(pago.getId()));
+            stmt.setDouble(5, pedido.getTotal());
+        
+            stmt.executeUpdate();
+            
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    int idPedido = generatedKeys.getInt(1);
+                    
+                   pedido.setId(String.valueOf(idPedido));
+                    
+                }
+                }
+                    
+                } catch (Exception ex) {
+            throw new DAOException("no se pudo crear el Pago: \n" + ex.getMessage());
+        }
 
             stmtItems = conexion.prepareStatement(sqlItems);
             for (ItemMenu item : pedido.getItems()) {
-                stmtItems.setString(1, (String) pedido.getId());
-                stmtItems.setString(2, item.getId());
+                stmtItems.setInt(1, Integer.parseInt(pedido.getId()));
+                stmtItems.setInt(2, Integer.parseInt(item.getId()));
                 stmtItems.addBatch();
             }
             stmtItems.executeBatch();
@@ -101,10 +100,10 @@ public class PedidoDAOSql extends DAO<Pedido> implements PedidoDAO {
 
     @Override
     public void actualizarPedido(Pedido pedido) throws DAOException {
-        //update pedido set estado = ?, id_cliente = ?, id_pago = ?, id_vendedor = ? where id_pedido = ?;
-        //update pedido_detalle set id_item_menu = ? where id_pedido = ?;
-        String sqlPedido = "update pedido set estado = ?, id_cliente = ?, id_pago = ?, id_vendedor = ? where id_pedido = ?;";
-        String sqlItems = "update items_pedido set item_id = ?, cantidad = ? where pedido_id = ?;";
+
+        String sqlPedido = "update pedido set estado = ?, id_cliente = ?, id_vendedor = ?,id_pago = ?"
+                + ",total= ? where id_pedido = ?;";
+        String sqlItems = "update items_pedido set item_id = ? where pedido_id = ?;"; //cantidad a implementar
 
         PreparedStatement stmtItems = null;
 
@@ -114,13 +113,17 @@ public class PedidoDAOSql extends DAO<Pedido> implements PedidoDAO {
             conexion.setAutoCommit(false);
 
             insertarModificarEliminar(sqlPedido,
-                    Integer.valueOf(pedido.getCliente().getId()), Integer.valueOf(pedido.getVendedor().getId()),
-                    Integer.valueOf(pedido.getId()), pedido.getPago(), pedido.getTotal());
+                    pedido.getEstado().toString(),
+                    Integer.parseInt(pedido.getCliente().getId()),
+                    Integer.parseInt(pedido.getVendedor().getId()),
+                    pedido.getPago().getId(),
+                    pedido.getTotal(),
+                    Integer.valueOf(pedido.getId()));
 
             stmtItems = conexion.prepareStatement(sqlItems);
             for (ItemMenu item : pedido.getItems()) {
-                stmtItems.setString(1, (String) pedido.getId());
-                stmtItems.setString(2, item.getId());
+                stmtItems.setInt(1, Integer.parseInt(item.getId()));
+                stmtItems.setInt(2, Integer.parseInt(pedido.getId()));
                 stmtItems.addBatch();
             }
             stmtItems.executeBatch();
@@ -158,7 +161,7 @@ public class PedidoDAOSql extends DAO<Pedido> implements PedidoDAO {
 
     @Override
     public void eliminarPedido(String id) throws DAOException {
-         String sql = "DELETE FROM Pedidos WHERE id = ?";
+         String sql = "DELETE FROM pedido WHERE id_pedido = ?";
         try {
             insertarModificarEliminar(sql, id);
             System.out.println("Pedido con ID " + id + " eliminado exitosamente.");
@@ -170,10 +173,7 @@ public class PedidoDAOSql extends DAO<Pedido> implements PedidoDAO {
     @Override
     public Pedido buscarPedido(String id) {
     Pedido pedido = null;
-    String sql = "SELECT * FROM Pedidos WHERE id = ?";
-    ClienteDAOSql cdsql= new ClienteDAOSql();
-    VendedorDAOSql vdsql= new VendedorDAOSql();
-    ItemMenuDAOSql imdsql= new ItemMenuDAOSql();
+    String sql = "SELECT * FROM pedido WHERE id_pedido = ?";
     
     
     try {
@@ -189,11 +189,11 @@ public class PedidoDAOSql extends DAO<Pedido> implements PedidoDAO {
             String estadoStr = resultado.getString("estado");
           
             
-            Cliente cliente = cdsql.buscarCliente(clienteId);
-            Vendedor vendedor = vdsql.buscarVendedor(vendedorId);
+            Cliente cliente = clienteDAO.buscarCliente(clienteId);
+            Vendedor vendedor = vendedorDAO.buscarVendedor(vendedorId);
             EstadoPedido estado = EstadoPedido.valueOf(estadoStr); 
-            List<ItemMenu> items = imdsql.obtenerItemsMenuDeVendedor(vendedor.getId());
-            Pago pago = null; //buscarPagoPorPedidoId(id); //terminar de implementar cuando esté listo el pagoDAOSql
+            List<ItemMenu> items = itemsPedidoDAO.buscarPorIdPedido(id);
+            Pago pago = pagoDAO.; //buscarPagoPorPedidoId(id); //terminar de implementar cuando esté listo el pagoDAOSql
             
             pedido = new Pedido(id, cliente, vendedor, items, pago, estado);
         }
