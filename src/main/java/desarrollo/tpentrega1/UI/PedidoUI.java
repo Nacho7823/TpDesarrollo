@@ -637,10 +637,14 @@ public class PedidoUI extends javax.swing.JPanel {
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
         
         
-        // TODO: verify
-        if (pedidoController.buscarPedido(tfId.getText()) != null){
-            JOptionPane.showMessageDialog(null, "Un pedido ya contiene ese ID.");
-            return;
+        try {
+            // TODO: verify
+            if (pedidoController.buscarPedido(tfId.getText()) != null){
+                JOptionPane.showMessageDialog(null, "Un pedido ya contiene ese ID.");
+                return;
+            }
+        } catch (DAOException ex) {
+            Logger.getLogger(PedidoUI.class.getName()).log(Level.SEVERE, null, ex);
         }
         pedido.setId(tfId.getText());
         
@@ -689,7 +693,12 @@ public class PedidoUI extends javax.swing.JPanel {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
 
-        Pedido p = pedidoController.buscarPedido(tfId.getText());
+        Pedido p = null;
+        try {
+            p = pedidoController.buscarPedido(tfId.getText());
+        } catch (DAOException ex) {
+            Logger.getLogger(PedidoUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
         if (p == null) {
             JOptionPane.showMessageDialog(null, "Pedido no encontrado.");
 

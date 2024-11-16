@@ -1,6 +1,6 @@
 package desarrollo.tpentrega1.controllers;
 
-import desarrollo.tpentrega1.dao.sql.ClienteDAOSql;
+import desarrollo.tpentrega1.dao.ClienteDAO;
 import desarrollo.tpentrega1.entidades.Cliente;
 import desarrollo.tpentrega1.entidades.Coordenada;
 import desarrollo.tpentrega1.exceptions.DAOException;
@@ -10,9 +10,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ClienteController {
-     private ClienteDAOSql clienteDAO;
+     private ClienteDAO clienteDAO;
 
-    public ClienteController(ClienteDAOSql c) {
+    public ClienteController(ClienteDAO c) {
         try {
             clienteDAO = c;
         } catch (Exception ex) {

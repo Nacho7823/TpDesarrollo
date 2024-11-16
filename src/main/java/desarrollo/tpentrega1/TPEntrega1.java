@@ -285,19 +285,19 @@ import desarrollo.tpentrega1.controllers.PedidoController;
 import desarrollo.tpentrega1.controllers.VendedorController;
 import desarrollo.tpentrega1.UI.MenuGeneral;
 import desarrollo.tpentrega1.controllers.ItemsMenuController;
+import desarrollo.tpentrega1.dao.ClienteDAO;
+import desarrollo.tpentrega1.dao.ItemsMenuDAO;
+import desarrollo.tpentrega1.dao.ItemsPedidoDAO;
+import desarrollo.tpentrega1.dao.PedidoDAO;
+import desarrollo.tpentrega1.dao.VendedorDAO;
 import desarrollo.tpentrega1.dao.sql.ClienteDAOSql;
 import desarrollo.tpentrega1.dao.sql.ItemMenuDAOSql;
 import desarrollo.tpentrega1.dao.sql.ItemsPedidoDAOSql;
 import desarrollo.tpentrega1.dao.sql.PedidoDAOSql;
 import desarrollo.tpentrega1.dao.sql.VendedorDAOSql;
 import desarrollo.tpentrega1.entidades.Coordenada;
-import desarrollo.tpentrega1.entidades.ItemMenu;
-import desarrollo.tpentrega1.entidades.Pago;
-import desarrollo.tpentrega1.entidades.Transferencia;
 import desarrollo.tpentrega1.entidades.Vendedor;
-import desarrollo.tpentrega1.enums.EstadoPedido;
 import desarrollo.tpentrega1.exceptions.DAOException;
-import java.util.List;
 
 import javax.swing.*;
 
@@ -306,17 +306,17 @@ public class TPEntrega1 {
     public static void main(String[] args) throws DAOException {
 
         // Crear instancias de memoria (simulando bases de datos en memoria)
-        ClienteDAOSql clienteDAOSql = new ClienteDAOSql();
-        VendedorDAOSql vendedorDAOSql = new VendedorDAOSql();
-        PedidoDAOSql pedidoDAOSql = new PedidoDAOSql();
-        ItemMenuDAOSql itemMenuDAOSql = new ItemMenuDAOSql();
-        ItemsPedidoDAOSql itemsPedidoDAOSql = new ItemsPedidoDAOSql();
+        ClienteDAO clienteDAO = ClienteDAOSql.getInstance();
+        VendedorDAO vendedorDAO = VendedorDAOSql.getInstance();
+        PedidoDAO pedidoDAO =PedidoDAOSql.getInstance();
+        ItemsMenuDAO itemMenuDAO =ItemMenuDAOSql.getInstance();
+        ItemsPedidoDAO itemsPedidoDAO =ItemsPedidoDAOSql.getInstance();
 
         // Crear instancias de controladores
-        ClienteController clienteController = new ClienteController(clienteDAOSql);
-        VendedorController vendedorController = new VendedorController(vendedorDAOSql);
-        PedidoController pedidoController = new PedidoController(pedidoDAOSql);
-        ItemsMenuController itemsMenuController = new ItemsMenuController(itemMenuDAOSql, vendedorController);
+        ClienteController clienteController = new ClienteController(clienteDAO);
+        VendedorController vendedorController = new VendedorController(vendedorDAO);
+        PedidoController pedidoController = new PedidoController(pedidoDAO);
+        ItemsMenuController itemsMenuController = new ItemsMenuController(itemMenuDAO, vendedorController);
 
         // Cargar datos de prueba para clientes
 
@@ -334,8 +334,8 @@ public class TPEntrega1 {
             v2 = vendedorController.crearNuevoVendedor("3", "Verdulería El Tomate", "Calle Libertad 2300", new Coordenada(-34.606732, -58.384752));
         }
 
-        itemsMenuController.crearNuevaBebida("1", "Heineken", "Cerveza", 2300, "Bebida", v1, 70, 2.0);
-        itemsMenuController.crearNuevaBebida("3", "CocaCola", "Gaseosa", 2100, "Bebida", v1, 70, 0.0);
+        itemsMenuController.crearNuevaBebida("Heineken", "Cerveza", 2300, "Bebida", v1, 70, 2.0);
+        itemsMenuController.crearNuevaBebida("CocaCola", "Gaseosa", 2100, "Bebida", v1, 70, 0.0);
         itemsMenuController.crearNuevoItem("Guaymallen", "Alfajor", 700, "Plato", 200, false, false, 120);
 
        clienteController.crearNuevoCliente("2","Juan Pérez", "20123456789", "juan@example.com", "Calle Falsa 123", new Coordenada(-34.603722, -58.381592));

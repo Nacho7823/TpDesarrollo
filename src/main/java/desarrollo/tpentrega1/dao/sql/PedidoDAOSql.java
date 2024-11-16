@@ -249,6 +249,7 @@ public List<Pedido> obtenerPedidos() throws DAOException {
     return pedidos;
 }
 
+    @Override
     public void removeItem(ItemMenu item, Pedido p) throws DAOException {
         String sql = "DELETE FROM items_pedido WHERE id_pedido = ? AND id_item_menu = ?";
 
@@ -266,6 +267,7 @@ public List<Pedido> obtenerPedidos() throws DAOException {
     }
     }
 
+    @Override
     public void addItem(ItemMenu item, Pedido p) throws DAOException {
          String sql = "INSERT INTO items_pedido (id_pedido, id_item_menu, cantidad) VALUES (?, ?, ?)";
 

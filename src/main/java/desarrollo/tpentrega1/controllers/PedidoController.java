@@ -2,7 +2,7 @@
 package desarrollo.tpentrega1.controllers;
 
 
-import desarrollo.tpentrega1.dao.sql.PedidoDAOSql;
+import desarrollo.tpentrega1.dao.PedidoDAO;
 import desarrollo.tpentrega1.entidades.Cliente;
 import desarrollo.tpentrega1.entidades.ItemMenu;
 import desarrollo.tpentrega1.entidades.Pago;
@@ -17,9 +17,9 @@ import java.util.List;
 
 
 public class PedidoController {
-    private PedidoDAOSql pedidoDAO = null;
+    private PedidoDAO pedidoDAO;
 
-    public PedidoController(PedidoDAOSql pedidoDAO) {
+    public PedidoController(PedidoDAO pedidoDAO) {
         this.pedidoDAO = pedidoDAO;
     }
 
@@ -51,7 +51,7 @@ public class PedidoController {
     }
 
     // Buscar un pedido por ID
-    public Pedido buscarPedido(String id) {
+    public Pedido buscarPedido(String id) throws DAOException{
         Pedido pedido = pedidoDAO.buscarPedido(id);
         if (pedido != null) {
             System.out.println("Pedido encontrado con ID: " + pedido.getId());
@@ -60,10 +60,10 @@ public class PedidoController {
         }
         return pedido;
     }
-    public Pedido buscarYDevolverPedido(String id){
+    public Pedido buscarYDevolverPedido(String id)throws DAOException{
         return pedidoDAO.buscarPedido(id);
     }
-    //public void editarPedido(int id, )
+
     public List<Pedido> obtenerListaPedidos() throws DAOException {
         return pedidoDAO.obtenerPedidos();
     }
@@ -72,7 +72,7 @@ public class PedidoController {
         pedidoDAO.addItem(item, p);
     }
     
-    public List<ItemMenu> getItems(Pedido p){
+    public List<ItemMenu> getItems(Pedido p) throws DAOException{
         Pedido p1= pedidoDAO.buscarPedido(p.getId());
         return p1.getItems();
     }

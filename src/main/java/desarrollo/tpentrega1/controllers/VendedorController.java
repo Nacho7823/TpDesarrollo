@@ -1,7 +1,7 @@
 package desarrollo.tpentrega1.controllers;
 
+import desarrollo.tpentrega1.dao.VendedorDAO;
 import desarrollo.tpentrega1.entidades.Vendedor;
-import desarrollo.tpentrega1.dao.sql.VendedorDAOSql;
 import desarrollo.tpentrega1.entidades.Coordenada;
 import desarrollo.tpentrega1.exceptions.DAOException;
 import java.util.List;
@@ -10,15 +10,15 @@ import java.util.logging.Logger;
 
 public class VendedorController {
 
-    private VendedorDAOSql vendedorDAOSql;
+    private VendedorDAO vendedorDAO;
 
-    public VendedorDAOSql getVendedorDAO() {
-        return vendedorDAOSql;
+    public VendedorDAO getVendedorDAO() {
+        return vendedorDAO;
     }
     
-    public VendedorController(VendedorDAOSql vendedorDAOSql) {
+    public VendedorController(VendedorDAO vendedorDAOSql) {
         try {
-            this.vendedorDAOSql = vendedorDAOSql;
+            this.vendedorDAO = vendedorDAOSql;
         } catch (Exception ex) {
             throw new RuntimeException("cant open db");
         }
@@ -27,7 +27,7 @@ public class VendedorController {
     public Vendedor crearNuevoVendedor(String id, String nombre, String direccion, Coordenada coordenada) {
         Vendedor nuevoVendedor = new Vendedor(id, nombre, direccion, coordenada);
         try {
-            vendedorDAOSql.crearVendedor(nuevoVendedor);
+            vendedorDAO.crearVendedor(nuevoVendedor);
         } catch (DAOException ex) {
             Logger.getLogger(VendedorController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -38,12 +38,12 @@ public class VendedorController {
     public void modificarVendedor(String id, String nombre, String direccion, Coordenada coordenada) {
         Vendedor vendedorExistente;
         try {
-            vendedorExistente = vendedorDAOSql.buscarVendedor(id);
+            vendedorExistente = vendedorDAO.buscarVendedor(id);
             if (vendedorExistente != null) {
                 vendedorExistente.setNombre(nombre);
                 vendedorExistente.setDireccion(direccion);
                 vendedorExistente.setCoordenada(coordenada);
-                vendedorDAOSql.actualizarVendedor(vendedorExistente);
+                vendedorDAO.actualizarVendedor(vendedorExistente);
                 System.out.println("Vendedor modificado: " + nombre);
             } else {
                 System.out.println("Vendedor no encontrado para modificar.");
@@ -55,7 +55,7 @@ public class VendedorController {
     
     public void modificarVendedor(Vendedor vendedor) {
         try {
-            vendedorDAOSql.actualizarVendedor(vendedor);
+            vendedorDAO.actualizarVendedor(vendedor);
         } catch (DAOException ex) {
             Logger.getLogger(VendedorController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -64,7 +64,7 @@ public class VendedorController {
     // Eliminar un vendedor por ID
     public void eliminarVendedor(Vendedor vendedor) {
         try {
-            vendedorDAOSql.eliminarVendedor(vendedor);
+            vendedorDAO.eliminarVendedor(vendedor);
         } catch (DAOException ex) {
             Logger.getLogger(VendedorController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -73,7 +73,7 @@ public class VendedorController {
     // Buscar un vendedor por ID
     public Vendedor buscarVendedor(String id) {
         try {
-        Vendedor vendedor = vendedorDAOSql.buscarVendedor(id);
+        Vendedor vendedor = vendedorDAO.buscarVendedor(id);
         if (vendedor != null) {
             System.out.println("Vendedor encontrado: " + vendedor.getNombre());
             return vendedor;
@@ -89,7 +89,7 @@ public class VendedorController {
 
     public List<Vendedor> obtenerListaVendedores() {
         try {
-            return vendedorDAOSql.obtenerVendedores();
+            return vendedorDAO.obtenerVendedores();
         } catch (DAOException ex) {
             Logger.getLogger(VendedorController.class.getName()).log(Level.SEVERE, null, ex);
         }

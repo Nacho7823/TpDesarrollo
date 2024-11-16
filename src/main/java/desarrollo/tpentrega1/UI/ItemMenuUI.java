@@ -7,7 +7,6 @@ import desarrollo.tpentrega1.entidades.ItemMenu;
 import desarrollo.tpentrega1.entidades.Plato;
 import desarrollo.tpentrega1.entidades.Vendedor;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -246,7 +245,7 @@ public class ItemMenuUI extends JPanel {
                     double tamaño = cardPanel.getTamaño();
                     double graduacionAlcoholica = cardPanel.getGraduacionAlcoholica();
                     // TODO: add vendedor
-                    Bebida bebida = itemsMenuController.crearNuevaBebida(id, nombre, descripcion, precio, categoria, vendedor,
+                    Bebida bebida = itemsMenuController.crearNuevaBebida(nombre, descripcion, precio, categoria, vendedor,
                             tamaño, graduacionAlcoholica);
 
                     System.out.println(bebida.toString());

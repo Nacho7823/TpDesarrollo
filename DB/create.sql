@@ -1,25 +1,25 @@
 CREATE TABLE vendedor (
     id_vendedor BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(20) NOT NULL,
-    direccion VARCHAR(20) NOT NULL,
+    nombre VARCHAR(30) NOT NULL,
+    direccion VARCHAR(50) NOT NULL,
     longitud DECIMAL(9, 6) NOT NULL,
     latitud DECIMAL(9, 6) NOT NULL
 ) ENGINE=InnoDB;
 
 CREATE TABLE cliente (
     id_cliente BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(20) NOT NULL,
+    nombre VARCHAR(30) NOT NULL,
     cuit VARCHAR(20) NOT NULL,
-    email VARCHAR(20) NOT NULL,
-    direccion VARCHAR(20) NOT NULL,
+    email VARCHAR(50) NOT NULL,
+    direccion VARCHAR(50) NOT NULL,
     longitud DECIMAL(9, 6) NOT NULL,
     latitud DECIMAL(9, 6) NOT NULL
 ) ENGINE=InnoDB;
 
 CREATE TABLE item_menu (
     id_item_menu BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(20) NOT NULL,
-    descripcion VARCHAR(20) NOT NULL,
+    nombre VARCHAR(30) NOT NULL,
+    descripcion VARCHAR(50) NOT NULL,
     precio DECIMAL(10, 2) NOT NULL,
     categoria VARCHAR(20) NOT NULL
 ) ENGINE=InnoDB;
@@ -34,7 +34,7 @@ CREATE TABLE vende (
 
 CREATE TABLE plato (
     id_item_menu BIGINT UNSIGNED PRIMARY KEY,
-    calorias DECIMAL(5, 2) NOT NULL,
+    calorias DECIMAL(8, 2) NOT NULL,
     apto_celiaco BOOLEAN,
     apto_vegano BOOLEAN,
     peso DECIMAL(5, 2) NOT NULL,
@@ -44,7 +44,7 @@ CREATE TABLE plato (
 CREATE TABLE bebida (
     id_item_menu BIGINT UNSIGNED PRIMARY KEY,
     graduacion_alcoholica DECIMAL(5, 2) NOT NULL,
-    tamanio DECIMAL(5, 2) NOT NULL,
+    tamanio DECIMAL(8, 2) NOT NULL,
     FOREIGN KEY (id_item_menu) REFERENCES item_menu(id_item_menu) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 

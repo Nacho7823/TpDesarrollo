@@ -2,7 +2,6 @@
 package desarrollo.tpentrega1.controllers;
 
 import desarrollo.tpentrega1.dao.ItemsMenuDAO;
-import desarrollo.tpentrega1.dao.sql.ItemMenuDAOSql;
 import desarrollo.tpentrega1.entidades.ItemMenu;
 import desarrollo.tpentrega1.entidades.Plato;
 import desarrollo.tpentrega1.entidades.Bebida;
@@ -15,10 +14,10 @@ import java.util.logging.Logger;
 
 public class ItemsMenuController {
 
-    private ItemMenuDAOSql itemMenuDAO;
+    private ItemsMenuDAO itemMenuDAO;
     private VendedorController vendedorController;
 
-    public ItemsMenuController(ItemMenuDAOSql itemMenuDAOSql, VendedorController vendedorController) {
+    public ItemsMenuController(ItemsMenuDAO itemMenuDAOSql, VendedorController vendedorController) {
         this.itemMenuDAO =  itemMenuDAOSql;
         this.vendedorController = vendedorController;
     }
@@ -53,10 +52,9 @@ public class ItemsMenuController {
         return p;
     }
     // Crear una nueva bebida
-    public Bebida crearNuevaBebida(String id, String nombre, String descripcion, double precio, String categoria, Vendedor vendedor,
+    public Bebida crearNuevaBebida(String nombre, String descripcion, double precio, String categoria, Vendedor vendedor,
             double tamaño, double graduacionAlcoholica) {        
         Bebida nuevaBebida = new Bebida.Builder()
-                .id(id)
                 .nombre(nombre)
                 .descripcion(descripcion)
                 .precio(precio)
