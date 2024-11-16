@@ -8,6 +8,7 @@ import desarrollo.tpentrega1.entidades.Vendedor;
 import java.util.List;
 import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 public class DBVendedorTest {
@@ -26,8 +27,10 @@ public class DBVendedorTest {
         List<String> ids = new ArrayList();
         for(Vendedor v : vendedorDAOSql.obtenerVendedores()){
             ids.add(v.getId());
+            assertFalse(v.getId()==null);
         }
         for(Vendedor v : vendedorDAOSql.obtenerVendedores()){
+            assertTrue(ids.remove(v.getId()));
             assertFalse(ids.contains(v.getId()));
         }
     }
