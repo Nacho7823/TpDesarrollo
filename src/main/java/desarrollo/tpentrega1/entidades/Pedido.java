@@ -20,7 +20,8 @@ public class Pedido {
     private EstadoPedido estado;
     private List<Observador> observadores = new ArrayList<>();
 
-    public Pedido() {
+    public Pedido(){
+        
     }
     
 
