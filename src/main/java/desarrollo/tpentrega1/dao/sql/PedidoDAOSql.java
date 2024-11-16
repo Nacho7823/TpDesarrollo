@@ -37,7 +37,7 @@ public class PedidoDAOSql extends DAO<Pedido> implements PedidoDAO {
     public void crearPedido(Pedido pedido) throws DAOException {
 
         String sqlPedido = "insert into pedido (estado,id_cliente, id_vendedor, id_pago, total) VALUES (?, ?, ?, ?, ?)";
-        String sqlItems = "insert into items_pedido (pedido_id, item_id,cantidad) VALUES (?, ?, ?)";
+        String sqlItems = "insert into items_pedido (id_pedido, id_item_menu,cantidad) VALUES (?, ?, ?)";
 
         PreparedStatement stmtItems = null;
 
@@ -103,7 +103,7 @@ public class PedidoDAOSql extends DAO<Pedido> implements PedidoDAO {
 
         String sqlPedido = "update pedido set estado = ?, id_cliente = ?, id_vendedor = ?,id_pago = ?"
                 + ",total= ? where id_pedido = ?;";
-        String sqlItems = "update items_pedido set item_id = ? where pedido_id = ?;"; //cantidad a implementar
+        String sqlItems = "update items_pedido set id_item_menu = ? where id_pedido = ?;"; //cantidad a implementar
 
         PreparedStatement stmtItems = null;
 
@@ -163,7 +163,7 @@ public class PedidoDAOSql extends DAO<Pedido> implements PedidoDAO {
     public void eliminarPedido(String id) throws DAOException {
          String sql = "DELETE FROM pedido WHERE id_pedido = ?";
         try {
-            insertarModificarEliminar(sql, id);
+            insertarModificarEliminar(sql, Integer.valueOf(id));
             System.out.println("Pedido con ID " + id + " eliminado exitosamente.");
         } catch (Exception e) {
             System.err.println("Error al eliminar el pedido con ID " + id + ": " + e.getMessage());
@@ -179,13 +179,13 @@ public class PedidoDAOSql extends DAO<Pedido> implements PedidoDAO {
     try {
         ConectarBase();
         PreparedStatement preparedStatement = conexion.prepareStatement(sql);
-        preparedStatement.setString(1, id); 
+        preparedStatement.setInt(1, Integer.parseInt(id)); 
         resultado = preparedStatement.executeQuery();
 
         if (resultado.next()) {
        
-            String clienteId = resultado.getString("cliente_id");
-            String vendedorId = resultado.getString("vendedor_id");
+            String clienteId = String.valueOf(resultado.getInt("id_cliente"));
+            String vendedorId = String.valueOf(resultado.getString("id_vendedor"));
             String estadoStr = resultado.getString("estado");
           
             
@@ -193,7 +193,10 @@ public class PedidoDAOSql extends DAO<Pedido> implements PedidoDAO {
             Vendedor vendedor = vendedorDAO.buscarVendedor(vendedorId);
             EstadoPedido estado = EstadoPedido.valueOf(estadoStr); 
             List<ItemMenu> items = itemsPedidoDAO.buscarPorIdPedido(id);
-            Pago pago = pagoDAO.; //buscarPagoPorPedidoId(id); //terminar de implementar cuando esté listo el pagoDAOSql
+            Pago pago = pagoDAO.buscarPagoPorIdPedido(id);
+            if (pago == null) {
+            throw new DAOException("No se encontró un pago asociado al pedido con ID " + id);
+            }
             
             pedido = new Pedido(id, cliente, vendedor, items, pago, estado);
         }
@@ -219,22 +222,17 @@ public List<Pedido> obtenerPedidos() throws DAOException {
         Statement statement = conexion.createStatement();
         ResultSet rs = statement.executeQuery(sql);
 
-        ClienteDAOSql clienteDAOSql = new ClienteDAOSql();
-        VendedorDAOSql vendedorDAOSql = new VendedorDAOSql();
-        ItemMenuDAOSql itemMenuDAOSql = new ItemMenuDAOSql();
-
         while (rs.next()) {
-            String id = rs.getString("id");
-            String clienteId = rs.getString("cliente_id");
-            String vendedorId = rs.getString("vendedor_id");
+            String id = String.valueOf(rs.getInt("id_pedido"));
+            String clienteId = String.valueOf(rs.getInt("id_cliente"));
+            String vendedorId = String.valueOf(rs.getInt("id_vendedor"));
             String estadoStr = rs.getString("estado");
 
-            Cliente cliente = clienteDAOSql.buscarCliente(clienteId);
-            Vendedor vendedor = vendedorDAOSql.buscarVendedor(vendedorId);
+            Cliente cliente = clienteDAO.buscarCliente(clienteId);
+            Vendedor vendedor = vendedorDAO.buscarVendedor(vendedorId);
             EstadoPedido estado = EstadoPedido.valueOf(estadoStr);
-            List<ItemMenu> items = itemMenuDAOSql.obtenerItemsMenuDeVendedor(vendedor.getId());
-            Pago pago = null; //buscarPagoPorPedidoId(id);  //terminar de implementar cuando esté listo el pagoDAOSql
-
+            List<ItemMenu> items = itemsPedidoDAO.buscarPorIdPedido(id);
+            Pago pago = pagoDAO.buscarPagoPorIdPedido(id);
             Pedido pedido = new Pedido(id, cliente, vendedor, items, pago, estado);
             pedidos.add(pedido);
         }
@@ -252,11 +250,11 @@ public List<Pedido> obtenerPedidos() throws DAOException {
 }
 
     public void removeItem(ItemMenu item, Pedido p) throws DAOException {
-        String sql = "DELETE FROM items_pedido WHERE pedido_id = ? AND item_id = ?";
+        String sql = "DELETE FROM items_pedido WHERE id_pedido = ? AND id_item_menu = ?";
 
     try {
         ConectarBase();
-        insertarModificarEliminar(sql, p.getId(), item.getId());
+        insertarModificarEliminar(sql, Integer.valueOf(p.getId()), Integer.valueOf(item.getId()));
     } catch (Exception e) {
         throw new DAOException("Error al eliminar ítem del pedido: " + e.getMessage());
     } finally {
@@ -269,11 +267,11 @@ public List<Pedido> obtenerPedidos() throws DAOException {
     }
 
     public void addItem(ItemMenu item, Pedido p) throws DAOException {
-         String sql = "INSERT INTO items_pedido (pedido_id, item_id, cantidad) VALUES (?, ?, ?)";
+         String sql = "INSERT INTO items_pedido (id_pedido, id_item_menu, cantidad) VALUES (?, ?, ?)";
 
     try {
         ConectarBase();
-        insertarModificarEliminar(sql, p.getId(), item.getId(), 1); // Suponiendo cantidad = 1
+        insertarModificarEliminar(sql, Integer.valueOf(p.getId()), Integer.valueOf(item.getId()), 1); // Suponiendo cantidad = 1
     } catch (Exception e) {
         throw new DAOException("Error al añadir ítem al pedido: " + e.getMessage());
     } finally {

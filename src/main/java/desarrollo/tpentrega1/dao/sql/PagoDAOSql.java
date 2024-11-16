@@ -137,6 +137,58 @@ public class PagoDAOSql extends DAO implements PagoDAO{
         return pago;
     }
 
+
+    
+     @Override
+    public Pago buscarPagoPorIdPedido(String id) throws DAOException {
+        
+        String sql = "SELECT * FROM pago P LEFT JOIN pedido PE ON PE.id_pago=P.id_pago LEFT JOIN mercado_pago MP ON P.id_pago=MP.id_pago LEFT JOIN transferencia T ON"
+                + " P.id_pago=T.id_pago WHERE PE.id_pedido= ?";
+
+
+            Pago pago = null;
+         try {
+            ConectarBase();
+            PreparedStatement preparedStatement = conexion.prepareStatement(sql);
+            preparedStatement.setInt(1, Integer.parseInt(id));
+            resultado = preparedStatement.executeQuery();
+ 
+
+            if(resultado.next()) {
+                double monto = resultado.getDouble("monto");
+                LocalDate fecha = resultado.getDate("fecha").toLocalDate();
+                
+                
+                if(resultado.getString("alias")!= null){
+                String alias= resultado.getString("alias");
+                pago = new MercadoPago(alias,monto);
+                pago.setId(id);
+                pago.setFecha(fecha);
+                }
+                else if(resultado.getString("cvu")!= null){
+                    String cuit= resultado.getString("cuit");
+                    String cvu=resultado.getString("cvu");
+                    pago= new Transferencia(cuit,cvu,monto);
+                    pago.setId(id);
+                    pago.setFecha(fecha);
+                }
+            }
+        } catch (Exception ex) {
+            throw new DAOException("No se pudo obtener los itemMenu: \n" + ex.getMessage());
+        } finally {
+            try {
+
+                desconectarBase();
+            } catch (Exception e) {
+                throw new DAOException("Error al cerrar la conexión: " + e.getMessage());
+            }
+        }
+
+        return pago;
+    
+    
+    
+}
     @Override
     public List<Pago> obtenerPagos() throws DAOException {
         
@@ -186,7 +238,4 @@ public class PagoDAOSql extends DAO implements PagoDAO{
 
         return listaPagos;
     }
-    
-    
-    
 }

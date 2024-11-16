@@ -24,7 +24,7 @@ public class DAO<T> {
         protected Statement sentencia = null;
         
         private final String USER = "root";
-        private final String PASSWORD = "C0NTR4S3Ñ4";
+        private final String PASSWORD = "root";
         private final String DATABASE = "tienda";
         private final String DRIVER = "com.mysql.cj.jdbc.Driver";
         

@@ -13,4 +13,6 @@ public interface PagoDAO {
     public Pago buscarPago(String id) throws DAOException;
     
     public List<Pago> obtenerPagos() throws DAOException;
+
+    public Pago buscarPagoPorIdPedido(String id)throws DAOException;
 }

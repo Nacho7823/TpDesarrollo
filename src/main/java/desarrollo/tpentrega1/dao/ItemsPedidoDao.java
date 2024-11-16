@@ -26,5 +26,7 @@ public interface ItemsPedidoDAO {
     public List<ItemMenu> buscarBebidaTamaño(double tamaño);
     public List<ItemMenu> buscarBebidaGraduacion(double graduacion);
 
+    public List<ItemMenu> buscarPorIdPedido(String id);
+
     
 }
