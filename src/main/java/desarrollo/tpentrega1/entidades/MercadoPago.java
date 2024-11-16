@@ -8,6 +8,10 @@ public class MercadoPago extends Pago{
         super(monto);
         this.alias = alias;
     }
+        public MercadoPago(String alias,String id,double monto) {
+        super(monto);
+        this.alias = alias;
+    }
 
     public String getAlias() {
         return alias;

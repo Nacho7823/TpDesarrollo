@@ -168,7 +168,6 @@ public class ItemMenuDAOSql extends DAO<ItemMenu> implements ItemsMenuDAO {
             resultado = preparedStatement.executeQuery();
 
             if(resultado.next()) {
-                String id_item_menu = resultado.getString("id_item_menu");
                 String nombre = resultado.getString("nombre");
                 String descripcion = resultado.getString("descripcion");
                 double precio = resultado.getDouble("precio");
@@ -179,7 +178,7 @@ public class ItemMenuDAOSql extends DAO<ItemMenu> implements ItemsMenuDAO {
                     double tamaño= resultado.getDouble("tamaño");
                     double graduacionAlcoholica= resultado.getDouble("graduacion_alcoholica");
                 itemMenu = new Bebida.Builder()
-                        .id(id_item_menu)
+                        .id(id)
                         .nombre(nombre)
                         .descripcion(descripcion)
                         .precio(precio)
@@ -194,7 +193,7 @@ public class ItemMenuDAOSql extends DAO<ItemMenu> implements ItemsMenuDAO {
                     boolean aptoVegano=resultado.getBoolean("apto_vegano");
                     double peso= resultado.getDouble("peso");
                     itemMenu= new Plato.Builder()
-                            .id(id_item_menu)
+                            .id(id)
                             .nombre(nombre)
                             .descripcion(descripcion)
                             .precio(precio)
@@ -237,7 +236,7 @@ public class ItemMenuDAOSql extends DAO<ItemMenu> implements ItemsMenuDAO {
             resultado = preparedStatement.executeQuery();
 
             while (resultado.next()) {
-                String id_item_menu = resultado.getString("id_item_menu");
+                String id_item_menu = String.valueOf(resultado.getInt("id_item_menu"));
                 String nombre = resultado.getString("nombre");
                 String descripcion = resultado.getString("descripcion");
                 double precio = resultado.getDouble("precio");
