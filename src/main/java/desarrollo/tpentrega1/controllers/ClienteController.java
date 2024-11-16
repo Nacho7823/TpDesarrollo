@@ -1,7 +1,5 @@
 package desarrollo.tpentrega1.controllers;
 
-import desarrollo.tpentrega1.Memory.ClienteMemory;
-import desarrollo.tpentrega1.dao.ClienteDAO;
 import desarrollo.tpentrega1.dao.sql.ClienteDAOSql;
 import desarrollo.tpentrega1.entidades.Cliente;
 import desarrollo.tpentrega1.entidades.Coordenada;

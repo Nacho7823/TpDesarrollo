@@ -26,7 +26,7 @@ public class DAO<T> {
         private final String USER = "root";
         private final String PASSWORD = "C0NTR4S3Ñ4";
         private final String DATABASE = "tienda";
-        private final String DRIVER = "com.mysql.jdbc.Driver";
+        private final String DRIVER = "com.mysql.cj.jdbc.Driver";
         
         protected void ConectarBase() throws SQLException, ClassNotFoundException {
             try {

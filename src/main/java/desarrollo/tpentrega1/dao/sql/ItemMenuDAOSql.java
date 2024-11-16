@@ -1,7 +1,6 @@
 package desarrollo.tpentrega1.dao.sql;
 
 import desarrollo.tpentrega1.dao.ItemsMenuDAO;
-import desarrollo.tpentrega1.dao.VendedorDAO;
 import desarrollo.tpentrega1.entidades.Bebida;
 import desarrollo.tpentrega1.entidades.ItemMenu;
 import desarrollo.tpentrega1.entidades.Plato;
@@ -14,12 +13,11 @@ import java.util.List;
 
 public class ItemMenuDAOSql extends DAO<ItemMenu> implements ItemsMenuDAO {
      
-    private VendedorDAO vendedorDAO= VendedorDAOSql.getInstance();
-    private static ItemMenuDAOSql instance;
-            
-        public static ItemMenuDAOSql getInstance(){
-        if(ItemMenuDAOSql.instance == null)ItemMenuDAOSql.instance =  new ItemMenuDAOSql();
-        return ItemMenuDAOSql.instance;
+    private static ItemMenuDAOSql instance = null;
+    
+    public static ItemMenuDAOSql getInstance(){
+        if(instance == null) instance =  new ItemMenuDAOSql();
+        return instance;
     }
         
         
