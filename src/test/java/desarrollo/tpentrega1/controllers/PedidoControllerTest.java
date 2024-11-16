@@ -131,11 +131,6 @@ public class PedidoControllerTest {
     }
 
     @Test
-<<<<<<< HEAD
-    public void testGetItems() throws DAOException {
-        Pedido p = null;
-        List<ItemMenu> expResult = null;
-=======
     public void testGetItems() throws InvalidOrderException {
         String id = "3";
         Coordenada co = new Coordenada();
@@ -146,7 +141,6 @@ public class PedidoControllerTest {
         EstadoPedido estado = null;
         Pedido p = new Pedido(id, cliente, vendedor, items, pago, estado);
         List<ItemMenu> expResult = new ArrayList();
->>>>>>> a158dda4c86e0b5c0a573403d5aa03bf7c31a797
         List<ItemMenu> result = pedidoController.getItems(p);
         assertEquals(expResult, result);
     }

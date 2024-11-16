@@ -50,15 +50,10 @@ public class VendedorControllerTest {
 
     @Test
     public void testGetVendedorDAO() {
-<<<<<<< HEAD
-        VendedorDAO expResult = null;
-        VendedorDAO result = vendedorController.getVendedorDAO();
-        assertEquals(expResult, result);
-=======
+
         VendedorDAOSql expResult = new VendedorDAOSql();
-        VendedorDAOSql result = vendedorController.getVendedorDAO();
+        VendedorDAO result = vendedorController.getVendedorDAO();
         assertEquals(expResult.getClass(), result.getClass());
->>>>>>> a158dda4c86e0b5c0a573403d5aa03bf7c31a797
     }
 
     @Test
@@ -69,16 +64,11 @@ public class VendedorControllerTest {
         Coordenada coordenada = null;
         Vendedor expResult = new Vendedor(id, nombre, direccion, coordenada);
         Vendedor result = vendedorController.crearNuevoVendedor(id, nombre, direccion, coordenada);
-<<<<<<< HEAD
-        assertEquals(expResult, result);
-        Mockito.verify(vendedorDAO).crearVendedor(expResult);
-=======
         assertEquals(expResult.getId(), result.getId());
         assertEquals(expResult.getNombre(), result.getNombre());
         assertEquals(expResult.getCoordenada(), result.getCoordenada());
         assertEquals(expResult.getDireccion(), result.getDireccion());
-        Mockito.verify(vendedorDAOSql).crearVendedor(result);
->>>>>>> a158dda4c86e0b5c0a573403d5aa03bf7c31a797
+        Mockito.verify(vendedorDAO).crearVendedor(result);
     }
 
     @Test
@@ -89,12 +79,8 @@ public class VendedorControllerTest {
         Coordenada coordenada = null;
         Vendedor vendedor = new Vendedor(id, nombre, direccion, coordenada);
         vendedorController.modificarVendedor(id, nombre, direccion, coordenada);
-<<<<<<< HEAD
         Mockito.verify(vendedorDAO).buscarVendedor(id);
-        Mockito.verify(vendedorDAO).actualizarVendedor(vendedor);
-=======
-        Mockito.verify(vendedorDAOSql).buscarVendedor(id);
->>>>>>> a158dda4c86e0b5c0a573403d5aa03bf7c31a797
+
     }
 
     @Test
