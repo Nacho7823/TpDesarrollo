@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ItemsPedidoDaoSql extends DAO<ItemMenu> implements ItemsPedidoDao {
+public class ItemsPedidoDAOSql extends DAO<ItemMenu> implements ItemsPedidoDao {
 
   
     private ItemMenu mapearItemMenu(ResultSet rs) throws DAOException {
@@ -58,7 +58,7 @@ public class ItemsPedidoDaoSql extends DAO<ItemMenu> implements ItemsPedidoDao {
                 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(ItemsPedidoDaoSql.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ItemsPedidoDAOSql.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
         
@@ -107,7 +107,7 @@ public class ItemsPedidoDaoSql extends DAO<ItemMenu> implements ItemsPedidoDao {
         try {
             return ejecutarConsulta(sql, nombre).getFirst();
         } catch (DAOException ex) {
-            Logger.getLogger(ItemsPedidoDaoSql.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ItemsPedidoDAOSql.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
         
@@ -119,7 +119,7 @@ public class ItemsPedidoDaoSql extends DAO<ItemMenu> implements ItemsPedidoDao {
         try {
             return ejecutarConsulta(sql, "%" + descripcion + "%");
         } catch (DAOException ex) {
-            Logger.getLogger(ItemsPedidoDaoSql.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ItemsPedidoDAOSql.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
@@ -130,7 +130,7 @@ public class ItemsPedidoDaoSql extends DAO<ItemMenu> implements ItemsPedidoDao {
             String sql = "SELECT * FROM items_menu WHERE precio BETWEEN ? AND ?";
             return ejecutarConsulta(sql, precioMin, precioMax);
         } catch (DAOException ex) {
-            Logger.getLogger(ItemsPedidoDaoSql.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ItemsPedidoDAOSql.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
@@ -141,7 +141,7 @@ public class ItemsPedidoDaoSql extends DAO<ItemMenu> implements ItemsPedidoDao {
         try {
             return ejecutarConsulta(sql, precio);
         } catch (DAOException ex) {
-            Logger.getLogger(ItemsPedidoDaoSql.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ItemsPedidoDAOSql.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
@@ -152,7 +152,7 @@ public class ItemsPedidoDaoSql extends DAO<ItemMenu> implements ItemsPedidoDao {
         try {
             return ejecutarConsulta(sql, categoria);
         } catch (DAOException ex) {
-            Logger.getLogger(ItemsPedidoDaoSql.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ItemsPedidoDAOSql.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
@@ -163,7 +163,7 @@ public class ItemsPedidoDaoSql extends DAO<ItemMenu> implements ItemsPedidoDao {
         try {
             return ejecutarConsulta(sql);
         } catch (DAOException ex) {
-            Logger.getLogger(ItemsPedidoDaoSql.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ItemsPedidoDAOSql.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
@@ -174,7 +174,7 @@ public class ItemsPedidoDaoSql extends DAO<ItemMenu> implements ItemsPedidoDao {
             String sql = "SELECT * FROM items_menu WHERE tipo = 'plato'";
             return ejecutarConsulta(sql);
         } catch (DAOException ex) {
-            Logger.getLogger(ItemsPedidoDaoSql.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ItemsPedidoDAOSql.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
@@ -185,7 +185,7 @@ public class ItemsPedidoDaoSql extends DAO<ItemMenu> implements ItemsPedidoDao {
             String sql = "SELECT * FROM items_menu WHERE tipo = 'plato' AND peso >= ?";
             return ejecutarConsulta(sql, peso);
         } catch (DAOException ex) {
-            Logger.getLogger(ItemsPedidoDaoSql.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ItemsPedidoDAOSql.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
@@ -196,7 +196,7 @@ public class ItemsPedidoDaoSql extends DAO<ItemMenu> implements ItemsPedidoDao {
         try {
             return ejecutarConsulta(sql);
         } catch (DAOException ex) {
-            Logger.getLogger(ItemsPedidoDaoSql.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ItemsPedidoDAOSql.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
@@ -207,7 +207,7 @@ public class ItemsPedidoDaoSql extends DAO<ItemMenu> implements ItemsPedidoDao {
         try {
             return ejecutarConsulta(sql);
         } catch (DAOException ex) {
-            Logger.getLogger(ItemsPedidoDaoSql.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ItemsPedidoDAOSql.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
@@ -218,7 +218,7 @@ public class ItemsPedidoDaoSql extends DAO<ItemMenu> implements ItemsPedidoDao {
             String sql = "SELECT * FROM items_menu WHERE apto_vegano = TRUE";
             return ejecutarConsulta(sql);
         } catch (DAOException ex) {
-            Logger.getLogger(ItemsPedidoDaoSql.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ItemsPedidoDAOSql.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
@@ -229,7 +229,7 @@ public class ItemsPedidoDaoSql extends DAO<ItemMenu> implements ItemsPedidoDao {
             String sql = "SELECT * FROM items_menu WHERE apto_vegano = FALSE";
             return ejecutarConsulta(sql);
         } catch (DAOException ex) {
-            Logger.getLogger(ItemsPedidoDaoSql.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ItemsPedidoDAOSql.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
@@ -240,7 +240,7 @@ public class ItemsPedidoDaoSql extends DAO<ItemMenu> implements ItemsPedidoDao {
         try {
             return ejecutarConsulta(sql, calorias);
         } catch (DAOException ex) {
-            Logger.getLogger(ItemsPedidoDaoSql.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ItemsPedidoDAOSql.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
        
@@ -252,7 +252,7 @@ public class ItemsPedidoDaoSql extends DAO<ItemMenu> implements ItemsPedidoDao {
             String sql = "SELECT * FROM items_menu WHERE tipo = 'bebida' AND tamaño >= ?";
             return ejecutarConsulta(sql, tamaño);
         } catch (DAOException ex) {
-            Logger.getLogger(ItemsPedidoDaoSql.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ItemsPedidoDAOSql.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
@@ -263,7 +263,7 @@ public class ItemsPedidoDaoSql extends DAO<ItemMenu> implements ItemsPedidoDao {
             String sql = "SELECT * FROM items_menu WHERE tipo = 'bebida' AND graduacion_alcoholica >= ?";
             return ejecutarConsulta(sql, graduacion);
         } catch (DAOException ex) {
-            Logger.getLogger(ItemsPedidoDaoSql.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ItemsPedidoDAOSql.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }

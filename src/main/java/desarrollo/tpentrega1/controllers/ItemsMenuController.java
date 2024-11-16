@@ -31,7 +31,8 @@ public class ItemsMenuController {
         }
         return new ArrayList<>();
     }
-
+    
+    //crearNuevoItem no contempla agregarlo a la lista de items de un vendedor, eso deberia hacerse luego de llamar este metodo
     public Plato crearNuevoItem(String nombre, String descripcion, double precio, String categoria,
             double calorias, boolean aptoCeliaco, boolean aptoVegano, double peso) {
         Plato p = new Plato.Builder()
@@ -43,8 +44,7 @@ public class ItemsMenuController {
                 .aptoCeliaco(aptoCeliaco)
                 .aptoVegano(aptoVegano)
                 .build();
-        //vendedor.addItemMenu(nuevoPlato);//como agregar este item al vendedor correspondiente o hacerlo afuera despues de llamar este metodo
-        //vendedorController.modificarVendedor(vendedor);
+        
         try {
             this.itemMenuDAO.crearItemMenu(p);
         } catch (DAOException ex) {
@@ -52,7 +52,6 @@ public class ItemsMenuController {
         }
         return p;
     }
-//a crear bebida le pasan vendedor pero a crear plato no?
     // Crear una nueva bebida
     public Bebida crearNuevaBebida(String id, String nombre, String descripcion, double precio, String categoria, Vendedor vendedor,
             double tamaño, double graduacionAlcoholica) {        
@@ -88,7 +87,7 @@ public class ItemsMenuController {
                 itemMenuDAO.actualizarItemMenu(itemExistente);
                 System.out.println("Item de menú modificado: " + nombre);
             } else {
-                System.out.println("Item de menú no encontrado para modificar.");
+                System.out.println("Item de menú no encontrado para modificar.");//deberia ser exception
             }
         } catch (DAOException ex) {
             Logger.getLogger(ItemsMenuController.class.getName()).log(Level.SEVERE, null, ex);
@@ -113,7 +112,6 @@ public class ItemsMenuController {
 
     // Eliminar un ítem de menú por ID
     public void eliminarItemsMenu(ItemMenu id) {
-//pq un itemmenu y no un string?
         try {
             itemMenuDAO.eliminarItemMenu(id.getId());
         } catch (DAOException ex) {

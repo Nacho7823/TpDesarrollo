@@ -3,32 +3,33 @@ package desarrollo.tpentrega1.Memory;
 import desarrollo.tpentrega1.entidades.Bebida;
 import desarrollo.tpentrega1.entidades.ItemMenu;
 import desarrollo.tpentrega1.exceptions.ItemNoEncontradoException;
-import desarrollo.tpentrega1.dao.ItemsPedidoDao;
 import desarrollo.tpentrega1.entidades.Plato;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ItemsPedidoMemory implements ItemsPedidoDao {
+public class ItemsPedidoMemory {
     private List<ItemMenu> items;
 
 
-    @Override
-    public void buscarPorNombre(String nombre) {
+    public ItemMenu buscarPorNombre(String nombre) {
+        ItemMenu item = null;
         try {
-            
-            List<ItemMenu> resultados = items.stream().filter(item -> item.getNombre().equals(nombre))
-                                              .collect(Collectors.toList());
-            if (resultados.isEmpty()) {
+            boolean band = true; int i=0;
+            while(band){
+                if(items.get(i).getNombre().equals(nombre)){
+                    band = false;
+                    item=items.get(i);
+                } i++;
+            }
+            if (item==null) {
                 throw new ItemNoEncontradoException("No se encontró ningún item con el nombre: " + nombre);
             }
-            // resultados.forEach(item -> System.out.println(item));
-            items = resultados;
         } catch (ItemNoEncontradoException e) {
             System.err.println(e.getMessage());
         }
+        return item;
     }
 
-    @Override
     public void buscarDescripcion(String descripcion) {
         try {
             List<ItemMenu> resultados = items.stream().filter(item -> item.getDescripcion().equals(descripcion))
@@ -43,7 +44,6 @@ public class ItemsPedidoMemory implements ItemsPedidoDao {
         }
     }
 
-    @Override
     public void buscarPrecioEntre(int precioMin, int precioMax) {
         try {
             List<ItemMenu> resultados = items.stream().filter(item -> item.getPrecio() >= precioMin && item.getPrecio() <= precioMax)
@@ -58,7 +58,6 @@ public class ItemsPedidoMemory implements ItemsPedidoDao {
         }
     }
 
-    @Override
     public void buscarPrecio(int precio) {
         try {
             List<ItemMenu> resultados = items.stream().filter(item -> item.getPrecio() == precio)
@@ -73,7 +72,6 @@ public class ItemsPedidoMemory implements ItemsPedidoDao {
         }
     }
 
-    @Override
     public void buscarCategoria(String categoria) {
         try {
             List<ItemMenu> resultados = items.stream().filter(item -> item.getCategoria().equals(categoria))
@@ -88,7 +86,6 @@ public class ItemsPedidoMemory implements ItemsPedidoDao {
         }
     }
 
-    @Override
     public void buscarBebidas() {
         try {
             List<ItemMenu> resultados = items.stream().filter(item -> item instanceof Bebida)
@@ -103,7 +100,6 @@ public class ItemsPedidoMemory implements ItemsPedidoDao {
         }
     }
 
-    @Override
     public void buscarPlatos() {
         try {
             List<ItemMenu> resultados = items.stream().filter(item -> item instanceof Plato)
@@ -118,7 +114,6 @@ public class ItemsPedidoMemory implements ItemsPedidoDao {
         }
     }
 
-    @Override
     public void buscarComidaPeso(double peso) {
         try {
             List<ItemMenu> resultados = items.stream().filter(item -> item instanceof Plato && ((Plato) item).peso() == peso)
@@ -133,7 +128,6 @@ public class ItemsPedidoMemory implements ItemsPedidoDao {
         }
     }
 
-    @Override
     public void buscarCeliacos() {
         try {
             List<ItemMenu> resultados = items.stream().filter(item -> item instanceof Plato && ((Plato) item).aptoCeliaco())
@@ -148,7 +142,6 @@ public class ItemsPedidoMemory implements ItemsPedidoDao {
         }
     }
 
-    @Override
     public void buscarNoCeliacos() {
         try {
             List<ItemMenu> resultados = items.stream().filter(item -> item instanceof Plato && !((Plato) item).aptoCeliaco())
@@ -163,7 +156,6 @@ public class ItemsPedidoMemory implements ItemsPedidoDao {
         }
     }
 
-    @Override
     public void buscarVeganos() {
         try {
             List<ItemMenu> resultados = items.stream().filter(item -> item instanceof Plato && ((Plato) item).aptoVegano())
@@ -178,7 +170,6 @@ public class ItemsPedidoMemory implements ItemsPedidoDao {
         }
     }
 
-    @Override
     public void buscarNoVeganos() {
         try {
             List<ItemMenu> resultados = items.stream().filter(item -> item instanceof Plato && !((Plato) item).aptoVegano())
@@ -193,7 +184,6 @@ public class ItemsPedidoMemory implements ItemsPedidoDao {
         }
     }
 
-    @Override
     public void buscarComidaCalorias(int calorias) {
         try {
             List<ItemMenu> resultados = items.stream().filter(item -> item instanceof Plato && ((Plato) item).getCalorias() <= calorias)
@@ -208,7 +198,6 @@ public class ItemsPedidoMemory implements ItemsPedidoDao {
         }
     }
 
-    @Override
     public void buscarBebidaTamaño(double tamaño) {
         try {
             List<ItemMenu> resultados = items.stream().filter(item -> item instanceof Bebida && ((Bebida) item).getTamaño() == tamaño)
@@ -223,7 +212,6 @@ public class ItemsPedidoMemory implements ItemsPedidoDao {
         }
     }
 
-    @Override
     public void buscarBebidaGraduacion(double graduacion) {
         try {
             List<ItemMenu> resultados = items.stream().filter(item -> item instanceof Bebida && ((Bebida) item).getGraduacionAlcoholica() == graduacion)

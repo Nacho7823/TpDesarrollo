@@ -680,7 +680,11 @@ public class PedidoUI extends javax.swing.JPanel {
         } catch (DAOException ex) {
             Logger.getLogger(PedidoUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        actualizarTabla();
+        try {
+            actualizarTabla();
+        } catch (DAOException ex) {
+            Logger.getLogger(PedidoUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnCrearActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
@@ -764,7 +768,11 @@ public class PedidoUI extends javax.swing.JPanel {
             }
         }
         update();
-        actualizarTabla();
+        try {
+            actualizarTabla();
+        } catch (DAOException ex) {
+            Logger.getLogger(PedidoUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }//GEN-LAST:event_btnEliminarActionPerformed
 
@@ -808,7 +816,7 @@ public class PedidoUI extends javax.swing.JPanel {
         pedido.setId(tfId.getText());
     }//GEN-LAST:event_tfIdActionPerformed
 
-    private void actualizarTabla() {
+    private void actualizarTabla() throws DAOException {
         List<Pedido> pedidos = pedidoController.obtenerListaPedidos();
 
         String[] columnNames = {"Id", "Cliente", "Vendedor", "Estado", "Forma de pago", "Total", "Items"};

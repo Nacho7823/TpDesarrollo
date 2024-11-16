@@ -27,7 +27,6 @@ public class ClienteController {
         try {
             clienteDAO.crearCliente(nuevoCliente);
         } catch (DAOException ex) {
-            
             Logger.getLogger(ClienteController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

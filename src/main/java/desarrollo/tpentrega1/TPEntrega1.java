@@ -280,7 +280,6 @@
 //}
 package desarrollo.tpentrega1;
 
-import desarrollo.tpentrega1.Memory.ItemsPedidoMemory;
 import desarrollo.tpentrega1.controllers.ClienteController;
 import desarrollo.tpentrega1.controllers.PedidoController;
 import desarrollo.tpentrega1.controllers.VendedorController;
@@ -288,6 +287,7 @@ import desarrollo.tpentrega1.UI.MenuGeneral;
 import desarrollo.tpentrega1.controllers.ItemsMenuController;
 import desarrollo.tpentrega1.dao.sql.ClienteDAOSql;
 import desarrollo.tpentrega1.dao.sql.ItemMenuDAOSql;
+import desarrollo.tpentrega1.dao.sql.ItemsPedidoDAOSql;
 import desarrollo.tpentrega1.dao.sql.PedidoDAOSql;
 import desarrollo.tpentrega1.dao.sql.VendedorDAOSql;
 import desarrollo.tpentrega1.entidades.Coordenada;
@@ -310,6 +310,7 @@ public class TPEntrega1 {
         VendedorDAOSql vendedorDAOSql = new VendedorDAOSql();
         PedidoDAOSql pedidoDAOSql = new PedidoDAOSql();
         ItemMenuDAOSql itemMenuDAOSql = new ItemMenuDAOSql();
+        ItemsPedidoDAOSql itemsPedidoDAOSql = new ItemsPedidoDAOSql();
 
         // Crear instancias de controladores
         ClienteController clienteController = new ClienteController(clienteDAOSql);
@@ -352,12 +353,11 @@ public class TPEntrega1 {
         vendedorController.buscarVendedor("2").addItemMenu(itemsMenuController.buscarItemsMenu("3"));
         vendedorController.buscarVendedor("3").addItemMenu(itemsMenuController.buscarItemsMenu("2"));
 
-        ItemsPedidoMemory itemsPedidoMemory = new ItemsPedidoMemory();
-        itemsPedidoMemory.setItems(vendedorController.obtenerListaVendedores().get(0).getItemsMenu());
+        /*ItemsPedidoDAOSql.setItems(vendedorController.obtenerListaVendedores().get(0).getItemsMenu());
 
-        itemsPedidoMemory.buscarBebidas();
-        itemsPedidoMemory.buscarPrecio(250);
-        List<ItemMenu> items = itemsPedidoMemory.getItems();
+        itemsPedidoDAOSql.buscarBebidas();
+        itemsPedidoDAOSql.buscarPrecio(250);
+        List<ItemMenu> items = itemsPedidoDAOSql.getItems();
 
         Pago pago = new Transferencia("20346572182", "0000003100092901454053", 0);
 
@@ -367,7 +367,7 @@ public class TPEntrega1 {
                 pago,
                 EstadoPedido.RECIBIDO
         );
-        pago.setMonto(pedidoController.buscarPedido("1").getTotal());
+        pago.setMonto(pedidoController.buscarPedido("1").getTotal());*/
         
         // Configurar UI de Cliente y Vendedor
         SwingUtilities.invokeLater(new Runnable() {
