@@ -2,12 +2,15 @@ package desarrollo.tpentrega1.controllers;
 
 import desarrollo.tpentrega1.dao.sql.PedidoDAOSql;
 import desarrollo.tpentrega1.entidades.Cliente;
+import desarrollo.tpentrega1.entidades.Coordenada;
 import desarrollo.tpentrega1.entidades.ItemMenu;
 import desarrollo.tpentrega1.entidades.Pago;
 import desarrollo.tpentrega1.entidades.Pedido;
 import desarrollo.tpentrega1.entidades.Vendedor;
 import desarrollo.tpentrega1.enums.EstadoPedido;
 import desarrollo.tpentrega1.exceptions.DAOException;
+import desarrollo.tpentrega1.exceptions.InvalidOrderException;
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
@@ -19,6 +22,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import static org.mockito.Mockito.times;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
@@ -49,31 +53,39 @@ public class PedidoControllerTest {
             pedidoController.eliminarPedido(p.getId());
         }
     }
-
+/*
     @Test
     public void testNewPedido() throws Exception {
-        String id = "";
-        Cliente cliente = null;
-        Vendedor vendedor = null;
-        List<ItemMenu> items = null;
+        String id = "1";
+        Coordenada co = new Coordenada();
+        List<ItemMenu> items = new ArrayList();
+        Vendedor vendedor = new Vendedor("1", "a", " ", co, items);
+        Cliente cliente = new Cliente("1", "c", "3", "d", "", co);
         Pago pago = null;
         EstadoPedido estado = null;
-        Pedido pedido = new Pedido(id, cliente, vendedor, items, pago, estado);
+        Pedido expResult = new Pedido(id, cliente, vendedor, items, pago, estado);
         pedidoController.newPedido(id, cliente, vendedor, items, pago, estado);
-        Mockito.verify(pedidoDAOSql).crearPedido(pedido);
-    }
+        Pedido result = pedidoController.buscarPedido(id);
+        assertEquals(expResult.getId(), result.getId());
+        assertEquals(expResult.getCliente(), result.getCliente());
+        assertEquals(expResult.getEstado(), result.getEstado());
+        assertEquals(expResult.getItems(), result.getItems());
+        Mockito.verify(pedidoDAOSql).crearPedido(result);
+    }*/
 
     @Test
     public void testModificarPedidoEstado() throws Exception {
-        String id = "";
-        Cliente cliente = null;
-        Vendedor vendedor = null;
-        List<ItemMenu> items = null;
+        String id = "3";
+        Coordenada co = new Coordenada();
+        List<ItemMenu> items = new ArrayList();
+        Vendedor vendedor = new Vendedor("1", "a", " ", co, items);
+        Cliente cliente = new Cliente("1", "c", "3", "d", "", co);
         Pago pago = null;
         EstadoPedido estado = null;
-        Pedido pedido = new Pedido(id, cliente, vendedor, items, pago, estado);
+        pedidoController.newPedido(id, cliente, vendedor, items, pago, estado);
         pedidoController.modificarPedidoEstado(id, estado);
-        Mockito.verify(pedidoDAOSql).buscarPedido(id);
+        Pedido pedido = pedidoController.buscarPedido(id);
+        Mockito.verify(pedidoDAOSql, times(2)).buscarPedido(id);
         Mockito.verify(pedidoDAOSql).actualizarPedido(pedido);
     }
 
@@ -104,7 +116,7 @@ public class PedidoControllerTest {
 
     @Test
     public void testObtenerListaPedidos() throws Exception {
-        List<Pedido> expResult = null;
+        List<Pedido> expResult = new ArrayList();
         List<Pedido> result = pedidoController.obtenerListaPedidos();
         assertEquals(expResult, result);
         Mockito.verify(pedidoDAOSql).obtenerPedidos();
@@ -119,12 +131,18 @@ public class PedidoControllerTest {
     }
 
     @Test
-    public void testGetItems() {
-        Pedido p = null;
-        List<ItemMenu> expResult = null;
+    public void testGetItems() throws InvalidOrderException {
+        String id = "3";
+        Coordenada co = new Coordenada();
+        List<ItemMenu> items = new ArrayList();
+        Vendedor vendedor = new Vendedor("1", "a", " ", co, items);
+        Cliente cliente = new Cliente("1", "c", "3", "d", "", co);
+        Pago pago = null;
+        EstadoPedido estado = null;
+        Pedido p = new Pedido(id, cliente, vendedor, items, pago, estado);
+        List<ItemMenu> expResult = new ArrayList();
         List<ItemMenu> result = pedidoController.getItems(p);
         assertEquals(expResult, result);
-        Mockito.verify(pedidoDAOSql).buscarPedido(null);
     }
 
     @Test

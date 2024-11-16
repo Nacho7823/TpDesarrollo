@@ -73,8 +73,7 @@ public class PedidoController {
     }
     
     public List<ItemMenu> getItems(Pedido p){
-        Pedido p1= pedidoDAO.buscarPedido(p.getId());
-        return p1.getItems();
+        return p.getItems();
     }
     
     public void removeItem(ItemMenu item, Pedido p) throws DAOException{

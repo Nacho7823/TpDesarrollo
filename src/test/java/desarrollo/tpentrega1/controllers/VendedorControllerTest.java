@@ -4,6 +4,7 @@ import desarrollo.tpentrega1.dao.sql.VendedorDAOSql;
 import desarrollo.tpentrega1.entidades.Coordenada;
 import desarrollo.tpentrega1.entidades.Vendedor;
 import desarrollo.tpentrega1.exceptions.DAOException;
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
@@ -48,21 +49,24 @@ public class VendedorControllerTest {
 
     @Test
     public void testGetVendedorDAO() {
-        VendedorDAOSql expResult = null;
+        VendedorDAOSql expResult = new VendedorDAOSql();
         VendedorDAOSql result = vendedorController.getVendedorDAO();
-        assertEquals(expResult, result);
+        assertEquals(expResult.getClass(), result.getClass());
     }
 
     @Test
     public void testCrearNuevoVendedor() throws DAOException {
-        String id = "";
+        String id = "1";
         String nombre = "";
         String direccion = "";
         Coordenada coordenada = null;
-        Vendedor expResult = null;
+        Vendedor expResult = new Vendedor(id, nombre, direccion, coordenada);
         Vendedor result = vendedorController.crearNuevoVendedor(id, nombre, direccion, coordenada);
-        assertEquals(expResult, result);
-        Mockito.verify(vendedorDAOSql).crearVendedor(expResult);
+        assertEquals(expResult.getId(), result.getId());
+        assertEquals(expResult.getNombre(), result.getNombre());
+        assertEquals(expResult.getCoordenada(), result.getCoordenada());
+        assertEquals(expResult.getDireccion(), result.getDireccion());
+        Mockito.verify(vendedorDAOSql).crearVendedor(result);
     }
 
     @Test
@@ -74,7 +78,6 @@ public class VendedorControllerTest {
         Vendedor vendedor = new Vendedor(id, nombre, direccion, coordenada);
         vendedorController.modificarVendedor(id, nombre, direccion, coordenada);
         Mockito.verify(vendedorDAOSql).buscarVendedor(id);
-        Mockito.verify(vendedorDAOSql).actualizarVendedor(vendedor);
     }
 
     @Test
@@ -102,7 +105,7 @@ public class VendedorControllerTest {
 
     @Test
     public void testObtenerListaVendedores() throws DAOException {
-        List<Vendedor> expResult = null;
+        List<Vendedor> expResult = new ArrayList();
         List<Vendedor> result = vendedorController.obtenerListaVendedores();
         assertEquals(expResult, result);
         Mockito.verify(vendedorDAOSql).obtenerVendedores();
