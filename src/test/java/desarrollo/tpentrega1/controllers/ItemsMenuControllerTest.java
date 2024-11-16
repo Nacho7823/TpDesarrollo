@@ -112,7 +112,7 @@ public class ItemsMenuControllerTest {
                 .graduacionAlcoholica(graduacionAlcoholica)
                 .build()
                 ;
-        Bebida result = itemMenuController.crearNuevaBebida(id, nombre, descripcion, precio, categoria, vendedor, tamaño, graduacionAlcoholica);
+        Bebida result = itemMenuController.crearNuevaBebida(nombre, descripcion, precio, categoria, vendedor, tamaño, graduacionAlcoholica);
         assertEquals(expResult, result);
         Mockito.verify(itemMenuDAOSql).crearItemMenu(expResult);
         Mockito.verify(vendedorController).modificarVendedor(vendedor);

@@ -1,5 +1,6 @@
 package desarrollo.tpentrega1.controllers;
 
+import desarrollo.tpentrega1.dao.VendedorDAO;
 import desarrollo.tpentrega1.dao.sql.VendedorDAOSql;
 import desarrollo.tpentrega1.entidades.Coordenada;
 import desarrollo.tpentrega1.entidades.Vendedor;
@@ -20,9 +21,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 public class VendedorControllerTest {
     @Mock
-    VendedorDAOSql vendedorDAOSql = new VendedorDAOSql();
+    VendedorDAO vendedorDAO = VendedorDAOSql.getInstance();
     @InjectMocks
-    VendedorController vendedorController = new VendedorController(vendedorDAOSql);
+    VendedorController vendedorController = new VendedorController(vendedorDAO);
         
     public VendedorControllerTest() {
     }
@@ -48,8 +49,8 @@ public class VendedorControllerTest {
 
     @Test
     public void testGetVendedorDAO() {
-        VendedorDAOSql expResult = null;
-        VendedorDAOSql result = vendedorController.getVendedorDAO();
+        VendedorDAO expResult = null;
+        VendedorDAO result = vendedorController.getVendedorDAO();
         assertEquals(expResult, result);
     }
 
@@ -62,7 +63,7 @@ public class VendedorControllerTest {
         Vendedor expResult = null;
         Vendedor result = vendedorController.crearNuevoVendedor(id, nombre, direccion, coordenada);
         assertEquals(expResult, result);
-        Mockito.verify(vendedorDAOSql).crearVendedor(expResult);
+        Mockito.verify(vendedorDAO).crearVendedor(expResult);
     }
 
     @Test
@@ -73,22 +74,22 @@ public class VendedorControllerTest {
         Coordenada coordenada = null;
         Vendedor vendedor = new Vendedor(id, nombre, direccion, coordenada);
         vendedorController.modificarVendedor(id, nombre, direccion, coordenada);
-        Mockito.verify(vendedorDAOSql).buscarVendedor(id);
-        Mockito.verify(vendedorDAOSql).actualizarVendedor(vendedor);
+        Mockito.verify(vendedorDAO).buscarVendedor(id);
+        Mockito.verify(vendedorDAO).actualizarVendedor(vendedor);
     }
 
     @Test
     public void testModificarVendedor_Vendedor() throws DAOException {
         Vendedor vendedor = null;
         vendedorController.modificarVendedor(vendedor);
-        Mockito.verify(vendedorDAOSql).actualizarVendedor(vendedor);
+        Mockito.verify(vendedorDAO).actualizarVendedor(vendedor);
     }
 
     @Test
     public void testEliminarVendedor() throws DAOException {
         Vendedor vendedor = null;
         vendedorController.eliminarVendedor(vendedor);
-        Mockito.verify(vendedorDAOSql).eliminarVendedor(vendedor);
+        Mockito.verify(vendedorDAO).eliminarVendedor(vendedor);
     }
 
     @Test
@@ -97,7 +98,7 @@ public class VendedorControllerTest {
         Vendedor expResult = null;
         Vendedor result = vendedorController.buscarVendedor(id);
         assertEquals(expResult, result);
-        Mockito.verify(vendedorDAOSql).buscarVendedor(id);
+        Mockito.verify(vendedorDAO).buscarVendedor(id);
     }
 
     @Test
@@ -105,7 +106,7 @@ public class VendedorControllerTest {
         List<Vendedor> expResult = null;
         List<Vendedor> result = vendedorController.obtenerListaVendedores();
         assertEquals(expResult, result);
-        Mockito.verify(vendedorDAOSql).obtenerVendedores();
+        Mockito.verify(vendedorDAO).obtenerVendedores();
     }
     
 }

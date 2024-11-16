@@ -105,6 +105,7 @@ public class ItemsPedidoDAOSql extends DAO<ItemMenu> implements ItemsPedidoDAO {
         return items;
     }
 
+         @Override
     public List<ItemMenu> buscarPorIdPedido(String id){
         String sql= "SELECT * FROM item_menu I LEFT JOIN items_pedido IP ON I.id_item_menu=IP.id_item_menu"
                 + "LEFT JOIN pedido P ON IP.id_pedido= P.id_pedido WHERE P.id_pedido= ?";
@@ -264,7 +265,7 @@ public class ItemsPedidoDAOSql extends DAO<ItemMenu> implements ItemsPedidoDAO {
     @Override
     public List<ItemMenu> buscarBebidaTamaño(double tamaño) {
         try {
-            String sql = "SELECT * FROM items_menu I LEFT JOIN bebida B ON I.id_item_menu=B.id_item_menu WHERE categoria LIKE 'Bebida' AND B.tamaño >= ?";
+            String sql = "SELECT * FROM items_menu I LEFT JOIN bebida B ON I.id_item_menu=B.id_item_menu WHERE categoria LIKE 'Bebida' AND B.tamanio >= ?";
             return ejecutarConsulta(sql, tamaño);
         } catch (DAOException ex) {
             Logger.getLogger(ItemsPedidoDAOSql.class.getName()).log(Level.SEVERE, null, ex);

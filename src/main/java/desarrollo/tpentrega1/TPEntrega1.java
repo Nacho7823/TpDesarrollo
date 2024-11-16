@@ -295,7 +295,7 @@ import desarrollo.tpentrega1.dao.sql.ItemMenuDAOSql;
 import desarrollo.tpentrega1.dao.sql.ItemsPedidoDAOSql;
 import desarrollo.tpentrega1.dao.sql.PedidoDAOSql;
 import desarrollo.tpentrega1.dao.sql.VendedorDAOSql;
-import desarrollo.tpentrega1.entidades.Coordenada;
+import desarrollo.tpentrega1.entidades.Cliente;
 import desarrollo.tpentrega1.entidades.Vendedor;
 import desarrollo.tpentrega1.exceptions.DAOException;
 
@@ -320,54 +320,20 @@ public class TPEntrega1 {
 
         // Cargar datos de prueba para clientes
 
-        if (clienteController.buscarCliente("2") == null) {
-            clienteController.crearNuevoCliente("2", "Juan Pérez", "20123456789", "juan@example.com", "Calle Falsa 123", new Coordenada(-34.603722, -58.381592));
-            clienteController.crearNuevoCliente("3", "María Gómez", "27876543210", "maria@example.com", "Avenida Siempre Viva 742", new Coordenada(-34.609722, -58.392592));
-        }
+       Cliente c2= clienteController.buscarCliente("2");
+            
         
 
         // Cargar datos de prueba para vendedores
-        Vendedor v1 = vendedorController.buscarVendedor("2");
-        Vendedor v2 = vendedorController.buscarVendedor("3");
-        if (vendedorController.buscarVendedor("2") == null) {
-            v1 = vendedorController.crearNuevoVendedor("2", "Supermercado ABC", "Av. Corrientes 1500", new Coordenada(-34.603532, -58.383222));
-            v2 = vendedorController.crearNuevoVendedor("3", "Verdulería El Tomate", "Calle Libertad 2300", new Coordenada(-34.606732, -58.384752));
-        }
+        Vendedor v2 = vendedorController.buscarVendedor("2");
+        Vendedor v3 = vendedorController.buscarVendedor("3");
 
-        itemsMenuController.crearNuevaBebida("Heineken", "Cerveza", 2300, "Bebida", v1, 70, 2.0);
-        itemsMenuController.crearNuevaBebida("CocaCola", "Gaseosa", 2100, "Bebida", v1, 70, 0.0);
-        itemsMenuController.crearNuevoItem("Guaymallen", "Alfajor", 700, "Plato", 200, false, false, 120);
-
-       clienteController.crearNuevoCliente("2","Juan Pérez", "20123456789", "juan@example.com", "Calle Falsa 123", new Coordenada(-34.603722, -58.381592));
-       clienteController.crearNuevoCliente("3","María Gómez", "27876543210", "maria@example.com", "Avenida Siempre Viva 742", new Coordenada(-34.609722, -58.392592));
-
-        // Cargar datos de prueba para vendedores
-       vendedorController.crearNuevoVendedor("2","Supermercado ABC", "Av. Corrientes 1500", new Coordenada(-34.603532, -58.383222));
-       vendedorController.crearNuevoVendedor("3","Verdulería El Tomate", "Calle Libertad 2300", new Coordenada(-34.606732, -58.384752));
-        
-        //itemsMenuController.crearNuevaBebida("1","Heineken", "Cerveza", 2300, "Bebida", 70, 2.0);
-        //itemsMenuController.crearNuevoPlato("2", "Guaymallen", "Alfajor", 700, "Plato", 200, false, false, 120);
-        
 
         vendedorController.buscarVendedor("2").addItemMenu(itemsMenuController.buscarItemsMenu("1"));
         vendedorController.buscarVendedor("2").addItemMenu(itemsMenuController.buscarItemsMenu("3"));
         vendedorController.buscarVendedor("3").addItemMenu(itemsMenuController.buscarItemsMenu("2"));
 
-        /*ItemsPedidoDAOSql.setItems(vendedorController.obtenerListaVendedores().get(0).getItemsMenu());
 
-        itemsPedidoDAOSql.buscarBebidas();
-        itemsPedidoDAOSql.buscarPrecio(250);
-        List<ItemMenu> items = itemsPedidoDAOSql.getItems();
-
-        Pago pago = new Transferencia("20346572182", "0000003100092901454053", 0);
-
-        pedidoController.newPedido("1", clienteController.obtenerListaClientes().get(0),
-                vendedorController.obtenerListaVendedores().get(0),
-                items,
-                pago,
-                EstadoPedido.RECIBIDO
-        );
-        pago.setMonto(pedidoController.buscarPedido("1").getTotal());*/
         
         // Configurar UI de Cliente y Vendedor
         SwingUtilities.invokeLater(new Runnable() {

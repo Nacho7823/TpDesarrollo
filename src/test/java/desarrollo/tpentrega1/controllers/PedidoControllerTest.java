@@ -85,7 +85,7 @@ public class PedidoControllerTest {
     }
 
     @Test
-    public void testBuscarPedido() {
+    public void testBuscarPedido() throws DAOException {
         String id = "";
         Pedido expResult = null;
         Pedido result = pedidoController.buscarPedido(id);
@@ -94,7 +94,7 @@ public class PedidoControllerTest {
     }
 
     @Test
-    public void testBuscarYDevolverPedido() {
+    public void testBuscarYDevolverPedido() throws DAOException {
         String id = "";
         Pedido expResult = null;
         Pedido result = pedidoController.buscarYDevolverPedido(id);
@@ -119,7 +119,7 @@ public class PedidoControllerTest {
     }
 
     @Test
-    public void testGetItems() {
+    public void testGetItems() throws DAOException {
         Pedido p = null;
         List<ItemMenu> expResult = null;
         List<ItemMenu> result = pedidoController.getItems(p);

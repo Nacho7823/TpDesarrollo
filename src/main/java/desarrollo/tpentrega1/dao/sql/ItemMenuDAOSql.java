@@ -173,7 +173,7 @@ public class ItemMenuDAOSql extends DAO<ItemMenu> implements ItemsMenuDAO {
                 
                 
                 if(categoria.equalsIgnoreCase("bebida")){
-                    double tamaño= resultado.getDouble("tamaño");
+                    double tamaño= resultado.getDouble("tamanio");
                     double graduacionAlcoholica= resultado.getDouble("graduacion_alcoholica");
                 itemMenu = new Bebida.Builder()
                         .id(id)
@@ -222,15 +222,18 @@ public class ItemMenuDAOSql extends DAO<ItemMenu> implements ItemsMenuDAO {
     @Override
     public List<ItemMenu> obtenerItemsMenuDeVendedor(String id) throws DAOException {
 
-        String sql = "SELECT * FROM item_menu I JOIN bebida B ON I.id_item_menu=B.id_item_menu JOIN plato P ON"
-                + " I.id_item_menu=P.id_item_menu WHERE EXISTS (SELECT * FROM vende V WHERE V.id_item_menu=I.id_item_menu"
-                + "AND V.id_vendedor= ?)";
+       String sql = "SELECT * FROM item_menu I "
+                + "LEFT JOIN bebida B ON I.id_item_menu = B.id_item_menu "
+                + "LEFT JOIN plato P ON I.id_item_menu = P.id_item_menu "
+                + "WHERE EXISTS (SELECT 1 FROM vende V WHERE V.id_item_menu = I.id_item_menu "
+                + "AND V.id_vendedor = ?)";
+
         List<ItemMenu> listaItemMenus = new ArrayList<>();
 
         try {
             ConectarBase();
             PreparedStatement preparedStatement = conexion.prepareStatement(sql);
-            preparedStatement.setInt(1, Integer.parseInt(id));
+            preparedStatement.setString(1, id);
             resultado = preparedStatement.executeQuery();
 
             while (resultado.next()) {
@@ -243,7 +246,7 @@ public class ItemMenuDAOSql extends DAO<ItemMenu> implements ItemsMenuDAO {
                 ItemMenu itemMenu= null;
                 
                 if(categoria.equalsIgnoreCase("bebida")){
-                    double tamaño= resultado.getDouble("tamaño");
+                    double tamaño= resultado.getDouble("tamanio");
                     double graduacionAlcoholica= resultado.getDouble("graduacion_alcoholica");
                 itemMenu = new Bebida.Builder()
                         .id(id_item_menu)
