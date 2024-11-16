@@ -14,12 +14,11 @@ import java.util.List;
 
 public class ItemMenuDAOSql extends DAO<ItemMenu> implements ItemsMenuDAO {
      
-    private VendedorDAO vendedorDAO= VendedorDAOSql.getInstance();
-    private static ItemMenuDAOSql instance;
+    private static ItemMenuDAOSql instance = null;
             
-        public static ItemMenuDAOSql getInstance(){
-        if(ItemMenuDAOSql.instance == null)ItemMenuDAOSql.instance =  new ItemMenuDAOSql();
-        return ItemMenuDAOSql.instance;
+    public static ItemMenuDAOSql getInstance(){
+        if(instance == null) instance =  new ItemMenuDAOSql();
+        return instance;
     }
         
         
