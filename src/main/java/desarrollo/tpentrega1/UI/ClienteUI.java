@@ -3,10 +3,13 @@ package desarrollo.tpentrega1.UI;
 import desarrollo.tpentrega1.entidades.Cliente;
 import desarrollo.tpentrega1.entidades.Coordenada;
 import desarrollo.tpentrega1.controllers.ClienteController;
+import desarrollo.tpentrega1.exceptions.DAOException;
 import java.awt.Color;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.JTableHeader;
 
 public class ClienteUI extends JPanel {

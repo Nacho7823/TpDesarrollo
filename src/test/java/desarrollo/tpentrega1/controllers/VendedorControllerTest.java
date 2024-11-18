@@ -22,7 +22,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 public class VendedorControllerTest {
     @Mock
-    VendedorDAO vendedorDAO = VendedorDAOSql.getInstance();
+    VendedorDAOSql vendedorDAO = VendedorDAOSql.getInstance();
     @InjectMocks
     VendedorController vendedorController = new VendedorController(vendedorDAO);
         
@@ -50,8 +50,7 @@ public class VendedorControllerTest {
 
     @Test
     public void testGetVendedorDAO() {
-
-        VendedorDAOSql expResult = new VendedorDAOSql();
+        VendedorDAOSql expResult = vendedorDAO;
         VendedorDAO result = vendedorController.getVendedorDAO();
         assertEquals(expResult.getClass(), result.getClass());
     }

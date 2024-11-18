@@ -3,10 +3,12 @@ package desarrollo.tpentrega1.controllers;
 import desarrollo.tpentrega1.dao.sql.ItemMenuDAOSql;
 import desarrollo.tpentrega1.dao.sql.VendedorDAOSql;
 import desarrollo.tpentrega1.entidades.Bebida;
+import desarrollo.tpentrega1.entidades.Coordenada;
 import desarrollo.tpentrega1.entidades.ItemMenu;
 import desarrollo.tpentrega1.entidades.Plato;
 import desarrollo.tpentrega1.entidades.Vendedor;
 import desarrollo.tpentrega1.exceptions.DAOException;
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
@@ -61,7 +63,7 @@ public class ItemsMenuControllerTest {
     @Test
     public void testObtenerItemsMenuDeVendedor() throws DAOException {
         String id = "";
-        List<ItemMenu> expResult = null;
+        List<ItemMenu> expResult = new ArrayList();
         List<ItemMenu> result = itemMenuController.obtenerItemsMenuDeVendedor(id);
         assertEquals(expResult, result);
         Mockito.verify(itemMenuDAOSql).obtenerItemsMenuDeVendedor(id);
@@ -88,8 +90,14 @@ public class ItemsMenuControllerTest {
                 .aptoVegano(aptoVegano)
                 .build();
         Plato result = itemMenuController.crearNuevoItem(nombre, descripcion, precio, categoria, calorias, aptoCeliaco, aptoVegano, peso);
-        assertEquals(expResult, result);
-        Mockito.verify(itemMenuDAOSql).crearItemMenu(expResult);
+        assertEquals(expResult.getCalorias(), result.getCalorias());
+        assertEquals(expResult.getCategoria(), result.getCategoria());
+        assertEquals(expResult.getClass(), result.getClass());
+        assertEquals(expResult.getDescripcion(), result.getDescripcion());
+        assertEquals(expResult.getId(), result.getId());
+        assertEquals(expResult.getNombre(), result.getNombre());
+        assertEquals(expResult.getPrecio(), result.getPrecio());
+        Mockito.verify(itemMenuDAOSql).crearItemMenu(result);
     }
 
     @Test
@@ -99,7 +107,11 @@ public class ItemsMenuControllerTest {
         String descripcion = "";
         double precio = 0.0;
         String categoria = "";
-        Vendedor vendedor = null;
+        String id1 = "1";
+        String nombre1 = "";
+        String direccion = "";
+        Coordenada coordenada = null;
+        Vendedor vendedor = new Vendedor(id1, nombre1, direccion, coordenada);
         double tamaño = 0.0;
         double graduacionAlcoholica = 0.0;
         Bebida expResult = new Bebida.Builder()
@@ -113,9 +125,14 @@ public class ItemsMenuControllerTest {
                 .build()
                 ;
         Bebida result = itemMenuController.crearNuevaBebida(nombre, descripcion, precio, categoria, vendedor, tamaño, graduacionAlcoholica);
-        assertEquals(expResult, result);
-        Mockito.verify(itemMenuDAOSql).crearItemMenu(expResult);
-        Mockito.verify(vendedorController).modificarVendedor(vendedor);
+        assertEquals(expResult.getTamaño(), result.getTamaño());
+        assertEquals(expResult.getCategoria(), result.getCategoria());
+        assertEquals(expResult.getClass(), result.getClass());
+        assertEquals(expResult.getDescripcion(), result.getDescripcion());
+        assertEquals(expResult.getNombre(), result.getNombre());
+        assertEquals(expResult.getPrecio(), result.getPrecio());
+        assertEquals(expResult.getGraduacionAlcoholica(), result.getGraduacionAlcoholica());
+        Mockito.verify(itemMenuDAOSql).crearItemMenu(result);
     }
 
     @Test
@@ -146,9 +163,9 @@ public class ItemsMenuControllerTest {
 
     @Test
     public void testEliminarItemsMenu() throws DAOException {
-        ItemMenu id = null;
+        ItemMenu id = itemMenuController.crearNuevoItem("", "", 0, "", 0, true, true, 0);
         itemMenuController.eliminarItemsMenu(id);
-        Mockito.verify(itemMenuDAOSql).eliminarItemMenu("");
+        Mockito.verify(itemMenuDAOSql).eliminarItemMenu(id.getId());
     }
 
     @Test

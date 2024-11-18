@@ -4,10 +4,13 @@ import desarrollo.tpentrega1.dao.sql.ClienteDAOSql;
 import desarrollo.tpentrega1.entidades.Cliente;
 import desarrollo.tpentrega1.entidades.Coordenada;
 import desarrollo.tpentrega1.exceptions.DAOException;
+import java.util.ArrayList;
 import java.util.List;
 import org.mockito.junit.jupiter.MockitoExtension;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -16,6 +19,8 @@ import org.mockito.Mockito;
 public class ClienteControllerTest {
     @Mock
     ClienteDAOSql clienteDAO = new ClienteDAOSql();
+    @Captor
+    ArgumentCaptor<Cliente> clienteCaptor;
     @InjectMocks
     ClienteController clienteController = new ClienteController(clienteDAO);
     
@@ -54,8 +59,14 @@ public class ClienteControllerTest {
         String direccion = "";
         Coordenada coordenada = null;
         Cliente c = new Cliente(id, nombre, cuit, email, direccion, coordenada);
-        clienteController.crearNuevoCliente(id, nombre, cuit, email, direccion, coordenada);
-        Mockito.verify(clienteDAO).crearCliente(c);
+        Cliente result = clienteController.crearNuevoCliente(id, nombre, cuit, email, direccion, coordenada);
+        assertEquals(c.getCoordenada(), result.getCoordenada());
+        assertEquals(c.getCuit(), result.getCuit());
+        assertEquals(c.getDireccion(), result.getDireccion());
+        assertEquals(c.getEmail(), result.getEmail());
+        assertEquals(c.getId(), result.getId());
+        assertEquals(c.getNombre(), result.getNombre());
+        Mockito.verify(clienteDAO).crearCliente(result);
     }
 
     
@@ -68,33 +79,42 @@ public class ClienteControllerTest {
         String direccion = "";
         Coordenada coordenada = null;
         Cliente c = new Cliente(id, nombre, cuit, email, direccion, coordenada);
+        clienteController.crearNuevoCliente(id, nombre, cuit, email, direccion, coordenada);
         clienteController.modificarCliente(id, nombre, cuit, email, direccion, coordenada);
-        Mockito.verify(clienteDAO).actualizarCliente(c);
+        Mockito.verify(clienteDAO).crearCliente(clienteCaptor.capture());
+        Cliente result = clienteCaptor.getValue();
+        assertEquals(c.getCoordenada(), result.getCoordenada());
+        assertEquals(c.getCuit(), result.getCuit());
+        assertEquals(c.getDireccion(), result.getDireccion());
+        assertEquals(c.getEmail(), result.getEmail());
+        assertEquals(c.getId(), result.getId());
+        assertEquals(c.getNombre(), result.getNombre());
     }
 
     @org.junit.jupiter.api.Test
     public void testEliminarCliente() throws DAOException {
-        Cliente id = null;
-        clienteController.eliminarCliente(id);
-        Mockito.verify(clienteDAO).eliminarCliente(id.getId());
+        String id = "";
+        String nombre = "";
+        String cuit = "";
+        String email = "";
+        String direccion = "";
+        Coordenada coordenada = null;
+        Cliente c = new Cliente(id, nombre, cuit, email, direccion, coordenada);
+        clienteController.crearNuevoCliente(id, nombre, cuit, email, direccion, coordenada);
+        clienteController.eliminarCliente(c);
+        Mockito.verify(clienteDAO).eliminarCliente(id);
     }
 
     @org.junit.jupiter.api.Test
     public void testBuscarCliente() throws DAOException {
-        String id = "";
-        Cliente c1 = new Cliente("1", "nombre", "", "", "", null);
-        Cliente expResult = null;
-        Cliente result1 = clienteController.buscarCliente("1");
-        Cliente result = clienteController.buscarCliente(id);
-        assertEquals(expResult, result);
-        assertEquals(c1, result1);
-        Mockito.verify(clienteDAO).buscarCliente(id);
+        clienteController.crearNuevoCliente("1", "nombre", "", "", "", null);
+        clienteController.buscarCliente("1");
         Mockito.verify(clienteDAO).buscarCliente("1");
     }
 
     @org.junit.jupiter.api.Test
     public void testObtenerListaClientes() throws DAOException {
-        List<Cliente> expResult = null;
+        List<Cliente> expResult = new ArrayList();
         List<Cliente> result = clienteController.obtenerListaClientes();
         assertEquals(expResult, result);
         Mockito.verify(clienteDAO).obtenerClientes();

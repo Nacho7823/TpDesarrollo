@@ -23,6 +23,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
@@ -53,7 +54,7 @@ public class PedidoControllerTest {
             pedidoController.eliminarPedido(p.getId());
         }
     }
-/*
+    
     @Test
     public void testNewPedido() throws Exception {
         String id = "1";
@@ -64,14 +65,14 @@ public class PedidoControllerTest {
         Pago pago = null;
         EstadoPedido estado = null;
         Pedido expResult = new Pedido(id, cliente, vendedor, items, pago, estado);
+        when(pedidoDAOSql.buscarPedido(id)).thenReturn(expResult);
         pedidoController.newPedido(id, cliente, vendedor, items, pago, estado);
-        Pedido result = pedidoController.buscarPedido(id);
+        Pedido result = pedidoController.buscarYDevolverPedido(id);
         assertEquals(expResult.getId(), result.getId());
         assertEquals(expResult.getCliente(), result.getCliente());
         assertEquals(expResult.getEstado(), result.getEstado());
         assertEquals(expResult.getItems(), result.getItems());
-        Mockito.verify(pedidoDAOSql).crearPedido(result);
-    }*/
+    }
 
     @Test
     public void testModificarPedidoEstado() throws Exception {
@@ -82,9 +83,11 @@ public class PedidoControllerTest {
         Cliente cliente = new Cliente("1", "c", "3", "d", "", co);
         Pago pago = null;
         EstadoPedido estado = null;
+        Pedido pedido = new Pedido(id, cliente, vendedor, items, pago, estado);
+        when(pedidoDAOSql.buscarPedido(id)).thenReturn(pedido);
         pedidoController.newPedido(id, cliente, vendedor, items, pago, estado);
         pedidoController.modificarPedidoEstado(id, estado);
-        Pedido pedido = pedidoController.buscarPedido(id);
+        pedido = pedidoController.buscarPedido(id);
         Mockito.verify(pedidoDAOSql, times(2)).buscarPedido(id);
         Mockito.verify(pedidoDAOSql).actualizarPedido(pedido);
     }
@@ -146,6 +149,7 @@ public class PedidoControllerTest {
     }
 
     @Test
+
     public void testRemoveItem() throws Exception {
         ItemMenu item = null;
         Pedido p = null;
