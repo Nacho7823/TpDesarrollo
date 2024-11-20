@@ -163,7 +163,10 @@ public class PedidoUI extends javax.swing.JPanel {
         tfTotal.setText(pedido.getTotal() + "");
 
         updateCurrentTable(pedido.getItems());
-        updateAddTable(pedido.getVendedor().getItemsMenu());
+        
+        //updateAddTable(pedido.getVendedor().getItemsMenu());
+        
+        updateAddTable();
 
     }
 
@@ -227,7 +230,7 @@ public class PedidoUI extends javax.swing.JPanel {
         return faltantes;
     }
 */
-    private void updateAddTable(List<ItemMenu> faltantes) {
+    private void updateAddTable() {
 
         String[] columnNames = {
             "ID",
@@ -243,16 +246,17 @@ public class PedidoUI extends javax.swing.JPanel {
             "aptoVegano",
             "peso"
         };
-
-        Object[][] data = new Object[faltantes.size()][12];
-        for (int i = 0; i < faltantes.size(); i++) {
-            ItemMenu item = faltantes.get(i);
+        Vendedor vendedor = pedido.getVendedor();
+        List<ItemMenu> items = itemsMenuController.obtenerItemsMenuDeVendedor(vendedor.getId());
+        Object[][] data = new Object[items.size()][12];
+        for (int i = 0; i < items.size(); i++) {
+            ItemMenu item = items.get(i);
             data[i][0] = item.getId();
             data[i][1] = item.getNombre();
             data[i][2] = item.getDescripcion();
             data[i][3] = item.getPrecio() + "";
             data[i][4] = item.getCategoria();
-//            data[i][5] = item.getVendedor().getNombre();
+            data[i][5] = vendedor.getNombre();
             data[i][5] = "";
 
             if (item instanceof Bebida) {
@@ -273,7 +277,6 @@ public class PedidoUI extends javax.swing.JPanel {
 
         }
         tableAddItems.setModel(new javax.swing.table.DefaultTableModel(data, columnNames));
-
     }
     
     private Pedido clonarPedido(Pedido p) {
@@ -625,13 +628,11 @@ public class PedidoUI extends javax.swing.JPanel {
         int idx = tableAddItems.getSelectedRow();
         if (idx == -1) {
             return;
-        }
-
-        ItemMenu it = pedido.getVendedor().getItemsMenu().get(idx);
-        pedido.addItem(it);
-        updateAll(pedido);
-
-
+        } else {
+            ItemMenu it = pedido.getVendedor().getItemsMenu().get(idx);
+            pedido.addItem(it);
+            updateAll(pedido);
+        }        
     }//GEN-LAST:event_btnAddSelectedItemActionPerformed
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
@@ -742,16 +743,15 @@ public class PedidoUI extends javax.swing.JPanel {
     }//GEN-LAST:event_idFieldActionPerformed
 
     private void ddVendedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ddVendedorActionPerformed
-        
         if(pedido == null || ddVendedor.getSelectedIndex() == -1)
             return;
         List<Vendedor> listaVendedores = vendedorController.obtenerListaVendedores();
         if (!listaVendedores.get(ddVendedor.getSelectedIndex()).equals(pedido.getVendedor())){
             pedido.setVendedor(listaVendedores.get(ddVendedor.getSelectedIndex()));
-            pedido.getItems().clear();
+            List<ItemMenu> lista = new ArrayList();
+            pedido.setItems(lista);
             updateAll(pedido);
         }
-        
     }//GEN-LAST:event_ddVendedorActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
