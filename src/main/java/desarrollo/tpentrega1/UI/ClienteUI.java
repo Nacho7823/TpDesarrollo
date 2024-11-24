@@ -4,10 +4,14 @@ import desarrollo.tpentrega1.entidades.Cliente;
 import desarrollo.tpentrega1.entidades.Coordenada;
 import desarrollo.tpentrega1.controllers.ClienteController;
 import desarrollo.tpentrega1.exceptions.DAOException;
+import desarrollo.tpentrega1.utilidades.GestionCeldas;
 import java.awt.Color;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.JTableHeader;
@@ -47,7 +51,7 @@ public class ClienteUI extends JPanel {
 
         // Inicializar tabla
         tableClientes = new JTable();
-        actualizarTabla(null);
+        actualizarTabla();
         tableClientes.setRowHeight(40);
         JTableHeader tableHeader = tableClientes.getTableHeader();
         tableHeader.setReorderingAllowed(false);
@@ -141,9 +145,7 @@ public class ClienteUI extends JPanel {
                 
                 Coordenada coordenada = new Coordenada(lat, lng);
                 clienteController.crearNuevoCliente(id, nombre, cuit, email, direccion, coordenada);
-                Cliente c = clienteController.buscarCliente(id);
-                System.out.println(c.toString());
-                actualizarTabla(c);
+                actualizarTabla();
                 txtId.setText("");
                 txtNombre.setText("");
                 txtCuit.setText("");
@@ -161,7 +163,7 @@ public class ClienteUI extends JPanel {
                 String id = txtId.getText();
                 Cliente cliente = clienteController.buscarCliente(id);
                 if (cliente != null) {
-                    actualizarTabla(cliente);
+                    actualizarTabla();
                     txtId.setText(cliente.getId());
                     txtNombre.setText(cliente.getNombre());
                     txtCuit.setText(cliente.getCuit());
@@ -172,8 +174,8 @@ public class ClienteUI extends JPanel {
 
                 } else {
                     JOptionPane.showMessageDialog(null, "Cliente no encontrado.");
-                    actualizarTabla(null);
-                        txtId.setText("");
+                    actualizarTabla();
+                    txtId.setText("");
                     txtNombre.setText("");
                     txtCuit.setText("");
                     txtEmail.setText("");
@@ -204,7 +206,7 @@ public class ClienteUI extends JPanel {
 
                 Coordenada coordenada = new Coordenada(lat, lng);
                 clienteController.modificarCliente(id, nombre, cuit, email, direccion, coordenada);
-                actualizarTabla(clienteController.buscarCliente(id));
+                actualizarTabla();
                 txtId.setText("");
                 txtNombre.setText("");
                 txtCuit.setText("");
@@ -220,7 +222,7 @@ public class ClienteUI extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 String id = txtId.getText();
                 Cliente c = clienteController.buscarCliente(id);
-                actualizarTabla(c);
+                actualizarTabla();
                 clienteController.eliminarCliente(c);
                 txtId.setText("");
                 txtNombre.setText("");
@@ -232,28 +234,65 @@ public class ClienteUI extends JPanel {
             }
 
         });
+        tableClientes.addMouseListener(new MouseListener(){
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int fila=tableClientes.rowAtPoint(e.getPoint());
+                int columna=tableClientes.columnAtPoint(e.getPoint());
+                
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+
+            
+        });
     }
 
-    private void actualizarTabla(Cliente c) {
-        String[] columnNames = {"ID", "Nombre", "Cuit", "Email", "Dirección", "Latitud", "Longitud"};
-        Object[][] data = new Object[1][7];
-        if (c == null) {
-            data[0][0] = " ";
-            data[0][1] = " ";
-            data[0][2] = " ";
-            data[0][3] = " ";
-            data[0][4] = " ";
-            data[0][5] = " ";
-            data[0][6] = " ";
-        } else {
-            data[0][0] = c.getId();
-            data[0][1] = c.getNombre();
-            data[0][2] = c.getCuit();
-            data[0][3] = c.getEmail();
-            data[0][4] = c.getDireccion();
-            data[0][5] = c.getCoordenada().getLat();
-            data[0][6] = c.getCoordenada().getLng();
+    private void actualizarTabla() {
+        String[] columnNames = {"ID", "Nombre", "Cuit", "Email", "Dirección", "Latitud", "Longitud", "", ""};
+        List<Cliente> clientes = clienteController.obtenerListaClientes();
+        Object[][] data = new Object[clientes.size()][9];
+        int i = 0;
+        for(Cliente c : clientes){
+            data[i][0] = c.getId();
+            data[i][1] = c.getNombre();
+            data[i][2] = c.getCuit();
+            data[i][3] = c.getEmail();
+            data[i][4] = c.getDireccion();
+            data[i][5] = c.getCoordenada().getLat();
+            data[i][6] = c.getCoordenada().getLng();
+            data[i][7] = "Editar";
+            data[i][8] = "Borrar";
+            i++;
         }
         tableClientes.setModel(new javax.swing.table.DefaultTableModel(data, columnNames));
+        
+        tableClientes.getColumnModel().getColumn(0).setCellRenderer(new GestionCeldas("numerico"));
+        tableClientes.getColumnModel().getColumn(1).setCellRenderer(new GestionCeldas("texto"));
+        tableClientes.getColumnModel().getColumn(2).setCellRenderer(new GestionCeldas("numerico"));
+        tableClientes.getColumnModel().getColumn(3).setCellRenderer(new GestionCeldas("texto"));
+        tableClientes.getColumnModel().getColumn(4).setCellRenderer(new GestionCeldas("texto"));
+        tableClientes.getColumnModel().getColumn(5).setCellRenderer(new GestionCeldas("numerico"));
+        tableClientes.getColumnModel().getColumn(6).setCellRenderer(new GestionCeldas("numerico"));
+        tableClientes.getColumnModel().getColumn(7).setCellRenderer(new GestionCeldas("icono"));
+        tableClientes.getColumnModel().getColumn(8).setCellRenderer(new GestionCeldas("icono"));
     }
 }
