@@ -1,16 +1,18 @@
 
 package desarrollo.tpentrega1.UI;
 import desarrollo.tpentrega1.controllers.*;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 public class MenuGeneral extends JFrame{
     public MenuGeneral(ClienteController clienteController,VendedorController vendedorController,ItemsMenuController itemsMenuController, PedidoController pedidoController){
-        setTitle("Menu general");
-        setSize(800,600);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setTitle("Menu general");
+        this.setSize(800,600);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ImageIcon icon= new ImageIcon("pedidosya-logo.png");
+        this.setIconImage(icon.getImage());
 
         JTabbedPane tabbedPane = new JTabbedPane();
 
@@ -24,23 +26,20 @@ public class MenuGeneral extends JFrame{
         tabbedPane.addTab("ItemMenu",itemMenuUI);
         tabbedPane.addTab("Pedido",pedidoUI);
         
-        tabbedPane.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                int selectedIndex = tabbedPane.getSelectedIndex();
-                if (selectedIndex == 0)
-                    clienteUI.update();
-                else if (selectedIndex == 1)
-                    vendedorUI.update();
-                else if (selectedIndex == 2)
-                    itemMenuUI.update();
-                else if (selectedIndex == 3)
-                    pedidoUI.update();
+        tabbedPane.addChangeListener((ChangeEvent e) -> {
+            int selectedIndex = tabbedPane.getSelectedIndex();
+            switch (selectedIndex) {
+                case 0 -> clienteUI.update();
+                case 1 -> vendedorUI.update();
+                case 2 -> itemMenuUI.update();
+                case 3 -> pedidoUI.update();
+                default -> {
+                }
             }
         });
         
 
-        add(tabbedPane);
+        this.add(tabbedPane);
 
 
     }

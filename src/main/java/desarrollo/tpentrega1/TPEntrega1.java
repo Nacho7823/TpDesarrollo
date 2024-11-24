@@ -341,6 +341,7 @@ public class TPEntrega1 {
             public void run() {
                 MenuGeneral menu = new MenuGeneral(clienteController, vendedorController, itemsMenuController, pedidoController);
                 menu.setVisible(true);
+                menu.setLocationRelativeTo(null);
 
             }
         });

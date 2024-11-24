@@ -31,7 +31,7 @@ public class DAO<T> {
         protected void ConectarBase() throws SQLException, ClassNotFoundException {
             try {
                 Class.forName(DRIVER);
-                String urlBaseDeDatos = "jdbc:mysql://localhost:3306/" + DATABASE + "?useSSL=false";
+                String urlBaseDeDatos = "jdbc:mysql://localhost:3306/" + DATABASE + "?useSSL=false&allowPublicKeyRetrieval=true";
                 conexion = DriverManager.getConnection(urlBaseDeDatos, USER, PASSWORD);
                 System.out.println("Conexión exitosa");
                 
