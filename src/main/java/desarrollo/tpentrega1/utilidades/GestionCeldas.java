@@ -3,7 +3,6 @@ package desarrollo.tpentrega1.utilidades;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
-import java.net.URL;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -18,7 +17,7 @@ public class GestionCeldas extends DefaultTableCellRenderer{
 	private Font bold = new Font("Verdana",Font.BOLD,12);
 	private JLabel label = new JLabel();
         
-	private ImageIcon iconoEditar = new ImageIcon("icons8-borrar-fila-40.png");
+	private ImageIcon iconoEditar = new ImageIcon("icons8-editar-fila-40.png");
         private ImageIcon iconoBorrar = new ImageIcon("icons8-borrar-fila-40.png");
 	
 	public GestionCeldas(){

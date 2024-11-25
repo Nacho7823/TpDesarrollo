@@ -30,12 +30,8 @@ public class PedidoUI extends javax.swing.JPanel {
     private ClienteController clienteController;
     private PedidoController pedidoController;
     private ItemsMenuController itemsMenuController;
-//    private Vendedor vendedor;
-//    private Cliente cliente;
     private Pedido pedido;
-//    List<ItemMenu> items = new ArrayList();
-//    List<Bebida> bebidas = new ArrayList();
-//    List<Plato> platos = new ArrayList();
+
 
     private JTextField tfFormaPago1;
     private JTextField tfFormaPago2;
