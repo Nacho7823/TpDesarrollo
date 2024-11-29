@@ -38,7 +38,7 @@ public class GestionCeldas extends DefaultTableCellRenderer{
         if (selected) this.setBackground(colorFondoPorDefecto);
         else this.setBackground(Color.white);
         
-        if( tipo.equals("texto")){
+        if(tipo.equals("texto")){
             if (focused) colorFondo=colorFondoSeleccion;
             else colorFondo= colorFondoPorDefecto;
             this.setHorizontalAlignment(JLabel.LEFT);
@@ -47,7 +47,7 @@ public class GestionCeldas extends DefaultTableCellRenderer{
             this.setFont(normal);
             return this;
         }
-        if( tipo.equals("icono")){
+        if(tipo.equals("icono")){
             if(String.valueOf(value).equals("Borrar")) label.setIcon(iconoBorrar);
             else if(String.valueOf(value).equals("Editar")) label.setIcon(iconoEditar);
             label.setHorizontalAlignment(JLabel.LEFT);

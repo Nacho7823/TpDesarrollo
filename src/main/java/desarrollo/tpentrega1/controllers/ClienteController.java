@@ -29,6 +29,16 @@ public class ClienteController {
         }
         return nuevoCliente;
     }
+    
+    public Cliente crearNuevoCliente(String nombre, String cuit, String email, String direccion, Coordenada coordenada) {
+        Cliente nuevoCliente = new Cliente(nombre, cuit, email, direccion, coordenada);
+        try {
+            clienteDAO.crearCliente(nuevoCliente);
+        } catch (DAOException ex) {
+            Logger.getLogger(ClienteController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return nuevoCliente;
+    }
 
     // Modificar un cliente existente
     public void modificarCliente(String id, String nombre, String cuit, String email, String direccion, Coordenada coordenada) {
