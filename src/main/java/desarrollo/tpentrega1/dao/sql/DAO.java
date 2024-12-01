@@ -11,11 +11,6 @@ import java.sql.Statement;
 
 
 
-/**
- * DAO genérico para operaciones CRUD.
- *
- * @param <T> Tipo de entidad.
- */
 
 public class DAO<T> {
 
@@ -27,11 +22,11 @@ public class DAO<T> {
         private final String PASSWORD = "root";
         private final String DATABASE = "tienda";
         private final String DRIVER = "com.mysql.cj.jdbc.Driver";
+        String urlBaseDeDatos = "jdbc:mysql://localhost:3306/" + DATABASE + "?useSSL=false&allowPublicKeyRetrieval=true";
         
         protected void ConectarBase() throws SQLException, ClassNotFoundException {
             try {
                 Class.forName(DRIVER);
-                String urlBaseDeDatos = "jdbc:mysql://localhost:3306/" + DATABASE + "?useSSL=false&allowPublicKeyRetrieval=true";
                 conexion = DriverManager.getConnection(urlBaseDeDatos, USER, PASSWORD);
                 System.out.println("Conexión exitosa");
                 
@@ -52,7 +47,7 @@ public class DAO<T> {
                 if (conexion != null) {
                     conexion.close();
                 }
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 throw e;
             }
         }

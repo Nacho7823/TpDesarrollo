@@ -3,6 +3,8 @@ package desarrollo.tpentrega1.UI;
 import desarrollo.tpentrega1.controllers.ClienteController;
 import desarrollo.tpentrega1.entidades.Cliente;
 import desarrollo.tpentrega1.entidades.Coordenada;
+import desarrollo.tpentrega1.utilidades.ButtonEditor;
+import desarrollo.tpentrega1.utilidades.ButtonRenderer;
 import desarrollo.tpentrega1.utilidades.GestionCeldas;
 import java.util.List;
 import javax.swing.table.JTableHeader;
@@ -22,21 +24,16 @@ public class ClienteUI extends javax.swing.JPanel {
     private void actualizarTabla() {
         String[] columnNames = {"ID", "Nombre", "Cuit", "Email", "Dirección", "Latitud", "Longitud", "", ""};
         List<Cliente> clientes = clienteController.obtenerListaClientes();
-        Object[][] data = new Object[clientes.size()][9];
-        int i = 0;
-        for(Cliente c : clientes){
-            data[i][0] = c.getId();
-            data[i][1] = c.getNombre();
-            data[i][2] = c.getCuit();
-            data[i][3] = c.getEmail();
-            data[i][4] = c.getDireccion();
-            data[i][5] = c.getCoordenada().getLat();
-            data[i][6] = c.getCoordenada().getLng();
-            data[i][7] = "Editar";
-            data[i][8] = "Borrar";
-            i++;
-        }
-        tableClientes.setModel(new javax.swing.table.DefaultTableModel(data, columnNames));
+        
+        tableClientes.setModel(new UsuarioTableModel(clientes, columnNames));
+        
+        tableClientes.getColumnModel().getColumn(7).setCellRenderer(new ButtonRenderer("Editar"));
+        tableClientes.getColumnModel().getColumn(8).setCellRenderer(new ButtonRenderer("Borrar"));
+
+        // Editores para las columnas
+        tableClientes.getColumnModel().getColumn(7).setCellEditor(new ButtonEditor("Editar"));
+        tableClientes.getColumnModel().getColumn(8).setCellEditor(new ButtonEditor("Borrar")); 
+
         tableClientes.getColumnModel().getColumn(0).setCellRenderer(new GestionCeldas("numerico"));
         tableClientes.getColumnModel().getColumn(1).setCellRenderer(new GestionCeldas("texto"));
         tableClientes.getColumnModel().getColumn(2).setCellRenderer(new GestionCeldas("numerico"));
@@ -500,12 +497,12 @@ public class ClienteUI extends javax.swing.JPanel {
                 .addGroup(panelTextosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelTextosLayout.createSequentialGroup()
                         .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
-                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 688, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(61, 61, 61)
+                        .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 688, Short.MAX_VALUE))
                     .addGroup(panelTextosLayout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 688, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(61, 61, 61)
+                        .addComponent(txtId, javax.swing.GroupLayout.DEFAULT_SIZE, 633, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -581,8 +578,8 @@ public class ClienteUI extends javax.swing.JPanel {
                 .addComponent(panelSuperiorDerecho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(panelSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(panelSuperiorLayout.createSequentialGroup()
-                    .addComponent(panelSuperiorIzquierdo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 95, Short.MAX_VALUE)))
+                    .addComponent(panelSuperiorIzquierdo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGap(95, 95, 95)))
         );
         panelSuperiorLayout.setVerticalGroup(
             panelSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

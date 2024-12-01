@@ -9,7 +9,7 @@ import javax.swing.event.ChangeEvent;
 public class MenuGeneral extends JFrame{
     public MenuGeneral(ClienteController clienteController,VendedorController vendedorController,ItemsMenuController itemsMenuController, PedidoController pedidoController){
         this.setTitle("Menu general");
-        this.setSize(1000,600);
+        this.setSize(1000,700);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ImageIcon icon= new ImageIcon("pedidosya-logo.png");
         this.setIconImage(icon.getImage());
