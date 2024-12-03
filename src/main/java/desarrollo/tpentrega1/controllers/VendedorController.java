@@ -33,8 +33,18 @@ public class VendedorController {
         }
         return nuevoVendedor;
     }
-
-    // Modificar un vendedor existente (asumiendo que se identifica por nombre, dirección, coordenada)
+    
+    public Vendedor crearNuevoVendedor(String nombre, String direccion, Coordenada coordenada) {
+        Vendedor nuevoVendedor = new Vendedor(nombre, direccion, coordenada);
+        try {
+            vendedorDAO.crearVendedor(nuevoVendedor);
+        } catch (DAOException ex) {
+            Logger.getLogger(VendedorController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return nuevoVendedor;
+    }
+    
+// Modificar un vendedor existente (asumiendo que se identifica por nombre, dirección, coordenada)
     public void modificarVendedor(String id, String nombre, String direccion, Coordenada coordenada) {
         Vendedor vendedorExistente;
         try {
@@ -95,4 +105,6 @@ public class VendedorController {
         }
         return null;
     }
+
+    
 }

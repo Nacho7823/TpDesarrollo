@@ -82,5 +82,14 @@ public abstract class ItemMenu {
     public abstract boolean esBebida();
     public abstract boolean aptoVegano();
     public abstract double peso();
+    public abstract double getCalorias();
+    public abstract boolean aptoCeliaco();
+    public  abstract void setCalorias(double calorias);
+    public abstract void setAptoCeliaco(boolean apto) ;
+    public abstract void setAptoVegano(boolean apto) ;
+    public abstract void setPeso(double peso) ;
+
+
+
     
 }
