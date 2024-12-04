@@ -148,7 +148,7 @@
                               <Group type="102" attributes="0">
                                   <Component id="ideditar" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="cancelarBtn1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="cancelarEditar" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="editarBtn" min="-2" max="-2" attributes="0"/>
                               </Group>
@@ -189,7 +189,7 @@
                   <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="editarBtn" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="cancelarBtn1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="cancelarEditar" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="ideditar" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="56" max="32767" attributes="0"/>
@@ -211,12 +211,12 @@
             <Property name="text" type="java.lang.String" value="Nombre"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="cancelarBtn1">
+        <Component class="javax.swing.JButton" name="cancelarEditar">
           <Properties>
             <Property name="text" type="java.lang.String" value="Cancelar"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cancelarBtn1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cancelarEditarActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="editarBtn">

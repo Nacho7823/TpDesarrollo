@@ -76,7 +76,6 @@ public abstract class ItemMenu {
     public void setCategoria(String categoria) {
         this.categoria = categoria;
     }
-
     
     public abstract boolean esComida();
     public abstract boolean esBebida();
@@ -88,8 +87,8 @@ public abstract class ItemMenu {
     public abstract void setAptoCeliaco(boolean apto) ;
     public abstract void setAptoVegano(boolean apto) ;
     public abstract void setPeso(double peso) ;
-
-
-
-    
+    public abstract double getGraduacionAlcoholica();
+    public abstract void setGraduacionAlcoholica(double graduacionAlcoholica);
+    public abstract double getTamaño();
+    public abstract void setTamaño(double tamaño);
 }

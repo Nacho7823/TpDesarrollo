@@ -39,18 +39,22 @@ public class Bebida extends ItemMenu {
 
     // getters / setters
 
+    @Override
     public double getGraduacionAlcoholica() {
         return graduacionAlcoholica;
     }
 
+    @Override
     public void setGraduacionAlcoholica(double graduacionAlcoholica) {
         this.graduacionAlcoholica = graduacionAlcoholica;
     }
 
+    @Override
     public double getTamaño() {
         return tamaño;
     }
 
+    @Override
     public void setTamaño(double tamaño) {
         this.tamaño = tamaño;
     }
