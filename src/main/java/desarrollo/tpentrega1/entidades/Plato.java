@@ -42,22 +42,27 @@ public class Plato extends ItemMenu {
 
     // getters / setters
 
+    @Override
     public double getCalorias() {
         return calorias;
     }
 
+    @Override
     public void setCalorias(double calorias) {
         this.calorias = calorias;
     }
 
+    @Override
     public void setAptoCeliaco(boolean apto) {
         this.aptoCeliaco = apto;
     }
 
+    @Override
     public void setAptoVegano(boolean apto) {
         this.aptoVegano = apto;
     }
 
+    @Override
     public void setPeso(double peso) {
         this.peso = peso;
     }
@@ -74,6 +79,7 @@ public class Plato extends ItemMenu {
         return aptoVegano;
     };
     
+    @Override
     public boolean aptoCeliaco() { 
         return aptoCeliaco;
     };

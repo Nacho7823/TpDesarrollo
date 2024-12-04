@@ -58,6 +58,28 @@ public class Bebida extends ItemMenu {
     // funcs
 
     @Override
+    public double getCalorias() {
+        return 0;
+    }
+
+    @Override
+    public boolean aptoCeliaco() {
+        return false;
+    }
+
+    @Override
+    public void setCalorias(double calorias) {}
+
+    @Override
+    public void setAptoCeliaco(boolean apto) {}
+
+    @Override
+    public void setAptoVegano(boolean apto) {}
+
+    @Override
+    public void setPeso(double peso) {}
+
+    @Override
     public double peso() {
         double p;
         if (graduacionAlcoholica == 0)

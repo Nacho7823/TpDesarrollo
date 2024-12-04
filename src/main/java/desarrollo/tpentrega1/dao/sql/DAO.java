@@ -39,7 +39,6 @@ public class DAO<T> {
             try {
                 if (resultado != null) {
                     resultado.close();
-                    
                 }
                 if (sentencia != null) {
                     sentencia.close();

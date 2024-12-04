@@ -10,7 +10,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ClienteDAOSql extends DAO<Cliente> implements ClienteDAO {
 private static ClienteDAOSql instance;
@@ -20,41 +21,39 @@ private static ClienteDAOSql instance;
         return ClienteDAOSql.instance;
     }
 
-
-    @Override
+   @Override
    public void crearCliente(Cliente cliente) throws DAOException {
-    String sql = "INSERT INTO cliente (nombre, cuit, email, direccion, longitud, latitud) VALUES (?, ?, ?, ?, ?, ?)";
-    
-           try (PreparedStatement stmt = conexion.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            ConectarBase();
+        String sql = "INSERT INTO cliente (nombre, cuit, email, direccion, longitud, latitud) VALUES (?, ?, ?, ?, ?, ?)";
+    try {
+        ConectarBase();
+    } catch (SQLException ex) {
+        Logger.getLogger(ClienteDAOSql.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (ClassNotFoundException ex) {
+        Logger.getLogger(ClienteDAOSql.class.getName()).log(Level.SEVERE, null, ex);
+    }
+        try (PreparedStatement stmt = conexion.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, cliente.getNombre());
             stmt.setString(2, cliente.getCuit());
             stmt.setString(3, cliente.getEmail());
             stmt.setString(4, cliente.getDireccion());
             stmt.setDouble(5, cliente.getCoordenada().getLng());
             stmt.setDouble(6, cliente.getCoordenada().getLat());
-        
             stmt.executeUpdate();
-            
             try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     int idCliente = generatedKeys.getInt(1);
-                    
-                   cliente.setId(String.valueOf(idCliente));
-                    
+                    cliente.setId(String.valueOf(idCliente));
                 }
-                }
-                    
-                } catch (Exception ex) {
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
             throw new DAOException("no se pudo crear el cliente: \n" + ex.getMessage());
         }
-}
-
+    }
 
     @Override
     public void actualizarCliente(Cliente cliente) throws DAOException {
-        
-            String sql = "UPDATE cliente SET nombre = ?, cuit = ?, email = ?, direccion = ?, longitud = ?, latitud = ? WHERE id_cliente = ?";
+        String sql = "UPDATE cliente SET nombre = ?, cuit = ?, email = ?, direccion = ?, longitud = ?, latitud = ? WHERE id_cliente = ?";
 
         try {
         
@@ -70,18 +69,16 @@ private static ClienteDAOSql instance;
 
         } catch (Exception ex) {
             throw new DAOException("no se pudo actualizar el cliente: \n" + ex.getMessage());
-   
         }
     }
 
     @Override
     public void eliminarCliente(String id) throws DAOException {
         String sql = "DELETE FROM cliente WHERE id_cliente = ?";
-    
         try {
-        insertarModificarEliminar(sql,Integer.valueOf(id));  
+            insertarModificarEliminar(sql,Integer.valueOf(id));  
         } catch (Exception ex) {
-        throw new DAOException("No se pudo eliminar el cliente: \n" + ex.getMessage());
+            throw new DAOException("No se pudo eliminar el cliente: \n" + ex.getMessage());
         }
     }
 
