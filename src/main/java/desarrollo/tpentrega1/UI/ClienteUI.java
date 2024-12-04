@@ -1,5 +1,6 @@
 package desarrollo.tpentrega1.UI;
 
+import desarrollo.tpentrega1.utilidades.UsuarioTableModel;
 import desarrollo.tpentrega1.controllers.ClienteController;
 import desarrollo.tpentrega1.entidades.Cliente;
 import desarrollo.tpentrega1.entidades.Coordenada;

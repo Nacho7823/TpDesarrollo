@@ -1,5 +1,5 @@
 
-package desarrollo.tpentrega1.UI;
+package desarrollo.tpentrega1.utilidades;
 
 import desarrollo.tpentrega1.entidades.Cliente;
 import javax.swing.table.AbstractTableModel;
@@ -40,7 +40,7 @@ public class UsuarioTableModel<T> extends AbstractTableModel {
 
         try {
             if (rowObject instanceof Cliente) {
-                // Caso especial: Cliente con Coordenada
+                
                 Cliente cliente = (Cliente) rowObject;
                 switch (columnIndex) {
                     case 0 -> {
