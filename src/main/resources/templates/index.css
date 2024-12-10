@@ -6,32 +6,36 @@
 }
 
 .header-text {
-    margin: 0;
-    font-size: 24px;
+    font-size: 40px;
 }
 
 header {
     margin:auto;
-    flex: 1;
-    /* height: 100px; */
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
     background-color: #232323;
     color: #dddddd;
-    font-size: 50px;
     text-align: center;
     
 }
 
 .buttons-container {
     display: flex;
+    flex-direction: row;
     align-items: center;
     gap: 10px;
-    flex-direction: column;
 }
 
 button {
     margin: 10px;
     width: 200px;
-    height: 50px;
-    border: 1px solid black;
+    height: 200px;
+    border: 1px solid #232323;
     border-radius: 10px;
+    background-color: #eeeeee;
+    color:#232323;
+    font-size: 25px;
+    font-weight: 600;
 }

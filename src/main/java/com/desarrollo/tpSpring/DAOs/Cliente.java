@@ -12,7 +12,7 @@ import jakarta.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "cliente")
-public class ClienteSQL {
+public class Cliente {
     @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
