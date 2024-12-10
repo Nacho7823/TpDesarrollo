@@ -313,10 +313,10 @@ public class TPEntrega1 {
         ItemsPedidoDAO itemsPedidoDAO =ItemsPedidoDAOSql.getInstance();
 
         // Crear instancias de controladores
-        ClienteController clienteController = new ClienteController(clienteDAO);
-        VendedorController vendedorController = new VendedorController(vendedorDAO);
-        PedidoController pedidoController = new PedidoController(pedidoDAO);
-        ItemsMenuController itemsMenuController = new ItemsMenuController(itemMenuDAO, vendedorController);
+        ClienteController clienteController = new ClienteController();
+        VendedorController vendedorController = new VendedorController();
+        PedidoController pedidoController = new PedidoController();
+        ItemsMenuController itemsMenuController = new ItemsMenuController(vendedorController);
 
         // Cargar datos de prueba para clientes
 
@@ -336,14 +336,10 @@ public class TPEntrega1 {
 
         
         // Configurar UI de Cliente y Vendedor
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                MenuGeneral menu = new MenuGeneral(clienteController, vendedorController, itemsMenuController, pedidoController);
-                menu.setVisible(true);
-                menu.setLocationRelativeTo(null);
-
-            }
+        SwingUtilities.invokeLater(() -> {
+            MenuGeneral menu = new MenuGeneral(clienteController, vendedorController, itemsMenuController, pedidoController);
+            menu.setVisible(true);
+            menu.setLocationRelativeTo(null);
         });
     }
 }

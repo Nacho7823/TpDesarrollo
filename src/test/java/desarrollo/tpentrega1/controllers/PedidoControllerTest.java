@@ -31,7 +31,7 @@ public class PedidoControllerTest {
     @Mock
     PedidoDAOSql pedidoDAOSql =  new PedidoDAOSql();
     @InjectMocks
-    PedidoController pedidoController = new PedidoController(pedidoDAOSql);
+    PedidoController pedidoController = new PedidoController();
     
     public PedidoControllerTest() {
     }

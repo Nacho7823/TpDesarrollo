@@ -24,7 +24,7 @@ public class VendedorControllerTest {
     @Mock
     VendedorDAOSql vendedorDAO = VendedorDAOSql.getInstance();
     @InjectMocks
-    VendedorController vendedorController = new VendedorController(vendedorDAO);
+    VendedorController vendedorController = new VendedorController();
         
     public VendedorControllerTest() {
     }

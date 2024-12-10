@@ -1,7 +1,7 @@
 
 package desarrollo.tpentrega1.controllers;
 
-import desarrollo.tpentrega1.dao.ItemsMenuDAO;
+import desarrollo.tpentrega1.dao.sql.ItemMenuDAOSql;
 import desarrollo.tpentrega1.entidades.ItemMenu;
 import desarrollo.tpentrega1.entidades.Plato;
 import desarrollo.tpentrega1.entidades.Bebida;
@@ -14,11 +14,11 @@ import java.util.logging.Logger;
 
 public class ItemsMenuController {
 
-    private ItemsMenuDAO itemMenuDAO;
+    private ItemMenuDAOSql itemMenuDAO=ItemMenuDAOSql.getInstance();
     private VendedorController vendedorController;
 
-    public ItemsMenuController(ItemsMenuDAO itemMenuDAOSql, VendedorController vendedorController) {
-        this.itemMenuDAO =  itemMenuDAOSql;
+    public ItemsMenuController(VendedorController vendedorController) {
+
         this.vendedorController = vendedorController;
     }
 

@@ -29,9 +29,9 @@ public class ItemsMenuControllerTest {
     ItemMenuDAOSql itemMenuDAOSql = new ItemMenuDAOSql();
     @Mock
     VendedorDAOSql vendedorDAOSql = new VendedorDAOSql();
-    VendedorController vendedorController = new VendedorController(vendedorDAOSql);
+    VendedorController vendedorController = new VendedorController();
     @InjectMocks
-    ItemsMenuController itemMenuController = new ItemsMenuController(itemMenuDAOSql, vendedorController);
+    ItemsMenuController itemMenuController = new ItemsMenuController(vendedorController);
     
     
     public ItemsMenuControllerTest() {

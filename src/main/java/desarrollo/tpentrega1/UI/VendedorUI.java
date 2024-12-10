@@ -187,6 +187,11 @@ public class VendedorUI extends javax.swing.JPanel {
         });
 
         editarBtn.setText("Editar");
+        editarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editarBtnActionPerformed(evt);
+            }
+        });
 
         jLabel11.setText("Dirección");
 
@@ -594,6 +599,7 @@ public class VendedorUI extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_crearBtnActionPerformed
 
+<<<<<<< Updated upstream
     private void cancelarEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarEditarActionPerformed
         nombreField1.setText("");
         direccionField1.setText("");
@@ -601,6 +607,15 @@ public class VendedorUI extends javax.swing.JPanel {
         coordenada2Field1.setText("");
         editarFrame.setVisible(false);
     }//GEN-LAST:event_cancelarEditarActionPerformed
+=======
+    private void cancelarBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarBtn1ActionPerformed
+        nombreField.setText("");
+        direccionField.setText("");
+        coordenada1Field.setText("");
+        coordenada2Field.setText("");
+        editarFrame.setVisible(false);
+    }//GEN-LAST:event_cancelarBtn1ActionPerformed
+>>>>>>> Stashed changes
 
     private void cancelarEliminarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarEliminarBtnActionPerformed
         nombreField2.setText("");
@@ -678,6 +693,23 @@ public class VendedorUI extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_tableVendedoresMouseClicked
+
+    private void editarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarBtnActionPerformed
+          if(nombreField1.getText().isEmpty() || direccionField1.getText().isEmpty() || coordenada1Field1.getText().isEmpty() 
+                || coordenada2Field1.getText().isEmpty()){
+            //mensaje de error por campos vacios
+        } else {
+            Coordenada coordenada = new Coordenada(Double.parseDouble(coordenada1Field1.getText()), Double.parseDouble(coordenada2Field1.getText()));
+            vendedorController.modificarVendedor(ideditar.getText(), nombreField1.getText(), direccionField1.getText(), coordenada);
+            actualizarTabla();
+            nombreField.setText("");
+            direccionField.setText("");
+            coordenada1Field.setText("");
+            coordenada2Field.setText("");
+            editarFrame.setVisible(false);
+            //cartel de exito
+        }
+    }//GEN-LAST:event_editarBtnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

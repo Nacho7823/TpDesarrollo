@@ -3,6 +3,7 @@ package desarrollo.tpentrega1.controllers;
 
 
 import desarrollo.tpentrega1.dao.PedidoDAO;
+import desarrollo.tpentrega1.dao.sql.PedidoDAOSql;
 import desarrollo.tpentrega1.entidades.Cliente;
 import desarrollo.tpentrega1.entidades.ItemMenu;
 import desarrollo.tpentrega1.entidades.Pago;
@@ -17,10 +18,9 @@ import java.util.List;
 
 
 public class PedidoController {
-    private PedidoDAO pedidoDAO;
+    private PedidoDAOSql pedidoDAO=PedidoDAOSql.getInstance();
 
-    public PedidoController(PedidoDAO pedidoDAO) {
-        this.pedidoDAO = pedidoDAO;
+    public PedidoController() {
     }
 
     public void newPedido(String id,Cliente cliente, Vendedor vendedor, List<ItemMenu> items, Pago pago, EstadoPedido estado) throws DAOException {

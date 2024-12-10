@@ -1,6 +1,6 @@
 package desarrollo.tpentrega1.controllers;
 
-import desarrollo.tpentrega1.dao.ClienteDAO;
+import desarrollo.tpentrega1.dao.sql.ClienteDAOSql;
 import desarrollo.tpentrega1.entidades.Cliente;
 import desarrollo.tpentrega1.entidades.Coordenada;
 import desarrollo.tpentrega1.exceptions.DAOException;
@@ -10,16 +10,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ClienteController {
-     private ClienteDAO clienteDAO;
-
-    public ClienteController(ClienteDAO c) {
-        try {
-            clienteDAO = c;
-        } catch (Exception ex) {
-            throw new RuntimeException("no se pudo conectar a la base de datos");
-        }
+     private ClienteDAOSql clienteDAO=ClienteDAOSql.getInstance();
+    
+    public ClienteController() {
     }
-
+    
     public Cliente crearNuevoCliente(String id, String nombre, String cuit, String email, String direccion, Coordenada coordenada) {
         Cliente nuevoCliente = new Cliente(id, nombre, cuit, email, direccion, coordenada);
         try {

@@ -1,6 +1,6 @@
 package desarrollo.tpentrega1.controllers;
 
-import desarrollo.tpentrega1.dao.VendedorDAO;
+import desarrollo.tpentrega1.dao.sql.VendedorDAOSql;
 import desarrollo.tpentrega1.entidades.Vendedor;
 import desarrollo.tpentrega1.entidades.Coordenada;
 import desarrollo.tpentrega1.exceptions.DAOException;
@@ -10,20 +10,17 @@ import java.util.logging.Logger;
 
 public class VendedorController {
 
-    private VendedorDAO vendedorDAO;
-
-    public VendedorDAO getVendedorDAO() {
+    private VendedorDAOSql vendedorDAO= VendedorDAOSql.getInstance();
+    
+    public VendedorDAOSql getVendedorDAO() {
         return vendedorDAO;
     }
-    
-    public VendedorController(VendedorDAO vendedorDAOSql) {
-        try {
-            this.vendedorDAO = vendedorDAOSql;
-        } catch (Exception ex) {
-            throw new RuntimeException("cant open db");
-        }
-    }
 
+
+    public VendedorController() {
+
+    }
+    
     public Vendedor crearNuevoVendedor(String id, String nombre, String direccion, Coordenada coordenada) {
         Vendedor nuevoVendedor = new Vendedor(id, nombre, direccion, coordenada);
         try {

@@ -22,7 +22,7 @@ public class ClienteControllerTest {
     @Captor
     ArgumentCaptor<Cliente> clienteCaptor;
     @InjectMocks
-    ClienteController clienteController = new ClienteController(clienteDAO);
+    ClienteController clienteController = new ClienteController();
     
     
     public ClienteControllerTest() {

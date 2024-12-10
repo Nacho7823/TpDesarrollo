@@ -244,6 +244,11 @@ public class ClienteUI extends javax.swing.JPanel {
         });
 
         ideditar.setText("jTextField1");
+        ideditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ideditarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout editarFrameLayout = new javax.swing.GroupLayout(editarFrame.getContentPane());
         editarFrame.getContentPane().setLayout(editarFrameLayout);
@@ -785,6 +790,10 @@ public class ClienteUI extends javax.swing.JPanel {
         tableClientes.getColumnModel().getColumn(7).setCellRenderer(new GestionCeldas("icono"));
         tableClientes.getColumnModel().getColumn(8).setCellRenderer(new GestionCeldas("icono"));
     }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void ideditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ideditarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ideditarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
