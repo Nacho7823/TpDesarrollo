@@ -71,6 +71,23 @@ public class ItemsMenuController {
         }
         return nuevaBebida;
     }
+    public Bebida crearNuevaBebida(String nombre, String descripcion, double precio, String categoria,
+            double tamaño, double graduacionAlcoholica) {        
+        Bebida nuevaBebida = new Bebida.Builder()
+                .nombre(nombre)
+                .descripcion(descripcion)
+                .precio(precio)
+                .categoria(categoria)
+                .tamaño(tamaño)
+                .graduacionAlcoholica(graduacionAlcoholica)
+                .build();
+        try {
+            itemMenuDAO.crearItemMenu(nuevaBebida);
+        } catch (DAOException ex) {
+            Logger.getLogger(ItemsMenuController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return nuevaBebida;
+    }
 
     // Modificar un ítem de menú existente
     public void modificarItemsMenu(String id, String nombre, String descripcion, double precio, String categoria) {

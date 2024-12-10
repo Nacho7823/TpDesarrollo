@@ -17,6 +17,22 @@ public class Plato extends ItemMenu {
         this.peso = builder.peso;
     }
 
+    @Override
+    public double getGraduacionAlcoholica() {
+        return 0;
+    }
+
+    @Override
+    public void setGraduacionAlcoholica(double graduacionAlcoholica) {}
+
+    @Override
+    public double getTamaño() {
+    return 0;    
+    }
+
+    @Override
+    public void setTamaño(double tamaño) {}
+
     public static class Builder extends ItemMenu.Builder<Builder> {
         private double calorias;
         private boolean aptoCeliaco;

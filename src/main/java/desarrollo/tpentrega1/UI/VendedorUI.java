@@ -67,7 +67,7 @@ public class VendedorUI extends javax.swing.JPanel {
         coordenada1Field1 = new javax.swing.JTextField();
         coordenada2Field1 = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        cancelarBtn1 = new javax.swing.JButton();
+        cancelarEditar = new javax.swing.JButton();
         editarBtn = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
@@ -179,10 +179,10 @@ public class VendedorUI extends javax.swing.JPanel {
 
         jLabel8.setText("Nombre");
 
-        cancelarBtn1.setText("Cancelar");
-        cancelarBtn1.addActionListener(new java.awt.event.ActionListener() {
+        cancelarEditar.setText("Cancelar");
+        cancelarEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancelarBtn1ActionPerformed(evt);
+                cancelarEditarActionPerformed(evt);
             }
         });
 
@@ -214,7 +214,7 @@ public class VendedorUI extends javax.swing.JPanel {
                             .addGroup(editarFrameLayout.createSequentialGroup()
                                 .addComponent(ideditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(cancelarBtn1)
+                                .addComponent(cancelarEditar)
                                 .addGap(18, 18, 18)
                                 .addComponent(editarBtn))
                             .addGroup(editarFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -244,7 +244,7 @@ public class VendedorUI extends javax.swing.JPanel {
                 .addGap(24, 24, 24)
                 .addGroup(editarFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(editarBtn)
-                    .addComponent(cancelarBtn1)
+                    .addComponent(cancelarEditar)
                     .addComponent(ideditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(56, Short.MAX_VALUE))
         );
@@ -594,19 +594,19 @@ public class VendedorUI extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_crearBtnActionPerformed
 
-    private void cancelarBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarBtn1ActionPerformed
-        nombreField.setText("");
-        direccionField.setText("");
-        coordenada1Field.setText("");
-        coordenada2Field.setText("");
-        crearFrame.setVisible(false);
-    }//GEN-LAST:event_cancelarBtn1ActionPerformed
+    private void cancelarEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarEditarActionPerformed
+        nombreField1.setText("");
+        direccionField1.setText("");
+        coordenada1Field1.setText("");
+        coordenada2Field1.setText("");
+        editarFrame.setVisible(false);
+    }//GEN-LAST:event_cancelarEditarActionPerformed
 
     private void cancelarEliminarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarEliminarBtnActionPerformed
-        nombreField.setText("");
-        direccionField.setText("");
-        coordenada1Field.setText("");
-        coordenada2Field.setText("");
+        nombreField2.setText("");
+        direccionField2.setText("");
+        coordenada1Field2.setText("");
+        coordenada2Field2.setText("");
         eliminarFrame.setVisible(false);
     }//GEN-LAST:event_cancelarEliminarBtnActionPerformed
 
@@ -685,7 +685,7 @@ public class VendedorUI extends javax.swing.JPanel {
     private javax.swing.JButton btnCrearVendedor;
     private javax.swing.JButton btnRefrescar;
     private javax.swing.JButton cancelarBtn;
-    private javax.swing.JButton cancelarBtn1;
+    private javax.swing.JButton cancelarEditar;
     private javax.swing.JButton cancelarEliminarBtn;
     private javax.swing.JTextField coordenada1Field;
     private javax.swing.JTextField coordenada1Field1;
