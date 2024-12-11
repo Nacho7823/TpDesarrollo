@@ -1,10 +1,19 @@
-server = window.location.origin;
+const btnCliente = document.getElementById("btn-clienteui")
+const btnItemMenu = document.getElementById("btn-itemmenuui")
+const btnPedidos = document.getElementById("btn-pedidosui")
 
-btnBuscar = document.getElementById("btn-buscar")
-// btnEditar = document.getElementById("btn-editar")
-// btnEliminar = document.getElementById("btn-eliminar")
-btnCrear = document.getElementById("btn-crear")
+btnCliente.addEventListener("click", ()=>{
+    window.location.href = "../cliente/cliente.html";
+});
 
+const btnCrear = document.getElementById("btn-crear")
+btnCrear.addEventListener("click", ()=>{
+    window.location.href = "crear/vendedorcrear.html";
+})
+
+// server = window.location.origin;
+
+// btnBuscar = document.getElementById("btn-buscar")
 
 btnBuscar.addEventListener("click", async () => {
 
