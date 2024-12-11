@@ -1,17 +1,17 @@
 const btnCliente = document.getElementById("btn-clienteui")
-const btnItemMenu = document.getElementById("btn-itemmenuui")
+const btnVendedor = document.getElementById("btn-vendedorui")
 const btnPedidos = document.getElementById("btn-pedidosui")
 
 btnCliente.addEventListener("click", ()=>{
     window.location.href = "../cliente/cliente.html";
 });
-btnItemMenu.addEventListener("click", ()=>{
-    window.location.href = "../itemmenu/itemmenu.html";
+btnVendedor.addEventListener("click", ()=>{
+    window.location.href = "../vendedor/vendedor.html";
 });
 
 const btnCrear = document.getElementById("btn-crear")
 btnCrear.addEventListener("click", ()=>{
-    window.location.href = "crear/vendedorcrear.html";
+    window.location.href = "crear/itemmenucrear.html";
 })
 
 // server = window.location.origin;
@@ -21,7 +21,7 @@ btnCrear.addEventListener("click", ()=>{
 btnBuscar.addEventListener("click", async () => {
 
     try {
-        const response = await fetch(server + "/vendedores");
+        const response = await fetch(server + "/itemmenus");
         if (!response.ok) {
             alert("no se pudo obtener los vendedores: response not ok");
             throw new Error("error al obtener los vendedores " + response.status);

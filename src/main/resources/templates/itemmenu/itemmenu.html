@@ -2,18 +2,18 @@
 <html>
 
 <head>
-    <title>Vendedor</title>
+    <title>Item menu</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="vendedor.css">
+    <link rel="stylesheet" href="itemmenu.css">
 </head>
 
 <body>
     <header>
         <div>
             <button class="headerbtn" id="btn-clienteui">Cliente</button>
-            <button class="headerbtn1" id="btn-vendedorui">Vendedor</button>
-            <button class="headerbtn" id="btn-itemmenuui">ItemMenu</button>
+            <button class="headerbtn" id="btn-vendedorui">Vendedor</button>
+            <button class="headerbtn1" id="btn-itemmenuui">ItemMenu</button>
             <button class="headerbtn" id="btn-pedidosui">Pedidos</button>
         </div>
     </header>
@@ -21,7 +21,7 @@
         <div id="upperpan">
             <div id="upperpan1">
                 <div class="div_upperpan_search">
-                    <label>ID Vendedor</label>
+                    <label>ID Item menu</label>
                     <input>
                 </div>
                 <div class="div_upperpan_search">
@@ -41,11 +41,15 @@
                         <tr>
                             <th>ID</th>
                             <th>Nombre</th>
-                            <th>Direccion</th>
-                            <th>Latitud</th>
-                            <th>Longitud</th>
-                            <th>Editar</th>
-                            <th>Eliminar</th>
+                            <th>Descripcion</th>
+                            <th>Precio</th>
+                            <th>Categoria</th>
+                            <th>Peso</th>
+                            <th>Apto Vegano</th>
+                            <th>Apto Celiaco</th>
+                            <th>Calorias</th>
+                            <th>Graduacion alcoholica</th>
+                            <th>Tamaño</th>
                         </tr>
                     </thead>
                     <tbody id="tablebody">
@@ -60,6 +64,6 @@
         <button id="btn-crear">Crear Vendedor</button>
     </footer>
 </body>
-<script src="vendedor.js"></script>
+<script src="itemmenu.js"></script>
 
 </html>
