@@ -51,9 +51,7 @@ public class Pedido {
     @Column
     private List<Observador> observadores = new ArrayList<>();
     
-    public Pedido(){
-        
-    }
+    
     
 
     
