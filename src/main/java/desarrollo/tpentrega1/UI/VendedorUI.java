@@ -599,7 +599,7 @@ public class VendedorUI extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_crearBtnActionPerformed
 
-<<<<<<< Updated upstream
+
     private void cancelarEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarEditarActionPerformed
         nombreField1.setText("");
         direccionField1.setText("");
@@ -607,7 +607,7 @@ public class VendedorUI extends javax.swing.JPanel {
         coordenada2Field1.setText("");
         editarFrame.setVisible(false);
     }//GEN-LAST:event_cancelarEditarActionPerformed
-=======
+
     private void cancelarBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarBtn1ActionPerformed
         nombreField.setText("");
         direccionField.setText("");
@@ -615,7 +615,7 @@ public class VendedorUI extends javax.swing.JPanel {
         coordenada2Field.setText("");
         editarFrame.setVisible(false);
     }//GEN-LAST:event_cancelarBtn1ActionPerformed
->>>>>>> Stashed changes
+
 
     private void cancelarEliminarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarEliminarBtnActionPerformed
         nombreField2.setText("");
