@@ -8,6 +8,9 @@ btnVendedor.addEventListener("click", () => {
 btnItemMenu.addEventListener("click", () => {
     window.location.href = "../itemmenu/itemmenu.html";
 });
+btnPedidos.addEventListener("click", () => {
+    window.location.href = "../pedidos/pedidos.html";
+});
 
 // server = window.location.origin;
 
@@ -21,31 +24,32 @@ btnCrear.addEventListener("click", () => {
 })
 
 
-btnBuscar.addEventListener("click", async () => {
-
-    try {
-        const response = await fetch(server + "/clientes");
-        if (!response.ok) {
-            alert("no se pudo obtener los vendedores: response not ok");
-            throw new Error("error al obtener los vendedores " + response.status);
-        }
-
-        const data = await response.json();
-
-        alert("type: " + typeof (data) + " " + JSON.stringify(data));
-
-        data.forEach(element => {
-            addRow(cliente)
-        });
 
 
-
-
-    } catch (error) {
-        alert(error);
+const defData = [
+    {
+        "id_cliente": 1,
+        "nombre": "cliente 1",
+        "cuit": "cuit 1",
+        "email": "email 1",
+        "direccion": "direccion 1",
+        "longitud": "longitud 1",
+        "latitud": "latitud 1"
+    },
+    { 
+        "id_cliente": 2,
+        "nombre": "cliente 2",
+        "cuit": "cuit 2",
+        "email": "email 2",
+        "direccion": "direccion 2",
+        "longitud": "longitud 2",
+        "latitud": "latitud 2"
     }
-});
+];
 
+defData.forEach(cliente => {
+    addRow(cliente);
+});
 
 function addRow(cliente) {
     const row = document.createElement('tr');

@@ -8,201 +8,69 @@ btnCliente.addEventListener("click", ()=>{
 btnVendedor.addEventListener("click", ()=>{
     window.location.href = "../vendedor/vendedor.html";
 });
+btnPedidos.addEventListener("click", () => {
+    window.location.href = "../pedidos/pedidos.html";
+});
 
-const btnCrear = document.getElementById("btn-crear")
-btnCrear.addEventListener("click", ()=>{
-    window.location.href = "crear/itemmenucrear.html";
+const btnCrearBebida = document.getElementById("btn-crear-bebida")
+const btnCrearPlato = document.getElementById("btn-crear-plato")
+
+btnCrearBebida.addEventListener("click", ()=>{
+    window.location.href = "crear/bebidacrear.html";
+})
+btnCrearPlato.addEventListener("click", ()=>{
+    window.location.href = "crear/platocrear.html";
 })
 
 // server = window.location.origin;
 
 // btnBuscar = document.getElementById("btn-buscar")
 
-btnBuscar.addEventListener("click", async () => {
-
-    try {
-        const response = await fetch(server + "/itemmenus");
-        if (!response.ok) {
-            alert("no se pudo obtener los vendedores: response not ok");
-            throw new Error("error al obtener los vendedores " + response.status);
-        }
-        const data = await response.json();
-        alert(data);
-
-    } catch (error) {
-        alert(error);
+const defData = [
+    {
+        id_itemmenu: 1,
+        nombre: "itemmenu 1",
+        descripcion: "descripcion 1",
+        precio: "precio 1",
+        categoria: "categoria 1",
+        peso: "peso 1",
+        aptoVegano: "aptoVegano 1",
+        aptoCeliaco: "aptoCeliaco 1",
+        calorias: "calorias 1",
+        graduacionAlcoholica: "graduacionAlcoholica 1",
+        tamano: "tamano 1"
+    },
+    {
+        id_itemmenu: 2,
+        nombre: "itemmenu 2",
+        descripcion: "descripcion 2",
+        precio: "precio 2",
+        categoria: "categoria 2",
+        peso: "peso 2",
+        aptoVegano: "aptoVegano 2",
+        aptoCeliaco: "aptoCeliaco 2",
+        calorias: "calorias 2",
+        graduacionAlcoholica: "graduacionAlcoholica 2",
+        tamano: "tamano 2"
     }
-});
+]
 
+defData.forEach(item => addRow(item))
 
-def = [{
-        "id_cliente": 1,
-        "nombre": "Luis Perez",
-        "direccion": "Dorrego 123",
-        "longitud": 0.4,
-        "latitud": 0.1
-    }, 
-    {
-        "id_cliente": 1,
-        "nombre": "Luis Perez",
-        "direccion": "Dorrego 123",
-        "longitud": 0.4,
-        "latitud": 0.1
-    },
-    {
-        "id_cliente": 1,
-        "nombre": "Luis Perez",
-        "direccion": "Dorrego 123",
-        "longitud": 0.4,
-        "latitud": 0.1
-    },
-    {
-        "id_cliente": 1,
-        "nombre": "Luis Perez",
-        "direccion": "Dorrego 123",
-        "longitud": 0.4,
-        "latitud": 0.1
-    },
-    {
-        "id_cliente": 1,
-        "nombre": "Luis Perez",
-        "direccion": "Dorrego 123",
-        "longitud": 0.4,
-        "latitud": 0.1
-    },
-    {
-        "id_cliente": 1,
-        "nombre": "Luis Perez",
-        "direccion": "Dorrego 123",
-        "longitud": 0.4,
-        "latitud": 0.1
-    },
-    {
-        "id_cliente": 1,
-        "nombre": "Luis Perez",
-        "direccion": "Dorrego 123",
-        "longitud": 0.4,
-        "latitud": 0.1
-    },
-    {
-        "id_cliente": 1,
-        "nombre": "Luis Perez",
-        "direccion": "Dorrego 123",
-        "longitud": 0.4,
-        "latitud": 0.1
-    },
-    {
-        "id_cliente": 1,
-        "nombre": "Luis Perez",
-        "direccion": "Dorrego 123",
-        "longitud": 0.4,
-        "latitud": 0.1
-    },
-    {
-        "id_cliente": 1,
-        "nombre": "Luis Perez",
-        "direccion": "Dorrego 123",
-        "longitud": 0.4,
-        "latitud": 0.1
-    },
-    {
-        "id_cliente": 1,
-        "nombre": "Luis Perez",
-        "direccion": "Dorrego 123",
-        "longitud": 0.4,
-        "latitud": 0.1
-    },
-    {
-        "id_cliente": 1,
-        "nombre": "Luis Perez",
-        "direccion": "Dorrego 123",
-        "longitud": 0.4,
-        "latitud": 0.1
-    },
-    {
-        "id_cliente": 1,
-        "nombre": "Luis Perez",
-        "direccion": "Dorrego 123",
-        "longitud": 0.4,
-        "latitud": 0.1
-    },
-    {
-        "id_cliente": 1,
-        "nombre": "Luis Perez",
-        "direccion": "Dorrego 123",
-        "longitud": 0.4,
-        "latitud": 0.1
-    },
-    {
-        "id_cliente": 1,
-        "nombre": "Luis Perez",
-        "direccion": "Dorrego 123",
-        "longitud": 0.4,
-        "latitud": 0.1
-    },
-    {
-        "id_cliente": 1,
-        "nombre": "Luis Perez",
-        "direccion": "Dorrego 123",
-        "longitud": 0.4,
-        "latitud": 0.1
-    },
-    {
-        "id_cliente": 1,
-        "nombre": "Luis Perez",
-        "direccion": "Dorrego 123",
-        "longitud": 0.4,
-        "latitud": 0.1
-    },
-    {
-        "id_cliente": 1,
-        "nombre": "Luis Perez",
-        "direccion": "Dorrego 123",
-        "longitud": 0.4,
-        "latitud": 0.1
-    },
-    {
-        "id_cliente": 1,
-        "nombre": "Luis Perez",
-        "direccion": "Dorrego 123",
-        "longitud": 0.4,
-        "latitud": 0.1
-    },
-    {
-        "id_cliente": 1,
-        "nombre": "Luis Perez",
-        "direccion": "Dorrego 123",
-        "longitud": 0.4,
-        "latitud": 0.1
-    },
-    {
-        "id_cliente": 1,
-        "nombre": "Luis Perez",
-        "direccion": "Dorrego 123",
-        "longitud": 0.4,
-        "latitud": 0.1
-    },
-    {
-        "id_cliente": 1,
-        "nombre": "Luis Perez",
-        "direccion": "Dorrego 123",
-        "longitud": 0.4,
-        "latitud": 0.1
-    }
-];
-
-def.forEach(e => {
-    addRow(e)
-})
-
-function addRow(vendedor) {
+function addRow(item) {
     const row = document.createElement('tr');
     row.innerHTML = `
-                <th>${vendedor.id_cliente}</th>
-                <th>${vendedor.nombre}</th>
-                <th>${vendedor.direccion}</th>
-                <th>${vendedor.longitud}</th>
-                <th>${vendedor.latitud}</th>
+                <th>${item.id_itemmenu}</th>
+                <th>${item.nombre}</th>
+                <th>${item.descripcion}</th>
+                <th>${item.precio}</th>
+                <th>${item.categoria}</th>
+                <th>${item.peso}</th>
+                <th>${item.aptoVegano}</th>
+                <th>${item.aptoCeliaco}</th>
+                <th>${item.calorias}</th>
+                <th>${item.graduacionAlcoholica}</th>
+                <th>${item.tamano}</th>
                 <th>editar</th>
                 <th>eliminar</th>
             `;

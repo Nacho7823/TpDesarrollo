@@ -131,14 +131,8 @@ footer {
     background-color: #64B4FF;
     border: 0;
 }
-#div-crear {
-    display: flex;
-    flex-direction: row;
-}
 
-#btn-crear-bebida, #btn-crear-plato {
-    margin-right: 10px;
-    flex-grow: 1;
+#btn-crear {
     width: 100px;
     color: #ffffff;
     background-color: #64B4FF;

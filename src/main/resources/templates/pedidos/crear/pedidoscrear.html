@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Crear Pedido</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="pedidoscrear.css">
+</head>
+
+<body>
+    <div id="div-root">
+        <div id="upperpan">
+            <div class="div_upperpan_search">
+                <label>ID Pedido</label>
+                <input id="input-id">
+            </div>
+            <div class="div_upperpan_search">
+                <label>Cliente</label>
+                <select id="select-cliente" name="cliente"></select>
+            </div>
+            <div class="div_upperpan_search">
+                <label>Vendedor</label>
+                <select id="select-vendedor" name="vendedor"></select>
+            </div>
+            <div class="div_upperpan_search">
+                <label>Estado</label>
+                <select id="select-estado" name="estado"></select>
+            </div>
+            <div class="div_upperpan_search">
+                <label>Forma de pago</label>
+                <div>
+                    <select id="select-formapago" name="estado">
+                        <option value="mercadopago">mercadopago</option>
+                        <option value="transferencia">transferencia</option>
+                    </select>
+                    <div id="div-formapago"></div>
+                </div>
+            </div>
+            <div class="div_upperpan_search">
+                <label>Total</label>
+                <label id="lable-total">
+            </div>
+
+            <div>
+                <label>Items</label>
+                <table>
+                    <thead> 
+                        <tr>
+                            <th>ID</th>
+                            <th>Cliente</th>
+                            <th>Vendedor</th>
+                            <th>Estado</th>
+                            <th>Forma de pago</th>
+                            <th>Total</th>
+                            <th>Ver items</th>
+                            <th>Editar</th>
+                            <th>Eliminar</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div id="divbtns">
+                <button id="btn-modificar-items">Modificar items</button>
+                <button id="btn-volver">Volver</button>
+                <button id="btn-crear">Crear</button>
+            </div>
+
+        </div>
+    </div>
+    <footer>
+
+    </footer>
+</body>
+<script src="pedidoscrear.js"></script>
+
+</html>

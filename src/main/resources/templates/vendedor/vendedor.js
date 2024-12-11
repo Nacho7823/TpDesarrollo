@@ -8,6 +8,9 @@ btnCliente.addEventListener("click", ()=>{
 btnItemMenu.addEventListener("click", ()=>{
     window.location.href = "../itemmenu/itemmenu.html";
 });
+btnPedidos.addEventListener("click", () => {
+    window.location.href = "../pedidos/pedidos.html";
+});
 
 const btnCrear = document.getElementById("btn-crear")
 btnCrear.addEventListener("click", ()=>{
@@ -18,187 +21,34 @@ btnCrear.addEventListener("click", ()=>{
 
 // btnBuscar = document.getElementById("btn-buscar")
 
-btnBuscar.addEventListener("click", async () => {
-
-    try {
-        const response = await fetch(server + "/vendedores");
-        if (!response.ok) {
-            alert("no se pudo obtener los vendedores: response not ok");
-            throw new Error("error al obtener los vendedores " + response.status);
-        }
-        const data = await response.json();
-        alert(data);
-
-    } catch (error) {
-        alert(error);
-    }
-});
 
 
-def = [{
-        "id_cliente": 1,
-        "nombre": "Luis Perez",
-        "direccion": "Dorrego 123",
-        "longitud": 0.4,
-        "latitud": 0.1
-    }, 
+
+const defData = [
     {
-        "id_cliente": 1,
-        "nombre": "Luis Perez",
-        "direccion": "Dorrego 123",
-        "longitud": 0.4,
-        "latitud": 0.1
+        id_vendedor: 1,
+        nombre: "vendedor 1",
+        direccion: "direccion 1",
+        longitud: "longitud 1",
+        latitud: "latitud 1"
     },
     {
-        "id_cliente": 1,
-        "nombre": "Luis Perez",
-        "direccion": "Dorrego 123",
-        "longitud": 0.4,
-        "latitud": 0.1
-    },
-    {
-        "id_cliente": 1,
-        "nombre": "Luis Perez",
-        "direccion": "Dorrego 123",
-        "longitud": 0.4,
-        "latitud": 0.1
-    },
-    {
-        "id_cliente": 1,
-        "nombre": "Luis Perez",
-        "direccion": "Dorrego 123",
-        "longitud": 0.4,
-        "latitud": 0.1
-    },
-    {
-        "id_cliente": 1,
-        "nombre": "Luis Perez",
-        "direccion": "Dorrego 123",
-        "longitud": 0.4,
-        "latitud": 0.1
-    },
-    {
-        "id_cliente": 1,
-        "nombre": "Luis Perez",
-        "direccion": "Dorrego 123",
-        "longitud": 0.4,
-        "latitud": 0.1
-    },
-    {
-        "id_cliente": 1,
-        "nombre": "Luis Perez",
-        "direccion": "Dorrego 123",
-        "longitud": 0.4,
-        "latitud": 0.1
-    },
-    {
-        "id_cliente": 1,
-        "nombre": "Luis Perez",
-        "direccion": "Dorrego 123",
-        "longitud": 0.4,
-        "latitud": 0.1
-    },
-    {
-        "id_cliente": 1,
-        "nombre": "Luis Perez",
-        "direccion": "Dorrego 123",
-        "longitud": 0.4,
-        "latitud": 0.1
-    },
-    {
-        "id_cliente": 1,
-        "nombre": "Luis Perez",
-        "direccion": "Dorrego 123",
-        "longitud": 0.4,
-        "latitud": 0.1
-    },
-    {
-        "id_cliente": 1,
-        "nombre": "Luis Perez",
-        "direccion": "Dorrego 123",
-        "longitud": 0.4,
-        "latitud": 0.1
-    },
-    {
-        "id_cliente": 1,
-        "nombre": "Luis Perez",
-        "direccion": "Dorrego 123",
-        "longitud": 0.4,
-        "latitud": 0.1
-    },
-    {
-        "id_cliente": 1,
-        "nombre": "Luis Perez",
-        "direccion": "Dorrego 123",
-        "longitud": 0.4,
-        "latitud": 0.1
-    },
-    {
-        "id_cliente": 1,
-        "nombre": "Luis Perez",
-        "direccion": "Dorrego 123",
-        "longitud": 0.4,
-        "latitud": 0.1
-    },
-    {
-        "id_cliente": 1,
-        "nombre": "Luis Perez",
-        "direccion": "Dorrego 123",
-        "longitud": 0.4,
-        "latitud": 0.1
-    },
-    {
-        "id_cliente": 1,
-        "nombre": "Luis Perez",
-        "direccion": "Dorrego 123",
-        "longitud": 0.4,
-        "latitud": 0.1
-    },
-    {
-        "id_cliente": 1,
-        "nombre": "Luis Perez",
-        "direccion": "Dorrego 123",
-        "longitud": 0.4,
-        "latitud": 0.1
-    },
-    {
-        "id_cliente": 1,
-        "nombre": "Luis Perez",
-        "direccion": "Dorrego 123",
-        "longitud": 0.4,
-        "latitud": 0.1
-    },
-    {
-        "id_cliente": 1,
-        "nombre": "Luis Perez",
-        "direccion": "Dorrego 123",
-        "longitud": 0.4,
-        "latitud": 0.1
-    },
-    {
-        "id_cliente": 1,
-        "nombre": "Luis Perez",
-        "direccion": "Dorrego 123",
-        "longitud": 0.4,
-        "latitud": 0.1
-    },
-    {
-        "id_cliente": 1,
-        "nombre": "Luis Perez",
-        "direccion": "Dorrego 123",
-        "longitud": 0.4,
-        "latitud": 0.1
+        id_vendedor: 2,
+        nombre: "vendedor 2",
+        direccion: "direccion 2",
+        longitud: "longitud 2",
+        latitud: "latitud 2"
     }
 ];
 
-def.forEach(e => {
+defData.forEach(e => {
     addRow(e)
 })
 
 function addRow(vendedor) {
     const row = document.createElement('tr');
     row.innerHTML = `
-                <th>${vendedor.id_cliente}</th>
+                <th>${vendedor.id_vendedor}</th>
                 <th>${vendedor.nombre}</th>
                 <th>${vendedor.direccion}</th>
                 <th>${vendedor.longitud}</th>

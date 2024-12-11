@@ -2,10 +2,10 @@
 <html>
 
 <head>
-    <title>Item menu</title>
+    <title>Pedidos</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="itemmenu.css">
+    <link rel="stylesheet" href="pedidos.css">
 </head>
 
 <body>
@@ -13,15 +13,15 @@
         <div>
             <button class="headerbtn" id="btn-clienteui">Cliente</button>
             <button class="headerbtn" id="btn-vendedorui">Vendedor</button>
-            <button class="headerbtn1" id="btn-itemmenuui">ItemMenu</button>
-            <button class="headerbtn" id="btn-pedidosui">Pedidos</button>
+            <button class="headerbtn" id="btn-itemmenuui">ItemMenu</button>
+            <button class="headerbtn1" id="btn-pedidosui">Pedidos</button>
         </div>
     </header>
     <div id="div-root">
         <div id="upperpan">
             <div id="upperpan1">
                 <div class="div_upperpan_search">
-                    <label>ID Item menu</label>
+                    <label>ID Pedido</label>
                     <input>
                 </div>
                 <div class="div_upperpan_search">
@@ -40,16 +40,14 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Nombre</th>
-                            <th>Descripcion</th>
-                            <th>Precio</th>
-                            <th>Categoria</th>
-                            <th>Peso</th>
-                            <th>Apto Vegano</th>
-                            <th>Apto Celiaco</th>
-                            <th>Calorias</th>
-                            <th>Graduacion alcoholica</th>
-                            <th>Tamaño</th>
+                            <th>Cliente</th>
+                            <th>Vendedor</th>
+                            <th>Estado</th>
+                            <th>Forma de pago</th>
+                            <th>Total</th>
+                            <th>Ver items</th>
+                            <th>Editar</th>
+                            <th>Eliminar</th>
                         </tr>
                     </thead>
                     <tbody id="tablebody">
@@ -61,12 +59,9 @@
     </div>
     <footer>
         <button id="btn-refresh">Refrescar</button>
-        <div id="div-crear">
-            <button id="btn-crear-bebida">Crear bebida</button>
-            <button id="btn-crear-plato">Crear plato</button>
-        </div>
+        <button id="btn-crear">Crear Pedido</button>
     </footer>
 </body>
-<script src="itemmenu.js"></script>
+<script src="pedidos.js"></script>
 
 </html>
