@@ -35,6 +35,10 @@ public class TpSpringApplication {
     private static String vendedor_css;
     private static String vendedor_js;
     
+    private static String cliente_html;
+    private static String cliente_css;
+    private static String cliente_js;
+    
     @Autowired
     private VendedorRepository vendedorRepository;
     @Autowired
@@ -55,6 +59,10 @@ public class TpSpringApplication {
             vendedor_html = cargarArchivo("templates/vendedor/vendedor.html");
             vendedor_css = cargarArchivo("templates/vendedor/vendedor.css");
             vendedor_js = cargarArchivo("templates/vendedor/vendedor.js");
+            
+            cliente_html = cargarArchivo("templates/cliente/cliente.html");
+            cliente_css = cargarArchivo("templates/cliente/cliente.css");
+            cliente_js = cargarArchivo("templates/cliente/cliente.js");
 
         } catch (IOException e) {
             System.out.println("error html");
@@ -138,6 +146,21 @@ public class TpSpringApplication {
     @GetMapping("/vendedor/vendedor.js")
     public ResponseEntity<String> vendedorJs() {
         return new ResponseEntity<>(vendedor_js, HttpStatus.OK);
+    }
+    
+    @GetMapping("/cliente/cliente.html")
+    public ResponseEntity<String> clienteHtml() {
+        return new ResponseEntity<>(cliente_html, HttpStatus.OK);
+    }
+
+    @GetMapping("/cliente/cliente.css")
+    public ResponseEntity<String> clienteCss() {
+        return new ResponseEntity<>(cliente_css, HttpStatus.OK);
+    }
+
+    @GetMapping("/cliente/cliente.js")
+    public ResponseEntity<String> clienteJs() {
+        return new ResponseEntity<>(cliente_js, HttpStatus.OK);
     }
 
     @GetMapping("/vendedores")
