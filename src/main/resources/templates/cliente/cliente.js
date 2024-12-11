@@ -5,6 +5,9 @@ const btnPedidos = document.getElementById("btn-pedidosui")
 btnVendedor.addEventListener("click", () => {
     window.location.href = "../vendedor/vendedor.html";
 });
+btnItemMenu.addEventListener("click", () => {
+    window.location.href = "../itemmenu/itemmenu.html";
+});
 
 // server = window.location.origin;
 
