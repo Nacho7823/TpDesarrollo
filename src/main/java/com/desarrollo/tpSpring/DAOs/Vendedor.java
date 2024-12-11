@@ -15,7 +15,7 @@ import jakarta.persistence.*;
 public class Vendedor {
     @Id
     @Column
-    private int id_cliente;
+    private int id_vendedor;
     
     @Column
     private String nombre;

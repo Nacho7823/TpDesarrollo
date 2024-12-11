@@ -1,6 +1,9 @@
 package com.desarrollo.tpSpring;
 
 import com.desarrollo.tpSpring.DAOs.Cliente;
+import com.desarrollo.tpSpring.DAOs.ClienteRepository;
+import com.desarrollo.tpSpring.DAOs.Vendedor;
+import com.desarrollo.tpSpring.DAOs.VendedorRepository;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -15,6 +18,7 @@ import org.hibernate.*;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,8 +34,17 @@ public class TpSpringApplication {
     private static String vendedor_html;
     private static String vendedor_css;
     private static String vendedor_js;
+    
+    @Autowired
+    private VendedorRepository vendedorRepository;
+    @Autowired
+    private ClienteRepository clienteRepository;
 
     public static void main(String[] args) {
+        // mvn spring-boot:run
+        // mvnw.cmd spring-boot:run
+        // mvnw.cmd compile
+        
         SpringApplication.run(TpSpringApplication.class, args);
 
         try {
@@ -98,39 +111,45 @@ public class TpSpringApplication {
 //        return new ResponseEntity<>("ok:" + d, HttpStatus.OK);
 //    }
     @GetMapping("/index.html")
-    public static ResponseEntity<String> indexHtml() {
+    public ResponseEntity<String> indexHtml() {
         return new ResponseEntity<>(index_html, HttpStatus.OK);
     }
 
     @GetMapping("/index.css")
-    public static ResponseEntity<String> indexCss() {
+    public ResponseEntity<String> indexCss() {
         return new ResponseEntity<>(index_css, HttpStatus.OK);
     }
 
     @GetMapping("/index.js")
-    public static ResponseEntity<String> indexJs() {
+    public ResponseEntity<String> indexJs() {
         return new ResponseEntity<>(index_js, HttpStatus.OK);
     }
 
     @GetMapping("/vendedor/vendedor.html")
-    public static ResponseEntity<String> vendedorHtml() {
+    public ResponseEntity<String> vendedorHtml() {
         return new ResponseEntity<>(vendedor_html, HttpStatus.OK);
     }
 
     @GetMapping("/vendedor/vendedor.css")
-    public static ResponseEntity<String> vendedorCss() {
+    public ResponseEntity<String> vendedorCss() {
         return new ResponseEntity<>(vendedor_css, HttpStatus.OK);
     }
 
     @GetMapping("/vendedor/vendedor.js")
-    public static ResponseEntity<String> vendedorJs() {
+    public ResponseEntity<String> vendedorJs() {
         return new ResponseEntity<>(vendedor_js, HttpStatus.OK);
     }
 
     @GetMapping("/vendedores")
-    public static ResponseEntity<String> vendedores() {
-        String s = "hola";
-        return new ResponseEntity<>(s, HttpStatus.OK);
+    public ResponseEntity<Iterable<Vendedor>> vendedores() {
+        Iterable<Vendedor> vend = vendedorRepository.findAll();
+        return ResponseEntity.ok(vend);
+    }
+    
+    @GetMapping("/clientes")
+    public ResponseEntity<Iterable<Cliente>> clientes() {
+        Iterable<Cliente> vend = clienteRepository.findAll();
+        return ResponseEntity.ok(vend);
     }
 
 //    @GetMapping("/style.css")
