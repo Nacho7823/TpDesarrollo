@@ -34,7 +34,9 @@ header {
 
 #div-root {
     height: 100%;
-    border: 3px solid #C8DDF2;
+    border-top: 3px solid #C8DDF2;
+    border-left: 3px solid #C8DDF2;
+    border-right: 3px solid #C8DDF2;
     background-color: #E0F0FE;
 }
 
@@ -153,4 +155,30 @@ header {
     
     border-radius: 0px 0px 10px 10px;
     color:#dddddd;
+}
+
+
+footer {
+    height:100px;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-left: 3px solid #C8DDF2;
+    border-right: 3px solid #C8DDF2;
+    border-bottom: 3px solid #C8DDF2;
+    background-color: #E0F0FE;
+}
+
+#btn-refresh {
+    width: 100px;
+    color: #ffffff;
+    background-color: #64B4FF;
+    border: 0;
+}
+
+#btn-crear {
+    width: 100px;
+    color: #ffffff;
+    background-color: #64B4FF;
+    border: 0;
 }
