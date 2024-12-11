@@ -4,7 +4,7 @@
  */
 package com.desarrollo.tpSpring.Controllers;
 
-import com.desarrollo.tpSpring.DAOs.Vendedor;
+import com.desarrollo.tpSpring.entities.Vendedor;
 import com.desarrollo.tpSpring.DAOs.VendedorRepository;
 import org.springframework.web.bind.annotation.*;
 //import org.springframework.web.bind.annotation.RequestMapping;

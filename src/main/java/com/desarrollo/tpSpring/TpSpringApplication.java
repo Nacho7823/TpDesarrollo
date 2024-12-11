@@ -1,8 +1,8 @@
 package com.desarrollo.tpSpring;
 
-import com.desarrollo.tpSpring.DAOs.Cliente;
+import com.desarrollo.tpSpring.entities.Cliente;
 import com.desarrollo.tpSpring.DAOs.ClienteRepository;
-import com.desarrollo.tpSpring.DAOs.Vendedor;
+import com.desarrollo.tpSpring.entities.Vendedor;
 import com.desarrollo.tpSpring.DAOs.VendedorRepository;
 import java.io.IOException;
 import java.nio.file.Files;

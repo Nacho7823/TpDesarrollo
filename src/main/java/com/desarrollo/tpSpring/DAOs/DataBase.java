@@ -4,6 +4,8 @@
  */
 package com.desarrollo.tpSpring.DAOs;
 
+import com.desarrollo.tpSpring.entities.Cliente;
+import com.desarrollo.tpSpring.entities.Vendedor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;

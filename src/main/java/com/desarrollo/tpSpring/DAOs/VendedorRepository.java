@@ -8,6 +8,7 @@ package com.desarrollo.tpSpring.DAOs;
  *
  * @author imsac
  */
+import com.desarrollo.tpSpring.entities.Vendedor;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
