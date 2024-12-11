@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Main menu</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="cliente.css">
+</head>
+
+<body>
+    <header>
+        <h1 id="header-text">Cliente</h1>
+    </header>
+    <div id="div-root">
+        <div id="div-center">
+            <div class="divinfo">
+                <label class="lbinfo">ID Cliente</label>
+                <input class="inputinfo">
+            </div>
+            <div class="divinfo">
+                <label class="lbinfo">Nombre</label>
+                <input class="inputinfo">
+            </div>
+            <div class="divinfo">
+                <label class="lbinfo">Cuit</label>
+                <input class="inputinfo">
+            </div>
+            <div class="divinfo">
+                <label class="lbinfo">Email</label>
+                <input class="inputinfo">
+            </div>
+            <div class="divinfo">
+                <label class="lbinfo">Direccion</label>
+                <input class="inputinfo">
+            </div>
+            <div class="divinfo">
+                <label class="lbinfo">Latitud</label>
+                <input class="inputinfo">
+            </div>
+            <div class="divinfo">
+                <label class="lbinfo">Longitud</label>
+                <input class="inputinfo">
+            </div>
+
+            <div id="divbuttons">
+                <button class="infobuttons" id="btn-buscar">Buscar</button>
+                <button class="infobuttons" id="btn-editar">Editar</button>
+                <button class="infobuttons" id="btn-eliminar">Eliminar</button>
+                <button class="infobuttons" id="btn-crear">Crear</button>
+            </div>
+        </div>
+        <div class="divtable">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID Cliente</th>
+                        <th>Nombre</th>
+                        <th>Cuit</th>
+                        <th>Email</th>
+                        <th>Direccion</th>
+                        <th>Longitud</th>
+                        <th>Latitud</th>
+                    </tr>
+                </thead>
+                <tbody id="tablebody">
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <footer>
+        <button id="btn-volver">Volver</button>
+    </footer>
+</body>
+<script src="cliente.js"></script>
+
+</html>
