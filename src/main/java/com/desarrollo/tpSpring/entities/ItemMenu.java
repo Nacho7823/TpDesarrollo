@@ -38,8 +38,7 @@ public abstract class ItemMenu {
     private double precio;
     @Column
     private String categoria; 
-    @ManyToOne
-    private Vendedor vendedor;
+    
 
     
     

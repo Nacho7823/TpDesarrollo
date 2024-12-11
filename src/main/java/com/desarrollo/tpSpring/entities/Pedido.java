@@ -69,8 +69,13 @@ public class Pedido {
         this.items=items;
     }
 
-    private boolean validarItemsUnVendedor(List<ItemMenu> items, Vendedor vendedor) {
-        return items.stream().allMatch(item -> item.getVendedor().equals(vendedor));
+     private boolean validarItemsUnVendedor(List<ItemMenu> items, Vendedor vendedor) {
+        List<ItemMenu> itemsVendedor = vendedor.getItemsMenu();
+
+        for (ItemMenu item : items) 
+            if(!itemsVendedor.contains(item)) 
+                return false;
+        return true;
     }
     
  

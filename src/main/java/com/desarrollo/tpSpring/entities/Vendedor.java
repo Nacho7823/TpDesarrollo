@@ -7,6 +7,8 @@ package com.desarrollo.tpSpring.entities;
 
 import lombok.*;
 import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -30,7 +32,13 @@ public class Vendedor {
     @Column
     private double latitud;
 
-   
+    private List<ItemMenu> itemsMenu;
+    
+    public ArrayList<ItemMenu> getItemsMenu(){
+        return (ArrayList)this.itemsMenu;
+    }
+
+    
     
     
     
