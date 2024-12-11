@@ -9,6 +9,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,9 +20,11 @@ import lombok.NoArgsConstructor;
  *
  * @author florh
  */
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "itemmenu")
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class ItemMenu {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -33,46 +38,9 @@ public abstract class ItemMenu {
     private double precio;
     @Column
     private String categoria; 
+    
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public double getPrecio() {
-        return precio;
-    }
-
-    public void setPrecio(double precio) {
-        this.precio = precio;
-    }
-
-    public String getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
-    }
+    
     
     
     protected ItemMenu(Builder<?> builder) {
@@ -82,6 +50,7 @@ public abstract class ItemMenu {
         this.precio = builder.precio;
         this.categoria = builder.categoria;
     }
+
 
     public static abstract class Builder<T extends Builder<T>> {
         private String id;

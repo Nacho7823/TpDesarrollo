@@ -7,12 +7,14 @@ package com.desarrollo.tpSpring.entities;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
  *
  * @author florh
  */
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -23,7 +25,9 @@ public class Transferencia extends Pago{
     private String cvu;
 
     Transferencia(String cuit, String cvu, double calcularTotal) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        this.cuit=cuit;
+        this.cvu=cvu;
+        super.setMonto(calcularTotal);
     }
     
     @Override
