@@ -19,6 +19,10 @@ btnCrear.addEventListener("click", ()=> {
     direccion = inputDireccion.value;
     longitud = Number(inputLongitud.value);
     latitud = Number(inputLatitud.value);
+
+    if (!verify(1, nombre, direccion, longitud, latitud)) {
+        return;
+    }
     
     s = "";
     s += "nombre: " + nombre + "\n";
@@ -52,3 +56,42 @@ btnCrear.addEventListener("click", ()=> {
 });
 
 
+function verify(id, nombre, direccion, longitud, latitud) {
+
+    if (id == null || id == "") {
+        alert("debe ingresar un id");
+        return false;    
+    }
+
+    if (nombre == null || nombre == "") {
+        alert("debe ingresar un nombre");
+        return false;    
+    }
+
+    if (direccion == null || direccion == "") {
+        alert("debe ingresar una direccion");
+        return false;    
+    }
+
+    if (longitud == null || longitud == "") {
+        alert("debe ingresar una longitud");
+        return false;    
+    }
+
+    if (latitud == null || latitud == "") {
+        alert("debe ingresar una latitud");
+        return false;    
+    }
+
+    if (nombre.length > 30) {
+        alert("el nombre debe tener menos de 30 caracteres");
+        return false;    
+    }
+
+    if (direccion.length > 50) {
+        alert("la direccion debe tener menos de 50 caracteres");
+        return false;    
+    }
+
+    return true;
+}

@@ -21,14 +21,14 @@ const btnBuscar = document.getElementById("btn-buscar");
 const inputBuscarId = document.getElementById("input-buscar-id");
 const inputBuscarNombre = document.getElementById("input-buscar-nombre");
 
+inputBuscarId.type = "number";
+
 const vendedores = [];
 
 btnCrear.addEventListener("click", () => window.location.href = "crear/vendedorcrear.html");
 btnBuscar.addEventListener("click", () => {
     id = inputBuscarId.value;
     nombre = inputBuscarNombre.value;
-
-    console.log(id, nombre);
 
     const filter = [];
     for (const vendedor of vendedores) {
@@ -50,8 +50,6 @@ btnBuscar.addEventListener("click", () => {
         }
     }
 
-    console.log(filter);
-
     clearTable();
     for (const v of filter) {
         addRow(v);
@@ -62,7 +60,6 @@ btnBuscar.addEventListener("click", () => {
 async function load() {
     const response = await fetch(window.location.origin + "/vendedor/vendedores");
     if (!response.ok) {
-
         alert("no se pudieron obtener los vendedores");
         return;
     }
@@ -78,22 +75,8 @@ async function load() {
 
 load();
 
-
-
-
-// defData.forEach(e => {
-//     addRow(e)
-// })
-
 function addRow(vendedor) {
     const row = document.createElement('tr');
-
-    const btnModificar = document.createElement('button');
-    const btnEliminar = document.createElement('button');
-    btnModificar.classList.add("btntable");
-    btnEliminar.classList.add("btntable");
-    btnModificar.addEventListener("click", () => modificarVendedor(vendedor.id_vendedor));
-    btnEliminar.addEventListener("click", () => eliminarVendedor(vendedor.id_vendedor));
 
     createCell = (text) => {
         const cell = document.createElement('th');

@@ -3,26 +3,32 @@ const btnModificar = document.getElementById("btn-modificar");
 
 const inputId = document.getElementById("input-id");
 const inputNombre = document.getElementById("input-nombre");
+const inputCuit = document.getElementById("input-cuit");
+const inputEmail = document.getElementById("input-email");
 const inputDireccion = document.getElementById("input-direccion");
 const inputLongitud = document.getElementById("input-longitud");
 const inputLatitud = document.getElementById("input-latitud");
 
 inputNombre.maxLength = 30;
+inputCuit.maxLength = 20;
+inputEmail.maxLength = 50;
 inputDireccion.maxLength = 50;
 inputLongitud.type = "number";  
 inputLongitud.step = "0.001";
 
-btnVolver.addEventListener("click", ()=> window.location.href = "../vendedor.html");
+btnVolver.addEventListener("click", ()=> window.location.href = "../cliente.html");
 
 btnModificar.addEventListener("click", ()=> {
-    id = vendedor.id_vendedor;
+    id = cliente.id_cliente;
     nombre = inputNombre.value;
+    cuit = inputCuit.value;
+    email = inputEmail.value;
     direccion = inputDireccion.value;
     longitud = Number(inputLongitud.value);
     latitud = Number(inputLatitud.value);
 
 
-    if (!verify(id, nombre, direccion, longitud, latitud)) {
+    if (!verify(id, nombre, cuit, email, direccion, longitud, latitud)) {
         return;
     }
 
@@ -30,30 +36,34 @@ btnModificar.addEventListener("click", ()=> {
     s = "";
     s += "id: " + id + "\n";
     s += "nombre: " + nombre + "\n";
+    s += "cuit: " + cuit + "\n";
+    s += "email: " + email + "\n";
     s += "direccion: " + direccion + "\n";
     s += "longitud: " + longitud + "\n";
     s += "latitud: " + latitud + "\n";
     
     console.log(s);
 
-    fetch(window.location.origin + "/vendedor/vendedor", {
+    fetch(window.location.origin + "/cliente/cliente", {
         method: "PUT",
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            id_vendedor: id,
+            id_cliente: id,
             nombre: nombre,
+            cuit: cuit,
+            email: email,
             direccion: direccion,
             longitud: longitud,
             latitud: latitud
         })
     }).then(response => {
         if (!response.ok) {
-            alert("no se pudo modificar el vendedor: " + id);
+            alert("no se pudo modificar el cliente: " + id);
             return;
         }
-        window.location.href = "../vendedor.html";
+        window.location.href = "../cliente.html";
     }).catch(e => {
         alert(e);
     });
@@ -61,17 +71,19 @@ btnModificar.addEventListener("click", ()=> {
 });
 
 
-const vend = localStorage.getItem("vendedor");
-const vendedor = JSON.parse(vend);
+const clie = localStorage.getItem("cliente");
+const cliente = JSON.parse(clie);
 
-inputId.value = vendedor.id_vendedor;
-inputNombre.value = vendedor.nombre;
-inputDireccion.value = vendedor.direccion;
-inputLongitud.value = vendedor.longitud;
-inputLatitud.value = vendedor.latitud;
+inputId.value = cliente.id_cliente;
+inputNombre.value = cliente.nombre;
+inputCuit.value = cliente.cuit;
+inputEmail.value = cliente.email;
+inputDireccion.value = cliente.direccion;
+inputLongitud.value = cliente.longitud;
+inputLatitud.value = cliente.latitud;
 
 
-function verify(id, nombre, direccion, longitud, latitud) {
+function verify(id, nombre, cuit, email, direccion, longitud, latitud) {
 
     if (id == null || id == "") {
         alert("debe ingresar un id");
@@ -81,6 +93,16 @@ function verify(id, nombre, direccion, longitud, latitud) {
     if (nombre == null || nombre == "") {
         alert("debe ingresar un nombre");
         return false;    
+    }
+
+    if (cuit == null || cuit == "") {
+        alert("debe ingresar un cuit");
+        return false;    
+    }
+
+    if (email == null || email == "") {
+        alert("debe ingresar un email");
+        return false;
     }
 
     if (direccion == null || direccion == "") {
@@ -100,6 +122,16 @@ function verify(id, nombre, direccion, longitud, latitud) {
 
     if (nombre.length > 30) {
         alert("el nombre debe tener menos de 30 caracteres");
+        return false;    
+    }
+
+    if (cuit.length > 20) {
+        alert("el cuit debe tener menos de 20 caracteres");
+        return false;
+    }
+
+    if (email.length > 50) {
+        alert("el email debe tener menos de 50 caracteres");
         return false;    
     }
 
