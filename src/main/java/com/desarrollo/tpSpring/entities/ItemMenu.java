@@ -22,8 +22,7 @@ public abstract class ItemMenu {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column
-    private String id;
-    
+    private int id_item_menu;
     @Basic   
     @Column
     private String nombre;
@@ -39,7 +38,7 @@ public abstract class ItemMenu {
     
     
     protected ItemMenu(Builder<?> builder) {
-        this.id = builder.id;
+        this.id_item_menu = builder.id;
         this.nombre = builder.nombre;
         this.descripcion = builder.descripcion;
         this.precio = builder.precio;
@@ -48,13 +47,13 @@ public abstract class ItemMenu {
 
 
     public static abstract class Builder<T extends Builder<T>> {
-        private String id;
+        private int id;
         private String nombre;
         private String descripcion;
         private double precio;
         private String categoria;
 
-        public T id(String id) { this.id = id; return self(); }
+        public T id(int id) { this.id = id; return self(); }
         public T nombre(String nombre) { this.nombre = nombre; return self(); }
         public T descripcion(String descripcion) { this.descripcion = descripcion; return self(); }
         public T precio(double precio) { this.precio = precio; return self(); }

@@ -28,16 +28,16 @@ public class Pedido {
     @Column
     private String id;
     
+//    @Column
     @ManyToOne
-    @Column
     private Cliente cliente;
+//    @Column
     @ManyToOne
-    @Column
     private Vendedor vendedor;
     @Column
     private List<ItemMenu> items;
+//    @Column
     @OneToOne
-    @Column
     private Pago pago;
     
     @Basic
