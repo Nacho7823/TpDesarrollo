@@ -38,13 +38,6 @@ public class VendedorController {
         }
     }
 
-    @GetMapping
-    public Iterable<Vendedor> obtenerProductos() {
-        return vendedorRepository.findAll();
-//    public Iterable<Vendedor> obtenerProductos() {
-//        return productoService.obtenerProductos();
-    }
-    
     @GetMapping("/vendedor.html")
     public ResponseEntity<String> vendedorHtml() {
         return new ResponseEntity<>(vendedor_html, HttpStatus.OK);

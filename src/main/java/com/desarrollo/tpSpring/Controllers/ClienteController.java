@@ -46,13 +46,6 @@ public class ClienteController {
         }
     }
 
-    @GetMapping
-    public Iterable<Cliente> obtenerProductos() {
-        return clienteRepository.findAll();
-//    public Iterable<cliente> obtenerProductos() {
-//        return productoService.obtenerProductos();
-    }
-    
     @GetMapping("/cliente.html")
     public ResponseEntity<String> clienteHtml() {
         return new ResponseEntity<>(cliente_html, HttpStatus.OK);
