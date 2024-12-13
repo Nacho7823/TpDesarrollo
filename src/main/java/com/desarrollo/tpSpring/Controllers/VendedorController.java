@@ -124,6 +124,4 @@ public class VendedorController {
         vendedorRepository.save(vendedor);
         return ResponseEntity.ok("Vendedor " + vendedor + " modificado exitosamente");
     }
-    
-
 }
