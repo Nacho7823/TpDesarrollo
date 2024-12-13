@@ -12,7 +12,6 @@ btnPedidos.addEventListener("click", () => {
     window.location.href = "../pedidos/pedidos.html";
 });
 
-// server = window.location.origin;
 
 // btnBuscar = document.getElementById("btn-buscar")
 // btnEditar = document.getElementById("btn-editar")
@@ -23,8 +22,20 @@ btnCrear.addEventListener("click", () => {
     window.location.href = "crear/clientecrear.html";
 })
 
+async function load() {
+    const response = await fetch(window.location.origin + "/clientes");
+    if (!response.ok) {
+        
+        alert("no se pudieron obtener los clientes");
+        return;
+    }
+    const clientes = await response.json();
+    clientes.forEach(cliente => {
+        addRow(cliente);
+    });
+};
 
-
+load();
 
 const defData = [
     {
@@ -47,9 +58,9 @@ const defData = [
     }
 ];
 
-defData.forEach(cliente => {
-    addRow(cliente);
-});
+// defData.forEach(cliente => {
+    // addRow(cliente);
+// });
 
 function addRow(cliente) {
     const row = document.createElement('tr');

@@ -26,6 +26,21 @@ btnCrearPlato.addEventListener("click", ()=>{
 
 // btnBuscar = document.getElementById("btn-buscar")
 
+async function load() {
+    const response = await fetch(window.location.origin + "/itemmenus");
+    if (!response.ok) {
+        
+        alert("no se pudieron obtener los itemmenus");
+        return;
+    }
+    const itemmenus = await response.json();
+    for (const item of itemmenus) {
+        addRow(item);
+    }
+}
+
+load();
+
 const defData = [
     {
         id_itemmenu: 1,
@@ -55,7 +70,8 @@ const defData = [
     }
 ]
 
-defData.forEach(item => addRow(item))
+
+// defData.forEach(item => addRow(item))
 
 function addRow(item) {
     const row = document.createElement('tr');

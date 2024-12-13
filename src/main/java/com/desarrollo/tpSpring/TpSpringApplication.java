@@ -27,17 +27,17 @@ import org.springframework.http.ResponseEntity;
 @RestController
 public class TpSpringApplication {
 
-    private static String index_html;
-    private static String index_css;
-    private static String index_js;
+    public static String index_html;
+    public static String index_css;
+    public static String index_js;
 
-    private static String vendedor_html;
-    private static String vendedor_css;
-    private static String vendedor_js;
+    public static String vendedor_html;
+    public static String vendedor_css;
+    public static String vendedor_js;
     
-    private static String cliente_html;
-    private static String cliente_css;
-    private static String cliente_js;
+    public static String cliente_html;
+    public static String cliente_css;
+    public static String cliente_js;
     
     @Autowired
     private VendedorRepository vendedorRepository;
@@ -103,6 +103,7 @@ public class TpSpringApplication {
 //        transaction.commit();
 //        session.close();
 //        sessionFactory.close();
+
     }
 
 //    @GetMapping("/helloa")

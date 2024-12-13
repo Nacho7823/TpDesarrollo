@@ -9,13 +9,13 @@ const inputDireccion = document.getElementById("input-direccion");
 const inputLongitud = document.getElementById("input-longitud");
 const inputLatitud = document.getElementById("input-latitud");
 
-btnVolver.addEventListener("click", ()=> {
+btnVolver.addEventListener("click", () => {
     window.location.href = "../cliente.html";
 });
 
 
 
-btnCrear.addEventListener("click", ()=> {
+btnCrear.addEventListener("click", () => {
     id = inputId.value;
     nombre = inputNombre.value;
     cuit = inputCuit.value;
@@ -23,7 +23,7 @@ btnCrear.addEventListener("click", ()=> {
     direccion = inputDireccion.value;
     longitud = inputLongitud.value;
     latitud = inputLatitud.value;
-    
+
     s = "";
     s += "id: " + id + "\n";
     s += "nombre: " + nombre + "\n";
@@ -32,10 +32,37 @@ btnCrear.addEventListener("click", ()=> {
     s += "direccion: " + direccion + "\n";
     s += "longitud: " + longitud + "\n";
     s += "latitud: " + latitud + "\n";
-    
-    alert(s);
 
     console.log(s);
+
+    body = JSON.stringify({
+        id: id,
+        nombre: nombre,
+        cuit: cuit,
+        email: email,
+        direccion: direccion,
+        longitud: longitud,
+        latitud: latitud
+    });
+    console.log(body);
+
+    fetch(window.location.origin + "/clientes", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: body
+    }).then(res => {
+        if (res.ok) {
+            alert("Cliente creado");
+            window.location.href = "../cliente.html";
+        } else {
+            alert("Error al crear el cliente");
+        }
+    }).catch(err => {
+        alert("Error al crear el cliente");
+        console.error(err);
+    });
 });
 
 

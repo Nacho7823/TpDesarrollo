@@ -22,8 +22,8 @@ import lombok.NoArgsConstructor;
 @Entity(name="pago")
 public abstract class Pago implements FormaDePago{
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String id_pago;
     
     @Basic
     @Column

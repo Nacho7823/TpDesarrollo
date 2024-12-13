@@ -14,13 +14,13 @@ import org.springframework.data.repository.CrudRepository;
  * @author florh
  */
 public interface ItemMenuRepository extends CrudRepository<ItemMenu, String>{
-    public void crearItemMenu(ItemMenu itemMenu) throws DAOException;
+//    public void crearItemMenu(ItemMenu itemMenu) throws DAOException;
 
-    public void actualizarItemMenu(ItemMenu itemMenu) throws DAOException;
+//    public void actualizarItemMenu(ItemMenu itemMenu) throws DAOException;
 
-    public void eliminarItemMenu(String id) throws DAOException;
+//    public void eliminarItemMenu(String id) throws DAOException;
 
-    public ItemMenu buscarItemMenu(String id) throws DAOException;
+//    public ItemMenu buscarItemMenu(String id) throws DAOException;
     
-    public List<ItemMenu> obtenerItemsMenuDeVendedor(String id) throws DAOException;
+//    public List<ItemMenu> obtenerItemsMenuDeVendedor(String id) throws DAOException;
 }

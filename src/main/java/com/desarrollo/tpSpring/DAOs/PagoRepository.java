@@ -14,13 +14,13 @@ import org.springframework.data.repository.CrudRepository;
  * @author florh
  */
 public interface PagoRepository extends CrudRepository<Pago, String> {    
-    public void crearPago(Pago pago) throws DAOException,Exception;
+//    public void crearPago(Pago pago) throws DAOException,Exception;
 
-    public void eliminarPago(String id) throws DAOException;
+//    public void eliminarPago(String id) throws DAOException;
 
-    public Pago buscarPago(String id) throws DAOException;
+//    public Pago buscarPago(String id) throws DAOException;
     
-    public List<Pago> obtenerPagos() throws DAOException;
+//    public List<Pago> obtenerPagos() throws DAOException;
 
-    public Pago buscarPagoPorIdPedido(String id)throws DAOException; 
+//    public Pago buscarPagoPorIdPedido(String id)throws DAOException; 
 }

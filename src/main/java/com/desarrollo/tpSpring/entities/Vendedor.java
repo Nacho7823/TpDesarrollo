@@ -27,6 +27,7 @@ public class Vendedor {
     @Column
     private double latitud;
 
+    @Transient
     private List<ItemMenu> itemsMenu;
     
     public ArrayList<ItemMenu> getItemsMenu(){

@@ -15,17 +15,17 @@ import org.springframework.data.repository.CrudRepository;
  * @author florh
  */
 public interface PedidoRepository extends CrudRepository<Pedido, String>{
-    public void crearPedido(Pedido pedido) throws DAOException;
+//    public void crearPedido(Pedido pedido) throws DAOException;
 
-    public void actualizarPedido(Pedido pedido) throws DAOException;
+//    public void actualizarPedido(Pedido pedido) throws DAOException;
 
-    public void eliminarPedido(String id) throws DAOException;
+//    public void eliminarPedido(String id) throws DAOException;
 
-    public Pedido buscarPedido(String id) throws DAOException;
+//    public Pedido buscarPedido(String id) throws DAOException;
     
-    public List<Pedido> obtenerPedidos() throws DAOException;
+//    public List<Pedido> obtenerPedidos() throws DAOException;
 
-    public void addItem(ItemMenu item, Pedido p) throws DAOException;
+//    public void addItem(ItemMenu item, Pedido p) throws DAOException;
 
-    public void removeItem(ItemMenu item, Pedido p) throws DAOException;
+//    public void removeItem(ItemMenu item, Pedido p) throws DAOException;
 }

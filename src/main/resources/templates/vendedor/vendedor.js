@@ -21,7 +21,20 @@ btnCrear.addEventListener("click", ()=>{
 
 // btnBuscar = document.getElementById("btn-buscar")
 
+async function load() {
+    const response = await fetch(window.location.origin + "/vendedores");
+    if (!response.ok) {
+        
+        alert("no se pudieron obtener los vendedores");
+        return;
+    }
+    const clientes = await response.json();
+    clientes.forEach(cliente => {
+        addRow(cliente);
+    });
+};
 
+load();
 
 
 const defData = [
@@ -41,9 +54,9 @@ const defData = [
     }
 ];
 
-defData.forEach(e => {
-    addRow(e)
-})
+// defData.forEach(e => {
+//     addRow(e)
+// })
 
 function addRow(vendedor) {
     const row = document.createElement('tr');
