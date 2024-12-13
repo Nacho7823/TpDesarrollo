@@ -29,8 +29,6 @@ public class Cliente {
     private String direccion;
             
     @Column
-    private double longitud;
-            
-    @Column
-    private double latitud;
+    @ManyToOne
+    private Coordenada coordenada;
 }

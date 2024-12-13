@@ -23,9 +23,8 @@ public class Vendedor {
     @Column
     private String direccion;
     @Column
-    private double longitud;
-    @Column
-    private double latitud;
+    @ManyToOne
+    Coordenada coordenada;
 
     @Transient
     private List<ItemMenu> itemsMenu;
