@@ -18,8 +18,9 @@ btnItemMenu.addEventListener("click", () => window.location.href = "../itemmenu/
 btnPedidos.addEventListener("click", () => window.location.href = "../pedidos/pedidos.html");
 
 
+const btnRefrescar = document.getElementById("btn-refresh");
 const btnCrear = document.getElementById("btn-crear");
-const btnBuscar = document.getElementById("btn-buscar");
+const btnBuscar = document.getElementById("btn-buscar");1
 const inputBuscarId = document.getElementById("input-buscar-id");
 const inputBuscarNombre = document.getElementById("input-buscar-nombre");
 
@@ -27,6 +28,7 @@ inputBuscarId.type = "number";
 
 const clientes = [];
 
+btnRefrescar.addEventListener("click", () => location.reload());
 btnCrear.addEventListener("click", () => window.location.href = "crear/clientecrear.html");
 btnBuscar.addEventListener("click", () => {
     id = inputBuscarId.value;
@@ -43,11 +45,11 @@ btnBuscar.addEventListener("click", () => {
             }
         }
         else if (nombre == "") {
-            if (cliente.id_vendedor == id) {
+            if (cliente.id_cliente == id) {
                 filter.push(cliente);
             }
         }
-        else if (cliente.id_vendedor == id && cliente.nombre == nombre) {
+        else if (cliente.id_cliente == id && cliente.nombre == nombre) {
             filter.push(cliente);
         }
     }
@@ -60,7 +62,7 @@ btnBuscar.addEventListener("click", () => {
 });
 
 async function load() {
-    const response = await fetch(window.location.origin + "/clientes");
+    const response = await fetch(window.location.origin + "/cliente/clientes");
     if (!response.ok) {
         alert("no se pudieron obtener los clientes");
         return;
@@ -103,7 +105,7 @@ function addRow(cliente) {
     row.appendChild(createCell(cliente.direccion));
     row.appendChild(createCell(cliente.longitud));
     row.appendChild(createCell(cliente.latitud));
-    row.appendChild(createBtn("editar", () => modificarcliente(cliente.id_cliente)));
+    row.appendChild(createBtn("editar", () => modificarCliente(cliente.id_cliente)));
     row.appendChild(createBtn("eliminar", () => eliminarCliente(cliente.id_cliente)));
 
     const tbod = document.getElementById("tablebody");

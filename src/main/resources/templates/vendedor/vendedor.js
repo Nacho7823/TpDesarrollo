@@ -16,6 +16,7 @@ btnPedidos.addEventListener("click", () => window.location.href = "../pedidos/pe
 
 // -------------
 
+const btnRefrescar = document.getElementById("btn-refresh");
 const btnCrear = document.getElementById("btn-crear");
 const btnBuscar = document.getElementById("btn-buscar");
 const inputBuscarId = document.getElementById("input-buscar-id");
@@ -25,6 +26,7 @@ inputBuscarId.type = "number";
 
 const vendedores = [];
 
+btnRefrescar.addEventListener("click", () => location.reload());
 btnCrear.addEventListener("click", () => window.location.href = "crear/vendedorcrear.html");
 btnBuscar.addEventListener("click", () => {
     id = inputBuscarId.value;
