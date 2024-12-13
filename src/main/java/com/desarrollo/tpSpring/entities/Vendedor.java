@@ -33,10 +33,4 @@ public class Vendedor {
     public ArrayList<ItemMenu> getItemsMenu(){
         return (ArrayList)this.itemsMenu;
     }
-
-    
-    
-    
-    
-    
 }
