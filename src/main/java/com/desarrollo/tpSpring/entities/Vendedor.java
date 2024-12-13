@@ -4,8 +4,9 @@ package com.desarrollo.tpSpring.entities;
 
 import lombok.*;
 import jakarta.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Data
 @AllArgsConstructor
@@ -26,16 +27,15 @@ public class Vendedor {
     @ManyToOne
     private Coordenada coordenada;
 
-    @Transient
-    private List<ItemMenu> itemsMenu;
+  @ManyToMany
+    @JoinTable(
+        name = "vende",
+        joinColumns = @JoinColumn(name = "vendedor_id"),
+        inverseJoinColumns = @JoinColumn(name = "item_menu_id")
+    )
+    private Set<ItemMenu> items;
     
-    public ArrayList<ItemMenu> getItemsMenu(){
-        return (ArrayList)this.itemsMenu;
-    }
-
-    
-    
-    
-    
-    
+  public HashSet<ItemMenu> getItems(){
+      return new HashSet<>(this.items);
+  }
 }

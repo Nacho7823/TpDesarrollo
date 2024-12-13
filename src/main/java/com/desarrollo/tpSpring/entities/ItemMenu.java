@@ -1,14 +1,8 @@
 
 package com.desarrollo.tpSpring.entities;
 
-import jakarta.persistence.Basic;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
+import jakarta.persistence.*;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,6 +26,11 @@ public abstract class ItemMenu {
     private double precio;
     @Column
     private String categoria; 
+    
+   @ManyToMany(mappedBy = "itemMenu")
+    private Set<Vendedor> vendedores;
+   @OneToMany(mappedBy = "itemMenu", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<ItemsPedido> itemsPedido;
     
 
     

@@ -2,32 +2,17 @@
 package com.desarrollo.tpSpring.DAOs;
 
 import com.desarrollo.tpSpring.entities.ItemMenu;
+import com.desarrollo.tpSpring.entities.ItemsPedido;
 import java.util.List;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ItemPedido extends CrudRepository<ItemMenu, String>{
-//     public ItemMenu buscarPorNombre(String nombre);
-//    public List<ItemMenu> buscarDescripcion(String descripcion);
-//    public List<ItemMenu> buscarPrecioEntre(int precioMin, int precioMax);
-//    public List<ItemMenu> buscarPrecio(int precio);
-//    public List<ItemMenu> buscarCategoria(String categoria);
-//    public List<ItemMenu> buscarBebidas();
-//    public List<ItemMenu> buscarPlatos();
-//
-//    // plato
-//    public List<ItemMenu> buscarComidaPeso(double peso);
-//    public List<ItemMenu> buscarCeliacos();
-//    public List<ItemMenu> buscarNoCeliacos();
-//    public List<ItemMenu> buscarVeganos();
-//    public List<ItemMenu> buscarNoVeganos();
-//    public List<ItemMenu> buscarComidaCalorias(int calorias);
-//
-//    // bebida
-//    public List<ItemMenu> buscarBebidaTamaño(double tamaño);
-//    public List<ItemMenu> buscarBebidaGraduacion(double graduacion);
-//
-//    public List<ItemMenu> buscarPorIdPedido(String id);
+public interface ItemPedido extends JpaRepository<ItemMenu, String>{
+
+   public List<ItemsPedido> buscarPorIdPedido(int idPedido);
+   public List<ItemsPedido> buscarPorIdItemMenu(int idItem);
+   
+   public List<ItemsPedido> buscarPorCantidad(int cantidad);
 
 }

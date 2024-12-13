@@ -1,21 +1,26 @@
 
 package com.desarrollo.tpSpring.DAOs;
 
+import com.desarrollo.tpSpring.entities.MercadoPago;
 import com.desarrollo.tpSpring.entities.Pago;
-import com.desarrollo.tpSpring.exceptions.DAOException;
+import java.time.LocalDate;
 import java.util.List;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PagoRepository extends CrudRepository<Pago, String> {    
-//    public void crearPago(Pago pago) throws DAOException,Exception;
+public interface PagoRepository extends JpaRepository<Pago, String> {    
+   List<Pago> BuscarPorFecha(LocalDate fecha);
+   List<Pago> BuscarPorMonto(double montoMinimo);
 
-//    public void eliminarPago(String id) throws DAOException;
+@Query("SELECT p FROM Pago p WHERE TYPE(p) = MercadoPago")
+List<Pago> ObtenerMercadoPago();
 
-//    public Pago buscarPago(String id) throws DAOException;
-    
-//    public List<Pago> obtenerPagos() throws DAOException;
+@Query("SELECT p FROM Pago p WHERE TYPE(p) = Transferencia")
+List<Pago> ObtenerTransferencia();
 
-//    public Pago buscarPagoPorIdPedido(String id)throws DAOException; 
+    @Query("SELECT m FROM MercadoPago m WHERE m.alias = :alias")
+    List<MercadoPago> findMercadoPagoByAlias(@Param("alias") String alias);
 }
