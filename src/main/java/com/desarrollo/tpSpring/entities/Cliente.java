@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package com.desarrollo.tpSpring.entities;
 
 
@@ -14,9 +11,10 @@ import jakarta.persistence.*;
 @Entity(name = "cliente")
 public class Cliente {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column
     private int id_cliente;
+    @Basic
     
     @Column
     private String nombre;

@@ -1,12 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package com.desarrollo.tpSpring.entities;
 
 import com.desarrollo.tpSpring.exceptions.InvalidOrderException;
 import com.desarrollo.tpSpring.enums.EstadoPedido;
 import com.desarrollo.tpSpring.interfaces.Observador;
+import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,19 +18,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- *
- * @author florh
- */
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Entity
+@Entity(name="pedido")
 public class Pedido {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column
     private String id;
+    
     @ManyToOne
     @Column
     private Cliente cliente;
@@ -44,6 +39,8 @@ public class Pedido {
     @OneToOne
     @Column
     private Pago pago;
+    
+    @Basic
     @Column
     private double total;
     @Column
