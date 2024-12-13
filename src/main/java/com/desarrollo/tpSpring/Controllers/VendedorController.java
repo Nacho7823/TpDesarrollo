@@ -23,6 +23,9 @@ public class VendedorController {
     private String vendedor_crear_html;
     private String vendedor_crear_css;
     private String vendedor_crear_js;
+    private String vendedor_modificar_html;
+    private String vendedor_modificar_css;
+    private String vendedor_modificar_js;
 
     public VendedorController() {
         try {
@@ -32,6 +35,9 @@ public class VendedorController {
             vendedor_crear_html = cargarArchivo("templates/vendedor/crear/vendedorcrear.html");
             vendedor_crear_css = cargarArchivo("templates/vendedor/crear/vendedorcrear.css");
             vendedor_crear_js = cargarArchivo("templates/vendedor/crear/vendedorcrear.js");
+            vendedor_modificar_html = cargarArchivo("templates/vendedor/modificar/vendedormodificar.html");
+            vendedor_modificar_css = cargarArchivo("templates/vendedor/modificar/vendedormodificar.css");
+            vendedor_modificar_js = cargarArchivo("templates/vendedor/modificar/vendedormodificar.js");
             System.out.println("paginas vendedor cargadas correctamente");
         } catch (IOException e) {
             throw new RuntimeException("no se pudo cargar la pagina del vendedor");
@@ -68,6 +74,21 @@ public class VendedorController {
     public ResponseEntity<String> vendedorCrearJs() {
         return new ResponseEntity<>(vendedor_crear_js, HttpStatus.OK);
     }
+    
+    @GetMapping("/modificar/vendedormodificar.html")
+    public ResponseEntity<String> vendedorModificarHtml() {
+        return new ResponseEntity<>(vendedor_modificar_html, HttpStatus.OK);
+    }
+    
+    @GetMapping("/modificar/vendedormodificar.css")
+    public ResponseEntity<String> vendedorModificarCss() {
+        return new ResponseEntity<>(vendedor_modificar_css, HttpStatus.OK);
+    }
+    
+    @GetMapping("/modificar/vendedormodificar.js")
+    public ResponseEntity<String> vendedorModificarJs() {
+        return new ResponseEntity<>(vendedor_modificar_js, HttpStatus.OK);
+    }
 
     // datos
     @GetMapping("/vendedores")
@@ -76,9 +97,10 @@ public class VendedorController {
         return ResponseEntity.ok(vend);
     }
 
-    @DeleteMapping("/vendedor/{id}")
-    public ResponseEntity<String> eliminarVendedor(@PathVariable int id) {
-        Optional<Vendedor> opt = vendedorRepository.findById((long)id);
+    @DeleteMapping("/vendedor")
+    public ResponseEntity<String> eliminarVendedor(@RequestBody Vendedor vendedor) {
+        long id = vendedor.getId_vendedor();
+        Optional<Vendedor> opt = vendedorRepository.findById(id);
         if(opt.isEmpty()){
             System.out.println("no se pudo eliminar el vendedor: " + id);
             return ResponseEntity.badRequest().body("no se pudo eliminar");
@@ -89,6 +111,19 @@ public class VendedorController {
         return ResponseEntity.ok("Vendedor " + id + " eliminado exitosamente");
     }
     
+    @PostMapping("/vendedor")
+    public ResponseEntity<String> crearVendedor(@RequestBody Vendedor vendedor) {
+        vendedorRepository.save(vendedor);
+        return ResponseEntity.ok("Vendedor " + vendedor + " creado exitosamente");
+    }
+    
+    
+    @PutMapping("/vendedor")
+    public ResponseEntity<String> modificarVendedor(@RequestBody Vendedor vendedor) {
+        System.out.println("id: " + vendedor.getId_vendedor());
+        vendedorRepository.save(vendedor);
+        return ResponseEntity.ok("Vendedor " + vendedor + " modificado exitosamente");
+    }
     
 
 }

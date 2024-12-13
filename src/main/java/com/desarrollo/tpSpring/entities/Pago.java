@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 public abstract class Pago implements FormaDePago{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id_pago;
+    private int id_pago;
     
     @Basic
     @Column

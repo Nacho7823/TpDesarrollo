@@ -7,10 +7,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
-@Entity(name="items_pedido")
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+//@Entity(name="items_pedido")
+//@Data
+//@AllArgsConstructor
+//@NoArgsConstructor
 public class ItemsPedido {
     
 }

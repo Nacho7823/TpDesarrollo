@@ -1,5 +1,5 @@
 const btnVolver = document.getElementById("btn-volver");
-const btnCrear = document.getElementById("btn-crear");
+const btnModificar = document.getElementById("btn-modificar");
 
 const inputId = document.getElementById("input-id");
 const inputNombre = document.getElementById("input-nombre");
@@ -7,18 +7,18 @@ const inputDireccion = document.getElementById("input-direccion");
 const inputLongitud = document.getElementById("input-longitud");
 const inputLatitud = document.getElementById("input-latitud");
 
-btnVolver.addEventListener("click", ()=> {
-    window.location.href = "../vendedor.html";
-});
+inputNombre.maxLength = 50;
+inputLongitud.type = "number";  
+inputLongitud.step = "0.001";
 
+btnVolver.addEventListener("click", ()=> window.location.href = "../vendedor.html");
 
-
-btnCrear.addEventListener("click", ()=> {
-    id = inputId.value;
+btnModificar.addEventListener("click", ()=> {
+    id = vendedor.id_vendedor;
     nombre = inputNombre.value;
     direccion = inputDireccion.value;
-    longitud = inputLongitud.value;
-    latitud = inputLatitud.value;
+    longitud = Number(inputLongitud.value);
+    latitud = Number(inputLatitud.value);
     
     s = "";
     s += "id: " + id + "\n";
@@ -27,9 +27,40 @@ btnCrear.addEventListener("click", ()=> {
     s += "longitud: " + longitud + "\n";
     s += "latitud: " + latitud + "\n";
     
-    alert(s);
-
     console.log(s);
+
+    fetch(window.location.origin + "/vendedor/vendedor", {
+        method: "PUT",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            id_vendedor: id,
+            nombre: nombre,
+            direccion: direccion,
+            longitud: longitud,
+            latitud: latitud
+        })
+    }).then(response => {
+        if (!response.ok) {
+            alert("no se pudo modificar el vendedor: " + id);
+            return;
+        }
+        window.location.href = "../vendedor.html";
+    }).catch(e => {
+        alert(e);
+    });
+
 });
+
+
+const vend = localStorage.getItem("vendedor");
+const vendedor = JSON.parse(vend);
+
+inputId.value = vendedor.id_vendedor;
+inputNombre.value = vendedor.nombre;
+inputDireccion.value = vendedor.direccion;
+inputLongitud.value = vendedor.longitud;
+inputLatitud.value = vendedor.latitud;
 
 
