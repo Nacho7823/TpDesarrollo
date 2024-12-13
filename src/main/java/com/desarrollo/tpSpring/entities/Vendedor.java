@@ -24,7 +24,7 @@ public class Vendedor {
     private String direccion;
     @Column
     @ManyToOne
-    Coordenada coordenada;
+    private Coordenada coordenada;
 
     @Transient
     private List<ItemMenu> itemsMenu;
@@ -32,4 +32,10 @@ public class Vendedor {
     public ArrayList<ItemMenu> getItemsMenu(){
         return (ArrayList)this.itemsMenu;
     }
+
+    
+    
+    
+    
+    
 }

@@ -4,10 +4,13 @@
  */
 package com.desarrollo.tpSpring.services;
 
+import org.springframework.stereotype.Service;
+
 /**
  *
  * @author florh
  */
+@Service
 public class PedidoService {
     
 }
