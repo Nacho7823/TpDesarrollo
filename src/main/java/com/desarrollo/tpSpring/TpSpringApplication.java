@@ -1,33 +1,17 @@
 package com.desarrollo.tpSpring;
 
-import com.desarrollo.tpSpring.entities.Cliente;
-import com.desarrollo.tpSpring.DAOs.ClienteRepository;
-import com.desarrollo.tpSpring.entities.Vendedor;
-import com.desarrollo.tpSpring.DAOs.VendedorRepository;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.*;
 
-import org.hibernate.*;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-
-//@RestController
 @SpringBootApplication
 public class TpSpringApplication {
 
-
+    /*
+        PARA CORRER DESDE CMD
+        mvnw.cmd clean compile spring-boot:run
+    */
+    
+    
     public static void main(String[] args) {
         // mvn spring-boot:run
         // mvnw.cmd spring-boot:run
