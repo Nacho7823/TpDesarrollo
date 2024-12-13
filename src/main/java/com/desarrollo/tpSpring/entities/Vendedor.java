@@ -15,7 +15,7 @@ public class Vendedor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private int id_vendedor;
+    private String id_vendedor;
     
     @Basic
     @Column
