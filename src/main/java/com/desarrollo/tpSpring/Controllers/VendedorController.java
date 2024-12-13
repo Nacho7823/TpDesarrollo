@@ -3,17 +3,18 @@ package com.desarrollo.tpSpring.Controllers;
 
 import com.desarrollo.tpSpring.entities.Vendedor;
 import com.desarrollo.tpSpring.DAOs.VendedorRepository;
-import com.desarrollo.tpSpring.TpSpringApplication;
 import static com.desarrollo.tpSpring.Utils.FileUtils.cargarArchivo;
 import java.io.IOException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-//@RestController
+@RestController
 @RequestMapping("/vendedor")
 public class VendedorController {
     
+    @Autowired
     private VendedorRepository vendedorRepository;
     
     private String vendedor_html;
@@ -75,8 +76,9 @@ public class VendedorController {
     }
     
     @GetMapping("/vendedores")
-    public String vendedores() {
-        return "";
+    public ResponseEntity<Iterable<Vendedor>> vendedores() {
+        Iterable<Vendedor> vend = vendedorRepository.findAll();
+        return ResponseEntity.ok(vend);
     }
     
 }
