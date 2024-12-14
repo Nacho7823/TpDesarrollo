@@ -1,3 +1,5 @@
+import { updateVendedor } from "../../utils.js";
+
 const btnVolver = document.getElementById("btn-volver");
 const btnModificar = document.getElementById("btn-modificar");
 
@@ -14,54 +16,34 @@ inputLongitud.step = "0.001";
 
 btnVolver.addEventListener("click", ()=> window.location.href = "../vendedor.html");
 
-btnModificar.addEventListener("click", ()=> {
-    id = vendedor.id_vendedor;
-    nombre = inputNombre.value;
-    direccion = inputDireccion.value;
-    longitud = Number(inputLongitud.value);
-    latitud = Number(inputLatitud.value);
+btnModificar.addEventListener("click", async ()=> {
+    const tmp = {
+        id: vendedor.id_vendedor,
+        nombre: inputNombre.value,
+        direccion: inputDireccion.value,
+        longitud: Number(inputLongitud.value),
+        latitud: Number(inputLatitud.value),
+    }
 
+    console.log(tmp);
 
-    if (!verify(id, nombre, direccion, longitud, latitud)) {
+    if (!verify(tmp)) {
         return;
     }
 
-    
-    s = "";
-    s += "id: " + id + "\n";
-    s += "nombre: " + nombre + "\n";
-    s += "direccion: " + direccion + "\n";
-    s += "longitud: " + longitud + "\n";
-    s += "latitud: " + latitud + "\n";
-    
-    console.log(s);
 
-    fetch(window.location.origin + "/vendedor/vendedor", {
-        method: "PUT",
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            id_vendedor: id,
-            nombre: nombre,
-            direccion: direccion,
-            longitud: longitud,
-            latitud: latitud
-        })
-    }).then(response => {
-        if (!response.ok) {
-            alert("no se pudo modificar el vendedor: " + id);
-            return;
-        }
-        window.location.href = "../vendedor.html";
-    }).catch(e => {
-        alert(e);
-    });
+    if (!await updateVendedor(tmp)) {
+        alert("no se pudo modificar el vendedor");
+        return;
+    }
+
+    window.location.href = "../vendedor.html";
 
 });
 
 
-const vend = localStorage.getItem("vendedor");
+const vend = sessionStorage.getItem("vendedor");
+console.log(vend);
 const vendedor = JSON.parse(vend);
 
 inputId.value = vendedor.id_vendedor;
@@ -71,7 +53,7 @@ inputLongitud.value = vendedor.longitud;
 inputLatitud.value = vendedor.latitud;
 
 
-function verify(id, nombre, direccion, longitud, latitud) {
+function verify({ id, nombre, direccion, longitud, latitud }) {
 
     if (id == null || id == "") {
         alert("debe ingresar un id");

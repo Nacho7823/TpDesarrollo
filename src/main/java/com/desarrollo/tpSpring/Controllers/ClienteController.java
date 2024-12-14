@@ -106,12 +106,21 @@ public class ClienteController {
     // datos
     @GetMapping("/clientes")
     public ResponseEntity<Iterable<Cliente>> clientes() {
-        Iterable<Cliente> vend = clienteRepository.findAll();
-        return ResponseEntity.ok(vend);
+        Iterable<Cliente> clien = clienteRepository.findAll();
+        return ResponseEntity.ok(clien);
+    }
+    
+    @GetMapping("/cliente")
+    public ResponseEntity<Cliente> getCliente(@RequestBody String id_cliente) {
+        Optional<Cliente> opt = clienteRepository.findById(Long.valueOf(id_cliente));
+        if(opt.isEmpty())
+            return ResponseEntity.notFound().build();
+        
+        return ResponseEntity.ok(opt.get());
     }
 
     @DeleteMapping("/cliente")
-    public ResponseEntity<String> eliminarcliente(@RequestBody Cliente cliente) {
+    public ResponseEntity<String> eliminarCliente(@RequestBody Cliente cliente) {
         long id = cliente.getId_cliente();
         Optional<Cliente> opt = clienteRepository.findById(id);
         if(opt.isEmpty()){
@@ -125,14 +134,14 @@ public class ClienteController {
     }
     
     @PostMapping("/cliente")
-    public ResponseEntity<String> crearcliente(@RequestBody Cliente cliente) {
+    public ResponseEntity<String> crearCliente(@RequestBody Cliente cliente) {
         clienteRepository.save(cliente);
         return ResponseEntity.ok("cliente " + cliente + " creado exitosamente");
     }
     
     
     @PutMapping("/cliente")
-    public ResponseEntity<String> modificarcliente(@RequestBody Cliente cliente) {
+    public ResponseEntity<String> modificarCliente(@RequestBody Cliente cliente) {
         System.out.println("id: " + cliente.getId_cliente());
         clienteRepository.save(cliente);
         return ResponseEntity.ok("cliente " + cliente + " modificado exitosamente");

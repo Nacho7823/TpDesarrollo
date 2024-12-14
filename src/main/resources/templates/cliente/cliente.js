@@ -8,6 +8,8 @@
 //     "latitud": "latitud 1"
 // }
 
+import { getClientes, deleteCliente } from "../utils.js";
+
 
 const btnVendedor = document.getElementById("btn-vendedorui")
 const btnItemMenu = document.getElementById("btn-itemmenuui")
@@ -26,13 +28,13 @@ const inputBuscarNombre = document.getElementById("input-buscar-nombre");
 
 inputBuscarId.type = "number";
 
-const clientes = [];
+let clientes = [];
 
 btnRefrescar.addEventListener("click", () => location.reload());
 btnCrear.addEventListener("click", () => window.location.href = "crear/clientecrear.html");
 btnBuscar.addEventListener("click", () => {
-    id = inputBuscarId.value;
-    nombre = inputBuscarNombre.value;
+    const id = inputBuscarId.value;
+    const nombre = inputBuscarNombre.value;
 
     const filter = [];
     for (const cliente of clientes) {
@@ -61,33 +63,16 @@ btnBuscar.addEventListener("click", () => {
 
 });
 
-async function load() {
-    const response = await fetch(window.location.origin + "/cliente/clientes");
-    if (!response.ok) {
-        alert("no se pudieron obtener los clientes");
-        return;
-    }
-    const clienteslist = await response.json();
-    for (const v of clienteslist) {
-        clientes.push(v);
-    }
-    clientes.forEach(cliente => {
-        addRow(cliente);
-    });
-};
-
-load();
-
 
 function addRow(cliente) {
     const row = document.createElement('tr');
 
-    createCell = (text) => {
+    const createCell = (text) => {
         const cell = document.createElement('th');
         cell.textContent = text;
         return cell;
     }
-    createBtn = (text, action) => {
+    const createBtn = (text, action) => {
         const btn = document.createElement('button');
         btn.textContent = text;
         btn.classList.add("btntable");
@@ -112,8 +97,6 @@ function addRow(cliente) {
     tbod.appendChild(row)
 }
 
-
-
 function clearTable() {
     const tbod = document.getElementById("tablebody");
     while (tbod.firstChild) {
@@ -124,29 +107,22 @@ function clearTable() {
 
 function modificarCliente(id) {
     const v = clientes.find(cliente => cliente.id_cliente == id);
-    console.log(v);
-    localStorage.setItem("cliente", JSON.stringify(v));
+    sessionStorage.setItem("cliente", JSON.stringify(v));
     window.location.href = "modificar/clientemodificar.html";
 }
 
-function eliminarCliente(id) {
-    fetch(window.location.origin + "/cliente/cliente", {
-        method: "DELETE",
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            id_cliente: id
-        })
-    }).then(response => {
-        if (!response.ok) {
-            alert("no se pudo eliminar el cliente: " + id);
-            return;
-        }
-        window.location.reload();
-        window.location.href = "../cliente/cliente.html";
-    }).catch(e => {
-        alert(e);
-    });
+async function eliminarCliente(id) {
+    if(! await deleteCliente(id)){
+        alert("No se pudo eliminar el cliente");
+    };
+    location.reload();
 }
+
+
+(async function main() {
+    clientes = await getClientes();
+    for (const v of clientes) {
+        addRow(v);
+    }
+})();
 

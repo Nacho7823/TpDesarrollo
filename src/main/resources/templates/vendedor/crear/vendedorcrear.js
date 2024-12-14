@@ -1,3 +1,5 @@
+import { createVendedor } from "../../utils.js";
+
 const btnVolver = document.getElementById("btn-volver");
 const btnCrear = document.getElementById("btn-crear");
 
@@ -14,54 +16,30 @@ inputLongitud.step = "0.001";
 btnVolver.addEventListener("click", ()=> window.location.href = "../vendedor.html");
 
 
-btnCrear.addEventListener("click", ()=> {
-    nombre = inputNombre.value;
-    direccion = inputDireccion.value;
-    longitud = Number(inputLongitud.value);
-    latitud = Number(inputLatitud.value);
+btnCrear.addEventListener("click", async ()=> {
+    const tmp = {
+        nombre: inputNombre.value,
+        direccion: inputDireccion.value,
+        longitud: Number(inputLongitud.value),
+        latitud: Number(inputLatitud.value),
+    }
 
-    if (!verify(1, nombre, direccion, longitud, latitud)) {
+    console.log(tmp);
+    if (!verify(tmp)) {
         return;
     }
     
-    s = "";
-    s += "nombre: " + nombre + "\n";
-    s += "direccion: " + direccion + "\n";
-    s += "longitud: " + longitud + "\n";
-    s += "latitud: " + latitud + "\n";
-    
-    console.log(s);
+    if (! await createVendedor(tmp)) {
+        alert("no se pudo crear el vendedor");
+        return;
+    }
 
-    fetch(window.location.origin + "/vendedor/vendedor", {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            nombre: nombre,
-            direccion: direccion,
-            longitud: longitud,
-            latitud: latitud
-        })
-    }).then(response => {
-        if (!response.ok) {
-            alert("no se pudo crear el vendedor: " + " - " + response.status);
-            return;
-        }
-        window.location.href = "../vendedor.html";
-    }).catch(e => {
-        alert(e);
-    });
+    window.location.href = "../vendedor.html";
 
 });
 
 
-function verify(id, nombre, direccion, longitud, latitud) {
-
-    if (id == null || id == "") {
-        alert("debe ingresar un id");
-        return false;    
-    }
+function verify({ nombre, direccion, longitud, latitud }) {
 
     if (nombre == null || nombre == "") {
         alert("debe ingresar un nombre");

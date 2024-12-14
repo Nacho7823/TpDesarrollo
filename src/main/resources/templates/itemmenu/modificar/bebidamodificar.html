@@ -2,15 +2,19 @@
 <html>
 
 <head>
-    <title>Crear plato</title>
+    <title>Modificar bebida</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="platocrear.css">
+    <link rel="stylesheet" href="bebidamodificar.css">
 </head>
 
 <body>
     <div id="div-root">
         <div id="upperpan">
+            <div class="div_upperpan_search">
+                <label>Id Bebida</label>
+                <input disabled id="input-id">
+            </div>
             <div class="div_upperpan_search">
                 <label>Nombre</label>
                 <input id="input-nombre">
@@ -24,24 +28,16 @@
                 <input id="input-precio">
             </div>
             <div class="div_upperpan_search">
-                <label>Peso</label>
-                <input id="input-peso">
+                <label>Graduacion-alcoholica</label>
+                <input id="input-graduacion-alcoholica">
             </div>
             <div class="div_upperpan_search">
-                <label>Apto Vegano</label>
-                <input type="checkbox" id="input-apto-vegano">
-            </div>
-            <div class="div_upperpan_search">
-                <label>Apto Celiaco</label>
-                <input type="checkbox" id="input-apto-celiaco">
-            </div>
-            <div class="div_upperpan_search">
-                <label>Calorias</label>
-                <input id="input-calorias">
+                <label>Tamaño</label>
+                <input id="input-tamanio">
             </div>
             <div id="divbtns">
                 <button id="btn-volver">Volver</button>
-                <button id="btn-crear">Crear</button>
+                <button id="btn-crear">Modificar</button>
             </div>
 
         </div>
@@ -50,6 +46,6 @@
 
     </footer>
 </body>
-<script type="module" src="platocrear.js"></script>
+<script type="module" src="bebidamodificar.js"></script>
 
 </html>

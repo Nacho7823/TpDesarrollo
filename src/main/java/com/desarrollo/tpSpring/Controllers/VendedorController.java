@@ -96,6 +96,15 @@ public class VendedorController {
         Iterable<Vendedor> vend = vendedorRepository.findAll();
         return ResponseEntity.ok(vend);
     }
+    
+    @GetMapping("/vendedor")
+    public ResponseEntity<Vendedor> getVendedor(@RequestBody String id) {
+        Optional<Vendedor> opt = vendedorRepository.findById(Long.valueOf(id));
+        if(opt.isEmpty())
+            return ResponseEntity.notFound().build();
+        
+        return ResponseEntity.ok(opt.get());
+    }
 
     @DeleteMapping("/vendedor")
     public ResponseEntity<String> eliminarVendedor(@RequestBody Vendedor vendedor) {

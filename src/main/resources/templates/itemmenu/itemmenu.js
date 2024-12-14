@@ -1,96 +1,132 @@
+
+import { deleteItemMenu, getItemMenus } from "../utils.js";
+
 const btnCliente = document.getElementById("btn-clienteui")
 const btnVendedor = document.getElementById("btn-vendedorui")
 const btnPedidos = document.getElementById("btn-pedidosui")
+btnCliente.addEventListener("click", () => window.location.href = "../cliente/cliente.html");
+btnVendedor.addEventListener("click", () => window.location.href = "../vendedor/vendedor.html");
+btnPedidos.addEventListener("click", () => window.location.href = "../pedidos/pedidos.html");
 
-btnCliente.addEventListener("click", ()=>{
-    window.location.href = "../cliente/cliente.html";
-});
-btnVendedor.addEventListener("click", ()=>{
-    window.location.href = "../vendedor/vendedor.html";
-});
-btnPedidos.addEventListener("click", () => {
-    window.location.href = "../pedidos/pedidos.html";
-});
-
+const btnRefrescar = document.getElementById("btn-refresh");
+const btnBuscar = document.getElementById("btn-buscar");
 const btnCrearBebida = document.getElementById("btn-crear-bebida")
 const btnCrearPlato = document.getElementById("btn-crear-plato")
+const inputBuscarId = document.getElementById("input-buscar-id");
+const inputBuscarNombre = document.getElementById("input-buscar-nombre");
 
-btnCrearBebida.addEventListener("click", ()=>{
-    window.location.href = "crear/bebidacrear.html";
-})
-btnCrearPlato.addEventListener("click", ()=>{
-    window.location.href = "crear/platocrear.html";
-})
+btnBuscar.addEventListener("click", () => {
+    const id = inputBuscarId.value;
+    const nombre = inputBuscarNombre.value;
 
-// server = window.location.origin;
+    console.log(id);
+    console.log(nombre);
 
-// btnBuscar = document.getElementById("btn-buscar")
-
-async function load() {
-    const response = await fetch(window.location.origin + "/itemmenus");
-    if (!response.ok) {
-        
-        alert("no se pudieron obtener los itemmenus");
-        return;
+    const filter = [];
+    for (const item of itemMenus) {
+        if (id == "" && nombre == "") {
+            filter.push(item);
+        }
+        else if (id == "") {
+            if (item.nombre == nombre) {
+                filter.push(item);
+            }
+        }
+        else if (nombre == "") {
+            if (item.id_item_menu == id) {
+                filter.push(item);
+            }
+        }
+        else if (item.id_item_menu == id && item.nombre == nombre) {
+            filter.push(item);
+        }
     }
-    const itemmenus = await response.json();
-    for (const item of itemmenus) {
-        addRow(item);
+
+    clearTable();
+    for (const v of filter) {
+        addRow(v);
     }
-}
 
-load();
+});
 
-const defData = [
-    {
-        id_itemmenu: 1,
-        nombre: "itemmenu 1",
-        descripcion: "descripcion 1",
-        precio: "precio 1",
-        categoria: "categoria 1",
-        peso: "peso 1",
-        aptoVegano: "aptoVegano 1",
-        aptoCeliaco: "aptoCeliaco 1",
-        calorias: "calorias 1",
-        graduacionAlcoholica: "graduacionAlcoholica 1",
-        tamano: "tamano 1"
-    },
-    {
-        id_itemmenu: 2,
-        nombre: "itemmenu 2",
-        descripcion: "descripcion 2",
-        precio: "precio 2",
-        categoria: "categoria 2",
-        peso: "peso 2",
-        aptoVegano: "aptoVegano 2",
-        aptoCeliaco: "aptoCeliaco 2",
-        calorias: "calorias 2",
-        graduacionAlcoholica: "graduacionAlcoholica 2",
-        tamano: "tamano 2"
-    }
-]
+btnRefrescar.addEventListener("click", () => location.reload());
+btnCrearBebida.addEventListener("click", () => window.location.href = "crear/bebidacrear.html");
+btnCrearPlato.addEventListener("click", () => window.location.href = "crear/platocrear.html");
 
-
-// defData.forEach(item => addRow(item))
 
 function addRow(item) {
     const row = document.createElement('tr');
-    row.innerHTML = `
-                <th>${item.id_itemmenu}</th>
-                <th>${item.nombre}</th>
-                <th>${item.descripcion}</th>
-                <th>${item.precio}</th>
-                <th>${item.categoria}</th>
-                <th>${item.peso}</th>
-                <th>${item.aptoVegano}</th>
-                <th>${item.aptoCeliaco}</th>
-                <th>${item.calorias}</th>
-                <th>${item.graduacionAlcoholica}</th>
-                <th>${item.tamano}</th>
-                <th>editar</th>
-                <th>eliminar</th>
-            `;
+
+    const createCell = (text) => {
+        const cell = document.createElement('th');
+        cell.textContent = text;
+        return cell;
+    }
+    const createBtn = (text, action) => {
+        const btn = document.createElement('button');
+        btn.textContent = text;
+        btn.classList.add("btntable");
+        btn.addEventListener("click", action);
+
+        const cell = document.createElement('th');
+        cell.appendChild(btn);
+        return cell;
+    }
+
+    row.appendChild(createCell(item.id_item_menu));
+    row.appendChild(createCell(item.nombre));
+    row.appendChild(createCell(item.descripcion));
+    row.appendChild(createCell(item.precio));
+    row.appendChild(createCell(item.categoria));
+    row.appendChild(createCell(item.peso));
+    row.appendChild(createCell(item.apto_vegano));
+    row.appendChild(createCell(item.apto_celiaco));
+    row.appendChild(createCell(item.calorias));
+    row.appendChild(createCell(item.graduacion_alcoholica));
+    row.appendChild(createCell(item.tamanio));
+    row.appendChild(createBtn("editar", () => modificarItemMenu(item.id_item_menu)));
+    row.appendChild(createBtn("eliminar", () => eliminarItemMenu(item.id_item_menu)));
 
     const tbod = document.getElementById("tablebody");
     tbod.appendChild(row)
 }
+
+
+function clearTable() {
+    const tbod = document.getElementById("tablebody");
+    while (tbod.firstChild) {
+        tbod.removeChild(tbod.firstChild);
+    }
+}
+
+
+function modificarItemMenu(id) {
+    const v = itemMenus.find(item => item.id_item_menu == id);
+    console.log(v);
+    sessionStorage.setItem("itemMenu", JSON.stringify(v));
+    if (v.graduacion_alcoholica == null) {
+        window.location.href = "modificar/platomodificar.html";
+    }
+    else {
+        window.location.href = "modificar/bebidamodificar.html";
+    }
+}
+
+async function eliminarItemMenu(id) {
+    if (! await deleteItemMenu(id)) {
+        alert("no se pudo eliminar el itemMenu");
+        return;
+    }
+    location.reload();
+}
+
+
+let itemMenus;
+
+(async function main() {
+    itemMenus = await getItemMenus();
+    for (const item of itemMenus) {
+        addRow(item);
+    }
+})();
+

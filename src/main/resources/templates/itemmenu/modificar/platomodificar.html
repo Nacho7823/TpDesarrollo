@@ -2,15 +2,19 @@
 <html>
 
 <head>
-    <title>Crear plato</title>
+    <title>Modificar plato</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="platocrear.css">
+    <link rel="stylesheet" href="platomodificar.css">
 </head>
 
 <body>
     <div id="div-root">
         <div id="upperpan">
+            <div class="div_upperpan_search">
+                <label>Id Plato</label>
+                <input disabled id="input-id">
+            </div>
             <div class="div_upperpan_search">
                 <label>Nombre</label>
                 <input id="input-nombre">
@@ -41,7 +45,7 @@
             </div>
             <div id="divbtns">
                 <button id="btn-volver">Volver</button>
-                <button id="btn-crear">Crear</button>
+                <button id="btn-crear">Modificar</button>
             </div>
 
         </div>
@@ -50,6 +54,6 @@
 
     </footer>
 </body>
-<script type="module" src="platocrear.js"></script>
+<script type="module" src="platomodificar.js"></script>
 
 </html>
