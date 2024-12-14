@@ -52,4 +52,7 @@ public class PedidoService {
         pedidoRepository.delete(pedido);
     }
     
+    public List<Pedido> encontrarPorTotal(double total){
+        return pedidoRepository.findByTotal(total);
+    }
 }
