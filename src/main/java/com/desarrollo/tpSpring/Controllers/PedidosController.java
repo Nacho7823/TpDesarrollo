@@ -226,6 +226,7 @@ public class PedidosController {
         pedido.setEstado(estado);
         pedido.setPago(pago);
         pedidoService.crearPedido(pedido);
+        System.out.println("pedido creado");
         return ResponseEntity.ok(true);
     }
 

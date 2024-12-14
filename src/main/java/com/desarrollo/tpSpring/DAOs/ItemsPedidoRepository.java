@@ -2,6 +2,7 @@
 package com.desarrollo.tpSpring.DAOs;
 
 import com.desarrollo.tpSpring.entities.ItemsPedido;
+import com.desarrollo.tpSpring.entities.ItemsPedidoID;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -9,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ItemsPedidoRepository extends JpaRepository<ItemsPedido, Long>{
+public interface ItemsPedidoRepository extends JpaRepository<ItemsPedido, ItemsPedidoID>{
 
   // public List<ItemsPedido> findByIdPedido(int idPedido);
    

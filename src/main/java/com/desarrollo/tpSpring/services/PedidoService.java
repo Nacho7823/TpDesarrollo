@@ -4,10 +4,13 @@
  */
 package com.desarrollo.tpSpring.services;
 
+import com.desarrollo.tpSpring.DAOs.PagoRepository;
 import com.desarrollo.tpSpring.DAOs.PedidoRepository;
+import com.desarrollo.tpSpring.entities.Pago;
 import com.desarrollo.tpSpring.entities.Pedido;
 import jakarta.transaction.Transactional;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -17,15 +20,20 @@ import org.springframework.validation.annotation.Validated;
  */
 @Service
 public class PedidoService {
-    private final PedidoRepository pedidoRepository;
+    @Autowired
+    private PedidoRepository pedidoRepository;
+    @Autowired
+    private PagoRepository pagoRepository;
 
     public PedidoService(PedidoRepository pedidoRepository) {
-        this.pedidoRepository = pedidoRepository;
     }
     
     @Transactional
     public void crearPedido(@Validated Pedido pedido){
         
+        Pago pago = pedido.getPago();
+        pagoRepository.save(pago);
+        pedido.setPago(pago);
         if(pedido.getPago() != null){
             pedidoRepository.save(pedido);
            

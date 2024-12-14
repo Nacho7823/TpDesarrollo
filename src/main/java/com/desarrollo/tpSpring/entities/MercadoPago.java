@@ -3,6 +3,7 @@ package com.desarrollo.tpSpring.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,11 +14,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name= "mercado_pago")
+@PrimaryKeyJoinColumn(name = "id_pago")
 public class MercadoPago extends Pago{
     @Column(name="alias")
     private String alias;
 
-    MercadoPago(String alias, double calcularTotal) {
+    public MercadoPago(String alias, double calcularTotal) {
         this.alias=alias;
         super.setMonto(calcularTotal);
     }

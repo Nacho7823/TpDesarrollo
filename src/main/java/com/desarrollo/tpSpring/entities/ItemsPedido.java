@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 @Entity(name="detalle_pedido")
 @AllArgsConstructor
 @NoArgsConstructor
+@IdClass(ItemsPedidoID.class)
 public class ItemsPedido {
 
     @Id
