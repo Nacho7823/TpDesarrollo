@@ -3,6 +3,7 @@ package com.desarrollo.tpSpring.Controllers;
 import com.desarrollo.tpSpring.DAOs.PedidoRepository;
 import static com.desarrollo.tpSpring.Utils.FileUtils.cargarArchivo;
 import com.desarrollo.tpSpring.entities.Pedido;
+import com.desarrollo.tpSpring.services.PedidoService;
 import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/pedidos")
 public class PedidosController {
     @Autowired
-    private PedidoRepository pedidoService;
+    private PedidoService pedidoService;
     
     private String pedidos_html;
     private String pedidos_css;
@@ -130,25 +131,25 @@ public class PedidosController {
     // funciones
     @GetMapping("/pedidos")
     public ResponseEntity<Iterable<Pedido>> pedidos() {
-        Iterable<Pedido> pedidos = pedidoService.findAll();
+        Iterable<Pedido> pedidos = pedidoService.obtenerPedidos();
         return ResponseEntity.ok(pedidos);
     }
 
     @DeleteMapping("/pedidos")
     public ResponseEntity<String> eliminarPedido(@RequestBody Pedido pedido) {
-        pedidoService.delete(pedido);
+        pedidoService.eliminarPedido(pedido);
         return ResponseEntity.ok("Pedido " + pedido.getId_pedido() + " eliminado exitosamente");
     }
     
     @PostMapping("/pedidos")
     public ResponseEntity<String> crearPedido(@RequestBody Pedido pedido) {
-        pedidoService.save(pedido);
+        pedidoService.crearPedido(pedido);
         return ResponseEntity.ok("Pedido " + pedido.getId_pedido() + " creado exitosamente");
     }
     
     @PutMapping("/pedidos")
     public ResponseEntity<String> modificarPedido(@RequestBody Pedido pedido) {
-        pedidoService.save(pedido);
+        pedidoService.actualizarPedido(pedido);
         return ResponseEntity.ok("Pedido " + pedido + " modificado exitosamente");
     }
 }
