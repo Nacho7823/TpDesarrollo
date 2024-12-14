@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package com.desarrollo.tpSpring.services;
 
 import com.desarrollo.tpSpring.DAOs.ItemsPedidoRepository;
@@ -13,10 +10,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
-/**
- *
- * @author florh
- */
+
 @Service
 public class ItemPedidoService {
     private final ItemsPedidoRepository itemPedidoRepository;
@@ -113,8 +107,8 @@ public class ItemPedidoService {
         itemPedidoRepository.delete(item);
     }
 
-    public List<ItemsPedido> encontrarPorCantidad(int cantidad){
+  /*  public List<ItemsPedido> encontrarPorCantidad(int cantidad){
         return itemPedidoRepository.find
-    }
+    }*/
     
 }
