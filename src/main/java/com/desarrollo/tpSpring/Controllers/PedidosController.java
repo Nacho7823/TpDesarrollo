@@ -16,12 +16,17 @@ import com.desarrollo.tpSpring.services.ItemMenuService;
 import com.desarrollo.tpSpring.services.PedidoService;
 import com.desarrollo.tpSpring.services.VendedorService;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +41,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/pedidos")
 public class PedidosController {
+
     @Autowired
     private PedidoService pedidoService;
     @Autowired
@@ -44,9 +50,7 @@ public class PedidosController {
     private ClienteService clienteService;
     @Autowired
     private ItemMenuService itemMenuService;
-    
-    
-    
+
     private String pedidos_html;
     private String pedidos_css;
     private String pedidos_js;
@@ -78,6 +82,13 @@ public class PedidosController {
         } catch (IOException e) {
             throw new RuntimeException("no se pudo cargar la pagina del pedido");
         }
+    }
+
+    //`${year}-${month}-${day}`;
+    private LocalDate parseDate(String date) {
+        String[] splits = date.split("-");
+        LocalDate localDate = LocalDate.of(Integer.parseInt(splits[0]), Integer.parseInt(splits[1]), Integer.parseInt(splits[2]));
+        return localDate;
     }
 
     // pasar UI
@@ -116,17 +127,17 @@ public class PedidosController {
                 .header("Content-Type", "application/javascript")
                 .body(pedidos_crear_js);
     }
-    
+
     @GetMapping("/modificar/pedidosmodificar.html")
     public ResponseEntity<String> pedidosModificarHtml() {
         return new ResponseEntity<>(pedidos_modificar_html, HttpStatus.OK);
     }
-    
+
     @GetMapping("/modificar/pedidosmodificar.css")
     public ResponseEntity<String> pedidosModificarCss() {
         return new ResponseEntity<>(pedidos_modificar_css, HttpStatus.OK);
     }
-    
+
     @GetMapping("/modificar/pedidosmodificar.js")
     public ResponseEntity<String> pedidoModificarJs() {
         return ResponseEntity
@@ -134,17 +145,17 @@ public class PedidosController {
                 .header("Content-Type", "application/javascript")
                 .body(pedidos_modificar_js);
     }
-    
+
     @GetMapping("/veritems/pedidoveritems.html")
     public ResponseEntity<String> pedidosVerItemsHtml() {
         return new ResponseEntity<>(pedidoveritems_html, HttpStatus.OK);
     }
-    
+
     @GetMapping("/veritems/pedidoveritems.css")
     public ResponseEntity<String> pedidosVerItemsCss() {
         return new ResponseEntity<>(pedidoveritems_css, HttpStatus.OK);
     }
-    
+
     @GetMapping("/veritems/pedidoveritems.js")
     public ResponseEntity<String> pedidosVerItemsJs() {
         return ResponseEntity
@@ -165,51 +176,48 @@ public class PedidosController {
         pedidoService.eliminarPedido(pedido);
         return ResponseEntity.ok("Pedido " + pedido.getId_pedido() + " eliminado exitosamente");
     }
-    
+
     @PostMapping("/pedido")
     public ResponseEntity<Boolean> crearPedido(@RequestBody Map<String, Object> data) {
-        
         EstadoPedido estado = EstadoPedido.valueOf((String) data.get("estado"));
         int id_cliente = (int) data.get("id_cliente");
         int id_vendedor = (int) data.get("id_vendedor");
 //        int id_pago = (int) data.get("id_pago");
 //        int total = (int) data.get("total");      // creo q no deberia estar
-        
+
         Cliente cliente = clienteService.buscarCliente(id_cliente);
         Vendedor vendedor = vendedorService.buscarVendedor(id_vendedor);
-        
-        List<Map<String,Object>> itemsDetalles = (List<Map<String,Object>>) data.get("items");
-        
+
+        List<Map<String, Object>> itemsDetalles = (List<Map<String, Object>>) data.get("items");
+//        
         Pedido pedido = new Pedido();
-        
         Set<ItemsPedido> items = new HashSet();
         for (int i = 0; i < itemsDetalles.size(); i++) {
             int id_item_menu = (int) itemsDetalles.get(i).get("id_item_menu");
             int cantidad = (int) itemsDetalles.get(i).get("cantidad");
-            
+
             ItemMenu itemMenu = itemMenuService.buscarItemMenu(id_item_menu);
-            
+
             ItemsPedido item = new ItemsPedido(0, cantidad, pedido, itemMenu);
             items.add(item);
         }
-        
+
         Pago pago;
-        if(data.get("formapago").equals("mercadopago")){
+        if (data.get("formapago").equals("mercadopago")) {
             String alias = (String) data.get("alias");
             int monto = (int) data.get("monto");
-            Date fecha = (Date) data.get("fecha");
+            String fecha = (String) data.get("fecha");
             pago = new MercadoPago(alias);
             pago.setMonto(monto);
-            pago.setFecha(fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-        }
-        else {              //transferencia
+            pago.setFecha(parseDate(fecha));
+        } else {              //transferencia
             String cvu = (String) data.get("cvu");
             String cuit = (String) data.get("cuit");
             int monto = (int) data.get("monto");
-            Date fecha = (Date) data.get("fecha");
+            String fecha = (String) data.get("fecha");
             pago = new Transferencia(cuit, cvu);
             pago.setMonto(monto);
-            pago.setFecha(fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+            pago.setFecha(parseDate(fecha));
         }
         
         pedido.setCliente(cliente);
@@ -217,23 +225,14 @@ public class PedidosController {
         pedido.setItems(items);
         pedido.setEstado(estado);
         pedido.setPago(pago);
-        
-        System.out.println(" ");
-        System.out.println(" ");
-        System.out.println(" ");
-        System.out.println("pedido: " + pedido.toString());
-        System.out.println(" ");
-        System.out.println(" ");
-        System.out.println(" ");
-        
         pedidoService.crearPedido(pedido);
         return ResponseEntity.ok(true);
     }
-    
+
     @PutMapping("/pedido")
     public ResponseEntity<String> modificarPedido(@RequestBody Pedido pedido) {
         pedidoService.actualizarPedido(pedido);
         return ResponseEntity.ok("Pedido " + pedido + " modificado exitosamente");
     }
-    
+
 }

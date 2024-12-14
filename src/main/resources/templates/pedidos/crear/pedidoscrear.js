@@ -10,6 +10,14 @@ const selectEstado = document.getElementById("select-estado");
 const inputTotal = document.getElementById("input-total");
 const divPago = document.getElementById("pagopan");
 
+function formatDate(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Los meses en JavaScript empiezan desde 0
+    const day = String(date.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
+}
+
 btnVolver.addEventListener("click", () => window.location.href = "../pedidos.html");
 
 btnCrear.addEventListener("click", async () => {
@@ -24,7 +32,7 @@ btnCrear.addEventListener("click", async () => {
         formapago : selectFormaPago.value,
         id_pago: 0,
         monto: 0,
-        fecha: new Date(),
+        fecha: formatDate(new Date()),
         alias: alias,
         cvu: cvu,
         cuit: cuit,
@@ -33,46 +41,8 @@ btnCrear.addEventListener("click", async () => {
         total: 0
     };
 
-    const id_pedido = await createPedido(tmp);
-    if (id_pedido == null) {
+    if (!await createPedido(tmp)) {
         alert("No se pudo crear el pedido");
-        return;
-    }
-    tmp.id_pedido = id_pedido;
-
-    // asociar items
-    const detalles = [];
-    itemsAdded.forEach((value, key) => {
-        if (value <= 0) {
-            return;
-        }
-        detalles.push({
-            id_pedido: id_pedido,
-            id_item_menu: key,
-            cantidad: value
-        });
-    })
-
-    for (const detalle_pedido of detalles) {
-        console.log(detalle_pedido);
-        if (!await createDetalles(detalle_pedido)) {
-            alert("No se pudo crear el pedido");
-            return;
-        }
-    }
-
-    // calcular precio total
-    let total = 0;
-    for (const detalle_pedido of detalles) {
-        const item = await getItemMenu(detalle_pedido.id_item_menu);
-        total += item.precio * detalle_pedido.cantidad;
-    }
-
-    tmp.total = total;
-
-    // actualizar pedido
-    if (!await updatePedido(tmp)) {
-        alert("No se pudo actualizar el pedido");
         return;
     }
 

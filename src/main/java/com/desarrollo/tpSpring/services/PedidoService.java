@@ -26,9 +26,6 @@ public class PedidoService {
     @Transactional
     public void crearPedido(@Validated Pedido pedido){
         
-        
-        
-        
         if(pedido.getPago() != null){
             pedidoRepository.save(pedido);
            
