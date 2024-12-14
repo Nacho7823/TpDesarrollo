@@ -18,5 +18,6 @@ public interface ItemsPedidoRepository extends JpaRepository<ItemsPedido, Long>{
    
    public List<ItemsPedido> findByCantidad(int cantidad);
    
+   
 
 }
