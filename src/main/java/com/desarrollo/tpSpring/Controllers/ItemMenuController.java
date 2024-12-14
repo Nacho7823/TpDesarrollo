@@ -3,6 +3,7 @@ package com.desarrollo.tpSpring.Controllers;
 import com.desarrollo.tpSpring.DAOs.ItemMenuRepository;
 import static com.desarrollo.tpSpring.Utils.FileUtils.cargarArchivo;
 import com.desarrollo.tpSpring.entities.ItemMenu;
+import com.desarrollo.tpSpring.services.ItemMenuService;
 import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/itemmenu")
 public class ItemMenuController {
     @Autowired
-    private ItemMenuRepository itemMenuDAO;
+    private ItemMenuService itemMenuService;
 //    
     private String itemmenu_html;
     private String itemmenu_css;
@@ -155,26 +156,26 @@ public class ItemMenuController {
     //funciones
     @GetMapping("/itemmenus")
     public ResponseEntity<Iterable<ItemMenu>> items(){
-        Iterable<ItemMenu> items = itemMenuDAO.findAll();
+        Iterable<ItemMenu> items = itemMenuService.obtenerItemsMenu();
         return ResponseEntity.ok(items);
     }
     
     @PostMapping("/itemmenu")
     public ResponseEntity<String> addItem(@RequestBody ItemMenu item){
-        ItemMenu i;
-        i = itemMenuDAO.save(item);
-        return ResponseEntity.ok("Item " +  i.getNombre() + " creado exitosamente");
+        
+        itemMenuService.crearItemsMenu(item);
+        return ResponseEntity.ok("Item " +  item.getNombre() + " creado exitosamente");
     }
     
     @PutMapping("/itemmenu")
     public ResponseEntity<ItemMenu> updateItem(@RequestBody ItemMenu item){
-        itemMenuDAO.save(item);
+        itemMenuService.actualizarItemMenu(item);
         return new ResponseEntity<>(item, HttpStatus.OK);
     }
     
     @DeleteMapping("/itemmenu")
     public ResponseEntity<String> deleteItem(@RequestBody ItemMenu item){
-        itemMenuDAO.delete(item);
+        itemMenuService.eliminarItemMenu(item.getId_item_menu());
         return ResponseEntity.ok("Item " +  item.getNombre() + " creado exitosamente");
     }
 }
