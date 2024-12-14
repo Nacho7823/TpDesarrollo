@@ -3,6 +3,7 @@ package com.desarrollo.tpSpring.Controllers;
 import com.desarrollo.tpSpring.entities.Vendedor;
 import com.desarrollo.tpSpring.DAOs.VendedorRepository;
 import static com.desarrollo.tpSpring.Utils.FileUtils.cargarArchivo;
+import com.desarrollo.tpSpring.services.VendedorService;
 import java.io.IOException;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 public class VendedorController {
 
     @Autowired
-    private VendedorRepository vendedorRepository;
+    private VendedorService vendedorService;
 
     private String vendedor_html;
     private String vendedor_css;
@@ -105,35 +106,35 @@ public class VendedorController {
     // datos
     @GetMapping("/vendedores")
     public ResponseEntity<Iterable<Vendedor>> vendedores() {
-        Iterable<Vendedor> vend = vendedorRepository.findAll();
+        Iterable<Vendedor> vend = vendedorService.obtenerVendedores();
         return ResponseEntity.ok(vend);
     }
 
     @DeleteMapping("/vendedor")
     public ResponseEntity<String> eliminarVendedor(@RequestBody Vendedor vendedor) {
         long id = vendedor.getId_vendedor();
-        Optional<Vendedor> opt = vendedorRepository.findById(id);
-        if(opt.isEmpty()){
+        Vendedor opt = vendedorService.buscarVendedor(id);
+        if(opt==null){
             System.out.println("no se pudo eliminar el vendedor: " + id);
             return ResponseEntity.badRequest().body("no se pudo eliminar");
         }
         
-        vendedorRepository.delete(opt.get());
+        vendedorService.eliminarVendedor(id);
         System.out.println("delete vendedor: " + id);
         return ResponseEntity.ok("Vendedor " + id + " eliminado exitosamente");
     }
     
     @PostMapping("/vendedor")
     public ResponseEntity<String> crearVendedor(@RequestBody Vendedor vendedor) {
-        vendedorRepository.save(vendedor);
+        vendedorService.crearVendedor(vendedor);
         return ResponseEntity.ok("Vendedor " + vendedor + " creado exitosamente");
     }
     
     
     @PutMapping("/vendedor")
     public ResponseEntity<String> modificarVendedor(@RequestBody Vendedor vendedor) {
-        System.out.println("id: " + vendedor.getId_vendedor());
-        vendedorRepository.save(vendedor);
+        
+        vendedorService.actualizarVendedor(vendedor);
         return ResponseEntity.ok("Vendedor " + vendedor + " modificado exitosamente");
     }
 }
