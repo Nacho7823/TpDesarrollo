@@ -5,6 +5,7 @@
 package com.desarrollo.tpSpring.services;
 
 import com.desarrollo.tpSpring.DAOs.ClienteRepository;
+import com.desarrollo.tpSpring.DAOs.CoordenadaRepository;
 import com.desarrollo.tpSpring.entities.Cliente;
 import jakarta.transaction.Transactional;
 import java.util.List;
@@ -19,10 +20,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class ClienteService {
     private final ClienteRepository clienteRepository;
-    
+     public final CoordenadaRepository coordenadaRepository;
+     
     @Autowired
-    public ClienteService(ClienteRepository clienteRepository) {
+    public ClienteService(ClienteRepository clienteRepository,CoordenadaRepository coordenadaRepository) {
         this.clienteRepository = clienteRepository;
+        this.coordenadaRepository=coordenadaRepository;
     }
     
     public List<Cliente> obtenerClientes(){
@@ -41,6 +44,7 @@ public class ClienteService {
     @Transactional
     public void actualizarCliente(Cliente cliente){
         try {
+            coordenadaRepository.save(cliente.getCoordenada());
             clienteRepository.save(cliente);
             System.out.println("Cliente actualizado exitosamente: " + cliente.getId_cliente()); 
         } catch (Exception e) {
