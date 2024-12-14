@@ -240,42 +240,89 @@ async function DELETE(url, body) {
     return await response.json();
 }
 
+function DTO2Cliente(dto) {
+    return {
+        id_cliente: dto.id_cliente,
+        nombre: dto.nombre,
+        cuit: dto.cuit,
+        email: dto.email,
+        direccion: dto.direccion,
+        latitud: dto.coordenada.latitud,
+        longitud: dto.coordenada.longitud
+    }
+}
+function Cliente2DTO(cliente) {
+    return {
+        id_cliente: cliente.id_cliente,
+        nombre: cliente.nombre,
+        cuit: cliente.cuit,
+        email: cliente.email,
+        direccion: cliente.direccion,
+        coordenada: {
+            latitud: cliente.latitud,
+            longitud: cliente.longitud
+        }
+    }
+}
+
+function DTO2Vendedor(dto) {
+    return {
+        id_vendedor: dto.id_vendedor,
+        nombre: dto.nombre,
+        direccion: dto.direccion,
+        latitud: dto.coordenada.latitud,
+        longitud: dto.coordenada.longitud
+    }
+}
+
+function Vendedor2DTO(vendedor) {
+    return {
+        id_vendedor: vendedor.id_vendedor,
+        nombre: vendedor.nombre,
+        direccion: vendedor.direccion,
+        coordenada: {
+            latitud: vendedor.latitud,
+            longitud: vendedor.longitud
+        }
+    }
+}
+
 async function getClientes() {
-    const clietnes = await GET("/cliente/clientes");
-    console.log(clietnes);
-    return await GET("/cliente/clientes");
+    const clientesDTOs = await GET("/cliente/clientes");
+    const clientes = clientesDTOs.map(DTO2Cliente);
+    return clientes;
 }
 async function getCliente(id) {
-    return await GET_ID("/cliente/cliente", id);
+    return DTO2Cliente(await GET_ID("/cliente/cliente", id));
 }
 async function createCliente(cliente) {
-    return await POST("/cliente/cliente", cliente);
+    return DTO2Cliente(await POST("/cliente/cliente", Cliente2DTO(cliente)));
 }
 async function updateCliente(cliente) {
-    return await PUT("/cliente/cliente", cliente);
+    return await PUT("/cliente/cliente", Cliente2DTO(cliente));
 }
-async function deleteCliente(id) {
-    return await DELETE("/cliente/cliente", id);
+async function deleteCliente(cliente) {
+    return await DELETE("/cliente/cliente", Cliente2DTO(cliente));
 }
 
 // vendedor
 
 async function getVendedores() {
-    const v = await GET("/vendedor/vendedores");
-    console.log(v);
-    return await GET("/vendedor/vendedores");
+    const vendedoresDTOs = await GET("/vendedor/vendedores");
+    const vendedores = vendedoresDTOs.map(DTO2Vendedor);
+    return vendedores;
 }
 async function getVendedor(id) {
-    return await GET_ID("/vendedor/vendedor", id);
+    return DTO2Vendedor(await GET_ID("/vendedor/vendedor", id));
 }
 async function createVendedor(vendedor) {
-    return await POST("/vendedor/vendedor", vendedor);
+    return await POST("/vendedor/vendedor", Vendedor2DTO(vendedor));
 }
 async function updateVendedor(vendedor) {
-    return await PUT("/vendedor/vendedor", vendedor);
+    return await PUT("/vendedor/vendedor", Vendedor2DTO(vendedor));
 }
-async function deleteVendedor(id) {
-    return await DELETE("/vendedor/vendedor", id);
+async function deleteVendedor(vendedor) {
+    return await DELETE("/vendedor/vendedor", Vendedor2DTO(vendedor));
 }
 
 // itemmenu
