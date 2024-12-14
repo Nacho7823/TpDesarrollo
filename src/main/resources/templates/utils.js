@@ -148,6 +148,7 @@ async function createCliente(cliente) {
     return DTO2Cliente(await POST("/cliente/cliente", Cliente2DTO(cliente)));
 }
 async function updateCliente(cliente) {
+    console.log(cliente);
     return await PUT("/cliente/cliente", Cliente2DTO(cliente));
 }
 async function deleteCliente(cliente) {
