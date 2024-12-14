@@ -3,6 +3,7 @@ package com.desarrollo.tpSpring.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Entity;
 
 
@@ -22,11 +23,13 @@ public class ItemsPedido {
     @Id
     @ManyToOne
     @JoinColumn(name = "id_pedido", nullable = false)
+    @JsonBackReference 
     private Pedido pedido;
 
     @Id
     @ManyToOne
     @JoinColumn(name = "id_item_menu", nullable = false)
+    @JsonProperty("id_item_menu")
     private ItemMenu itemMenu;
 
     @Column(name="cantidad")

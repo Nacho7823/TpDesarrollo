@@ -3,6 +3,7 @@ package com.desarrollo.tpSpring.Controllers;
 import com.desarrollo.tpSpring.entities.Vendedor;
 import com.desarrollo.tpSpring.DAOs.VendedorRepository;
 import static com.desarrollo.tpSpring.Utils.FileUtils.cargarArchivo;
+import com.desarrollo.tpSpring.entities.Cliente;
 import com.desarrollo.tpSpring.services.VendedorService;
 import java.io.IOException;
 import java.util.Optional;
@@ -108,6 +109,12 @@ public class VendedorController {
     public ResponseEntity<Iterable<Vendedor>> vendedores() {
         Iterable<Vendedor> vend = vendedorService.obtenerVendedores();
         return ResponseEntity.ok(vend);
+    }
+    
+    @GetMapping("/vendedor/{id}")
+    public ResponseEntity<Vendedor> getVendedor(@PathVariable int id) {
+        Vendedor vendedor = vendedorService.buscarVendedor(id);
+        return ResponseEntity.ok(vendedor);
     }
 
     @DeleteMapping("/vendedor")

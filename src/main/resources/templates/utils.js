@@ -211,8 +211,8 @@ async function createPedido(pedido) {
 async function updatePedido(pedido) {
     return await PUT("/pedidos/pedido", pedido);
 }
-async function deletePedido(id) {
-    return await DELETE("/pedidos/pedido", id);
+async function deletePedido(pedido) {
+    return await DELETE("/pedidos/pedido", pedido);
 }
 
 // detalle_pedido

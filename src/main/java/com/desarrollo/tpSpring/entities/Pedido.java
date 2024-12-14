@@ -6,6 +6,7 @@ import com.desarrollo.tpSpring.enums.EstadoPedido;
 import com.desarrollo.tpSpring.interfaces.Observador;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -40,10 +41,12 @@ public class Pedido {
     
     @ManyToOne
     @JoinColumn(name = "id_cliente", referencedColumnName = "id_cliente")
+    @JsonProperty("id_cliente")
     private Cliente cliente;
 
     @ManyToOne
     @JoinColumn(name = "id_vendedor")
+    @JsonProperty("id_vendedor")
     private Vendedor vendedor;
 
     @OneToOne

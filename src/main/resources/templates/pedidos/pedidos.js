@@ -53,9 +53,8 @@ async function addRow(pedido) {
         cell.appendChild(btn);
         return cell;
     }
-
-    const nombreCliente = (await getCliente(pedido.id_cliente)).nombre;
-    const nombreVendedor = (await getVendedor(pedido.id_vendedor)).nombre;
+    const nombreCliente = (await getCliente(pedido.id_cliente.id_cliente)).nombre;
+    const nombreVendedor = (await getVendedor(pedido.id_vendedor.id_vendedor)).nombre;
 
     row.appendChild(createCell(pedido.id_pedido))
     row.appendChild(createCell(nombreCliente));

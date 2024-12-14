@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -109,6 +110,12 @@ public class ClienteController {
     public ResponseEntity<Iterable<Cliente>> clientes() {
         Iterable<Cliente> vend = clienteService.obtenerClientes();
         return ResponseEntity.ok(vend);
+    }
+    
+    @GetMapping("/cliente/{id}")
+    public ResponseEntity<Cliente> getCliente(@PathVariable int id) {
+        Cliente cliente = clienteService.buscarCliente(id);
+        return ResponseEntity.ok(cliente);
     }
 
     @DeleteMapping("/cliente")
