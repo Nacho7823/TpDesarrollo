@@ -6,6 +6,7 @@ package com.desarrollo.tpSpring.services;
 
 import com.desarrollo.tpSpring.DAOs.VendedorRepository;
 import com.desarrollo.tpSpring.entities.Vendedor;
+import jakarta.transaction.Transactional;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,7 @@ public class VendedorService {
         return (List<Vendedor>) vendedorRepository.findAll();
     }
     
+    @Transactional
     public void crearVendedor(Vendedor vendedor) {
         try {
             vendedorRepository.save(vendedor);
@@ -35,6 +37,7 @@ public class VendedorService {
         }
     }
     
+    @Transactional
     public void actualizarVendedor(Vendedor vendedor){
         try {
             vendedorRepository.save(vendedor);
@@ -44,7 +47,7 @@ public class VendedorService {
         }
         
     }
-    
+    @Transactional
     public void eliminarVendedor(long id) {
          try {
             vendedorRepository.deleteById(id);

@@ -7,6 +7,7 @@ package com.desarrollo.tpSpring.services;
 import com.desarrollo.tpSpring.DAOs.PagoRepository;
 import com.desarrollo.tpSpring.entities.MercadoPago;
 import com.desarrollo.tpSpring.entities.Pago;
+import jakarta.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 import org.springframework.stereotype.Service;
@@ -48,6 +49,8 @@ public class PagoService {
     public Pago buscarPagoPorId(String id){
         return pagoRepository.findById(id).get();
     }
+    
+    @Transactional
     public void crearPago(Pago p){
         try{
         pagoRepository.save(p);
@@ -55,6 +58,7 @@ public class PagoService {
             System.err.println("No se puedo crear el pago"+ e.getMessage());
         }
     }
+    @Transactional
     public void actualizarPago(Pago p){
         try{
         pagoRepository.save(p);
@@ -62,6 +66,7 @@ public class PagoService {
             System.err.println("No se puedo actualizar el pago"+ e.getMessage());
         }
     }
+    @Transactional
     public void eliminarPago(Pago p){
         try{
         pagoRepository.delete(p);
@@ -69,6 +74,7 @@ public class PagoService {
             System.err.println("No se puedo eliminar el pago"+ e.getMessage());
         }
     }
+    @Transactional
     public void eliminarPagoPorId(String id){
         try{
         pagoRepository.deleteById(id);

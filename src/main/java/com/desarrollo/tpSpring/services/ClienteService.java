@@ -6,6 +6,7 @@ package com.desarrollo.tpSpring.services;
 
 import com.desarrollo.tpSpring.DAOs.ClienteRepository;
 import com.desarrollo.tpSpring.entities.Cliente;
+import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class ClienteService {
     public List<Cliente> obtenerClientes(){
         return (List<Cliente>) clienteRepository.findAll();
     }
-    
+    @Transactional
     public void crearCliente(Cliente cliente) {
         try {
             clienteRepository.save(cliente);
@@ -37,7 +38,7 @@ public class ClienteService {
             System.err.println("Error inesperado al crear el cliente: " + e.getMessage());
         }
     }
-    
+    @Transactional
     public void actualizarCliente(Cliente cliente){
         try {
             clienteRepository.save(cliente);
@@ -47,6 +48,8 @@ public class ClienteService {
         }
         
     }
+    
+    @Transactional
     public void eliminarCliente(long id) {
          try {
             clienteRepository.deleteById(id);

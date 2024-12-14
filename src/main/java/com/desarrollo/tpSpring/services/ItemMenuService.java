@@ -4,13 +4,9 @@
  */
 package com.desarrollo.tpSpring.services;
 
-import com.desarrollo.tpSpring.DAOs.BebidaRepository;
 import com.desarrollo.tpSpring.DAOs.ItemMenuRepository;
-import com.desarrollo.tpSpring.DAOs.PlatoRepository;
-import com.desarrollo.tpSpring.entities.Bebida;
 import com.desarrollo.tpSpring.entities.ItemMenu;
-import com.desarrollo.tpSpring.entities.Plato;
-import java.util.Collection;
+import jakarta.transaction.Transactional;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +29,7 @@ public class ItemMenuService {
     public List<ItemMenu> obtenerItemsMenu() { 
         return itemMenuRepository.findAll() ;
     }
-    
+    @Transactional
     public void crearItemsMenu(ItemMenu item) {
         try {
             itemMenuRepository.save(item);
@@ -43,7 +39,7 @@ public class ItemMenuService {
             System.err.println("Error inesperado al crear el item: " + e.getMessage());
         }
     }
-    
+    @Transactional
     public void actualizarItemMenu(ItemMenu item){
         try {
                 itemMenuRepository.save(item);
@@ -53,7 +49,7 @@ public class ItemMenuService {
         }
         
     }
-    
+    @Transactional
     public void eliminarItemMenu(String id) {
          try {
                 itemMenuRepository.deleteById(id);
