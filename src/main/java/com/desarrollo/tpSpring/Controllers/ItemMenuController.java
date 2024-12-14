@@ -5,6 +5,7 @@ import static com.desarrollo.tpSpring.Utils.FileUtils.cargarArchivo;
 
 import com.desarrollo.tpSpring.entities.Bebida;
 import com.desarrollo.tpSpring.entities.ItemMenu;
+import com.desarrollo.tpSpring.entities.ItemsPedido;
 import com.desarrollo.tpSpring.entities.Plato;
 import com.desarrollo.tpSpring.services.ItemMenuService;
 import java.io.IOException;
@@ -244,6 +245,12 @@ public class ItemMenuController {
     @GetMapping("/itemmenusOfVendedor/{id}")
     public ResponseEntity<Iterable<ItemMenu>> itemsOfVendedor(@PathVariable int id) {
         Iterable<ItemMenu> items = itemMenuService.obtenerItemsMenuDeVendedor(id);
+        return ResponseEntity.ok(items);
+    }
+    
+    @GetMapping("/itemmenusOfPedido/{id}")
+    public ResponseEntity<Iterable<ItemsPedido>> itemsOfPedido(@PathVariable int id) {
+        Iterable<ItemsPedido> items = itemMenuService.obtenerItemsMenuDePedido(id);
         return ResponseEntity.ok(items);
     }
 }

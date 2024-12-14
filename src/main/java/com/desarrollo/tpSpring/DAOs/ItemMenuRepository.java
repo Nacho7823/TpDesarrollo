@@ -1,6 +1,7 @@
 package com.desarrollo.tpSpring.DAOs;
 
 import com.desarrollo.tpSpring.entities.ItemMenu;
+import com.desarrollo.tpSpring.entities.ItemsPedido;
 import com.desarrollo.tpSpring.entities.Vendedor;
 import java.util.List;
 import java.util.Set;
@@ -17,6 +18,8 @@ public interface ItemMenuRepository extends JpaRepository<ItemMenu, Integer> {
       public List<ItemMenu> findByPrecioBetween(int precioMin, int precioMax);
       public List<ItemMenu> findByPrecio(int precio);
       public List<ItemMenu> findByVendedores(Vendedor vendedor);
+//      public List<ItemMenu> findByItemsPedido(ItemsPedido itemsPedido);
+      
 
       @Query("SELECT i FROM item_menu i WHERE TYPE(i) = com.desarrollo.tpSpring.entities.Bebida")
       Set<ItemMenu> findAllBebida();

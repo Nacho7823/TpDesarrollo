@@ -61,8 +61,6 @@ public class PedidoService {
     @Transactional
     public void eliminarPedido(@Validated Pedido id) {
         Pedido pedido = pedidoRepository.findById(id.getId_pedido()).get();
-        
-//        pagoRepository.delete(pago);
         pedidoRepository.delete(pedido);
     }
 

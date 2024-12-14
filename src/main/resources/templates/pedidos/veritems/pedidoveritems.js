@@ -4,7 +4,7 @@ const btnVolver = document.getElementById("btn-volver");
 btnVolver.addEventListener("click", () => window.location.href = "../pedidos.html");
 
 async function addRow(itemregister) {
-    const item = itemregister.item;
+    const item = itemregister.id_item_menu;
     const cantidad = itemregister.cantidad;
     const row = document.createElement('tr');
 

@@ -228,7 +228,7 @@ async function createDetalles(detalle_pedido) {
 // others
 
 async function getItemsOfPedido(id) {
-    return await GET_ID("/detalle_pedido/detalle_pedido", id);
+    return await GET_ID("/itemmenu/itemmenusOfPedido", id);
 }
 
 async function getItemsOfVendedor(id) {
