@@ -4,6 +4,7 @@
  */
 package com.desarrollo.tpSpring.services;
 
+import com.desarrollo.tpSpring.DAOs.ItemMenuRepository;
 import com.desarrollo.tpSpring.DAOs.ItemsPedidoRepository;
 import com.desarrollo.tpSpring.entities.ItemMenu;
 import com.desarrollo.tpSpring.entities.ItemsPedido;
@@ -20,19 +21,20 @@ import org.springframework.validation.annotation.Validated;
 @Service
 public class ItemPedidoService {
     private final ItemsPedidoRepository itemPedidoRepository;
+    private final ItemMenuRepository itemMenuRepository;
 
-    public ItemPedidoService(ItemsPedidoRepository itemPedidoRepository) {
+    public ItemPedidoService(ItemsPedidoRepository itemPedidoRepository, com.desarrollo.tpSpring.DAOs.ItemMenuRepository itemMenuRepository) {
         this.itemPedidoRepository = itemPedidoRepository;
+        this.itemMenuRepository = itemMenuRepository;
     }
     
     
     
     
    
-    public ItemMenu buscarPorNombre(String nombre) {
-        ItemMenu item = null;
+    public List<ItemMenu> buscarPorNombre(String nombre) {
         
-        return item;
+        return null;
     }
 
     public List<ItemMenu> buscarDescripcion(String descripcion) {
@@ -114,7 +116,7 @@ public class ItemPedidoService {
     }
 
     public List<ItemsPedido> encontrarPorCantidad(int cantidad){
-        return itemPedidoRepository.find
+        return itemPedidoRepository.findByCantidad(cantidad);
     }
     
 }
