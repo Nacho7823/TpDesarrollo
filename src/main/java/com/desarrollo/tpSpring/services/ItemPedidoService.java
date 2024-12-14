@@ -1,11 +1,8 @@
 
 package com.desarrollo.tpSpring.services;
 
-import com.desarrollo.tpSpring.DAOs.ItemMenuRepository;
 import com.desarrollo.tpSpring.DAOs.ItemsPedidoRepository;
-import com.desarrollo.tpSpring.entities.ItemMenu;
 import com.desarrollo.tpSpring.entities.ItemsPedido;
-import com.desarrollo.tpSpring.exceptions.ItemNoEncontradoException;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import org.springframework.stereotype.Service;

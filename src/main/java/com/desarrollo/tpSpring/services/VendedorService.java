@@ -4,6 +4,7 @@
  */
 package com.desarrollo.tpSpring.services;
 
+import com.desarrollo.tpSpring.DAOs.CoordenadaRepository;
 import com.desarrollo.tpSpring.DAOs.VendedorRepository;
 import com.desarrollo.tpSpring.entities.Vendedor;
 import jakarta.transaction.Transactional;
@@ -17,9 +18,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class VendedorService {
     public final VendedorRepository vendedorRepository;
+    public final CoordenadaRepository coordenadaRepository;
 
-    public VendedorService(VendedorRepository vendedorRepository) {
+    public VendedorService(VendedorRepository vendedorRepository,CoordenadaRepository coordenadaRepository) {
         this.vendedorRepository = vendedorRepository;
+        this.coordenadaRepository=coordenadaRepository;
     }
     
     public List<Vendedor> obtenerVendedores() {
@@ -40,6 +43,7 @@ public class VendedorService {
     @Transactional
     public void actualizarVendedor(Vendedor vendedor){
         try {
+            coordenadaRepository.save(vendedor.getCoordenada());
             vendedorRepository.save(vendedor);
             System.out.println("Vendedor actualizado exitosamente: " + vendedor.getId_vendedor()); 
         } catch (Exception e) {
