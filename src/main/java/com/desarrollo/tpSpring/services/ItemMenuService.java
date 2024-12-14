@@ -20,32 +20,23 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ItemMenuService {
-    public final PlatoRepository platoRepository;
-    public final BebidaRepository bebidaRepository;
+    public final ItemMenuRepository itemMenuRepository;
 
-    public ItemMenuService(PlatoRepository platoRepository, BebidaRepository bebidaRepository) {
-        this.platoRepository = platoRepository;
-        this.bebidaRepository = bebidaRepository;
+    public ItemMenuService(ItemMenuRepository itemMenuRepository) {
+        this.itemMenuRepository = itemMenuRepository;
     }
+    
+
 
     
 
-    public List<ItemMenu> obtenerItemsMenu() {
-        List<ItemMenu> items =  (List<ItemMenu>) (Collection<? extends ItemMenu>) platoRepository.findAll();
-        items.addAll((Collection<? extends ItemMenu>) bebidaRepository.findAll());
-        
-        return items ;
+    public List<ItemMenu> obtenerItemsMenu() { 
+        return itemMenuRepository.findAll() ;
     }
     
     public void crearItemsMenu(ItemMenu item) {
         try {
-            
-            if(item.esComida()){
-                platoRepository.save((Plato)item);
-            }
-            if(item.esBebida()){
-               bebidaRepository.save((Bebida)item);
-            }
+            itemMenuRepository.save(item);
             System.out.println("Item creado exitosamente");
           
         } catch (Exception e) {
@@ -55,12 +46,7 @@ public class ItemMenuService {
     
     public void actualizarItemMenu(ItemMenu item){
         try {
-            if(item.esComida()){
-                platoRepository.save((Plato)item);
-            }
-            if(item.esBebida()){
-               bebidaRepository.save((Bebida)item);
-            }
+                itemMenuRepository.save(item);
             System.out.println("Item actualizado exitosamente"); 
         } catch (Exception e) {
             System.err.println("Error al acceder a la base de datos: " + e.getMessage());
@@ -68,16 +54,11 @@ public class ItemMenuService {
         
     }
     
-    public void eliminarItemMenu(int id) {
+    public void eliminarItemMenu(String id) {
          try {
-            Bebida b =  bebidaRepository.findById((long)id).get();
-            if(b == null){
-                platoRepository.deleteById((long)id);
+                itemMenuRepository.deleteById(id);
                 System.out.println("Item eliminado exitosamente: " + id); 
-            }else{
-                bebidaRepository.deleteById((long)id);
-                System.out.println("Item eliminado exitosamente: " + id); 
-            }
+            
             
             
             
@@ -86,12 +67,7 @@ public class ItemMenuService {
         }
     }
     
-    public ItemMenu buscarItemMenu(int id) {
-         Bebida b= bebidaRepository.findById((long)id).get();
-            if(b == null){
-                return (Plato) platoRepository.findById((long)id).get();
-              
-            }
-            return b;
+    public ItemMenu buscarItemMenu(String id) {
+         return itemMenuRepository.findById(id).get();
     }
 }
