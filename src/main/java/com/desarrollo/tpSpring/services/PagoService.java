@@ -4,6 +4,7 @@
  */
 package com.desarrollo.tpSpring.services;
 
+import com.desarrollo.tpSpring.DAOs.PagoRepository;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,5 +13,12 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class PagoService {
+    public final PagoRepository pagoRepository;
+
+    public PagoService(PagoRepository pagoRepository) {
+        this.pagoRepository = pagoRepository;
+    }
+    
+    public Pago encontrarPagoPor
     
 }

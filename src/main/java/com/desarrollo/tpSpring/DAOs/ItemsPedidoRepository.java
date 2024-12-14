@@ -17,5 +17,6 @@ public interface ItemsPedidoRepository extends JpaRepository<ItemsPedido, Long>{
     List<ItemsPedido> findByIdItemMenu(@Param("idItemMenu") int idItemMenu);*/
    
    public List<ItemsPedido> findByCantidad(int cantidad);
+   
 
 }

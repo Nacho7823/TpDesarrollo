@@ -70,4 +70,26 @@ public class ItemMenuService {
     public ItemMenu buscarItemMenu(String id) {
          return itemMenuRepository.findById(id).get();
     }
+    
+    public ItemMenu buscarItemPorNombre(String nombre){
+        return itemMenuRepository.findByNombre(nombre);
+    }
+    
+    public List<ItemMenu> buscarPorDescripcionItemMenus(String descripcion){
+        return itemMenuRepository.findByDescripcion(descripcion);
+    }
+    
+    public List<ItemMenu> buscarPorPrecioEntre(int precioMin, int precioMax){
+        return itemMenuRepository.findByPrecioBetween(precioMin, precioMax);
+    }
+    public List<ItemMenu> buscarPorPrecio(int precio){
+          return  itemMenuRepository.findByPrecio(precio);
+    
+    }
+    public List<ItemMenu> buscarBebidas(){
+        return (List<ItemMenu>) itemMenuRepository.findAllBebida();
+    }
+    public List<ItemMenu> buscarPlatos(){
+        return (List<ItemMenu>) itemMenuRepository.findAllPlato();
+    }
 }
