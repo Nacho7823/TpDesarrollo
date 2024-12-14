@@ -1,8 +1,8 @@
 package com.desarrollo.tpSpring.Controllers;
 
-import com.desarrollo.tpSpring.DAOs.ClienteRepository;
 import static com.desarrollo.tpSpring.Utils.FileUtils.cargarArchivo;
 import com.desarrollo.tpSpring.entities.Cliente;
+import com.desarrollo.tpSpring.services.ClienteService;
 import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ClienteController {
     
     @Autowired
-    private ClienteRepository clienteRepository;
+    private ClienteService clienteService;
 
     private String cliente_html;
     private String cliente_css;
@@ -107,26 +107,26 @@ public class ClienteController {
     // datos
     @GetMapping("/clientes")
     public ResponseEntity<Iterable<Cliente>> clientes() {
-        Iterable<Cliente> vend = clienteRepository.findAll();
+        Iterable<Cliente> vend = clienteService.obtenerClientes();
         return ResponseEntity.ok(vend);
     }
 
     @DeleteMapping("/cliente")
     public ResponseEntity<String> eliminarcliente(@RequestBody Cliente cliente) {
-        clienteRepository.delete(cliente);
+        clienteService.eliminarCliente(cliente.getId_cliente());
         return ResponseEntity.ok("Cliente " + cliente.getNombre() + " eliminado exitosamente");
     }
     
     @PostMapping("/cliente")
     public ResponseEntity<String> crearcliente(@RequestBody Cliente cliente) {
-        clienteRepository.save(cliente);
+        clienteService.crearCliente(cliente);
         return ResponseEntity.ok("Cliente " + cliente + " creado exitosamente");
     }
     
     
     @PutMapping("/cliente")
     public ResponseEntity<String> modificarcliente(@RequestBody Cliente cliente) {
-        clienteRepository.save(cliente);
+        clienteService.actualizarCliente(cliente);
         return ResponseEntity.ok("Cliente " + cliente + " modificado exitosamente");
     }
     
