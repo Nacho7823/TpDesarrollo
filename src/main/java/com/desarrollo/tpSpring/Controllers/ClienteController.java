@@ -112,22 +112,37 @@ public class ClienteController {
     }
 
     @DeleteMapping("/cliente")
-    public ResponseEntity<String> eliminarcliente(@RequestBody Cliente cliente) {
+    public ResponseEntity<Boolean> eliminarcliente(@RequestBody Cliente cliente) {
+        System.out.println("  ");
+        System.out.println("  ");
+        System.out.println("cliente: " + cliente.toString());
+        System.out.println("  ");
+        System.out.println("  ");
         clienteService.eliminarCliente(cliente.getId_cliente());
-        return ResponseEntity.ok("Cliente " + cliente.getNombre() + " eliminado exitosamente");
+        return ResponseEntity.ok(true);
     }
     
     @PostMapping("/cliente")
-    public ResponseEntity<String> crearcliente(@RequestBody Cliente cliente) {
+    public ResponseEntity<Boolean> crearcliente(@RequestBody Cliente cliente) {
+        System.out.println("  ");
+        System.out.println("  ");
+        System.out.println("cliente: " + cliente.toString());
+        System.out.println("  ");
+        System.out.println("  ");
         clienteService.crearCliente(cliente);
-        return ResponseEntity.ok("Cliente " + cliente + " creado exitosamente");
+        return ResponseEntity.ok(true);
     }
     
     
     @PutMapping("/cliente")
-    public ResponseEntity<String> modificarcliente(@RequestBody Cliente cliente) {
+    public ResponseEntity<Boolean> modificarcliente(@RequestBody Cliente cliente) {
+        System.out.println("  ");
+        System.out.println("  ");
+        System.out.println("cliente: " + cliente.toString());
+        System.out.println("  ");
+        System.out.println("  ");
         clienteService.actualizarCliente(cliente);
-        return ResponseEntity.ok("Cliente " + cliente + " modificado exitosamente");
+        return ResponseEntity.ok(true);
     }
     
 }

@@ -3,8 +3,11 @@ package com.desarrollo.tpSpring.Controllers;
 import com.desarrollo.tpSpring.DAOs.PedidoRepository;
 import static com.desarrollo.tpSpring.Utils.FileUtils.cargarArchivo;
 import com.desarrollo.tpSpring.entities.Pedido;
+import com.desarrollo.tpSpring.enums.EstadoPedido;
 import com.desarrollo.tpSpring.services.PedidoService;
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -142,9 +145,18 @@ public class PedidosController {
     }
     
     @PostMapping("/pedidos")
-    public ResponseEntity<String> crearPedido(@RequestBody Pedido pedido) {
-        pedidoService.crearPedido(pedido);
-        return ResponseEntity.ok("Pedido " + pedido.getId_pedido() + " creado exitosamente");
+    public ResponseEntity<String> crearPedido(@RequestBody Map<String, Object> pedido) {
+        EstadoPedido estado = (EstadoPedido) pedido.get("estado");
+        int id_cliente = (int) pedido.get("id_cliente");
+        int id_vendedor = (int) pedido.get("id_vendedor");
+        int id_pago = (int) pedido.get("id_pago");
+        int total = (int) pedido.get("total");      // creo q no deberia estar
+        
+        List<Map> detalle = (List<Map>) pedido.get("detalle_pedido");
+        
+//        pedidoService.crearPedido(pedido);
+//        return ResponseEntity.ok("Pedido " + pedido.getId_pedido() + " creado exitosamente");
+        return ResponseEntity.ok("");
     }
     
     @PutMapping("/pedidos")

@@ -1,4 +1,4 @@
-import { createPlato } from "../../utils.js";
+import { createItemMenu } from "../../utils.js";
 
 const btnVolver = document.getElementById("btn-volver");
 const btnCrear = document.getElementById("btn-crear");
@@ -35,7 +35,7 @@ btnCrear.addEventListener("click", async () => {
     }
 
 
-    if(!await createPlato(tmp)){
+    if(!await createItemMenu(tmp)){
         alert("no se pudo crear la bebida");
         return;
     }

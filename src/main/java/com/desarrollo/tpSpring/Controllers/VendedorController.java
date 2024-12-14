@@ -111,30 +111,38 @@ public class VendedorController {
     }
 
     @DeleteMapping("/vendedor")
-    public ResponseEntity<String> eliminarVendedor(@RequestBody Vendedor vendedor) {
+    public ResponseEntity<Boolean> eliminarVendedor(@RequestBody Vendedor vendedor) {
         long id = vendedor.getId_vendedor();
         Vendedor opt = vendedorService.buscarVendedor(id);
         if(opt==null){
             System.out.println("no se pudo eliminar el vendedor: " + id);
-            return ResponseEntity.badRequest().body("no se pudo eliminar");
+            return ResponseEntity.badRequest().body(false);
         }
         
         vendedorService.eliminarVendedor(id);
         System.out.println("delete vendedor: " + id);
-        return ResponseEntity.ok("Vendedor " + id + " eliminado exitosamente");
+        return ResponseEntity.ok(true);
     }
     
     @PostMapping("/vendedor")
-    public ResponseEntity<String> crearVendedor(@RequestBody Vendedor vendedor) {
+    public ResponseEntity<Boolean> crearVendedor(@RequestBody Vendedor vendedor) {
+        System.out.println("  ");
+        System.out.println("  ");
+        System.out.println("vendedor: " + vendedor.toString());
+        System.out.println("  ");
+        System.out.println("  ");
         vendedorService.crearVendedor(vendedor);
-        return ResponseEntity.ok("Vendedor " + vendedor + " creado exitosamente");
+        return ResponseEntity.ok(true);
     }
     
-    
     @PutMapping("/vendedor")
-    public ResponseEntity<String> modificarVendedor(@RequestBody Vendedor vendedor) {
-        
+    public ResponseEntity<Boolean> modificarVendedor(@RequestBody Vendedor vendedor) {
+        System.out.println("  ");
+        System.out.println("  ");
+        System.out.println("vendedor: " + vendedor.toString());
+        System.out.println("  ");
+        System.out.println("  ");
         vendedorService.actualizarVendedor(vendedor);
-        return ResponseEntity.ok("Vendedor " + vendedor + " modificado exitosamente");
+        return ResponseEntity.ok(true);
     }
 }

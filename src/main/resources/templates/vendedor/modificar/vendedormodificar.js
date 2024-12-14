@@ -21,6 +21,7 @@ btnModificar.addEventListener("click", async ()=> {
         id: vendedor.id_vendedor,
         nombre: inputNombre.value,
         direccion: inputDireccion.value,
+        id_coordenada: vendedor.id_coordenada,
         longitud: Number(inputLongitud.value),
         latitud: Number(inputLatitud.value),
     }

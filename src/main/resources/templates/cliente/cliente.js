@@ -112,7 +112,8 @@ function modificarCliente(id) {
 }
 
 async function eliminarCliente(id) {
-    if(! await deleteCliente(id)){
+    const cliente = clientes.find(cliente => cliente.id_cliente == id);
+    if(! await deleteCliente(cliente)){
         alert("No se pudo eliminar el cliente");
     };
     location.reload();

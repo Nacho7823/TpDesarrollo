@@ -240,6 +240,8 @@ async function DELETE(url, body) {
     return await response.json();
 }
 
+// ------------------------------------------------------------------------
+
 function DTO2Cliente(dto) {
     return {
         id_cliente: dto.id_cliente,
@@ -247,6 +249,7 @@ function DTO2Cliente(dto) {
         cuit: dto.cuit,
         email: dto.email,
         direccion: dto.direccion,
+        id_coordenada: dto.coordenada.id_coordenada,
         latitud: dto.coordenada.latitud,
         longitud: dto.coordenada.longitud
     }
@@ -259,6 +262,7 @@ function Cliente2DTO(cliente) {
         email: cliente.email,
         direccion: cliente.direccion,
         coordenada: {
+            id_coordenada: cliente.id_coordenada,
             latitud: cliente.latitud,
             longitud: cliente.longitud
         }
@@ -270,6 +274,7 @@ function DTO2Vendedor(dto) {
         id_vendedor: dto.id_vendedor,
         nombre: dto.nombre,
         direccion: dto.direccion,
+        id_coordenada: dto.coordenada.id_coordenada,
         latitud: dto.coordenada.latitud,
         longitud: dto.coordenada.longitud
     }
@@ -280,15 +285,51 @@ function Vendedor2DTO(vendedor) {
         id_vendedor: vendedor.id_vendedor,
         nombre: vendedor.nombre,
         direccion: vendedor.direccion,
+        items: [],
         coordenada: {
+            id_coordenada: vendedor.id_coordenada,
             latitud: vendedor.latitud,
             longitud: vendedor.longitud
         }
     }
 }
 
+function DTO2ItemMenu(dto) {
+    return {
+        id_item_menu: dto.id_item_menu,
+        nombre: dto.nombre,
+        descripcion: dto.descripcion,
+        precio: dto.precio,
+        categoria: dto.categoria,
+        peso: dto.peso,
+        apto_vegano: dto.aptoVegano,
+        apto_celiaco: dto.aptoCeliaco,
+        calorias: dto.calorias,
+        graduacion_alcoholica: dto.graduacion_alcoholica,
+        tamanio: dto.tamanio
+    };
+}
+function ItemMenu2DTO(itemMenu) {
+    return {
+        id_item_menu: itemMenu.id_item_menu,
+        nombre: itemMenu.nombre,
+        descripcion: itemMenu.descripcion,
+        precio: itemMenu.precio == null ? null : itemMenu.precio.toFixed(2),
+        categoria: itemMenu.categoria,
+        peso: itemMenu.peso == null ? null : itemMenu.peso.toFixed(2),
+        aptoVegano: itemMenu.apto_vegano,
+        aptoCeliaco: itemMenu.apto_celiaco,
+        calorias: itemMenu.calorias == null ? null : itemMenu.calorias.toFixed(2),
+        graduacion_alcoholica: itemMenu.graduacion_alcoholica == null ? null : itemMenu.graduacion_alcoholica.toFixed(2),
+        tamanio: itemMenu.tamanio == null ? null : itemMenu.tamanio.toFixed(2)
+    };
+}
+
+// ------------------------------------------------------------------------
+
 async function getClientes() {
     const clientesDTOs = await GET("/cliente/clientes");
+    console.log("clientesDTOs", clientesDTOs);
     const clientes = clientesDTOs.map(DTO2Cliente);
     return clientes;
 }
@@ -309,6 +350,7 @@ async function deleteCliente(cliente) {
 
 async function getVendedores() {
     const vendedoresDTOs = await GET("/vendedor/vendedores");
+    console.log("vendedoresDTOs", vendedoresDTOs);
     const vendedores = vendedoresDTOs.map(DTO2Vendedor);
     return vendedores;
 }
@@ -328,29 +370,21 @@ async function deleteVendedor(vendedor) {
 // itemmenu
 
 async function getItemMenus() {
-    return await GET("/itemmenu/itemmenus");
+    const itemMenusDTOs = await GET("/itemmenu/itemmenus");
+    const itemMenus = itemMenusDTOs.map(DTO2ItemMenu);
+    return itemMenus;
 }
 async function getItemMenu(id) {
-    return await GET_ID("/itemmenu/itemmenu", id);
+    return DTO2ItemMenu(await GET_ID("/itemmenu/itemmenu", id));
 }
-// async function createItemMenu(itemmenu) {
-//     const _item_menu = get(item_menusID);
-//     itemmenu.id_item_menu = _item_menu.length + 5;
-//     _item_menu.push(itemmenu);
-//     save(item_menusID, _item_menu);
-//     return await true;
-// }
-async function createBebida(bebida) {
-    return await POST("/itemmenu/itemmenu", bebida);
-}
-async function createPlato(plato) {
-    return await POST("/itemmenu/itemmenu", plato);
+async function createItemMenu(itemmenu) {
+    return await POST("/itemmenu/itemmenu", ItemMenu2DTO(itemmenu));
 }
 async function updateItemMenu(it) {
-    return await PUT("/itemmenu/itemmenu", it);
+    return await PUT("/itemmenu/itemmenu", ItemMenu2DTO(it));
 }
-async function deleteItemMenu(id) {
-    return await DELETE("/itemmenu/itemmenu", id);
+async function deleteItemMenu(it) {
+    return await DELETE("/itemmenu/itemmenu", ItemMenu2DTO(it));
 }
 
 // pedidos
@@ -406,9 +440,7 @@ export {
 
     getItemMenus,
     getItemMenu,
-    // createItemMenu,
-    createBebida,
-    createPlato,
+    createItemMenu,
     updateItemMenu,
     deleteItemMenu,
 

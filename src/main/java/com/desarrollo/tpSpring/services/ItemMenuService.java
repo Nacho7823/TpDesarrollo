@@ -114,7 +114,7 @@ public class ItemMenuService {
     public List<Bebida> encontrarPorTamanio(double tamanio){
         return bebidaRepository.findByTamanio(tamanio);
     }
-      public List<Bebida> findByGraduacion_alcoholica(double graduacion_alcoholica){
-          return bebidaRepository.findByGraduacion_alcoholica(graduacion_alcoholica);
-      }
+//      public List<Bebida> findByGraduacion_alcoholica(double graduacion_alcoholica){
+//          return bebidaRepository.findByGraduacion_alcoholica(graduacion_alcoholica);
+//      }
 }
