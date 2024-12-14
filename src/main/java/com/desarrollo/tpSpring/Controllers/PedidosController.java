@@ -2,12 +2,26 @@ package com.desarrollo.tpSpring.Controllers;
 
 import com.desarrollo.tpSpring.DAOs.PedidoRepository;
 import static com.desarrollo.tpSpring.Utils.FileUtils.cargarArchivo;
+import com.desarrollo.tpSpring.entities.Cliente;
+import com.desarrollo.tpSpring.entities.ItemMenu;
+import com.desarrollo.tpSpring.entities.ItemsPedido;
+import com.desarrollo.tpSpring.entities.MercadoPago;
+import com.desarrollo.tpSpring.entities.Pago;
 import com.desarrollo.tpSpring.entities.Pedido;
+import com.desarrollo.tpSpring.entities.Transferencia;
+import com.desarrollo.tpSpring.entities.Vendedor;
 import com.desarrollo.tpSpring.enums.EstadoPedido;
+import com.desarrollo.tpSpring.services.ClienteService;
+import com.desarrollo.tpSpring.services.ItemMenuService;
 import com.desarrollo.tpSpring.services.PedidoService;
+import com.desarrollo.tpSpring.services.VendedorService;
 import java.io.IOException;
+import java.time.ZoneId;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +38,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class PedidosController {
     @Autowired
     private PedidoService pedidoService;
+    @Autowired
+    private VendedorService vendedorService;
+    @Autowired
+    private ClienteService clienteService;
+    @Autowired
+    private ItemMenuService itemMenuService;
+    
+    
     
     private String pedidos_html;
     private String pedidos_css;
@@ -138,30 +160,80 @@ public class PedidosController {
         return ResponseEntity.ok(pedidos);
     }
 
-    @DeleteMapping("/pedidos")
+    @DeleteMapping("/pedido")
     public ResponseEntity<String> eliminarPedido(@RequestBody Pedido pedido) {
         pedidoService.eliminarPedido(pedido);
         return ResponseEntity.ok("Pedido " + pedido.getId_pedido() + " eliminado exitosamente");
     }
     
-    @PostMapping("/pedidos")
-    public ResponseEntity<String> crearPedido(@RequestBody Map<String, Object> pedido) {
-        EstadoPedido estado = (EstadoPedido) pedido.get("estado");
-        int id_cliente = (int) pedido.get("id_cliente");
-        int id_vendedor = (int) pedido.get("id_vendedor");
-        int id_pago = (int) pedido.get("id_pago");
-        int total = (int) pedido.get("total");      // creo q no deberia estar
+    @PostMapping("/pedido")
+    public ResponseEntity<Boolean> crearPedido(@RequestBody Map<String, Object> data) {
         
-        List<Map> detalle = (List<Map>) pedido.get("detalle_pedido");
+        EstadoPedido estado = EstadoPedido.valueOf((String) data.get("estado"));
+        int id_cliente = (int) data.get("id_cliente");
+        int id_vendedor = (int) data.get("id_vendedor");
+//        int id_pago = (int) data.get("id_pago");
+//        int total = (int) data.get("total");      // creo q no deberia estar
         
-//        pedidoService.crearPedido(pedido);
-//        return ResponseEntity.ok("Pedido " + pedido.getId_pedido() + " creado exitosamente");
-        return ResponseEntity.ok("");
+        Cliente cliente = clienteService.buscarCliente(id_cliente);
+        Vendedor vendedor = vendedorService.buscarVendedor(id_vendedor);
+        
+        List<Map<String,Object>> itemsDetalles = (List<Map<String,Object>>) data.get("items");
+        
+        Pedido pedido = new Pedido();
+        
+        Set<ItemsPedido> items = new HashSet();
+        for (int i = 0; i < itemsDetalles.size(); i++) {
+            int id_item_menu = (int) itemsDetalles.get(i).get("id_item_menu");
+            int cantidad = (int) itemsDetalles.get(i).get("cantidad");
+            
+            ItemMenu itemMenu = itemMenuService.buscarItemMenu(id_item_menu);
+            
+            ItemsPedido item = new ItemsPedido(0, cantidad, pedido, itemMenu);
+            items.add(item);
+        }
+        
+        Pago pago;
+        if(data.get("formapago").equals("mercadopago")){
+            String alias = (String) data.get("alias");
+            int monto = (int) data.get("monto");
+            Date fecha = (Date) data.get("fecha");
+            pago = new MercadoPago(alias);
+            pago.setMonto(monto);
+            pago.setFecha(fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+        }
+        else {              //transferencia
+            String cvu = (String) data.get("cvu");
+            String cuit = (String) data.get("cuit");
+            int monto = (int) data.get("monto");
+            Date fecha = (Date) data.get("fecha");
+            pago = new Transferencia(cuit, cvu);
+            pago.setMonto(monto);
+            pago.setFecha(fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+        }
+        
+        pedido.setCliente(cliente);
+        pedido.setVendedor(vendedor);
+        pedido.setItems(items);
+        pedido.setEstado(estado);
+        pedido.setPago(pago);
+        
+        System.out.println(" ");
+        System.out.println(" ");
+        System.out.println(" ");
+        System.out.println("pedido: " + pedido.toString());
+        System.out.println(" ");
+        System.out.println(" ");
+        System.out.println(" ");
+        
+        pedidoService.crearPedido(pedido);
+        return ResponseEntity.ok(true);
     }
     
-    @PutMapping("/pedidos")
+    @PutMapping("/pedido")
     public ResponseEntity<String> modificarPedido(@RequestBody Pedido pedido) {
         pedidoService.actualizarPedido(pedido);
         return ResponseEntity.ok("Pedido " + pedido + " modificado exitosamente");
     }
+    
 }

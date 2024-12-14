@@ -190,14 +190,8 @@ async function GET(url) {
         throw new Error("Error GET: " + response.status);
     return await response.json();
 }
-async function GET_ID(URL, plainbody) {
-    const response = await fetch(URL, {
-        method: "GET",
-        headers: {
-            'Content-Type': 'text/plain'
-        },
-        body: plainbody
-    });
+async function GET_ID(URL, id) {
+    const response = await fetch(URL + "/" + id);
     if (!response.ok)
         throw new Error("Error GET: " + response.status);
     return await response.json();
@@ -390,19 +384,21 @@ async function deleteItemMenu(it) {
 // pedidos
 
 async function getPedidos() {
-    return await GET("/pedido/pedidos");
+    const pedidosDTOs = await GET("/pedidos/pedidos");
+    console.log("pedidosDTOs", pedidosDTOs);
+    return await GET("/pedidos/pedidos");
 }
 async function getPedido(id) {
-    return await GET_ID("/pedido/pedido", id);
+    return await GET_ID("/pedidos/pedido", id);
 }
 async function createPedido(pedido) {
-    return await POST("/pedido/pedido", pedido);
+    return await POST("/pedidos/pedido", pedido);
 }
 async function updatePedido(pedido) {
-    return await PUT("/pedido/pedido", pedido);
+    return await PUT("/pedidos/pedido", pedido);
 }
 async function deletePedido(id) {
-    return await DELETE("/pedido/pedido", id);
+    return await DELETE("/pedidos/pedido", id);
 }
 
 // detalle_pedido
@@ -421,7 +417,7 @@ async function getItemsOfPedido(id) {
 }
 
 async function getItemsOfVendedor(id) {
-    return await GET_ID("/detalle_pedido/detalle_pedido", id);
+    return await GET_ID("/itemmenu/itemmenusOfVendedor", id);
 }
 
 

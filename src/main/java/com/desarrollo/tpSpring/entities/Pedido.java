@@ -35,15 +35,14 @@ public class Pedido {
     //@Column
     private int id_pedido;
     
-//    @Column
     @ManyToOne
     @JoinColumn(name = "id_cliente", referencedColumnName = "id_cliente")
     private Cliente cliente;
-//    @Column
+
     @ManyToOne
     @JoinColumn(name = "id_vendedor")
     private Vendedor vendedor;
-//    @Column
+
     @OneToOne
     @JoinColumn(name = "id_pago", referencedColumnName = "id_pago")
     private Pago pago;
@@ -63,7 +62,7 @@ public class Pedido {
     
 
     
-    public Pedido(int id,Cliente cliente, Vendedor vendedor, Set<ItemsPedido> items, Pago pago, EstadoPedido estado)throws InvalidOrderException {
+    public Pedido(int id, Cliente cliente, Vendedor vendedor, Set<ItemsPedido> items, Pago pago, EstadoPedido estado)throws InvalidOrderException {
         if (!validarItemsUnVendedor(items, vendedor)) {
             throw new InvalidOrderException("Los ítems deben pertenecer al mismo vendedor");
         }

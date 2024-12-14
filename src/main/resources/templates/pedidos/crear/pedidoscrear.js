@@ -13,11 +13,23 @@ const divPago = document.getElementById("pagopan");
 btnVolver.addEventListener("click", () => window.location.href = "../pedidos.html");
 
 btnCrear.addEventListener("click", async () => {
+
+    const pedidoItems = getPedidoItems();
+
     const tmp = {
         estado: selectEstado.value,
         id_cliente: parseInt(selectCliente.value),
         id_vendedor: parseInt(selectVendedor.value),
-        id_pago: null,
+
+        formapago : selectFormaPago.value,
+        id_pago: 0,
+        monto: 0,
+        fecha: new Date(),
+        alias: alias,
+        cvu: cvu,
+        cuit: cuit,
+
+        items: pedidoItems,
         total: 0
     };
 
@@ -210,17 +222,22 @@ function setItemCantity(id_item_menu, cantity) {
     }
 }
 
-function calculateTotal() {
-    const detalles = [];
+function getPedidoItems() {
+    const items = [];
     itemsAdded.forEach((value, key) => {
         if (value <= 0) {
             return;
         }
-        detalles.push({
+        items.push({
             id_item_menu: key,
             cantidad: value
         });
     });
+    return items;
+}
+
+function calculateTotal() {
+    const detalles = getPedidoItems();
 
     let total = 0;
     detalles.forEach((detalle) => {

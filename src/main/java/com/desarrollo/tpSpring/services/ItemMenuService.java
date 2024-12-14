@@ -7,11 +7,14 @@ package com.desarrollo.tpSpring.services;
 import com.desarrollo.tpSpring.DAOs.BebidaRepository;
 import com.desarrollo.tpSpring.DAOs.ItemMenuRepository;
 import com.desarrollo.tpSpring.DAOs.PlatoRepository;
+import com.desarrollo.tpSpring.DAOs.VendedorRepository;
 import com.desarrollo.tpSpring.entities.Bebida;
 import com.desarrollo.tpSpring.entities.ItemMenu;
 import com.desarrollo.tpSpring.entities.Plato;
+import com.desarrollo.tpSpring.entities.Vendedor;
 import jakarta.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 /**
@@ -23,11 +26,16 @@ public class ItemMenuService {
     public final ItemMenuRepository itemMenuRepository;
     public final PlatoRepository platoRepository;
     public final BebidaRepository bebidaRepository;
+    public final VendedorRepository vendedorRepository;
 
-    public ItemMenuService(ItemMenuRepository itemMenuRepository, com.desarrollo.tpSpring.DAOs.PlatoRepository platoRepository, com.desarrollo.tpSpring.DAOs.BebidaRepository bebidaRepository) {
+    public ItemMenuService(ItemMenuRepository itemMenuRepository, 
+            PlatoRepository platoRepository, 
+            BebidaRepository bebidaRepository,
+            VendedorRepository vendedorRepository) {
         this.itemMenuRepository = itemMenuRepository;
         this.platoRepository = platoRepository;
         this.bebidaRepository = bebidaRepository;
+        this.vendedorRepository = vendedorRepository;
     }
     
     
@@ -109,6 +117,15 @@ public class ItemMenuService {
     }
     public List<Plato> encontrarPorCalorias(int calorias){
         return  platoRepository.findByCalorias(calorias);
+    }
+    
+    public List<ItemMenu> obtenerItemsMenuDeVendedor(int id) {
+        Optional<Vendedor> opt = vendedorRepository.findById((long)id);
+        if(opt.isEmpty()){
+            throw new RuntimeException("no se encontro el vendedor");
+        }
+            
+        return itemMenuRepository.findByVendedores(opt.get());
     }
     
 //      public List<Bebida> findByGraduacion_alcoholica(double graduacion_alcoholica){

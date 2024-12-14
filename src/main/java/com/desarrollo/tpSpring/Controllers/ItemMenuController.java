@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -238,5 +239,11 @@ public class ItemMenuController {
     public ResponseEntity<Boolean> deleteItem(@RequestBody Map<String, Object> data) {
         itemMenuService.eliminarItemMenu((Integer) data.get("id_item_menu"));
         return ResponseEntity.ok(true);
+    }
+    
+    @GetMapping("/itemmenusOfVendedor/{id}")
+    public ResponseEntity<Iterable<ItemMenu>> itemsOfVendedor(@PathVariable int id) {
+        Iterable<ItemMenu> items = itemMenuService.obtenerItemsMenuDeVendedor(id);
+        return ResponseEntity.ok(items);
     }
 }
