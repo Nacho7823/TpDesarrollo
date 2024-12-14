@@ -10,6 +10,7 @@ import com.desarrollo.tpSpring.entities.Pago;
 import com.desarrollo.tpSpring.entities.Pedido;
 import jakarta.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -57,8 +58,17 @@ public class PedidoService {
     }
     
     @Transactional
-    public void eliminarPedido(@Validated Pedido pedido){
-        pedidoRepository.delete(pedido);
+    public void eliminarPedido(@Validated Pedido id){
+        
+        Optional<Pedido> opt = pedidoRepository.findById(id.getId_pedido());
+        if (opt.isEmpty())
+            throw new RuntimeException("no se encontro el id");
+        
+        Pedido pedido = opt.get();
+        Pago pago = pedido.getPago();
+        
+        pagoRepository.delete(pago);
+        pedidoRepository.delete(opt.get());
     }
     
     public List<Pedido> encontrarPorTotal(double total){

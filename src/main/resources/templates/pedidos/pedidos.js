@@ -87,7 +87,8 @@ function modificarPedido(id) {
 }
 
 async function eliminarPedido(id) {
-    if(!await deletePedido(id)) {
+    const pedido = pedidos.find(pedido => pedido.id_pedido == id);
+    if(!await deletePedido(pedido)) {
         alert("No se pudo eliminar el pedido");
     }
     window.location.reload();

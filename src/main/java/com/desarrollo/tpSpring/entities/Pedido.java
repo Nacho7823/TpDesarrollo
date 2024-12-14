@@ -36,7 +36,6 @@ import lombok.NoArgsConstructor;
 public class Pedido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    //@Column
     private int id_pedido;
     
     @ManyToOne
@@ -54,7 +53,7 @@ public class Pedido {
     private Pago pago;
     
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval=true)
-    @JsonManagedReference  
+    @JsonManagedReference   
     private Set<ItemsPedido> items;
     //@Column
     private double total;
