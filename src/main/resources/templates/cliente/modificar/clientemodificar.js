@@ -42,7 +42,7 @@ btnModificar.addEventListener("click", async () => {
     if (! await updateCliente(tmp)) {
         alert("no se pudo modificar el cliente");
     }
-    // window.location.href = "../cliente.html";
+    window.location.href = "../cliente.html";
 
 });
 
