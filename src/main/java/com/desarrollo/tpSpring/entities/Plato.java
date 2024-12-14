@@ -22,19 +22,13 @@ public class Plato extends ItemMenu{
     @Column
     private double calorias;
     @Column
-    private boolean apto_celiaco;
+    private boolean aptoCeliaco;
     @Column
-    private boolean apto_vegano;
+    private boolean aptoVegano;
     @Column
     private double peso;
 
-    public boolean isAptoCeliaco() {
-        return apto_celiaco;
-    }
-
-    public boolean isAptoVegano() {
-        return apto_vegano;
-    }
+  
 
     public double getPeso() {
         return peso;
@@ -45,8 +39,8 @@ public class Plato extends ItemMenu{
     private Plato(Builder builder) {
         super(builder);
         this.calorias = builder.calorias;
-        this.apto_celiaco = builder.aptoCeliaco;
-        this.apto_vegano = builder.aptoVegano;
+        this.aptoCeliaco = builder.aptoCeliaco;
+        this.aptoVegano = builder.aptoVegano;
         this.peso = builder.peso;
     }
 
@@ -103,12 +97,12 @@ public class Plato extends ItemMenu{
 
     @Override
     public void setAptoCeliaco(boolean apto) {
-        this.apto_celiaco = apto;
+        this.aptoCeliaco = apto;
     }
 
     @Override
     public void setAptoVegano(boolean apto) {
-        this.apto_vegano = apto;
+        this.aptoVegano = apto;
     }
 
     @Override
@@ -125,12 +119,12 @@ public class Plato extends ItemMenu{
 
     @Override
     public boolean aptoVegano() { // consultar método
-        return apto_vegano;
+        return aptoVegano;
     };
     
     @Override
     public boolean aptoCeliaco() { 
-        return apto_celiaco;
+        return aptoCeliaco;
     };
 
     @Override
@@ -147,8 +141,8 @@ public class Plato extends ItemMenu{
     public String toString() {
     return "Plato{" +
             "calorias=" + calorias +
-            ", aptoCeliaco=" + apto_celiaco +
-            ", aptoVegano=" + apto_vegano +
+            ", aptoCeliaco=" + aptoCeliaco +
+            ", aptoVegano=" + aptoVegano +
             ", peso=" + peso +
             ", nombre=" + getNombre() +
             ", descripcion=" + getDescripcion() +

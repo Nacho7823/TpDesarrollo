@@ -4,8 +4,12 @@
  */
 package com.desarrollo.tpSpring.services;
 
+import com.desarrollo.tpSpring.DAOs.BebidaRepository;
 import com.desarrollo.tpSpring.DAOs.ItemMenuRepository;
+import com.desarrollo.tpSpring.DAOs.PlatoRepository;
+import com.desarrollo.tpSpring.entities.Bebida;
 import com.desarrollo.tpSpring.entities.ItemMenu;
+import com.desarrollo.tpSpring.entities.Plato;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import org.springframework.stereotype.Service;
@@ -17,10 +21,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class ItemMenuService {
     public final ItemMenuRepository itemMenuRepository;
+    public final PlatoRepository platoRepository;
+    public final BebidaRepository bebidaRepository;
 
-    public ItemMenuService(ItemMenuRepository itemMenuRepository) {
+    public ItemMenuService(ItemMenuRepository itemMenuRepository, com.desarrollo.tpSpring.DAOs.PlatoRepository platoRepository, com.desarrollo.tpSpring.DAOs.BebidaRepository bebidaRepository) {
         this.itemMenuRepository = itemMenuRepository;
+        this.platoRepository = platoRepository;
+        this.bebidaRepository = bebidaRepository;
     }
+    
     
 
 
@@ -88,4 +97,24 @@ public class ItemMenuService {
     public List<ItemMenu> buscarPlatos(){
         return (List<ItemMenu>) itemMenuRepository.findAllPlato();
     }
+    
+    public List<Plato> encontrarPorPeso(double peso){
+        return platoRepository.findByPeso(peso);
+    }
+   public List<Plato> esAptoCeliaco(boolean apto){
+       return platoRepository.findByAptoCeliaco(apto);
+   }
+    public List<Plato> esAptoVegano(boolean apto){
+        return platoRepository.findByAptoVegano(apto);
+    }
+    public List<Plato> encontrarPorCalorias(int calorias){
+        return  platoRepository.findByCalorias(calorias);
+    }
+    
+    public List<Bebida> encontrarPorTamanio(double tamanio){
+        return bebidaRepository.findByTamanio(tamanio);
+    }
+      public List<Bebida> findByGraduacion_alcoholica(double graduacion_alcoholica){
+          return bebidaRepository.findByGraduacion_alcoholica(graduacion_alcoholica);
+      }
 }

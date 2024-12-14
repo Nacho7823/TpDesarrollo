@@ -55,4 +55,6 @@ public class PedidoService {
     public List<Pedido> encontrarPorTotal(double total){
         return pedidoRepository.findByTotal(total);
     }
+    
+    
 }
