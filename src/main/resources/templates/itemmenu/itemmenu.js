@@ -113,7 +113,8 @@ function modificarItemMenu(id) {
 }
 
 async function eliminarItemMenu(id) {
-    if (! await deleteItemMenu(id)) {
+    const item = itemMenus.find(item => item.id_item_menu == id);
+    if (! await deleteItemMenu(item)) {
         alert("no se pudo eliminar el itemMenu");
         return;
     }
