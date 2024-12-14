@@ -198,7 +198,7 @@ public class PedidosController {
 
             ItemMenu itemMenu = itemMenuService.buscarItemMenu(id_item_menu);
 
-            ItemsPedido item = new ItemsPedido(0, cantidad, pedido, itemMenu);
+            ItemsPedido item = new ItemsPedido(pedido, itemMenu, cantidad);
             items.add(item);
         }
 
