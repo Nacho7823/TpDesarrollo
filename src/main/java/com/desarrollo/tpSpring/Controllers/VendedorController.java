@@ -26,6 +26,7 @@ public class VendedorController {
     private String vendedor_modificar_html;
     private String vendedor_modificar_css;
     private String vendedor_modificar_js;
+    
 
     public VendedorController() {
         try {
@@ -38,11 +39,13 @@ public class VendedorController {
             vendedor_modificar_html = cargarArchivo("templates/vendedor/modificar/vendedormodificar.html");
             vendedor_modificar_css = cargarArchivo("templates/vendedor/modificar/vendedormodificar.css");
             vendedor_modificar_js = cargarArchivo("templates/vendedor/modificar/vendedormodificar.js");
+            
             System.out.println("paginas vendedor cargadas correctamente");
         } catch (IOException e) {
             throw new RuntimeException("no se pudo cargar la pagina del vendedor");
         }
     }
+    
 
     // pasar UI
     @GetMapping("/vendedor.html")
@@ -57,7 +60,10 @@ public class VendedorController {
 
     @GetMapping("/vendedor.js")
     public ResponseEntity<String> vendedorJs() {
-        return new ResponseEntity<>(vendedor_js, HttpStatus.OK);
+        return ResponseEntity
+                .ok()
+                .header("Content-Type", "application/javascript")
+                .body(vendedor_js);
     }
 
     @GetMapping("/crear/vendedorcrear.html")
@@ -72,7 +78,10 @@ public class VendedorController {
 
     @GetMapping("/crear/vendedorcrear.js")
     public ResponseEntity<String> vendedorCrearJs() {
-        return new ResponseEntity<>(vendedor_crear_js, HttpStatus.OK);
+        return ResponseEntity
+                .ok()
+                .header("Content-Type", "application/javascript")
+                .body(vendedor_crear_js);
     }
     
     @GetMapping("/modificar/vendedormodificar.html")
@@ -87,7 +96,10 @@ public class VendedorController {
     
     @GetMapping("/modificar/vendedormodificar.js")
     public ResponseEntity<String> vendedorModificarJs() {
-        return new ResponseEntity<>(vendedor_modificar_js, HttpStatus.OK);
+        return ResponseEntity
+                .ok()
+                .header("Content-Type", "application/javascript")
+                .body(vendedor_modificar_js);
     }
 
     // datos

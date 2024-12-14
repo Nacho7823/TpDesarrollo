@@ -1,8 +1,9 @@
-import { createPlato } from "../../utils.js";
+import { createPlato, updateItemMenu } from "../../utils.js";
 
 const btnVolver = document.getElementById("btn-volver");
 const btnCrear = document.getElementById("btn-crear");
 
+const inputId = document.getElementById("input-id");
 const inputNombre = document.getElementById("input-nombre");
 const inputDescripcion = document.getElementById("input-descripcion");
 const inputPrecio = document.getElementById("input-precio");
@@ -15,6 +16,7 @@ btnVolver.addEventListener("click", () => window.location.href = "../itemmenu.ht
 
 btnCrear.addEventListener("click", async () => {
     const tmp = {
+        id_item_menu: itemMenu.id_item_menu,
         nombre: inputNombre.value,
         descripcion: inputDescripcion.value,
         precio: Number(inputPrecio.value),
@@ -35,7 +37,7 @@ btnCrear.addEventListener("click", async () => {
     }
 
 
-    if(!await createPlato(tmp)){
+    if(!await updateItemMenu(tmp)){
         alert("no se pudo crear la bebida");
         return;
     }
@@ -52,4 +54,16 @@ function validar({nombre, descripcion, precio, peso}) {
     return true;
 }
 
+
+const its = sessionStorage.getItem("itemMenu");
+const itemMenu = JSON.parse(its);
+
+inputId.value = itemMenu.id_item_menu;
+inputNombre.value = itemMenu.nombre;
+inputDescripcion.value = itemMenu.descripcion;
+inputPrecio.value = itemMenu.precio;
+inputPeso.value = itemMenu.peso;
+inputAptoVegano.checked = itemMenu.apto_vegano;
+inputAptoCeliaco.checked = itemMenu.apto_celiaco;
+inputCalorias.value = itemMenu.calorias;
 

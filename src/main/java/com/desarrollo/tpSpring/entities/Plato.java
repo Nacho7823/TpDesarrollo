@@ -22,18 +22,18 @@ public class Plato extends ItemMenu{
     @Column
     private double calorias;
     @Column
-    private boolean aptoCeliaco;
+    private boolean apto_celiaco;
     @Column
-    private boolean aptoVegano;
+    private boolean apto_vegano;
     @Column
     private double peso;
 
     public boolean isAptoCeliaco() {
-        return aptoCeliaco;
+        return apto_celiaco;
     }
 
     public boolean isAptoVegano() {
-        return aptoVegano;
+        return apto_vegano;
     }
 
     public double getPeso() {
@@ -45,8 +45,8 @@ public class Plato extends ItemMenu{
     private Plato(Builder builder) {
         super(builder);
         this.calorias = builder.calorias;
-        this.aptoCeliaco = builder.aptoCeliaco;
-        this.aptoVegano = builder.aptoVegano;
+        this.apto_celiaco = builder.aptoCeliaco;
+        this.apto_vegano = builder.aptoVegano;
         this.peso = builder.peso;
     }
 
@@ -103,12 +103,12 @@ public class Plato extends ItemMenu{
 
     @Override
     public void setAptoCeliaco(boolean apto) {
-        this.aptoCeliaco = apto;
+        this.apto_celiaco = apto;
     }
 
     @Override
     public void setAptoVegano(boolean apto) {
-        this.aptoVegano = apto;
+        this.apto_vegano = apto;
     }
 
     @Override
@@ -125,12 +125,12 @@ public class Plato extends ItemMenu{
 
     @Override
     public boolean aptoVegano() { // consultar método
-        return aptoVegano;
+        return apto_vegano;
     };
     
     @Override
     public boolean aptoCeliaco() { 
-        return aptoCeliaco;
+        return apto_celiaco;
     };
 
     @Override
@@ -147,8 +147,8 @@ public class Plato extends ItemMenu{
     public String toString() {
     return "Plato{" +
             "calorias=" + calorias +
-            ", aptoCeliaco=" + aptoCeliaco +
-            ", aptoVegano=" + aptoVegano +
+            ", aptoCeliaco=" + apto_celiaco +
+            ", aptoVegano=" + apto_vegano +
             ", peso=" + peso +
             ", nombre=" + getNombre() +
             ", descripcion=" + getDescripcion() +

@@ -68,14 +68,14 @@ public class ItemMenuService {
         
     }
     
-    public void eliminarItemMenu(String id) {
+    public void eliminarItemMenu(int id) {
          try {
-            Bebida b= bebidaRepository.findById(id).get();
+            Bebida b =  bebidaRepository.findById((long)id).get();
             if(b == null){
-                platoRepository.deleteById(id);
+                platoRepository.deleteById((long)id);
                 System.out.println("Item eliminado exitosamente: " + id); 
             }else{
-                bebidaRepository.deleteById(id);
+                bebidaRepository.deleteById((long)id);
                 System.out.println("Item eliminado exitosamente: " + id); 
             }
             
@@ -86,10 +86,10 @@ public class ItemMenuService {
         }
     }
     
-    public ItemMenu buscarItemMenu(String id) {
-         Bebida b= bebidaRepository.findById(id).get();
+    public ItemMenu buscarItemMenu(int id) {
+         Bebida b= bebidaRepository.findById((long)id).get();
             if(b == null){
-                return (Plato) platoRepository.findById(id).get();
+                return (Plato) platoRepository.findById((long)id).get();
               
             }
             return b;

@@ -2,15 +2,19 @@
 <html>
 
 <head>
-    <title>Crear Pedido</title>
+    <title>Modificar Pedido</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="pedidoscrear.css">
+    <link rel="stylesheet" href="pedidosmodificar.css">
 </head>
 
 <body>
     <div id="div-root">
         <div id="upperpan">
+            <div class="div_upperpan_search">
+                <label>ID Pedido</label>
+                <input disabled id="input-id" class="defsize">
+            </div>
             <div class="div_upperpan_search">
                 <label>Cliente</label>
                 <select id="select-cliente" class="defsize" name="cliente"></select>
@@ -69,7 +73,7 @@
         </div>
         <div id="divbtns">
             <button id="btn-volver">Volver</button>
-            <button id="btn-crear">Crear</button>
+            <button id="btn-crear">Modificar</button>
         </div>
 
     </div>
@@ -77,6 +81,6 @@
 
     </footer>
 </body>
-<script type="module" src="pedidoscrear.js"></script>
+<script type="module" src="pedidosmodificar.js"></script>
 
 </html>

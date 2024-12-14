@@ -3,6 +3,7 @@ import { getClientes, getVendedores, getItemsOfVendedor, createPedido, createDet
 const btnVolver = document.getElementById("btn-volver");
 const btnCrear = document.getElementById("btn-crear");
 
+const inputId = document.getElementById("input-id");
 const selectCliente = document.getElementById("select-cliente");
 const selectVendedor = document.getElementById("select-vendedor");
 const selectFormaPago = document.getElementById("select-formapago");
@@ -31,6 +32,7 @@ btnCrear.addEventListener("click", async () => {
     // asociar items
     const detalles = [];
     itemsAdded.forEach((value, key) => {
+        console.log(key, value);
         if (value <= 0) {
             return;
         }
@@ -139,12 +141,11 @@ async function updateItemsOfVendedor(id) {
     const items = await getItemsOfVendedor(id);
     clearTable();
     for (const item of items) {
-        addRow(item, false);
+        addRow(item);
     }
 }
 
-
-function addRow(item, valueCant) {
+function addRow(item) {
     const row = document.createElement('tr');
 
     const createCell = (text) => {
@@ -169,7 +170,7 @@ function addRow(item, valueCant) {
         inp.type = "number";
         inp.min = 0;
         inp.step = 1;
-        inp.value = valueCant;
+        inp.value = 0;
         const cell = document.createElement('th');
         cell.appendChild(inp);
         return cell;
@@ -210,32 +211,21 @@ function setItemCantity(id_item_menu, cantity) {
     }
 }
 
-function calculateTotal() {
-    const detalles = [];
-    itemsAdded.forEach((value, key) => {
-        if (value <= 0) {
-            return;
-        }
-        detalles.push({
-            id_item_menu: key,
-            cantidad: value
-        });
-    });
-
-    let total = 0;
-    detalles.forEach((detalle) => {
-        const item = getItemMenu(detalle.id_item_menu);
-        total += item.precio * detalle.cantidad;
-    });
-
-    inputTotal.value = total;
-}
-
 let formapago = "";
 let alias = "";
 let cvu = "";
 let cuit = "";
 let itemsAdded = new Map();
+
+const strPedido = sessionStorage.getItem("pedido");
+const pedido = JSON.parse(strPedido);
+
+inputId.value = pedido.id_pedido;
+selectEstado.value = pedido.estado;
+selectFormaPago.value = pedido.id_pago;
+selectVendedor.value = pedido.id_vendedor;
+selectCliente.value = pedido.id_cliente;
+inputTotal.value = pedido.total;
 
 (async function main() {
     const clientes = await getClientes();

@@ -62,7 +62,10 @@ public class ClienteController {
 
     @GetMapping("/cliente.js")
     public ResponseEntity<String> ClienteJs() {
-        return new ResponseEntity<>(cliente_js, HttpStatus.OK);
+        return ResponseEntity
+                .ok()
+                .header("Content-Type", "application/javascript")
+                .body(cliente_js);
     }
 
     @GetMapping("/crear/clientecrear.html")
@@ -77,7 +80,10 @@ public class ClienteController {
 
     @GetMapping("/crear/clientecrear.js")
     public ResponseEntity<String> clienteCrearJs() {
-        return new ResponseEntity<>(cliente_crear_js, HttpStatus.OK);
+        return ResponseEntity
+                .ok()
+                .header("Content-Type", "application/javascript")
+                .body(cliente_crear_js);
     }
     
     @GetMapping("/modificar/clientemodificar.html")
@@ -92,7 +98,10 @@ public class ClienteController {
     
     @GetMapping("/modificar/clientemodificar.js")
     public ResponseEntity<String> clienteModificarJs() {
-        return new ResponseEntity<>(cliente_modificar_js, HttpStatus.OK);
+        return ResponseEntity
+                .ok()
+                .header("Content-Type", "application/javascript")
+                .body(cliente_modificar_js);
     }
 
     // datos

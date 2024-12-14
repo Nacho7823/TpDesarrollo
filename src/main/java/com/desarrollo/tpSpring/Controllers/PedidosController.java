@@ -30,6 +30,9 @@ public class PedidosController {
     private String pedidos_modificar_html;
     private String pedidos_modificar_css;
     private String pedidos_modificar_js;
+    private String pedidoveritems_html;
+    private String pedidoveritems_css;
+    private String pedidoveritems_js;
 
     public PedidosController() {
         try {
@@ -39,9 +42,12 @@ public class PedidosController {
             pedidos_crear_html = cargarArchivo("templates/pedidos/crear/pedidoscrear.html");
             pedidos_crear_css = cargarArchivo("templates/pedidos/crear/pedidoscrear.css");
             pedidos_crear_js = cargarArchivo("templates/pedidos/crear/pedidoscrear.js");
-            pedidos_modificar_html = cargarArchivo("templates/pedidos/crear/pcmoditems.html");
-            pedidos_modificar_css = cargarArchivo("templates/pedidos/crear/pcmoditems.css");
-            pedidos_modificar_js = cargarArchivo("templates/pedidos/crear/pcmoditems.js");
+            pedidos_modificar_html = cargarArchivo("templates/pedidos/modificar/pedidosmodificar.html");
+            pedidos_modificar_css = cargarArchivo("templates/pedidos/modificar/pedidosmodificar.css");
+            pedidos_modificar_js = cargarArchivo("templates/pedidos/modificar/pedidosmodificar.js");
+            pedidoveritems_html = cargarArchivo("templates/pedidos/veritems/pedidoveritems.html");
+            pedidoveritems_css = cargarArchivo("templates/pedidos/veritems/pedidoveritems.css");
+            pedidoveritems_js = cargarArchivo("templates/pedidos/veritems/pedidoveritems.js");
             System.out.println("paginas pedidos cargadas correctamente");
         } catch (IOException e) {
             throw new RuntimeException("no se pudo cargar la pagina del pedido");
@@ -61,7 +67,10 @@ public class PedidosController {
 
     @GetMapping("/pedidos.js")
     public ResponseEntity<String> pedidosJs() {
-        return new ResponseEntity<>(pedidos_js, HttpStatus.OK);
+        return ResponseEntity
+                .ok()
+                .header("Content-Type", "application/javascript")
+                .body(pedidos_js);
     }
 
     @GetMapping("/crear/pedidoscrear.html")
@@ -76,22 +85,46 @@ public class PedidosController {
 
     @GetMapping("/crear/pedidoscrear.js")
     public ResponseEntity<String> pedidosCrearJs() {
-        return new ResponseEntity<>(pedidos_crear_js, HttpStatus.OK);
+        return ResponseEntity
+                .ok()
+                .header("Content-Type", "application/javascript")
+                .body(pedidos_crear_js);
     }
     
-    @GetMapping("/crear/pcmoditems.html")
+    @GetMapping("/modificar/pedidosmodificar.html")
     public ResponseEntity<String> pedidosModificarHtml() {
         return new ResponseEntity<>(pedidos_modificar_html, HttpStatus.OK);
     }
     
-    @GetMapping("/crear/pcmoditems.css")
+    @GetMapping("/modificar/pedidosmodificar.css")
     public ResponseEntity<String> pedidosModificarCss() {
         return new ResponseEntity<>(pedidos_modificar_css, HttpStatus.OK);
     }
     
-    @GetMapping("/crear/pcmoditems.js")
+    @GetMapping("/modificar/pedidosmodificar.js")
     public ResponseEntity<String> pedidoModificarJs() {
-        return new ResponseEntity<>(pedidos_modificar_js, HttpStatus.OK);
+        return ResponseEntity
+                .ok()
+                .header("Content-Type", "application/javascript")
+                .body(pedidos_modificar_js);
+    }
+    
+    @GetMapping("/veritems/pedidoveritems.html")
+    public ResponseEntity<String> pedidosVerItemsHtml() {
+        return new ResponseEntity<>(pedidoveritems_html, HttpStatus.OK);
+    }
+    
+    @GetMapping("/veritems/pedidoveritems.css")
+    public ResponseEntity<String> pedidosVerItemsCss() {
+        return new ResponseEntity<>(pedidoveritems_css, HttpStatus.OK);
+    }
+    
+    @GetMapping("/veritems/pedidoveritems.js")
+    public ResponseEntity<String> pedidosVerItemsJs() {
+        return ResponseEntity
+                .ok()
+                .header("Content-Type", "application/javascript")
+                .body(pedidoveritems_js);
     }
 
     // funciones

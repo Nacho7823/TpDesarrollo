@@ -41,7 +41,7 @@ public class ClienteService {
     public void actualizarCliente(Cliente cliente){
         try {
             clienteRepository.save(cliente);
-            System.out.println("Cliente actualizado exitosamente: " + cliente.getIdCliente()); 
+            System.out.println("Cliente actualizado exitosamente: " + cliente.getId_cliente()); 
         } catch (Exception e) {
             System.err.println("Error al acceder a la base de datos: " + e.getMessage());
         }

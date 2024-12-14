@@ -1,9 +1,15 @@
+CREATE TABLE coordenada (
+    id_coordenada BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    longitud DECIMAL(9, 6) NOT NULL,
+    latitud DECIMAL(9, 6) NOT NULL
+) ENGINE=InnoDB;
+
 CREATE TABLE vendedor (
     id_vendedor BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(30) NOT NULL,
     direccion VARCHAR(50) NOT NULL,
-    longitud DECIMAL(9, 6) NOT NULL,
-    latitud DECIMAL(9, 6) NOT NULL
+    id_coordenada BIGINT UNSIGNED,
+    FOREIGN KEY (id_coordenada) REFERENCES coordenada(id_coordenada) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
 CREATE TABLE cliente (
@@ -12,8 +18,8 @@ CREATE TABLE cliente (
     cuit VARCHAR(20) NOT NULL,
     email VARCHAR(50) NOT NULL,
     direccion VARCHAR(50) NOT NULL,
-    longitud DECIMAL(9, 6) NOT NULL,
-    latitud DECIMAL(9, 6) NOT NULL
+    id_coordenada BIGINT UNSIGNED,
+    FOREIGN KEY (id_coordenada) REFERENCES coordenada(id_coordenada) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
 CREATE TABLE item_menu (
@@ -28,8 +34,8 @@ CREATE TABLE vende (
     id_item_menu BIGINT UNSIGNED,
     id_vendedor BIGINT UNSIGNED,
     PRIMARY KEY(id_item_menu, id_vendedor),
-    FOREIGN KEY (id_item_menu) REFERENCES item_menu(id_item_menu),
-    FOREIGN KEY (id_vendedor) REFERENCES vendedor(id_vendedor)
+    FOREIGN KEY (id_item_menu) REFERENCES item_menu(id_item_menu) ON DELETE CASCADE,
+    FOREIGN KEY (id_vendedor) REFERENCES vendedor(id_vendedor) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
 CREATE TABLE plato (

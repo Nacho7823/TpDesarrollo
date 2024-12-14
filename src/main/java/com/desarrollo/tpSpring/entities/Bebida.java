@@ -18,30 +18,29 @@ import lombok.NoArgsConstructor;
 @PrimaryKeyJoinColumn(name = "id_item_menu")
 public class Bebida extends ItemMenu{
     @Basic
+    private double graduacion_alcoholica;
     @Column
-    private double graduacionAlcoholica;
-    @Column
-    private double tamaño;
+    private double tamanio;
     
     private Bebida(Builder builder) {
         super(builder);
-        this.graduacionAlcoholica = builder.graduacionAlcoholica;
-        this.tamaño = builder.tamaño;
+        this.graduacion_alcoholica = builder.graduacion_alcoholica;
+        this.tamanio = builder.tamanio;
     }
 
     
 
     public static class Builder extends ItemMenu.Builder<Builder> {
-        private double graduacionAlcoholica;
-        private double tamaño;
+        private double graduacion_alcoholica;
+        private double tamanio;
 
-        public Builder graduacionAlcoholica(double graduacionAlcoholica) { 
-            this.graduacionAlcoholica = graduacionAlcoholica; 
+        public Builder graduacionAlcoholica(double graduacion_alcoholica) { 
+            this.graduacion_alcoholica = graduacion_alcoholica; 
             return this; 
         }
 
         public Builder tamaño(double tamaño) { 
-            this.tamaño = tamaño; 
+            this.tamanio = tamaño; 
             return this; 
         }
 
@@ -81,10 +80,10 @@ public class Bebida extends ItemMenu{
     @Override
     public double peso() {
         double p;
-        if (graduacionAlcoholica == 0)
-            p = (tamaño * 1.04 + ((tamaño * 20) / 100));
+        if (graduacion_alcoholica == 0)
+            p = (tamanio * 1.04 + ((tamanio * 20) / 100));
         else
-            p = (tamaño * 0.99 + ((tamaño * 20) / 100));
+            p = (tamanio * 0.99 + ((tamanio * 20) / 100));
         return p;
     };
 
@@ -105,8 +104,8 @@ public class Bebida extends ItemMenu{
     @Override
     public String toString() {
     return "Bebida{" +
-            "tamaño=" + this.tamaño +
-            ", graduacionAlcoholica=" + this.graduacionAlcoholica +
+            "tamaño=" + this.tamanio +
+            ", graduacionAlcoholica=" + this.graduacion_alcoholica +
             ", nombre=" + this.getNombre() +
             ", descripcion=" + this.getDescripcion() +
             ", precio=" + this.getPrecio() +
@@ -114,21 +113,21 @@ public class Bebida extends ItemMenu{
     }
     @Override
     public double getGraduacionAlcoholica() {
-        return graduacionAlcoholica;
+        return graduacion_alcoholica;
     }
 
     @Override
     public void setGraduacionAlcoholica(double graduacionAlcoholica) {
-        this.graduacionAlcoholica = graduacionAlcoholica;
+        this.graduacion_alcoholica = graduacionAlcoholica;
     }
 
     @Override
     public double getTamaño() {
-        return tamaño;
+        return tamanio;
     }
 
     @Override
     public void setTamaño(double tamaño) {
-        this.tamaño = tamaño;
+        this.tamanio = tamaño;
     }
 }

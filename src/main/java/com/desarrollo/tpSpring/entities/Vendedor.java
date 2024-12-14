@@ -1,6 +1,4 @@
-
 package com.desarrollo.tpSpring.entities;
-
 
 import lombok.*;
 import jakarta.persistence.*;
@@ -12,29 +10,34 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity(name = "vendedor")
 public class Vendedor {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name= "id_vendedor")
+    @Column(name = "id_vendedor")
     private int id_vendedor;
-    
+
     @Basic
-    @Column(name = "nombre") 
+    @Column(name = "nombre")
     private String nombre;
+    
     @Column
     private String direccion;
-    //@Column
+    
     @ManyToOne
+    @JoinColumn(name = "id_coordenada", nullable = false)
     private Coordenada coordenada;
 
-  @ManyToMany
+    @ManyToMany
     @JoinTable(
-        name = "vende",
-        joinColumns = @JoinColumn(name = "vendedor_id"),
-        inverseJoinColumns = @JoinColumn(name = "item_menu_id")
+            name = "vende",
+            joinColumns = @JoinColumn(name = "id_vendedor"),
+            inverseJoinColumns = @JoinColumn(name = "id_item_menu")
     )
     private Set<ItemMenu> items;
-    
-  public HashSet<ItemMenu> getItems(){
-      return new HashSet<>(this.items);
-  }
+
+    public HashSet<ItemMenu> getItems() {
+        return new HashSet<>(this.items);
+    }
+
+
 }

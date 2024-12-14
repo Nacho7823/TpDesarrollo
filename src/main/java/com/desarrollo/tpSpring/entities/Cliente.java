@@ -13,7 +13,7 @@ public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id_cliente")
-    private int idCliente;
+    private int id_cliente;
     @Basic
     
     @Column(name = "nombre") 
@@ -27,8 +27,10 @@ public class Cliente {
             
     @Column
     private String direccion;
-            
-    //@Column
+    
     @ManyToOne
+    @JoinColumn(name = "id_coordenada", nullable = false)
     private Coordenada coordenada;
+
+    
 }

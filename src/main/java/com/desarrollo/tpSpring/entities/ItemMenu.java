@@ -29,7 +29,8 @@ public abstract class ItemMenu {
     
    @ManyToMany(mappedBy = "items")
     private Set<Vendedor> vendedores;
-   @OneToMany(mappedBy = "itemMenu", cascade = CascadeType.ALL, orphanRemoval = true)
+//   @OneToMany(mappedBy = "itemMenu", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Transient
     private Set<ItemsPedido> itemsPedido;
     
 

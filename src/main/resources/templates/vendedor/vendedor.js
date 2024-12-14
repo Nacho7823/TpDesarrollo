@@ -7,6 +7,8 @@
 //     latitud: "latitud 1"
 // };
 
+import { deleteVendedor, getVendedores} from "../utils.js";
+
 const btnCliente = document.getElementById("btn-clienteui")
 const btnItemMenu = document.getElementById("btn-itemmenuui")
 const btnPedidos = document.getElementById("btn-pedidosui")
@@ -24,13 +26,13 @@ const inputBuscarNombre = document.getElementById("input-buscar-nombre");
 
 inputBuscarId.type = "number";
 
-const vendedores = [];
+let vendedores = [];
 
 btnRefrescar.addEventListener("click", () => location.reload());
 btnCrear.addEventListener("click", () => window.location.href = "crear/vendedorcrear.html");
 btnBuscar.addEventListener("click", () => {
-    id = inputBuscarId.value;
-    nombre = inputBuscarNombre.value;
+    const id = inputBuscarId.value;
+    const nombre = inputBuscarNombre.value;
 
     const filter = [];
     for (const vendedor of vendedores) {
@@ -59,33 +61,16 @@ btnBuscar.addEventListener("click", () => {
 
 });
 
-async function load() {
-    const response = await fetch(window.location.origin + "/vendedor/vendedores");
-    if (!response.ok) {
-        alert("no se pudieron obtener los vendedores");
-        return;
-    }
-    const vendedoreslist = await response.json();
-    for (const v of vendedoreslist) {
-        vendedores.push(v);        
-    }
-
-    vendedores.forEach(vendedor => {
-        addRow(vendedor);
-    });
-};
-
-load();
 
 function addRow(vendedor) {
     const row = document.createElement('tr');
 
-    createCell = (text) => {
+    const createCell = (text) => {
         const cell = document.createElement('th');
         cell.textContent = text;
         return cell;
     }
-    createBtn = (text, action) => {
+    const createBtn = (text, action) => {
         const btn = document.createElement('button');
         btn.textContent = text;
         btn.classList.add("btntable");
@@ -117,30 +102,26 @@ function clearTable() {
 }
 
 
+
 function modificarVendedor(id) {
     const v = vendedores.find(vendedor => vendedor.id_vendedor == id);
     console.log(v);
-    localStorage.setItem("vendedor", JSON.stringify(v));
+    sessionStorage.setItem("vendedor", JSON.stringify(v));
     window.location.href = "modificar/vendedormodificar.html";
 }
 
-function eliminarVendedor(id) {
-    fetch(window.location.origin + "/vendedor/vendedor", {
-        method: "DELETE",
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            id_vendedor: id
-        })
-    }).then(response => {
-        if (!response.ok) {
-            alert("no se pudo eliminar el vendedor: " + id);
-            return;
-        }
-        window.location.reload();
-        window.location.href = "../vendedor/vendedor.html";
-    }).catch(e => {
-        alert(e);
-    });
+async function eliminarVendedor(id) {
+    if (! await deleteVendedor(id)) {
+        alert("no se pudo eliminar el vendedor");
+        return;
+    }
+    location.reload();
 }
+
+
+(async function main() {
+    vendedores = await getVendedores();
+    for (const vendedor of vendedores) {
+        addRow(vendedor);
+    }
+})();
