@@ -60,10 +60,10 @@ async function addRow(pedido) {
     row.appendChild(createCell(nombreCliente));
     row.appendChild(createCell(nombreVendedor));
     row.appendChild(createCell(pedido.estado));
-    row.appendChild(createCell(pedido.pago));
-    row.appendChild(createCell(pedido.total));
+    // row.appendChild(createCell(pedido.pago));
+    row.appendChild(createCell(pedido.pago.monto));      //total
     row.appendChild(createBtn("ver items", () => verItemsPedido(pedido.id_pedido)));
-    row.appendChild(createBtn("editar", () => modificarPedido(pedido.id_pedido)));
+    // row.appendChild(createBtn("editar", () => modificarPedido(pedido.id_pedido)));
     row.appendChild(createBtn("eliminar", () => eliminarPedido(pedido.id_pedido)));
 
     const tbod = document.getElementById("tablebody");

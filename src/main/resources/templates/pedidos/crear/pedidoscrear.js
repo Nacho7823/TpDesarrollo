@@ -7,7 +7,7 @@ const selectCliente = document.getElementById("select-cliente");
 const selectVendedor = document.getElementById("select-vendedor");
 const selectFormaPago = document.getElementById("select-formapago");
 const selectEstado = document.getElementById("select-estado");
-const inputTotal = document.getElementById("input-total");
+const inputMonto = document.getElementById("input-monto");
 const divPago = document.getElementById("pagopan");
 
 function formatDate(date) {
@@ -31,7 +31,7 @@ btnCrear.addEventListener("click", async () => {
 
         formapago : selectFormaPago.value,
         id_pago: 0,
-        monto: 0,
+        monto: Number(inputMonto.value),
         fecha: formatDate(new Date()),
         alias: alias,
         cvu: cvu,
@@ -56,9 +56,9 @@ function updateDivPago(value) {
     if (value == "mercadopago") {
         formapago = value;
         clearInputPago();
-        const container = createInputPago("Alias");
-        divPago.appendChild(container.div);
-        container.input.addEventListener("change", () => alias = container.input.value);
+        const container1 = createInputPago("Alias");
+        divPago.appendChild(container1.div);
+        container1.input.addEventListener("change", () => alias = container1.input.value);
 
     }
     else if (value == "transferencia") {
@@ -206,17 +206,6 @@ function getPedidoItems() {
     return items;
 }
 
-function calculateTotal() {
-    const detalles = getPedidoItems();
-
-    let total = 0;
-    detalles.forEach((detalle) => {
-        const item = getItemMenu(detalle.id_item_menu);
-        total += item.precio * detalle.cantidad;
-    });
-
-    inputTotal.value = total;
-}
 
 let formapago = "";
 let alias = "";
