@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BebidaRepository extends CrudRepository<Bebida,String>{
-    public List<Bebida> buscarBebidaTamaño(double tamaño);
-    public List<Bebida> buscarBebidaGraduacion(double graduacion);
+    public List<Bebida> findByTamaño(double tamaño);
+    public List<Bebida> findByGraduacionAlcoholica(double graduacion);
 }

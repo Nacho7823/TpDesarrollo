@@ -12,11 +12,11 @@ import jakarta.persistence.*;
 public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
-    private int id_cliente;
+    @Column(name="id_cliente")
+    private int idCliente;
     @Basic
     
-    @Column
+    @Column(name = "nombre") 
     private String nombre;
     
     @Column
@@ -28,7 +28,7 @@ public class Cliente {
     @Column
     private String direccion;
             
-    @Column
+    //@Column
     @ManyToOne
     private Coordenada coordenada;
 }

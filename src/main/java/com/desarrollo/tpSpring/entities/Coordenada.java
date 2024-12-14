@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 public class Coordenada {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
+    //@Column
     private int id_coordenada;
     
     private double lat;

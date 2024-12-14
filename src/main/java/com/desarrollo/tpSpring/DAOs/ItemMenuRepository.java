@@ -1,8 +1,6 @@
 package com.desarrollo.tpSpring.DAOs;
 
-import com.desarrollo.tpSpring.entities.Bebida;
 import com.desarrollo.tpSpring.entities.ItemMenu;
-import com.desarrollo.tpSpring.entities.Plato;
 import java.util.List;
 import java.util.Set;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,15 +11,14 @@ import org.springframework.stereotype.Repository;
 public interface ItemMenuRepository extends JpaRepository<ItemMenu, String> {
 
     
-      public ItemMenu buscarPorNombre(String nombre);
-      public List<ItemMenu> buscarDescripcion(String descripcion);
-      public List<ItemMenu> buscarPrecioEntre(int precioMin, int precioMax);
-      public List<ItemMenu> buscarPrecio(int precio);
-      public List<ItemMenu> buscarCategoria(String categoria);
+      public ItemMenu findByNombre(String nombre);
+      public List<ItemMenu> findByDescripcion(String descripcion);
+      public List<ItemMenu> findByPrecioBetween(int precioMin, int precioMax);
+      public List<ItemMenu> findByPrecio(int precio);
 
-      @Query("SELECT i FROM ItemMenu i WHERE TYPE(i) = Bebida")
-      Set<Bebida> ObtenerBebidas();
+      @Query("SELECT i FROM item_menu i WHERE TYPE(i) = com.desarrollo.tpSpring.entities.Bebida")
+      Set<ItemMenu> findAllBebida();
 
-     @Query("SELECT i FROM ItemMenu i WHERE TYPE(i) = Plato")
-     Set<Plato> ObtenerPlatos();
+     @Query("SELECT i FROM item_menu i WHERE TYPE(i) = com.desarrollo.tpSpring.entities.Plato")
+     Set<ItemMenu> findAllPlato();
 }

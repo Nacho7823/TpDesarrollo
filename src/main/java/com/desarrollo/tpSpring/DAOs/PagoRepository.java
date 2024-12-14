@@ -12,15 +12,15 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PagoRepository extends JpaRepository<Pago, String> {    
-   List<Pago> BuscarPorFecha(LocalDate fecha);
-   List<Pago> BuscarPorMonto(double montoMinimo);
+   List<Pago> findByFecha(LocalDate fecha);
+   List<Pago> findByMonto(double montoMinimo);
 
-@Query("SELECT p FROM Pago p WHERE TYPE(p) = MercadoPago")
-List<Pago> ObtenerMercadoPago();
+@Query("SELECT p FROM pago p WHERE TYPE(p) = com.desarrollo.tpSpring.entities.MercadoPago")
+List<Pago> findAllMercadoPago();
 
-@Query("SELECT p FROM Pago p WHERE TYPE(p) = Transferencia")
-List<Pago> ObtenerTransferencia();
+@Query("SELECT p FROM pago p WHERE TYPE(p) = com.desarrollo.tpSpring.entities.Transferencia")
+List<Pago> findAllTransferencia();
 
-    @Query("SELECT m FROM MercadoPago m WHERE m.alias = :alias")
+    @Query("SELECT m FROM mercado_pago m WHERE m.alias = :alias")
     List<MercadoPago> findMercadoPagoByAlias(@Param("alias") String alias);
 }

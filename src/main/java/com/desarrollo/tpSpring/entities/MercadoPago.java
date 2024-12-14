@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity(name= "mercado_pago")
 public class MercadoPago extends Pago{
-    @Column
+    @Column(name="alias")
     private String alias;
 
     MercadoPago(String alias, double calcularTotal) {

@@ -7,9 +7,12 @@ import com.desarrollo.tpSpring.interfaces.Observador;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
@@ -29,24 +32,28 @@ import lombok.NoArgsConstructor;
 public class Pedido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
+    //@Column
     private int id_pedido;
     
 //    @Column
     @ManyToOne
+    @JoinColumn(name = "id_cliente", referencedColumnName = "id_cliente")
     private Cliente cliente;
 //    @Column
     @ManyToOne
+    @JoinColumn(name = "id_vendedor")
     private Vendedor vendedor;
 //    @Column
     @OneToOne
+    @JoinColumn(name = "id_pago", referencedColumnName = "id_pago")
     private Pago pago;
     
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval=true)
     private Set<ItemsPedido> items;
-    @Column
+    //@Column
     private double total;
-    @Column
+    //@Column
+    @Enumerated(EnumType.STRING)
     private EstadoPedido estado;
 //    @Column
     @Transient

@@ -6,7 +6,6 @@ import lombok.*;
 import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Data
 @AllArgsConstructor
@@ -15,15 +14,15 @@ import java.util.stream.Collectors;
 public class Vendedor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
+    @Column(name= "id_vendedor")
     private int id_vendedor;
     
     @Basic
-    @Column
+    @Column(name = "nombre") 
     private String nombre;
     @Column
     private String direccion;
-    @Column
+    //@Column
     @ManyToOne
     private Coordenada coordenada;
 

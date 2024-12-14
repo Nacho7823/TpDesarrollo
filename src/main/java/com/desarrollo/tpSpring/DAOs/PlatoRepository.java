@@ -8,11 +8,11 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PlatoRepository extends JpaRepository<Plato,String>{
-    public List<Plato> buscarPorPeso(double peso);
-    public List<Plato> buscarCeliacos();
-    public List<Plato> buscarNoCeliacos();
-    public List<Plato> buscarVeganos();
-    public List<Plato> buscarNoVeganos();
-    public List<Plato> buscarPorCalorias(int calorias);
+    public List<Plato> findByPeso(double peso);
+  /*  public List<Plato> findByAptoCeliaco();
+    public List<Plato> findByAptoCeliacoFalse();
+    public List<Plato> findByAptoVegano();
+    public List<Plato> findByAptoVeganoFalse();*/
+    public List<Plato> findByCalorias(int calorias);
 
 }

@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public abstract class ItemMenu {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
+    @Column(name="id_item_menu")
     private int id_item_menu;
     @Basic   
     @Column
@@ -27,7 +27,7 @@ public abstract class ItemMenu {
     @Column
     private String categoria; 
     
-   @ManyToMany(mappedBy = "itemMenu")
+   @ManyToMany(mappedBy = "items")
     private Set<Vendedor> vendedores;
    @OneToMany(mappedBy = "itemMenu", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ItemsPedido> itemsPedido;
