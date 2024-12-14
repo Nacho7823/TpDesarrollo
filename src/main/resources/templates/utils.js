@@ -212,6 +212,7 @@ async function updatePedido(pedido) {
     return await PUT("/pedidos/pedido", pedido);
 }
 async function deletePedido(pedido) {
+    console.log(pedido);
     return await DELETE("/pedidos/pedido", pedido);
 }
 

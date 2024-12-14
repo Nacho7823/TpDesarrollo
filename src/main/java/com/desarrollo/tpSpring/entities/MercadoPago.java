@@ -16,7 +16,8 @@ import lombok.NoArgsConstructor;
 @Entity(name= "mercado_pago")
 @PrimaryKeyJoinColumn(name = "id_pago")
 public class MercadoPago extends Pago{
-    @Column(name="alias")
+    
+    @Column
     private String alias;
 
     public MercadoPago(String alias, double calcularTotal) {

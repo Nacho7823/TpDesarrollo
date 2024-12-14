@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Entity(name = "plato")
 @PrimaryKeyJoinColumn(name = "id_item_menu")
 public class Plato extends ItemMenu{
-    @Basic
+    
     @Column
     private double calorias;
     @Column

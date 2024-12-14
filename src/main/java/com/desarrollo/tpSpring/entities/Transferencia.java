@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Entity(name = "transferencia")
 @PrimaryKeyJoinColumn(name = "id_pago")
 public class Transferencia extends Pago{
-    @Basic
+    
     @Column
     private String cuit;
     @Column

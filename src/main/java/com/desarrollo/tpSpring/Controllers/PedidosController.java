@@ -172,9 +172,9 @@ public class PedidosController {
     }
 
     @DeleteMapping("/pedido")
-    public ResponseEntity<String> eliminarPedido(@RequestBody Pedido pedido) {
+    public ResponseEntity<Boolean> eliminarPedido(@RequestBody Pedido pedido) {
         pedidoService.eliminarPedido(pedido);
-        return ResponseEntity.ok("Pedido " + pedido.getId_pedido() + " eliminado exitosamente");
+        return ResponseEntity.ok(true);
     }
 
     @PostMapping("/pedido")

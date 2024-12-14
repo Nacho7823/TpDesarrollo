@@ -88,6 +88,8 @@ function modificarPedido(id) {
 
 async function eliminarPedido(id) {
     const pedido = pedidos.find(pedido => pedido.id_pedido == id);
+    pedido.pago = null; // borrar, solucion temporal
+    pedido.items = null;
     if(!await deletePedido(pedido)) {
         alert("No se pudo eliminar el pedido");
     }

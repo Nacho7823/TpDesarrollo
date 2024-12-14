@@ -21,6 +21,7 @@ import org.springframework.validation.annotation.Validated;
  */
 @Service
 public class PedidoService {
+
     @Autowired
     private PedidoRepository pedidoRepository;
     @Autowired
@@ -28,52 +29,45 @@ public class PedidoService {
 
     public PedidoService(PedidoRepository pedidoRepository) {
     }
-    
+
     @Transactional
-    public void crearPedido(@Validated Pedido pedido){
-        
+    public void crearPedido(@Validated Pedido pedido) {
+
         Pago pago = pedido.getPago();
         pagoRepository.save(pago);
         pedido.setPago(pago);
-        if(pedido.getPago() != null){
+        if (pedido.getPago() != null) {
             pedidoRepository.save(pedido);
-           
+
         }
     }
-    
-    public List<Pedido> obtenerPedidos(){
+
+    public List<Pedido> obtenerPedidos() {
         return pedidoRepository.findAll();
     }
-    
-    public Pedido buscarPedidoPorId(int id){
+
+    public Pedido buscarPedidoPorId(int id) {
         return pedidoRepository.findById(id).get();
     }
-    
+
     @Transactional
-    public void actualizarPedido(@Validated Pedido pedido){
-        if(pedido.getPago() != null){
+    public void actualizarPedido(@Validated Pedido pedido) {
+        if (pedido.getPago() != null) {
             pedidoRepository.save(pedido);
-           
+
         }
     }
-    
+
     @Transactional
-    public void eliminarPedido(@Validated Pedido id){
+    public void eliminarPedido(@Validated Pedido id) {
+        Pedido pedido = pedidoRepository.findById(id.getId_pedido()).get();
         
-        Optional<Pedido> opt = pedidoRepository.findById(id.getId_pedido());
-        if (opt.isEmpty())
-            throw new RuntimeException("no se encontro el id");
-        
-        Pedido pedido = opt.get();
-        Pago pago = pedido.getPago();
-        
-        pagoRepository.delete(pago);
-        pedidoRepository.delete(opt.get());
+//        pagoRepository.delete(pago);
+        pedidoRepository.delete(pedido);
     }
-    
-    public List<Pedido> encontrarPorTotal(double total){
+
+    public List<Pedido> encontrarPorTotal(double total) {
         return pedidoRepository.findByTotal(total);
     }
-    
-    
+
 }

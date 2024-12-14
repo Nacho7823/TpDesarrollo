@@ -17,10 +17,11 @@ import lombok.NoArgsConstructor;
 @Entity(name = "bebida")
 @PrimaryKeyJoinColumn(name = "id_item_menu")
 public class Bebida extends ItemMenu{
-    @Basic
-    private double graduacion_alcoholica;
+    
     @Column
     private double tamanio;
+    @Column
+    private double graduacion_alcoholica;
     
     private Bebida(Builder builder) {
         super(builder);
