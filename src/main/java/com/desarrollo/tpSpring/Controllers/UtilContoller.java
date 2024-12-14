@@ -27,7 +27,7 @@ public class UtilContoller {
             utils_js = cargarArchivo("templates/utils.js");
             System.out.println("utils.js cargado correctamente");
         } catch (IOException e) {
-            throw new RuntimeException("no se pudo cargar la pagina del cliente");
+            throw new RuntimeException("no se pudo cargar las utilidades");
         }
     }
     // pasar UI
