@@ -7,6 +7,7 @@ package com.desarrollo.tpSpring.services;
 import com.desarrollo.tpSpring.DAOs.ItemsPedidoRepository;
 import com.desarrollo.tpSpring.entities.ItemMenu;
 import com.desarrollo.tpSpring.entities.ItemsPedido;
+import com.desarrollo.tpSpring.exceptions.ItemNoEncontradoException;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import org.springframework.stereotype.Service;
@@ -34,116 +35,64 @@ public class ItemPedidoService {
     }
 
     public List<ItemMenu> buscarDescripcion(String descripcion) {
-        try {
-           
-        } catch (ItemNoEncontradoException e) {
-            System.err.println(e.getMessage());
-        }
+        return null;
     }
 
     public List<ItemMenu> buscarPrecioEntre(int precioMin, int precioMax) {
-        try {
-            
-        } catch (ItemNoEncontradoException e) {
-            System.err.println(e.getMessage());
-        }
+       return null;
     }
 
     public List<ItemMenu> buscarPrecio(int precio) {
-        try {
-            
-        } catch (ItemNoEncontradoException e) {
-            System.err.println(e.getMessage());
-        }
+        return null;
     }
 
     public List<ItemMenu> buscarCategoria(String categoria) {
-        try {
-            
-        } catch (ItemNoEncontradoException e) {
-            System.err.println(e.getMessage());
-        }
+        return null;
     }
 
     public List<ItemMenu> buscarBebidas() {
-        try {
-            
-            
-        } catch (ItemNoEncontradoException e) {
-            System.err.println(e.getMessage());
-        }
+        return null;
     }
 
     public List<ItemMenu> buscarPlatos() {
-        try {
-            
-        } catch (ItemNoEncontradoException e) {
-            System.err.println(e.getMessage());
-        }
+       return null;
+        
     }
 
     public List<ItemMenu> buscarComidaPeso(double peso) {
-        try {
-           
-        } catch (ItemNoEncontradoException e) {
-            System.err.println(e.getMessage());
-        }
+        
+           return null;
+        
     }
 
     public List<ItemMenu> buscarCeliacos() {
-        try {
-            
-        } catch (ItemNoEncontradoException e) {
-            System.err.println(e.getMessage());
-        }
+        return null;
     }
 
     public List<ItemMenu> buscarNoCeliacos() {
-        try {
-           
-        } catch (ItemNoEncontradoException e) {
-            System.err.println(e.getMessage());
-        }
+        return null;
     }
 
     public List<ItemMenu> buscarVeganos() {
-        try {
-            
-        } catch (ItemNoEncontradoException e) {
-            System.err.println(e.getMessage());
-        }
+       return null; 
     }
 
     public List<ItemMenu> buscarNoVeganos() {
-        try {
-            
-        } catch (ItemNoEncontradoException e) {
-            System.err.println(e.getMessage());
-        }
+       return null;
     }
 
     public List<ItemMenu> buscarComidaCalorias(int calorias) {
-        try {
-            
-        } catch (ItemNoEncontradoException e) {
-            System.err.println(e.getMessage());
-        }
+       return null;
     }
 
     public List<ItemMenu> buscarBebidaTamaño(double tamaño) {
-        try {
-            
-        } catch (ItemNoEncontradoException e) {
-            System.err.println(e.getMessage());
-        }
+      return null;  
     }
 
     public List<ItemMenu> buscarBebidaGraduacion(double graduacion) {
-        try {
-            
-        } catch (ItemNoEncontradoException e) {
-            System.err.println(e.getMessage());
-        }
+        
+     return null;       
+        
     }
     
     public List<ItemsPedido> obtenerItems(){

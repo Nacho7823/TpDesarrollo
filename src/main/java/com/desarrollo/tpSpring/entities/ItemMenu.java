@@ -14,9 +14,9 @@ import lombok.NoArgsConstructor;
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class ItemMenu {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name="id_item_menu")
-    private int id_item_menu;
+    private String id_item_menu;
     @Basic   
     @Column
     private String nombre;
@@ -47,13 +47,13 @@ public abstract class ItemMenu {
 
 
     public static abstract class Builder<T extends Builder<T>> {
-        private int id;
+        private String id;
         private String nombre;
         private String descripcion;
         private double precio;
         private String categoria;
 
-        public T id(int id) { this.id = id; return self(); }
+        public T id(String id) { this.id = id; return self(); }
         public T nombre(String nombre) { this.nombre = nombre; return self(); }
         public T descripcion(String descripcion) { this.descripcion = descripcion; return self(); }
         public T precio(double precio) { this.precio = precio; return self(); }
