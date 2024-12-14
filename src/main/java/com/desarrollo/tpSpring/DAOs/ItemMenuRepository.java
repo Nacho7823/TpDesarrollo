@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ItemMenuRepository extends JpaRepository<ItemMenu, String> {
+public interface ItemMenuRepository extends JpaRepository<ItemMenu, Integer> {
 
     
       public ItemMenu findByNombre(String nombre);

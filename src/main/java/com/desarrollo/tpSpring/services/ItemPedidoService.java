@@ -109,14 +109,8 @@ public class ItemPedidoService {
         itemPedidoRepository.delete(item);
     }
 
-<<<<<<< HEAD
     public List<ItemsPedido> encontrarPorCantidad(int cantidad){
         return itemPedidoRepository.findByCantidad(cantidad);
     }
-=======
-  /*  public List<ItemsPedido> encontrarPorCantidad(int cantidad){
-        return itemPedidoRepository.find
-    }*/
->>>>>>> 96d35d61310105ab10198ec005c33b3e252a18ee
-    
+
 }

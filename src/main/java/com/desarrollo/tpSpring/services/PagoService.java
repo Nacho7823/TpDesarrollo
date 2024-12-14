@@ -46,7 +46,7 @@ public class PagoService {
         return pagoRepository.findAll();
     }
     
-    public Pago buscarPagoPorId(String id){
+    public Pago buscarPagoPorId(Integer id){
         return pagoRepository.findById(id).get();
     }
     
@@ -75,7 +75,7 @@ public class PagoService {
         }
     }
     @Transactional
-    public void eliminarPagoPorId(String id){
+    public void eliminarPagoPorId(Integer id){
         try{
         pagoRepository.deleteById(id);
         }catch(Exception e){

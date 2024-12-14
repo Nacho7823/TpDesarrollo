@@ -50,7 +50,7 @@ public class ItemMenuService {
         
     }
     @Transactional
-    public void eliminarItemMenu(String id) {
+    public void eliminarItemMenu(Integer id) {
          try {
                 itemMenuRepository.deleteById(id);
                 System.out.println("Item eliminado exitosamente: " + id); 
@@ -63,7 +63,7 @@ public class ItemMenuService {
         }
     }
     
-    public ItemMenu buscarItemMenu(String id) {
+    public ItemMenu buscarItemMenu(Integer id) {
          return itemMenuRepository.findById(id).get();
     }
     

@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PagoRepository extends JpaRepository<Pago, String> {    
+public interface PagoRepository extends JpaRepository<Pago, Integer> {    
    List<Pago> findByFecha(LocalDate fecha);
    List<Pago> findByMonto(double montoMinimo);
 
