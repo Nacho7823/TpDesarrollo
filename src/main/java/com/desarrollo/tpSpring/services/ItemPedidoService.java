@@ -27,6 +27,7 @@ public class ItemPedidoService {
     
     
     
+    
    
     public ItemMenu buscarPorNombre(String nombre) {
         ItemMenu item = null;
@@ -112,5 +113,8 @@ public class ItemPedidoService {
         itemPedidoRepository.delete(item);
     }
 
+    public List<ItemsPedido> encontrarPorCantidad(int cantidad){
+        return itemPedidoRepository.find
+    }
     
 }
