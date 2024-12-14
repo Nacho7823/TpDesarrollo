@@ -8,10 +8,10 @@ package com.desarrollo.tpSpring.exceptions;
  *
  * @author florh
  */
-public class InvalidOrderException extends Exception {
+public class ItemNoEncontradoException extends Exception {
 
-    public InvalidOrderException(String los_ítems_deben_pertenecer_al_mismo_vende) {
-        super(los_ítems_deben_pertenecer_al_mismo_vende);
+    public ItemNoEncontradoException(String m) {
+        super(m);
     }
     
 }
