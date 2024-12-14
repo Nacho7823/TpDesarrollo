@@ -4,6 +4,8 @@ package com.desarrollo.tpSpring.entities;
 import com.desarrollo.tpSpring.exceptions.InvalidOrderException;
 import com.desarrollo.tpSpring.enums.EstadoPedido;
 import com.desarrollo.tpSpring.interfaces.Observador;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,6 +22,7 @@ import jakarta.persistence.Transient;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -48,11 +51,12 @@ public class Pedido {
     private Pago pago;
     
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval=true)
+    @JsonManagedReference  
     private Set<ItemsPedido> items;
     //@Column
     private double total;
     //@Column
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     private EstadoPedido estado;
 //    @Column
     @Transient
@@ -83,5 +87,18 @@ public class Pedido {
         return true;
     }
     
+     
+     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pedido pedido = (Pedido) o;
+        return id_pedido == pedido.id_pedido;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id_pedido);
+    }
  
 }
