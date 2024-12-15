@@ -4,11 +4,9 @@ package com.desarrollo.tpSpring.entities;
 import com.desarrollo.tpSpring.exceptions.InvalidOrderException;
 import com.desarrollo.tpSpring.enums.EstadoPedido;
 import com.desarrollo.tpSpring.interfaces.Observador;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -103,4 +101,9 @@ public class Pedido {
         return Objects.hash(id_pedido);
     }
  
+    public double calcularTotal() {
+        double totalProductos = items.stream().mapToDouble(item ->item.getItemMenu().getPrecio()).sum();
+        this.total = totalProductos + pago.aplicarRecargo(totalProductos);
+        return this.total;
+    }
 }

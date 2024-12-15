@@ -1,6 +1,5 @@
 package com.desarrollo.tpSpring.Controllers;
 
-import com.desarrollo.tpSpring.DAOs.PedidoRepository;
 import static com.desarrollo.tpSpring.Utils.FileUtils.cargarArchivo;
 import com.desarrollo.tpSpring.entities.Cliente;
 import com.desarrollo.tpSpring.entities.ItemMenu;
@@ -16,17 +15,11 @@ import com.desarrollo.tpSpring.services.ItemMenuService;
 import com.desarrollo.tpSpring.services.PedidoService;
 import com.desarrollo.tpSpring.services.VendedorService;
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -183,7 +176,6 @@ public class PedidosController {
         int id_cliente = (int) data.get("id_cliente");
         int id_vendedor = (int) data.get("id_vendedor");
 //        int id_pago = (int) data.get("id_pago");
-//        int total = (int) data.get("total");      // creo q no deberia estar
 
         Cliente cliente = clienteService.buscarCliente(id_cliente);
         Vendedor vendedor = vendedorService.buscarVendedor(id_vendedor);
@@ -225,6 +217,7 @@ public class PedidosController {
         pedido.setItems(items);
         pedido.setEstado(estado);
         pedido.setPago(pago);
+        pedido.calcularTotal();
         pedidoService.crearPedido(pedido);
         System.out.println("pedido creado");
         return ResponseEntity.ok(true);
