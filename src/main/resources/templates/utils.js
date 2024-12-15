@@ -144,7 +144,7 @@ async function getCliente(id) {
     return DTO2Cliente(await GET_ID("/cliente/cliente", id));
 }
 async function createCliente(cliente) {
-    return DTO2Cliente(await POST("/cliente/cliente", Cliente2DTO(cliente)));
+    return await POST("/cliente/cliente", Cliente2DTO(cliente));
 }
 async function updateCliente(cliente) {
     return await PUT("/cliente/cliente", Cliente2DTO(cliente));

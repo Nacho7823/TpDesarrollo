@@ -19,14 +19,11 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ClienteService {
-    private final ClienteRepository clienteRepository;
-     public final CoordenadaRepository coordenadaRepository;
-     
     @Autowired
-    public ClienteService(ClienteRepository clienteRepository,CoordenadaRepository coordenadaRepository) {
-        this.clienteRepository = clienteRepository;
-        this.coordenadaRepository=coordenadaRepository;
-    }
+    private ClienteRepository clienteRepository;
+    @Autowired
+    private CoordenadaRepository coordenadaRepository;
+     
     
     public List<Cliente> obtenerClientes(){
         return (List<Cliente>) clienteRepository.findAll();
@@ -34,6 +31,7 @@ public class ClienteService {
     @Transactional
     public void crearCliente(Cliente cliente) {
         try {
+            coordenadaRepository.save(cliente.getCoordenada());
             clienteRepository.save(cliente);
             System.out.println("Cliente creado exitosamente");
           

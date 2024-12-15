@@ -9,6 +9,7 @@ import com.desarrollo.tpSpring.DAOs.VendedorRepository;
 import com.desarrollo.tpSpring.entities.Vendedor;
 import jakarta.transaction.Transactional;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,13 +18,11 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class VendedorService {
-    public final VendedorRepository vendedorRepository;
-    public final CoordenadaRepository coordenadaRepository;
+    @Autowired
+    private VendedorRepository vendedorRepository;
+    @Autowired
+    private CoordenadaRepository coordenadaRepository;
 
-    public VendedorService(VendedorRepository vendedorRepository,CoordenadaRepository coordenadaRepository) {
-        this.vendedorRepository = vendedorRepository;
-        this.coordenadaRepository=coordenadaRepository;
-    }
     
     public List<Vendedor> obtenerVendedores() {
         return (List<Vendedor>) vendedorRepository.findAll();
@@ -32,6 +31,7 @@ public class VendedorService {
     @Transactional
     public void crearVendedor(Vendedor vendedor) {
         try {
+            coordenadaRepository.save(vendedor.getCoordenada());
             vendedorRepository.save(vendedor);
             System.out.println("Vendedor creado exitosamente");
           
