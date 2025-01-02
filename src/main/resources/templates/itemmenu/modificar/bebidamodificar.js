@@ -1,4 +1,4 @@
-import { createBebida, updateItemMenu } from "../../utils.js";
+import { getVendedores, createBebida, updateItemMenu } from "../../utils.js";
 
 const btnVolver = document.getElementById("btn-volver");
 const btnCrear = document.getElementById("btn-crear");
@@ -24,7 +24,7 @@ btnCrear.addEventListener("click", async () => {
         apto_celiaco: null,
         calorias: null,
         graduacion_alcoholica: Number(inputGraduacionAlcoholica.value),
-        tamanio: Number(inputTamanio.value)
+        tamanio: Number(inputTamanio.value),
     };
     
     console.log(tmp);
@@ -62,4 +62,3 @@ inputDescripcion.value = itemMenu.descripcion;
 inputPrecio.value = itemMenu.precio;
 inputGraduacionAlcoholica.value = itemMenu.graduacion_alcoholica;
 inputTamanio.value = itemMenu.tamanio;
-

@@ -215,8 +215,7 @@ async function createCliente(cliente) {
 }
 async function updateCliente(cliente) {
     const _cliente = get(clientesID);
-    const index = _cliente.findIndex(cliente => cliente.id_cliente == cliente.id_cliente);
-    cliente.id_cliente = _cliente[index].id_cliente;
+    const index = _cliente.findIndex(c => c.id_cliente == cliente.id_cliente);
     _cliente[index] = cliente;
     save(clientesID, _cliente);
     return true;
@@ -247,8 +246,7 @@ async function createVendedor(vendedor) {
 }
 async function updateVendedor(vendedor) {
     const _vendedor = get(vendedoresID);
-    const index = _vendedor.findIndex(vendedor => vendedor.id_vendedor == vendedor.id_vendedor);
-    vendedor.id_vendedor = _vendedor[index].id_vendedor;
+    const index = _vendedor.findIndex(v => v.id_vendedor == vendedor.id_vendedor);
     _vendedor[index] = vendedor;
     save(vendedoresID, _vendedor);
     return true;
@@ -257,6 +255,46 @@ async function deleteVendedor(id) {
     let _vendedor = get(vendedoresID);
     _vendedor = _vendedor.filter(vendedor => vendedor.id_vendedor != id);
     save(vendedoresID, _vendedor);
+    return true;
+}
+
+
+// vende
+
+async function getVende(id_item_menu, id_vendedor) {
+    const _vende = get(vendeID);
+    const index = _vende.findIndex(v => v.id_item_menu == id_item_menu && v.id_vendedor == id_vendedor);
+    if (index == -1) {
+        return false;
+    }
+    return true;
+}
+async function createVende(id_item_menu, id_vendedor) {
+    const _vende = get(vendeID);
+    // find if exists
+    const index = _vende.findIndex(v => v.id_item_menu == id_item_menu && v.id_vendedor == id_vendedor);
+    if (index != -1) {
+        // update
+        _vende[index].id_item_menu = id_item_menu;
+        _vende[index].id_vendedor = id_vendedor;
+        save(vendeID, _vende);
+        return true;
+    }
+    const vende = {
+        id_vende: _vende.length + 5,
+        id_item_menu: id_item_menu,
+        id_vendedor: id_vendedor
+    };
+
+    _vende.push(vende);
+    save(vendeID, _vende);
+    return true;
+}
+
+async function deleteVende(id_item_menu, id_vendedor) {
+    let _vende = get(vendeID);
+    _vende = _vende.filter(v => v.id_item_menu != id_item_menu && v.id_vendedor != id_vendedor);
+    save(vendeID, _vende);
     return true;
 }
 
@@ -294,7 +332,6 @@ async function createPlato(plato) {
 async function updateItemMenu(it) {
     const _item_menu = get(item_menusID);
     const index = _item_menu.findIndex(item => item.id_item_menu == it.id_item_menu);
-    it.id_item_menu = _item_menu[index].id_item_menu;
     _item_menu[index] = it;
     save(item_menusID, _item_menu);
     return true;
@@ -326,7 +363,6 @@ async function createPedido(pedido) {
 async function updatePedido(pedido) {
     const _pedido = get(pedidosID);
     const index = _pedido.findIndex(p => p.id_pedido == pedido.id_pedido);
-    pedido.id_pedido = _pedido[index].id_pedido;
     _pedido[index] = pedido;
     save(pedidosID, _pedido);
     return true;
@@ -462,10 +498,12 @@ const __item_menu = [
 
 const __vende = [
     {
+        id_vende: 0,
         id_item_menu: 1,
         id_vendedor: 1
     },
     {
+        id_vende: 1,
         id_item_menu: 2,
         id_vendedor: 1
     }
@@ -541,6 +579,10 @@ export {
     createVendedor,
     updateVendedor,
     deleteVendedor,
+
+    getVende,
+    createVende,
+    deleteVende,
 
     getItemMenus,
     getItemMenu,

@@ -24,7 +24,7 @@ btnCrear.addEventListener("click", async () => {
         apto_celiaco: Boolean(inputAptoCeliaco.checked),
         calorias: Number(inputCalorias.value),
         graduacion_alcoholica: null,
-        tamanio: null
+        tamanio: null,
     };
     
     console.log(tmp);
@@ -44,6 +44,7 @@ btnCrear.addEventListener("click", async () => {
 
 });
 
+// TODO
 function validar({nombre, descripcion, precio, peso}) {
     if(!nombre.trim() || !descripcion.trim() || peso <= 0 || precio <= 0) {
         alert("No se permiten campos vacios ni valores invalidos");
@@ -51,5 +52,3 @@ function validar({nombre, descripcion, precio, peso}) {
     }
     return true;
 }
-
-

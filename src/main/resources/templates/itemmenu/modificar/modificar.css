@@ -89,3 +89,7 @@ input {
     margin-top: 10px;
     margin-left: 10px;
 }
+
+select {
+    width: 300px;
+}

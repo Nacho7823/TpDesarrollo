@@ -1,5 +1,6 @@
 import { getClientes, getVendedores, getItemsOfVendedor, createPedido, createDetalles, updatePedido, getItemMenu} from "../../utils.js";
 
+const btnModificarItems = document.getElementById("btn-modificar-items");
 const btnVolver = document.getElementById("btn-volver");
 const btnCrear = document.getElementById("btn-crear");
 
@@ -10,7 +11,16 @@ const selectEstado = document.getElementById("select-estado");
 const inputTotal = document.getElementById("input-total");
 const divPago = document.getElementById("pagopan");
 
-btnVolver.addEventListener("click", () => window.location.href = "../pedidos.html");
+btnModificarItems.addEventListener("click", () => {
+    if (vendedores.length != 0)
+        window.location.href = "setItems.html";
+});
+btnVolver.addEventListener("click", () => {
+    window.location.href = "../pedidos.html";
+    id_vendedor = selectVendedor.value;
+    itemsAdded = [];
+    saveItems();
+});
 
 btnCrear.addEventListener("click", async () => {
     const tmp = {
@@ -68,7 +78,11 @@ btnCrear.addEventListener("click", async () => {
 });
 
 selectFormaPago.addEventListener("change", () => updateDivPago(selectFormaPago.value));
-selectVendedor.addEventListener("change", () => updateItemsOfVendedor(selectVendedor.value));
+selectVendedor.addEventListener("change", () => {
+    id_vendedor = selectVendedor.value;
+    itemsAdded = [];
+    saveItems();
+});
 
 function updateDivPago(value) {
     if (value == "mercadopago") {
@@ -133,82 +147,8 @@ function addOptionsVendedor(vendedores) {
     }
 }
 
-// item-menu
-
-async function updateItemsOfVendedor(id) {
-    const items = await getItemsOfVendedor(id);
-    clearTable();
-    for (const item of items) {
-        addRow(item, false);
-    }
-}
 
 
-function addRow(item, valueCant) {
-    const row = document.createElement('tr');
-
-    const createCell = (text) => {
-        const cell = document.createElement('th');
-        cell.textContent = text;
-        return cell;
-    }
-    const createInput = (action) => {
-        const inp = document.createElement('input');
-        inp.addEventListener("change", (ev) => {
-            let v = ev.target.value;
-            if (v == '') {
-                inp.value = 0;
-                v = 0;
-                action(v)
-            }
-            else {
-                v = parseInt(v);
-                action(v)
-            }
-        });
-        inp.type = "number";
-        inp.min = 0;
-        inp.step = 1;
-        inp.value = valueCant;
-        const cell = document.createElement('th');
-        cell.appendChild(inp);
-        return cell;
-    }
-
-    row.appendChild(createCell(item.id_item_menu));
-    row.appendChild(createCell(item.nombre));
-    row.appendChild(createCell(item.descripcion));
-    row.appendChild(createCell(item.precio));
-    row.appendChild(createCell(item.categoria));
-    row.appendChild(createCell(item.peso));
-    row.appendChild(createCell(item.apto_vegano));
-    row.appendChild(createCell(item.apto_celiaco));
-    row.appendChild(createCell(item.calorias));
-    row.appendChild(createCell(item.graduacion_alcoholica));
-    row.appendChild(createCell(item.tamanio));
-    row.appendChild(createInput((cant) => setItemCantity(item.id_item_menu, cant)));
-
-    const tbod = document.getElementById("tablebody");
-    tbod.appendChild(row)
-}
-
-function clearTable() {
-    const tbod = document.getElementById("tablebody");
-    while (tbod.firstChild) {
-        tbod.removeChild(tbod.firstChild);
-    }
-}
-
-
-function setItemCantity(id_item_menu, cantity) {
-    if (cantity == '') {
-        itemsAdded.set(id_item_menu, 0);
-
-    }
-    else {
-        itemsAdded.set(id_item_menu, cantity);
-    }
-}
 
 function calculateTotal() {
     const detalles = [];
@@ -235,15 +175,32 @@ let formapago = "";
 let alias = "";
 let cvu = "";
 let cuit = "";
-let itemsAdded = new Map();
+
+
+let itemsAdded;
+function saveItems() {
+    sessionStorage.setItem("vendedor", JSON.stringify(selectVendedor.value));
+    sessionStorage.setItem("itemsSeleccionados", JSON.stringify(itemsAdded));
+}
+function loadItems() {
+    id_vendedor = JSON.parse(sessionStorage.getItem("vendedor"));
+    itemsAdded = JSON.parse(sessionStorage.getItem("itemsSeleccionados"));
+}
+
+const clientes = await getClientes();
+const vendedores = await getVendedores();
 
 (async function main() {
-    const clientes = await getClientes();
-    const vendedores = await getVendedores();
     addOptionsCliente(clientes);
     addOptionsVendedor(vendedores);
 
-    updateItemsOfVendedor(selectVendedor.value);
+    if (sessionStorage.getItem("itemsSeleccionados")) 
+        loadItems();
+    else {
+        id_vendedor = selectVendedor.value;
+        itemsAdded = []
+        saveItems();
+    }
 
     updateDivPago(selectFormaPago.value);
     formapago = selectFormaPago.value;

@@ -18,7 +18,7 @@ btnVolver.addEventListener("click", ()=> window.location.href = "../vendedor.htm
 
 btnModificar.addEventListener("click", async ()=> {
     const tmp = {
-        id: vendedor.id_vendedor,
+        id_vendedor: vendedor.id_vendedor,
         nombre: inputNombre.value,
         direccion: inputDireccion.value,
         longitud: Number(inputLongitud.value),
@@ -53,9 +53,9 @@ inputLongitud.value = vendedor.longitud;
 inputLatitud.value = vendedor.latitud;
 
 
-function verify({ id, nombre, direccion, longitud, latitud }) {
+function verify({ id_vendedor, nombre, direccion, longitud, latitud }) {
 
-    if (id == null || id == "") {
+    if (id_vendedor == null || id_vendedor == "") {
         alert("debe ingresar un id");
         return false;    
     }

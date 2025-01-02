@@ -22,7 +22,7 @@ btnVolver.addEventListener("click", () => window.location.href = "../cliente.htm
 
 btnModificar.addEventListener("click", async () => {
     const tmp = {
-        id: cliente.id_cliente,
+        id_cliente: cliente.id_cliente,
         nombre: inputNombre.value,
         cuit: inputCuit.value,
         email: inputEmail.value,
@@ -58,9 +58,9 @@ inputLongitud.value = cliente.longitud;
 inputLatitud.value = cliente.latitud;
 
 
-function verify( {id, nombre, cuit, email, direccion, longitud, latitud}) {
+function verify( {id_cliente, nombre, cuit, email, direccion, longitud, latitud}) {
 
-    if (id == null || id == "") {
+    if (id_cliente == null || id_cliente == "") {
         alert("debe ingresar un id");
         return false;
     }
