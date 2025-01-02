@@ -111,8 +111,7 @@ function modificarVendedor(id) {
 }
 
 async function eliminarVendedor(id) {
-    const vendedor = vendedores.find(vendedor => vendedor.id_vendedor == id);
-    if (! await deleteVendedor(vendedor)) {
+    if (! await deleteVendedor(id)) {
         alert("no se pudo eliminar el vendedor");
         return;
     }

@@ -27,7 +27,6 @@ btnModificar.addEventListener("click", async () => {
         cuit: inputCuit.value,
         email: inputEmail.value,
         direccion: inputDireccion.value,
-        id_coordenada: cliente.id_coordenada,
         longitud: Number(inputLongitud.value),
         latitud: Number(inputLatitud.value),
     };

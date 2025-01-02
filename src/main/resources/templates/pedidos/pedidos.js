@@ -53,17 +53,18 @@ async function addRow(pedido) {
         cell.appendChild(btn);
         return cell;
     }
-    const nombreCliente = (await getCliente(pedido.id_cliente.id_cliente)).nombre;
-    const nombreVendedor = (await getVendedor(pedido.id_vendedor.id_vendedor)).nombre;
+
+    const nombreCliente = (await getCliente(pedido.id_cliente)).nombre;
+    const nombreVendedor = (await getVendedor(pedido.id_vendedor)).nombre;
 
     row.appendChild(createCell(pedido.id_pedido))
     row.appendChild(createCell(nombreCliente));
     row.appendChild(createCell(nombreVendedor));
     row.appendChild(createCell(pedido.estado));
-    // row.appendChild(createCell(pedido.pago));
-    row.appendChild(createCell(pedido.pago.monto));      //total
+    row.appendChild(createCell(pedido.pago));
+    row.appendChild(createCell(pedido.total));
     row.appendChild(createBtn("ver items", () => verItemsPedido(pedido.id_pedido)));
-    // row.appendChild(createBtn("editar", () => modificarPedido(pedido.id_pedido)));
+    row.appendChild(createBtn("editar", () => modificarPedido(pedido.id_pedido)));
     row.appendChild(createBtn("eliminar", () => eliminarPedido(pedido.id_pedido)));
 
     const tbod = document.getElementById("tablebody");
@@ -87,10 +88,7 @@ function modificarPedido(id) {
 }
 
 async function eliminarPedido(id) {
-    const pedido = pedidos.find(pedido => pedido.id_pedido == id);
-    pedido.pago = null; // borrar, solucion temporal
-    pedido.items = null;
-    if(!await deletePedido(pedido)) {
+    if(!await deletePedido(id)) {
         alert("No se pudo eliminar el pedido");
     }
     window.location.reload();

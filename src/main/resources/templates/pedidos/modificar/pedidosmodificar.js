@@ -1,5 +1,6 @@
-import { getClientes, getVendedores, getItemsOfVendedor, createPedido, createDetalles, updatePedido, getItemMenu} from "../../utils.js";
+import { getClientes, getVendedores, getItemsOfVendedor, createPedido, createDetalles, updatePedido, getItemMenu } from "../../utils.js";
 
+const btnModificarItems = document.getElementById("btn-modificar-items");
 const btnVolver = document.getElementById("btn-volver");
 const btnCrear = document.getElementById("btn-crear");
 
@@ -11,9 +12,24 @@ const selectEstado = document.getElementById("select-estado");
 const inputTotal = document.getElementById("input-total");
 const divPago = document.getElementById("pagopan");
 
-btnVolver.addEventListener("click", () => window.location.href = "../pedidos.html");
+btnModificarItems.addEventListener("click", () => {
+    savePedido();
+    if (vendedores.length != 0)
+        window.location.href = "setItems.html";
+});
+btnVolver.addEventListener("click", () => {
+    resetPedido();
+    resetItems();
+    window.location.href = "../pedidos.html";
+});
 
 btnCrear.addEventListener("click", async () => {
+
+    if (await calculateTotal() == 0) {
+        alert("Debe seleccionar por lo menos un item");
+        return;
+    }
+
     const tmp = {
         estado: selectEstado.value,
         id_cliente: parseInt(selectCliente.value),
@@ -31,17 +47,13 @@ btnCrear.addEventListener("click", async () => {
 
     // asociar items
     const detalles = [];
-    itemsAdded.forEach((value, key) => {
-        console.log(key, value);
-        if (value <= 0) {
-            return;
-        }
+    for (const value of itemsAdded) {
         detalles.push({
             id_pedido: id_pedido,
-            id_item_menu: key,
-            cantidad: value
+            id_item_menu: value.id_item_menu,
+            cantidad: value.cantidad
         });
-    })
+    }
 
     for (const detalle_pedido of detalles) {
         console.log(detalle_pedido);
@@ -69,16 +81,33 @@ btnCrear.addEventListener("click", async () => {
     window.location.href = "../pedidos.html";
 });
 
-selectFormaPago.addEventListener("change", () => updateDivPago(selectFormaPago.value));
-selectVendedor.addEventListener("change", () => updateItemsOfVendedor(selectVendedor.value));
 
 function updateDivPago(value) {
+    const clearInputPago = () => {
+        while (divPago.firstChild) {
+            divPago.removeChild(divPago.firstChild);
+        }
+    }
+    const createInputPago = (text) => {
+        const divC = document.createElement('div');
+        const labelC = document.createElement('label');
+        const inputC = document.createElement('input');
+
+        labelC.textContent = text;
+        inputC.type = "text";
+        inputC.classList.add("defsize");
+        divC.classList.add("addpan");
+        divC.appendChild(labelC);
+        divC.appendChild(inputC);
+        return { div: divC, input: inputC };
+    }
+
     if (value == "mercadopago") {
         formapago = value;
         clearInputPago();
         const container = createInputPago("Alias");
         divPago.appendChild(container.div);
-        container.input.addEventListener("change", () => alias = container.input.value);
+        container.input.addEventListener("change", () => pedido.alias = container.input.value);
 
     }
     else if (value == "transferencia") {
@@ -93,28 +122,13 @@ function updateDivPago(value) {
     }
 }
 
-function clearInputPago() {
-    while (divPago.firstChild) {
-        divPago.removeChild(divPago.firstChild);
-    }
-}
-
-const createInputPago = (text) => {
-    const divC = document.createElement('div');
-    const labelC = document.createElement('label');
-    const inputC = document.createElement('input');
-
-    labelC.textContent = text;
-    inputC.type = "text";
-    inputC.classList.add("defsize");
-    divC.classList.add("addpan");
-    divC.appendChild(labelC);
-    divC.appendChild(inputC);
-    return { div: divC, input: inputC };
-}
 
 
 // select-cliente / select-vendedor
+selectFormaPago.addEventListener("change", () => updateDivPago(selectFormaPago.value));
+selectVendedor.addEventListener("change", () => resetItems());
+
+
 function addOptionsCliente(clientes) {
     const selectElement = document.getElementById("select-cliente");
     for (const cliente of clientes) {
@@ -135,107 +149,86 @@ function addOptionsVendedor(vendedores) {
     }
 }
 
-// item-menu
+async function calculateTotal() {
+    let total = 0;
 
-async function updateItemsOfVendedor(id) {
-    const items = await getItemsOfVendedor(id);
-    clearTable();
-    for (const item of items) {
-        addRow(item);
-    }
-}
-
-function addRow(item) {
-    const row = document.createElement('tr');
-
-    const createCell = (text) => {
-        const cell = document.createElement('th');
-        cell.textContent = text;
-        return cell;
-    }
-    const createInput = (action) => {
-        const inp = document.createElement('input');
-        inp.addEventListener("change", (ev) => {
-            let v = ev.target.value;
-            if (v == '') {
-                inp.value = 0;
-                v = 0;
-                action(v)
-            }
-            else {
-                v = parseInt(v);
-                action(v)
-            }
-        });
-        inp.type = "number";
-        inp.min = 0;
-        inp.step = 1;
-        inp.value = 0;
-        const cell = document.createElement('th');
-        cell.appendChild(inp);
-        return cell;
+    for (const value of itemsAdded) {
+        const item = await getItemMenu(value.id_item_menu);
+        total += item.precio * value.cantidad;
     }
 
-    row.appendChild(createCell(item.id_item_menu));
-    row.appendChild(createCell(item.nombre));
-    row.appendChild(createCell(item.descripcion));
-    row.appendChild(createCell(item.precio));
-    row.appendChild(createCell(item.categoria));
-    row.appendChild(createCell(item.peso));
-    row.appendChild(createCell(item.apto_vegano));
-    row.appendChild(createCell(item.apto_celiaco));
-    row.appendChild(createCell(item.calorias));
-    row.appendChild(createCell(item.graduacion_alcoholica));
-    row.appendChild(createCell(item.tamanio));
-    row.appendChild(createInput((cant) => setItemCantity(item.id_item_menu, cant)));
-
-    const tbod = document.getElementById("tablebody");
-    tbod.appendChild(row)
-}
-
-function clearTable() {
-    const tbod = document.getElementById("tablebody");
-    while (tbod.firstChild) {
-        tbod.removeChild(tbod.firstChild);
-    }
-}
-
-
-function setItemCantity(id_item_menu, cantity) {
-    if (cantity == '') {
-        itemsAdded.set(id_item_menu, 0);
-
-    }
-    else {
-        itemsAdded.set(id_item_menu, cantity);
-    }
+    inputTotal.value = total;
+    return total;
 }
 
 let formapago = "";
 let alias = "";
 let cvu = "";
 let cuit = "";
-let itemsAdded = new Map();
 
-const strPedido = sessionStorage.getItem("pedido");
-const pedido = JSON.parse(strPedido);
+let pedido;
+let itemsAdded;
 
-inputId.value = pedido.id_pedido;
-selectEstado.value = pedido.estado;
-selectFormaPago.value = pedido.id_pago;
-selectVendedor.value = pedido.id_vendedor;
-selectCliente.value = pedido.id_cliente;
-inputTotal.value = pedido.total;
+function saveItems() {
+    sessionStorage.setItem("vendedor", JSON.stringify(selectVendedor.value));
+    sessionStorage.setItem("itemsSeleccionados", JSON.stringify(itemsAdded));
+}
+function loadItems() {
+    pedido = JSON.parse(sessionStorage.getItem("pedido"));
+    itemsAdded = JSON.parse(sessionStorage.getItem("itemsSeleccionados"));
+}
+function resetItems() {
+    pedido = {
+        estado: null,
+        id_cliente: null,
+        id_vendedor: null,
+        id_pago: null,
+        total: 0
+    }
+    itemsAdded = [];
+    saveItems();
+}
+
+function savePedido() {
+    pedido.estado = selectEstado.value;
+    pedido.id_cliente = parseInt(selectCliente.value);
+    pedido.id_vendedor = parseInt(selectVendedor.value);
+    sessionStorage.setItem("pedido", JSON.stringify(pedido));
+}
+function loadPedido() {
+    pedido = JSON.parse(sessionStorage.getItem("pedido"));
+}
+function resetPedido() {
+    pedido = {
+        estado: null,
+        id_cliente: null,
+        id_vendedor: null,
+        id_pago: null,
+        total: 0
+    }
+    sessionStorage.setItem("pedido", JSON.stringify(pedido));
+}
+
+const clientes = await getClientes();
+const vendedores = await getVendedores();
 
 (async function main() {
-    const clientes = await getClientes();
-    const vendedores = await getVendedores();
     addOptionsCliente(clientes);
     addOptionsVendedor(vendedores);
 
-    updateItemsOfVendedor(selectVendedor.value);
+    if (sessionStorage.getItem("itemsSeleccionados"))
+        loadItems();
+    else
+        resetItems();
 
+    if (sessionStorage.getItem("pedido"))
+        loadPedido();
+    else
+        resetPedido();        
+    
     updateDivPago(selectFormaPago.value);
     formapago = selectFormaPago.value;
+
+    calculateTotal();
 
 })();

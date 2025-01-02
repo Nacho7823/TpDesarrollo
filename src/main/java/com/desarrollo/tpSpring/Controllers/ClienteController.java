@@ -108,8 +108,22 @@ public class ClienteController {
     // datos
     @GetMapping("/clientes")
     public ResponseEntity<Iterable<Cliente>> clientes() {
+<<<<<<< HEAD
         Iterable<Cliente> vend = clienteService.obtenerClientes();
         return ResponseEntity.ok(vend);
+=======
+        Iterable<Cliente> clien = clienteRepository.findAll();
+        return ResponseEntity.ok(clien);
+    }
+    
+    @GetMapping("/cliente")
+    public ResponseEntity<Cliente> getCliente(@RequestBody String id_cliente) {
+        Optional<Cliente> opt = clienteRepository.findById(Long.valueOf(id_cliente));
+        if(opt.isEmpty())
+            return ResponseEntity.notFound().build();
+        
+        return ResponseEntity.ok(opt.get());
+>>>>>>> js
     }
     
     @GetMapping("/cliente/{id}")
@@ -119,6 +133,7 @@ public class ClienteController {
     }
 
     @DeleteMapping("/cliente")
+<<<<<<< HEAD
     public ResponseEntity<Boolean> eliminarcliente(@RequestBody Cliente cliente) {
         System.out.println("  ");
         System.out.println("  ");
@@ -138,10 +153,30 @@ public class ClienteController {
         System.out.println("  ");
         clienteService.crearCliente(cliente);
         return ResponseEntity.ok(true);
+=======
+    public ResponseEntity<String> eliminarCliente(@RequestBody Cliente cliente) {
+        long id = cliente.getId_cliente();
+        Optional<Cliente> opt = clienteRepository.findById(id);
+        if(opt.isEmpty()){
+            System.out.println("no se pudo eliminar el cliente: " + id);
+            return ResponseEntity.badRequest().body("no se pudo eliminar");
+        }
+        
+        clienteRepository.delete(opt.get());
+        System.out.println("delete cliente: " + id);
+        return ResponseEntity.ok("cliente " + id + " eliminado exitosamente");
+    }
+    
+    @PostMapping("/cliente")
+    public ResponseEntity<String> crearCliente(@RequestBody Cliente cliente) {
+        clienteRepository.save(cliente);
+        return ResponseEntity.ok("cliente " + cliente + " creado exitosamente");
+>>>>>>> js
     }
     
     
     @PutMapping("/cliente")
+<<<<<<< HEAD
     public ResponseEntity<Boolean> modificarcliente(@RequestBody Cliente cliente) {
         System.out.println("  ");
         System.out.println("  ");
@@ -150,6 +185,12 @@ public class ClienteController {
         System.out.println("  ");
         clienteService.actualizarCliente(cliente);
         return ResponseEntity.ok(true);
+=======
+    public ResponseEntity<String> modificarCliente(@RequestBody Cliente cliente) {
+        System.out.println("id: " + cliente.getId_cliente());
+        clienteRepository.save(cliente);
+        return ResponseEntity.ok("cliente " + cliente + " modificado exitosamente");
+>>>>>>> js
     }
     
 }

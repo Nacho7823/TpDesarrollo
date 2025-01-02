@@ -125,26 +125,12 @@ footer {
     background-color: #E0F0FE;
 }
 
-#btn-refresh {
+#btn-volver {
     width: 100px;
     color: #ffffff;
     background-color: #64B4FF;
     border: 0;
 }
-#div-crear {
-    display: flex;
-    flex-direction: row;
-}
-
-#btn-relacion-vendedor, #btn-crear-bebida, #btn-crear-plato {
-    margin-right: 10px;
-    flex-grow: 1;
-    width: 100px;
-    color: #ffffff;
-    background-color: #64B4FF;
-    border: 0;
-}
-
 
 .btntable {
     border: 0;

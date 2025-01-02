@@ -4,7 +4,7 @@ const btnVolver = document.getElementById("btn-volver");
 btnVolver.addEventListener("click", () => window.location.href = "../pedidos.html");
 
 async function addRow(itemregister) {
-    const item = itemregister.id_item_menu;
+    const item = itemregister.item;
     const cantidad = itemregister.cantidad;
     const row = document.createElement('tr');
 
@@ -35,8 +35,6 @@ async function addRow(itemregister) {
     const id_pedido = sessionStorage.getItem("pedido");
 
     const items = await getItemsOfPedido(id_pedido);
-
-    console.log(items);
 
     for (const item of items) {
         await addRow(item);

@@ -21,7 +21,6 @@ btnModificar.addEventListener("click", async ()=> {
         id_vendedor: vendedor.id_vendedor,
         nombre: inputNombre.value,
         direccion: inputDireccion.value,
-        id_coordenada: vendedor.id_coordenada,
         longitud: Number(inputLongitud.value),
         latitud: Number(inputLatitud.value),
     }
@@ -54,7 +53,7 @@ inputLongitud.value = vendedor.longitud;
 inputLatitud.value = vendedor.latitud;
 
 
-function verify({ id_vendedor , nombre, direccion, longitud, latitud }) {
+function verify({ id_vendedor, nombre, direccion, longitud, latitud }) {
 
     if (id_vendedor == null || id_vendedor == "") {
         alert("debe ingresar un id");

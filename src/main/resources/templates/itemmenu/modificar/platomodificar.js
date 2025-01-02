@@ -1,4 +1,4 @@
-import { updateItemMenu } from "../../utils.js";
+import { getVendedores, createPlato, updateItemMenu } from "../../utils.js";
 
 const btnVolver = document.getElementById("btn-volver");
 const btnCrear = document.getElementById("btn-crear");
@@ -26,7 +26,7 @@ btnCrear.addEventListener("click", async () => {
         apto_celiaco: Boolean(inputAptoCeliaco.checked),
         calorias: Number(inputCalorias.value),
         graduacion_alcoholica: null,
-        tamanio: null
+        tamanio: null,
     };
     
     console.log(tmp);
@@ -66,4 +66,3 @@ inputPeso.value = itemMenu.peso;
 inputAptoVegano.checked = itemMenu.apto_vegano;
 inputAptoCeliaco.checked = itemMenu.apto_celiaco;
 inputCalorias.value = itemMenu.calorias;
-

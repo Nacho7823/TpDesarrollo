@@ -1,4 +1,4 @@
-import { createItemMenu } from "../../utils.js";
+import { createBebida } from "../../utils.js";
 
 const btnVolver = document.getElementById("btn-volver");
 const btnCrear = document.getElementById("btn-crear");
@@ -22,7 +22,7 @@ btnCrear.addEventListener("click", async () => {
         apto_celiaco: null,
         calorias: null,
         graduacion_alcoholica: Number(inputGraduacionAlcoholica.value),
-        tamanio: Number(inputTamanio.value)
+        tamanio: Number(inputTamanio.value),
     };
     
     console.log(tmp);
@@ -33,7 +33,7 @@ btnCrear.addEventListener("click", async () => {
     }
 
 
-    if(!await createItemMenu(tmp)){
+    if(!await createBebida(tmp)){
         alert("no se pudo crear la bebida");
         return;
     }
@@ -42,6 +42,7 @@ btnCrear.addEventListener("click", async () => {
 
 });
 
+// TODO
 function validar({nombre, descripcion, precio, graduacion_alcoholica, tamanio}) {
     if(!nombre.trim() || !descripcion.trim() || precio <= 0 || graduacion_alcoholica < 0 || tamanio <= 0) {
         alert("No se permiten campos vacios ni valores invalidos");
@@ -49,5 +50,3 @@ function validar({nombre, descripcion, precio, graduacion_alcoholica, tamanio}) 
     }
     return true;
 }
-
-
