@@ -12,6 +12,7 @@ import com.desarrollo.tpSpring.entities.ItemsPedido;
 import com.desarrollo.tpSpring.entities.Pedido;
 import com.desarrollo.tpSpring.entities.Plato;
 import com.desarrollo.tpSpring.entities.Vendedor;
+import com.desarrollo.tpSpring.services.VendeService;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,9 @@ public class ItemMenuService {
     public ItemsPedidoRepository itemsPedidoRepository;
     @Autowired
     public PedidoRepository pedidoRepository;
+    
+    @Autowired 
+    private VendeService vendeService;
 
     public List<ItemMenu> obtenerItemsMenu() {
         return itemMenuRepository.findAll();
@@ -118,7 +122,7 @@ public class ItemMenuService {
 
     public List<ItemMenu> obtenerItemsMenuDeVendedor(int id) {
         Vendedor vendedor = vendedorRepository.findById((long) id).get();
-        return itemMenuRepository.findByVendedores(vendedor);
+        return vendeService.getItemMenuOfVendedor(vendedor.getId_vendedor());
     }
 
     public List<ItemsPedido> obtenerItemsMenuDePedido(int id) {

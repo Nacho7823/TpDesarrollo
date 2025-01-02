@@ -1,4 +1,4 @@
-import { getVendedores, createPlato, updateItemMenu } from "../../utils.js";
+import { updateItemMenu } from "../../utils.js";
 
 const btnVolver = document.getElementById("btn-volver");
 const btnCrear = document.getElementById("btn-crear");

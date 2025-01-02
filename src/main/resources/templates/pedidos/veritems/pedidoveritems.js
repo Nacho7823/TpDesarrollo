@@ -35,6 +35,7 @@ async function addRow(itemregister) {
     const id_pedido = sessionStorage.getItem("pedido");
 
     const items = await getItemsOfPedido(id_pedido);
+    console.log(items);
 
     for (const item of items) {
         await addRow(item);

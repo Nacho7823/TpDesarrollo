@@ -90,8 +90,8 @@ function addRow(cliente) {
     row.appendChild(createCell(cliente.direccion));
     row.appendChild(createCell(cliente.longitud));
     row.appendChild(createCell(cliente.latitud));
-    row.appendChild(createBtn("editar", () => modificarCliente(cliente.id_cliente)));
-    row.appendChild(createBtn("eliminar", () => eliminarCliente(cliente.id_cliente)));
+    row.appendChild(createBtn("editar", () => modificarCliente(cliente)));
+    row.appendChild(createBtn("eliminar", () => eliminarCliente(cliente)));
 
     const tbod = document.getElementById("tablebody");
     tbod.appendChild(row)
@@ -105,14 +105,13 @@ function clearTable() {
 }
 
 
-function modificarCliente(id) {
-    const v = clientes.find(cliente => cliente.id_cliente == id);
+function modificarCliente(v) {
     sessionStorage.setItem("cliente", JSON.stringify(v));
     window.location.href = "modificar/clientemodificar.html";
 }
 
-async function eliminarCliente(id) {
-    if(! await deleteCliente(id)){
+async function eliminarCliente(v) {
+    if(!await deleteCliente(v)){
         alert("No se pudo eliminar el cliente");
     };
     location.reload();

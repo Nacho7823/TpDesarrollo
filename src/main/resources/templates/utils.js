@@ -4,6 +4,7 @@ async function GET(url) {
         throw new Error("Error GET: " + response.status);
     return await response.json();
 }
+
 async function GET_ID(URL, id) {
     const response = await fetch(URL + "/" + id);
     if (!response.ok)
@@ -43,8 +44,10 @@ async function DELETE(url, body) {
         },
         body: JSON.stringify(body)
     });
-    if (!response.ok)
+    if (!response.ok){
+        alert("Error DELETE: " + response.status);
         throw new Error("Error DELETE: " + response.status);
+    }
     return await response.json();
 }
 
@@ -194,6 +197,19 @@ async function deleteItemMenu(it) {
     return await DELETE("/itemmenu/itemmenu", ItemMenu2DTO(it));
 }
 
+// vende
+async function getVende(id_item_menu, id_vendedor) {
+    const id = id_item_menu + "-" + id_vendedor;
+    return await GET_ID("/vende/vende", id);
+}
+async function createVende(id_item_menu, id_vendedor) {
+    return await POST("/vende/vende", { id_item_menu: id_item_menu, id_vendedor: id_vendedor });
+}
+async function deleteVende(id_item_menu, id_vendedor) {
+    return await DELETE("/vende/vende", { id_item_menu: id_item_menu, id_vendedor: id_vendedor });
+}
+
+
 // pedidos
 
 async function getPedidos() {
@@ -254,6 +270,10 @@ export {
     createItemMenu,
     updateItemMenu,
     deleteItemMenu,
+
+    getVende,
+    createVende,
+    deleteVende,
 
     getPedidos,
     getPedido,

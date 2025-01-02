@@ -67,9 +67,9 @@ public class Pedido {
 
     
     public Pedido(int id, Cliente cliente, Vendedor vendedor, Set<ItemsPedido> items, Pago pago, EstadoPedido estado)throws InvalidOrderException {
-        if (!validarItemsUnVendedor(items, vendedor)) {
-            throw new InvalidOrderException("Los ítems deben pertenecer al mismo vendedor");
-        }
+//        if (!validarItemsUnVendedor(items, vendedor)) {
+//            throw new InvalidOrderException("Los ítems deben pertenecer al mismo vendedor");
+//        }
         this.id_pedido = id;
         this.cliente=cliente;
         this.vendedor = vendedor;
@@ -78,8 +78,8 @@ public class Pedido {
         this.items=new HashSet(items);
     }
 
-     private boolean validarItemsUnVendedor(Set<ItemsPedido> items, Vendedor vendedor) {
-        HashSet<ItemMenu> itemsVendedor = vendedor.getItems();
+//     private boolean validarItemsUnVendedor(Set<ItemsPedido> items, Vendedor vendedor) {
+     private boolean validarItemsUnVendedor(Set<ItemsPedido> items, List<ItemMenu> itemsVendedor) {
 
         for (ItemsPedido item : items) 
             if(!itemsVendedor.contains(item.getItemMenu())) 

@@ -27,17 +27,17 @@ public class Vendedor {
     @JoinColumn(name = "id_coordenada", nullable = false)
     private Coordenada coordenada;
 
-    @ManyToMany
-    @JoinTable(
-            name = "vende",
-            joinColumns = @JoinColumn(name = "id_vendedor"),
-            inverseJoinColumns = @JoinColumn(name = "id_item_menu")
-    )
-    private Set<ItemMenu> items;
+//    @ManyToMany
+//    @JoinTable(
+//            name = "vende",
+//            joinColumns = @JoinColumn(name = "id_vendedor"),
+//            inverseJoinColumns = @JoinColumn(name = "id_item_menu")
+//    )
+//    private Set<ItemMenu> items;
 
-    public HashSet<ItemMenu> getItems() {
-        return new HashSet<>(this.items);
-    }
+//    public HashSet<ItemMenu> getItems() {
+//        return new HashSet<>(this.items);
+//    }
 
 
 }

@@ -31,38 +31,45 @@ public class ItemMenuController {
     private String itemmenu_html;
     private String itemmenu_css;
     private String itemmenu_js;
+    private String crear_css;
+    private String modificar_css;
     private String bebida_crear_html;
-    private String bebida_crear_css;
     private String bebida_crear_js;
     private String plato_crear_html;
-    private String plato_crear_css;
     private String plato_crear_js;
     private String bebida_modificar_html;
-    private String bebida_modificar_css;
     private String bebida_modificar_js;
     private String plato_modificar_html;
-    private String plato_modificar_css;
     private String plato_modificar_js;
+    
+    private String relacionar_html;
+    private String relacionar_css;
+    private String relacionar_js;
 
     public ItemMenuController() {
         try {
             itemmenu_html = cargarArchivo("templates/itemmenu/itemmenu.html");
             itemmenu_css = cargarArchivo("templates/itemmenu/itemmenu.css");
             itemmenu_js = cargarArchivo("templates/itemmenu/itemmenu.js");
+            crear_css = cargarArchivo("templates/itemmenu/crear/crear.css");
+            modificar_css = cargarArchivo("templates/itemmenu/modificar/modificar.css");
+            
             bebida_crear_html = cargarArchivo("templates/itemmenu/crear/bebidacrear.html");
-            bebida_crear_css = cargarArchivo("templates/itemmenu/crear/bebidacrear.css");
             bebida_crear_js = cargarArchivo("templates/itemmenu/crear/bebidacrear.js");
             plato_crear_html = cargarArchivo("templates/itemmenu/crear/platocrear.html");
-            plato_crear_css = cargarArchivo("templates/itemmenu/crear/platocrear.css");
             plato_crear_js = cargarArchivo("templates/itemmenu/crear/platocrear.js");
+            
             bebida_modificar_html = cargarArchivo("templates/itemmenu/modificar/bebidamodificar.html");
-            bebida_modificar_css = cargarArchivo("templates/itemmenu/modificar/bebidamodificar.css");
             bebida_modificar_js = cargarArchivo("templates/itemmenu/modificar/bebidamodificar.js");
             plato_modificar_html = cargarArchivo("templates/itemmenu/modificar/platomodificar.html");
-            plato_modificar_css = cargarArchivo("templates/itemmenu/modificar/platomodificar.css");
             plato_modificar_js = cargarArchivo("templates/itemmenu/modificar/platomodificar.js");
+            
+            relacionar_html = cargarArchivo("templates/itemmenu/relacionar/relacionar.html");
+            relacionar_css = cargarArchivo("templates/itemmenu/relacionar/relacionar.css");
+            relacionar_js = cargarArchivo("templates/itemmenu/relacionar/relacionar.js");
+            
+            
             System.out.println("paginas itemMenu cargadas correctamente");
-            plato_crear_html = cargarArchivo("templates/itemmenu/crear/platocrear.html");
         } catch (IOException e) {
             throw new RuntimeException("no se pudo cargar la pagina del itemMenu");
         }
@@ -88,15 +95,21 @@ public class ItemMenuController {
                 .body(itemmenu_js);
     }
 
+    @GetMapping("/crear/crear.css")
+    public ResponseEntity<String> crearCss() {
+        return new ResponseEntity<>(crear_css, HttpStatus.OK);
+    }
+    
+    @GetMapping("/modificar/modificar.css")
+    public ResponseEntity<String> bebidaModificarCss() {
+        return new ResponseEntity<>(modificar_css, HttpStatus.OK);
+    }
+    
     @GetMapping("/crear/bebidacrear.html")
     public ResponseEntity<String> bebidaCrearHtml() {
         return new ResponseEntity<>(bebida_crear_html, HttpStatus.OK);
     }
 
-    @GetMapping("/crear/bebidacrear.css")
-    public ResponseEntity<String> bebidaCrearCss() {
-        return new ResponseEntity<>(bebida_crear_css, HttpStatus.OK);
-    }
 
     @GetMapping("/crear/bebidacrear.js")
     public ResponseEntity<String> bebidaCrearJs() {
@@ -109,11 +122,6 @@ public class ItemMenuController {
     @GetMapping("/crear/platocrear.html")
     public ResponseEntity<String> platoCrearHtml() {
         return new ResponseEntity<>(plato_crear_html, HttpStatus.OK);
-    }
-
-    @GetMapping("/crear/platocrear.css")
-    public ResponseEntity<String> platoCrearCss() {
-        return new ResponseEntity<>(plato_crear_css, HttpStatus.OK);
     }
 
     @GetMapping("/crear/platocrear.js")
@@ -129,10 +137,6 @@ public class ItemMenuController {
         return new ResponseEntity<>(bebida_modificar_html, HttpStatus.OK);
     }
 
-    @GetMapping("/modificar/bebidamodificar.css")
-    public ResponseEntity<String> bebidaModificarCss() {
-        return new ResponseEntity<>(bebida_modificar_css, HttpStatus.OK);
-    }
 
     @GetMapping("/modificar/bebidamodificar.js")
     public ResponseEntity<String> bebidaModificarJs() {
@@ -147,11 +151,6 @@ public class ItemMenuController {
         return new ResponseEntity<>(plato_modificar_html, HttpStatus.OK);
     }
 
-    @GetMapping("/modificar/platomodificar.css")
-    public ResponseEntity<String> platoModificarCss() {
-        return new ResponseEntity<>(plato_modificar_css, HttpStatus.OK);
-    }
-
     @GetMapping("/modificar/platomodificar.js")
     public ResponseEntity<String> platoModificarJs() {
         return ResponseEntity
@@ -159,6 +158,25 @@ public class ItemMenuController {
                 .header("Content-Type", "application/javascript")
                 .body(plato_modificar_js);
     }
+    
+    @GetMapping("/relacionar/relacionar.html")
+    public ResponseEntity<String> relacionarHtml() {
+        return new ResponseEntity<>(relacionar_html, HttpStatus.OK);
+    }
+    
+    @GetMapping("/relacionar/relacionar.css")
+    public ResponseEntity<String> relacionarCss() {
+        return new ResponseEntity<>(relacionar_css, HttpStatus.OK);
+    }
+    
+    @GetMapping("/relacionar/relacionar.js")
+    public ResponseEntity<String> relacionarJs() {
+        return ResponseEntity
+                .ok()
+                .header("Content-Type", "application/javascript")
+                .body(relacionar_js);
+    }
+    
 
     // funciones
     @GetMapping("/itemmenus")
@@ -238,6 +256,7 @@ public class ItemMenuController {
 
     @DeleteMapping("/itemmenu")
     public ResponseEntity<Boolean> deleteItem(@RequestBody Map<String, Object> data) {
+        System.out.println("itemMenu:" + (Integer)data.get("id_item_menu"));
         itemMenuService.eliminarItemMenu((Integer) data.get("id_item_menu"));
         return ResponseEntity.ok(true);
     }

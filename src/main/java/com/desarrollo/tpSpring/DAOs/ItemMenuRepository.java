@@ -17,7 +17,7 @@ public interface ItemMenuRepository extends JpaRepository<ItemMenu, Integer> {
       public List<ItemMenu> findByDescripcion(String descripcion);
       public List<ItemMenu> findByPrecioBetween(int precioMin, int precioMax);
       public List<ItemMenu> findByPrecio(int precio);
-      public List<ItemMenu> findByVendedores(Vendedor vendedor);
+//      public List<ItemMenu> findByVendedores(Vendedor vendedor);
 //      public List<ItemMenu> findByItemsPedido(ItemsPedido itemsPedido);
       
 

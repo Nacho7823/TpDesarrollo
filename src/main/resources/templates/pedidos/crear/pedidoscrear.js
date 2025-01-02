@@ -222,13 +222,6 @@ const vendedores = await getVendedores();
     addOptionsCliente(clientes);
     addOptionsVendedor(vendedores);
 
-    if (sessionStorage.getItem("itemsSeleccionados")) 
-        loadItems();
-    else {
-        id_vendedor = selectVendedor.value;
-        resetItems();
-    }
-
     if (sessionStorage.getItem("pedido")) {
         loadPedido();
         selectFormaPago.value = pedido.formapago;
@@ -242,6 +235,15 @@ const vendedores = await getVendedores();
         pedido.formapago = selectFormaPago.value;
     }
     updateDivPago(selectFormaPago.value);
+
+
+    // items
+    if (sessionStorage.getItem("itemsSeleccionados")) 
+        loadItems();
+    else {
+        pedido.id_vendedor = selectVendedor.value;
+        resetItems();
+    }
 
 
     calculateTotal();

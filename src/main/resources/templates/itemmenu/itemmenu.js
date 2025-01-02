@@ -86,8 +86,8 @@ function addRow(item) {
     row.appendChild(createCell(item.calorias));
     row.appendChild(createCell(item.graduacion_alcoholica));
     row.appendChild(createCell(item.tamanio));
-    row.appendChild(createBtn("editar", () => modificarItemMenu(item.id_item_menu)));
-    row.appendChild(createBtn("eliminar", () => eliminarItemMenu(item.id_item_menu)));
+    row.appendChild(createBtn("editar", () => modificarItemMenu(item)));
+    row.appendChild(createBtn("eliminar", () => eliminarItemMenu(item)));
 
     const tbod = document.getElementById("tablebody");
     tbod.appendChild(row)
@@ -102,9 +102,7 @@ function clearTable() {
 }
 
 
-function modificarItemMenu(id) {
-    const v = itemMenus.find(item => item.id_item_menu == id);
-    console.log(v);
+function modificarItemMenu(v) {
     sessionStorage.setItem("itemMenu", JSON.stringify(v));
     if (v.graduacion_alcoholica == null) {
         window.location.href = "modificar/platomodificar.html";
@@ -114,8 +112,8 @@ function modificarItemMenu(id) {
     }
 }
 
-async function eliminarItemMenu(id) {
-    if (! await deleteItemMenu(id)) {
+async function eliminarItemMenu(v) {
+    if (! await deleteItemMenu(v)) {
         alert("no se pudo eliminar el itemMenu");
         return;
     }

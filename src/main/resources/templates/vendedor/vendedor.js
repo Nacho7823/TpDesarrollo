@@ -87,8 +87,8 @@ function addRow(vendedor) {
     row.appendChild(createCell(vendedor.direccion));
     row.appendChild(createCell(vendedor.longitud));
     row.appendChild(createCell(vendedor.latitud));
-    row.appendChild(createBtn("editar", () => modificarVendedor(vendedor.id_vendedor)));
-    row.appendChild(createBtn("eliminar", () => eliminarVendedor(vendedor.id_vendedor)));
+    row.appendChild(createBtn("editar", () => modificarVendedor(vendedor)));
+    row.appendChild(createBtn("eliminar", () => eliminarVendedor(vendedor)));
 
     const tbod = document.getElementById("tablebody");
     tbod.appendChild(row)
@@ -103,15 +103,13 @@ function clearTable() {
 
 
 
-function modificarVendedor(id) {
-    const v = vendedores.find(vendedor => vendedor.id_vendedor == id);
-    console.log(v);
+function modificarVendedor(v) {
     sessionStorage.setItem("vendedor", JSON.stringify(v));
     window.location.href = "modificar/vendedormodificar.html";
 }
 
-async function eliminarVendedor(id) {
-    if (! await deleteVendedor(id)) {
+async function eliminarVendedor(v) {
+    if (! await deleteVendedor(v)) {
         alert("no se pudo eliminar el vendedor");
         return;
     }
