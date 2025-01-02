@@ -52,13 +52,10 @@ function clearTable() {
 
 
 function relacionar(id_item_menu, id_vendedor, value) {
-
-    if (value) {
+    if (value) 
         createVende(id_item_menu, id_vendedor);
-    }
-    else {
+    else
         deleteVende(id_item_menu, id_vendedor);
-    }
 
 }
 

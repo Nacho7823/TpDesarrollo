@@ -293,8 +293,9 @@ async function createVende(id_item_menu, id_vendedor) {
 
 async function deleteVende(id_item_menu, id_vendedor) {
     let _vende = get(vendeID);
-    _vende = _vende.filter(v => v.id_item_menu != id_item_menu && v.id_vendedor != id_vendedor);
+    _vende = _vende.filter(v => (v.id_item_menu != id_item_menu || v.id_vendedor != id_vendedor));
     save(vendeID, _vende);
+
     return true;
 }
 

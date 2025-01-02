@@ -4,6 +4,19 @@ const btnVolver = document.getElementById("btn-volver");
 
 
 btnVolver.addEventListener("click", () => {
+    for (let i = 0; i < itemsAdded.length; i++) {
+        if (itemsAdded[i].cantidad < 0) {
+            alert("la cantidad no puede ser negativa");
+            return;
+        }
+
+        if (itemsAdded[i].cantidad == 0) {
+            itemsAdded.splice(i, 1);
+            i--;
+        }
+    }
+
+
     sessionStorage.setItem("itemsSeleccionados", JSON.stringify(itemsAdded));
     window.location.href = "pedidoscrear.html";
 });
@@ -13,6 +26,7 @@ btnVolver.addEventListener("click", () => {
 // item-menu
 async function updateItemsOfVendedor(id) {
     const items = await getItemsOfVendedor(id);
+    console.log(items)
     clearTable();
     for (const item of items) {
         let cant = 0;
@@ -123,6 +137,7 @@ if (Object.keys(itemsAdded).length == 0)
 
 
 (async function main() {
+    console.log(id_vendedor)
     updateItemsOfVendedor(id_vendedor);
 
 })();
