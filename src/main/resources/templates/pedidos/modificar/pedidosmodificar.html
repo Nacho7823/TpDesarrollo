@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Modificar Pedido</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="pedidosmodificar.css">
+</head>
+
+<body>
+    <div id="div-root">
+        <div id="upperpan">
+            <div class="div_upperpan_search">
+                <label>ID Pedido</label>
+                <input disabled id="input-id" class="defsize">
+            </div>
+            <div class="div_upperpan_search">
+                <label>Cliente</label>
+                <select id="select-cliente" class="defsize" name="cliente"></select>
+            </div>
+            <div class="div_upperpan_search">
+                <label>Vendedor</label>
+                <select id="select-vendedor" class="defsize" name="vendedor"></select>
+            </div>
+            <div class="div_upperpan_search">
+                <label>Estado</label>
+                <select id="select-estado" class="defsize" name="estado">
+                    <option value="RECIBIDO">Recivido</option>
+                    <option value="PROCESADO">Procesado</option>
+                    <option value="ENVIADO">Enviado</option>
+                </select>
+            </div>
+            <div class="div_upperpan_search">
+                <label>Forma de pago</label>
+                <div>
+                    <select id="select-formapago" class="defsize" name="estado">
+                        <option value="mercadopago">mercadopago</option>
+                        <option value="transferencia">transferencia</option>
+                    </select>
+                    <div id="div-formapago"></div>
+                </div>
+            </div>
+            <div class="div-pagos" id="pagopan">
+            </div>
+            <div class="div_upperpan_search">
+                <label>Total</label>
+                <input disabled id="input-total" class="defsize">
+            </div>
+        </div>
+
+        <div>
+            <label>Items</label>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Descripcion</th>
+                        <th>Precio</th>
+                        <th>Categoria</th>
+                        <th>Peso</th>
+                        <th>Apto Vegano</th>
+                        <th>Apto Celiaco</th>
+                        <th>Calorias</th>
+                        <th>Graduacion alcoholica</th>
+                        <th>Tamaño</th>
+                        <th>Agregado</th>
+                    </tr>
+                </thead>
+                <tbody id="tablebody"></tbody>
+            </table>
+        </div>
+        <div id="divbtns">
+            <button id="btn-volver">Volver</button>
+            <button id="btn-crear">Modificar</button>
+        </div>
+
+    </div>
+    <footer>
+
+    </footer>
+</body>
+<script type="module" src="pedidosmodificar.js"></script>
+
+</html>

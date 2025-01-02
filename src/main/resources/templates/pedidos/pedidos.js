@@ -83,8 +83,8 @@ function clearTable() {
 function modificarPedido(id) {
     const v = pedidos.find(pedido => pedido.id_pedido == id);
     console.log(v);
-    localStorage.setItem("pedido", JSON.stringify(v));
-    window.location.href = "modificar/pedidomodificar.html";
+    sessionStorage.setItem("pedido", JSON.stringify(v));
+    window.location.href = "modificar/pedidosmodificar.html";
 }
 
 async function eliminarPedido(id) {
