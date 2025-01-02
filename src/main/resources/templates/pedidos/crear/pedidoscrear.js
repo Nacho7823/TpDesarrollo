@@ -29,62 +29,31 @@ btnCrear.addEventListener("click", async () => {
         return;
     }
 
-    
-
-    const tmp = {
-        estado: pedido.estado,
-        id_cliente: pedido.id_cliente,
-        id_vendedor: pedido.id_vendedor,
-        id_pago: null,
-        total: pedido.total
-    };
-
-    const id_pedido = await createPedido(tmp);
-    if (id_pedido == null) {
-        alert("No se pudo crear el pedido");
-        return;
-    }
-    tmp.id_pedido = id_pedido;
-
-    // asociar items
-    const detalles = [];
+    const detalle_pedido = [];
     for (const value of itemsAdded) {
-        detalles.push({
-            id_pedido: id_pedido,
+        detalle_pedido.push({
             id_item_menu: value.id_item_menu,
             cantidad: value.cantidad
         });
     }
 
-    const pago = {
+    const tmp = {
+        estado: pedido.estado,
+        id_cliente: pedido.id_cliente,
+        id_vendedor: pedido.id_vendedor,
+        detalle_pedido: detalle_pedido,
+
+        formapago: pedido.formapago,
         monto: pedido.total,
         fecha: new Date(),
-        forma_pago: pedido.formapago,
         cvu: pedido.cvu,
         cuit: pedido.cuit,
         alias: pedido.alias
-    }
+    };
 
-    for (const detalle_pedido of detalles) {
-        console.log(detalle_pedido);
-        if (!await createDetalles(detalle_pedido)) {
-            alert("No se pudo crear el pedido");
-            return;
-        }
-    }
-
-    // calcular precio total
-    let total = 0;
-    for (const detalle_pedido of detalles) {
-        const item = await getItemMenu(detalle_pedido.id_item_menu);
-        total += item.precio * detalle_pedido.cantidad;
-    }
-
-    tmp.total = total;
-
-    // actualizar pedido
-    if (!await updatePedido(tmp)) {
-        alert("No se pudo actualizar el pedido");
+    const id_pedido = await createPedido(tmp);
+    if (id_pedido == null) {
+        alert("No se pudo crear el pedido");
         return;
     }
 
@@ -143,9 +112,13 @@ function updateDivPago(value) {
 selectFormaPago.addEventListener("change", () => updateDivPago(selectFormaPago.value));
 selectVendedor.addEventListener("change", () => {
     resetItems()
-    pedido.id_vendedor = selectVendedor.value;
+    console.log(selectVendedor.value);
+    const v = Number(selectVendedor.value);
+    pedido.id_vendedor = v;
+    calculateTotal();
 });
-selectCliente.addEventListener("change", () => pedido.id_cliente = selectCliente.value);
+selectCliente.addEventListener("change", () => pedido.id_cliente = Number(selectCliente.value));
+selectEstado.addEventListener("change", () => pedido.estado = selectEstado.value);
 
 function addOptionsCliente(clientes) {
     const selectElement = document.getElementById("select-cliente");
@@ -198,7 +171,6 @@ function savePedido() {
 }
 function loadPedido() {
     pedido = JSON.parse(sessionStorage.getItem("pedido"));
-    console.log(pedido);
 }
 function resetPedido() {
     pedido = {
@@ -224,6 +196,7 @@ const vendedores = await getVendedores();
 
     if (sessionStorage.getItem("pedido")) {
         loadPedido();
+        console.log("pedido load", pedido);
         selectFormaPago.value = pedido.formapago;
         selectVendedor.value = pedido.id_vendedor;
         selectCliente.value = pedido.id_cliente;
@@ -232,7 +205,13 @@ const vendedores = await getVendedores();
     }
     else {
         resetPedido();
+        console.log("pedido reset", pedido);
+        selectVendedor.value = vendedores[0].id_vendedor;
+        selectCliente.value = clientes[0].id_cliente;
+        pedido.id_vendedor = Number(selectVendedor.value);
+        pedido.id_cliente = Number(selectCliente.value);
         pedido.formapago = selectFormaPago.value;
+        selectEstado.value = pedido.estado;
     }
     updateDivPago(selectFormaPago.value);
 

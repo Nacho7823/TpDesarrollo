@@ -44,7 +44,7 @@ async function DELETE(url, body) {
         },
         body: JSON.stringify(body)
     });
-    if (!response.ok){
+    if (!response.ok) {
         alert("Error DELETE: " + response.status);
         throw new Error("Error DELETE: " + response.status);
     }
@@ -136,6 +136,86 @@ function ItemMenu2DTO(itemMenu) {
     };
 }
 
+function Pedido2DTO(pedido) {
+    console.log("pedido", pedido);
+    const f = pedido.fecha;
+    // `${year}-${month}-${day}`;
+    const fecha = f.getFullYear() + "-" + (f.getMonth() + 1) + "-" + f.getDate();
+    return {
+        estado: pedido.estado,
+        id_cliente: pedido.id_cliente,
+        id_vendedor: pedido.id_vendedor,
+        detalle_pedido: pedido.detalle_pedido,
+
+        formapago: pedido.formapago,
+        monto: pedido.monto,
+        fecha: fecha,
+        cvu: pedido.cvu,
+        cuit: pedido.cuit,
+        alias: pedido.alias
+    }
+}
+
+function DTO2Pedido(dto) {
+
+    console.log(dto);
+    /*
+    const detalle_pedido = [];
+    for (const value of itemsAdded) {
+        detalle_pedido.push({
+            id_item_menu: value.id_item_menu,
+            cantidad: value.cantidad
+        });
+    }
+
+    const tmp = {
+        estado: pedido.estado,
+        id_cliente: pedido.id_cliente,
+        id_vendedor: pedido.id_vendedor,
+        detalle_pedido: detalle_pedido,
+
+        formapago: pedido.formapago,
+        monto: pedido.total,
+        fecha: new Date(),
+        cvu: pedido.cvu,
+        cuit: pedido.cuit,
+        alias: pedido.alias
+    };
+    */
+    
+    console.log("pago", dto.pago);
+    console.log("fecha", dto.pago);
+    const f = dto.pago.fecha;
+    console.log(f);
+    const [anio, mes, dia] = f.split("-").map(Number);
+    const fecha = new Date(anio, mes - 1, dia); // Meses en JS son 0-indexados
+
+    const detalle_pedido = [];
+    for (const value of dto.items) {
+        detalle_pedido.push({
+            id_item_menu: value.id_item_menu.id_item_menu,  //TODO: fix
+            cantidad: value.cantidad
+        })
+    }
+
+    return {
+        id_pedido: dto.id_pedido,
+        estado: dto.estado,
+        id_cliente: dto.id_cliente.id_cliente,         // FIXME
+        id_vendedor: dto.id_vendedor.id_vendedor,       // FIXME
+
+        detalle_pedido: detalle_pedido,
+
+        formapago: dto.pago.alias == null ? "transferencia" : "mercadopago",
+        monto: dto.pago.monto,
+        fecha: fecha,
+        cvu: dto.pago.cvu,
+        cuit: dto.pago.cuit,
+        alias: dto.pago.alias
+    }
+}
+
+// ------------------------------------------------------------------------
 // ------------------------------------------------------------------------
 
 async function getClientes() {
@@ -213,23 +293,24 @@ async function deleteVende(id_item_menu, id_vendedor) {
 // pedidos
 
 async function getPedidos() {
-    const pedidosDTOs = await GET("/pedidos/pedidos");
-    console.log("pedidosDTOs", pedidosDTOs);
-    return await GET("/pedidos/pedidos");
+    const dtos = await GET("/pedidos/pedidos");
+    const pedidos = dtos.map(DTO2Pedido);
+    return pedidos;
 }
 async function getPedido(id) {
-    return await GET_ID("/pedidos/pedido", id);
+    return DTO2Pedido(await GET_ID("/pedidos/pedido", id));
 }
 async function createPedido(pedido) {
-    console.log(pedido);
-    return await POST("/pedidos/pedido", pedido);
+    const p = Pedido2DTO(pedido);
+    console.log("dto", p);
+    return await POST("/pedidos/pedido", Pedido2DTO(pedido));
 }
 async function updatePedido(pedido) {
-    return await PUT("/pedidos/pedido", pedido);
+    return await PUT("/pedidos/pedido", Pedido2DTO(pedido));
 }
 async function deletePedido(pedido) {
     console.log(pedido);
-    return await DELETE("/pedidos/pedido", pedido);
+    return await DELETE("/pedidos/pedido", Pedido2DTO(pedido));
 }
 
 // detalle_pedido
@@ -244,11 +325,22 @@ async function createDetalles(detalle_pedido) {
 // others
 
 async function getItemsOfPedido(id) {
-    return await GET_ID("/itemmenu/itemmenusOfPedido", id);
+    const dtos = await GET_ID("/itemmenu/itemmenusOfPedido", id);
+    console.log(dtos);
+
+    const items = dtos.map((item) => {
+        return {
+            cantidad: item.cantidad,
+            item_menu: DTO2ItemMenu(item.id_item_menu)
+        }
+    });
+    return items
 }
 
 async function getItemsOfVendedor(id) {
-    return await GET_ID("/itemmenu/itemmenusOfVendedor", id);
+    const dtos = await GET_ID("/itemmenu/itemmenusOfVendedor", id);
+    const items = dtos.map(DTO2ItemMenu);
+    return items;
 }
 
 

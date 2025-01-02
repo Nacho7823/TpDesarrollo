@@ -54,19 +54,28 @@ async function addRow(pedido) {
         return cell;
     }
 
-    // FIXME: 
-    const nombreCliente = (await getCliente(pedido.id_cliente.id_cliente)).nombre;
-    const nombreVendedor = (await getVendedor(pedido.id_vendedor.id_vendedor)).nombre;
+    const nombreCliente = (await getCliente(pedido.id_cliente)).nombre;
+    const nombreVendedor = (await getVendedor(pedido.id_vendedor)).nombre;
+
+    let formaPago = pedido.formapago + "\n";
+    if (pedido.alias != null) 
+        formaPago += "alias: '" + pedido.alias + "'";
+    
+    if (pedido.cuit != null) 
+        formaPago += "cuit:'" + pedido.cuit + "' cvu:'" + pedido.cvu + "'";
+    
+
 
     row.appendChild(createCell(pedido.id_pedido))
     row.appendChild(createCell(nombreCliente));
     row.appendChild(createCell(nombreVendedor));
     row.appendChild(createCell(pedido.estado));
-    row.appendChild(createCell(pedido.pago));
-    row.appendChild(createCell(pedido.total));
-    row.appendChild(createBtn("ver items", () => verItemsPedido(pedido.id_pedido)));
-    row.appendChild(createBtn("editar", () => modificarPedido(pedido.id_pedido)));
-    row.appendChild(createBtn("eliminar", () => eliminarPedido(pedido.id_pedido)));
+    row.appendChild(createCell(formaPago));
+    // row.appendChild(createCell(pedido.formapago));
+    row.appendChild(createCell(pedido.monto));
+    row.appendChild(createBtn("ver items", () => verItemsPedido(pedido)));
+    row.appendChild(createBtn("editar", () => modificarPedido(pedido)));
+    row.appendChild(createBtn("eliminar", () => eliminarPedido(pedido)));
 
     const tbod = document.getElementById("tablebody");
     tbod.appendChild(row)
@@ -81,22 +90,20 @@ function clearTable() {
 }
 
 
-function modificarPedido(id) {
-    const v = pedidos.find(pedido => pedido.id_pedido == id);
-    console.log(v);
+function modificarPedido(v) {
     sessionStorage.setItem("pedido", JSON.stringify(v));
     window.location.href = "modificar/pedidosmodificar.html";
 }
 
-async function eliminarPedido(id) {
-    if(!await deletePedido(id)) {
+async function eliminarPedido(v) {
+    if(!await deletePedido(v)) {
         alert("No se pudo eliminar el pedido");
     }
     window.location.reload();
 }
 
-function verItemsPedido(id) {
-    sessionStorage.setItem("pedido", id);
+function verItemsPedido(p) {
+    sessionStorage.setItem("id_pedido", p.id_pedido);
     window.location.href = "veritems/pedidoveritems.html";
 
 }

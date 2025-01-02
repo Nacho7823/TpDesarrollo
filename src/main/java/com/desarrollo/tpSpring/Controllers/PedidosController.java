@@ -50,6 +50,11 @@ public class PedidosController {
     private String pedidos_crear_html;
     private String pedidos_crear_css;
     private String pedidos_crear_js;
+    private String pedidos_crear_setItems_html;
+    private String pedidos_crear_setItems_css;
+    private String pedidos_crear_setItems_js;
+    
+    
     private String pedidos_modificar_html;
     private String pedidos_modificar_css;
     private String pedidos_modificar_js;
@@ -65,6 +70,9 @@ public class PedidosController {
             pedidos_crear_html = cargarArchivo("templates/pedidos/crear/pedidoscrear.html");
             pedidos_crear_css = cargarArchivo("templates/pedidos/crear/pedidoscrear.css");
             pedidos_crear_js = cargarArchivo("templates/pedidos/crear/pedidoscrear.js");
+            pedidos_crear_setItems_html = cargarArchivo("templates/pedidos/crear/setItems.html");
+            pedidos_crear_setItems_css = cargarArchivo("templates/pedidos/crear/setItems.css");
+            pedidos_crear_setItems_js = cargarArchivo("templates/pedidos/crear/setItems.js");
             pedidos_modificar_html = cargarArchivo("templates/pedidos/modificar/pedidosmodificar.html");
             pedidos_modificar_css = cargarArchivo("templates/pedidos/modificar/pedidosmodificar.css");
             pedidos_modificar_js = cargarArchivo("templates/pedidos/modificar/pedidosmodificar.js");
@@ -120,6 +128,24 @@ public class PedidosController {
                 .header("Content-Type", "application/javascript")
                 .body(pedidos_crear_js);
     }
+    
+    @GetMapping("/crear/setItems.html")
+    public ResponseEntity<String> pedidosCrearSetItemsHtml() {
+        return new ResponseEntity<>(pedidos_crear_setItems_html, HttpStatus.OK);
+    }
+
+    @GetMapping("/crear/setItems.css")
+    public ResponseEntity<String> pedidosCrearSetItemsCss() {
+        return new ResponseEntity<>(pedidos_crear_setItems_css, HttpStatus.OK);
+    }
+
+    @GetMapping("/crear/setItems.js")
+    public ResponseEntity<String> pedidosCrearSetItemsJs() {
+        return ResponseEntity
+                .ok()
+                .header("Content-Type", "application/javascript")
+                .body(pedidos_crear_setItems_js);
+    }
 
     @GetMapping("/modificar/pedidosmodificar.html")
     public ResponseEntity<String> pedidosModificarHtml() {
@@ -172,16 +198,16 @@ public class PedidosController {
 
     @PostMapping("/pedido")
     public ResponseEntity<Boolean> crearPedido(@RequestBody Map<String, Object> data) {
+        System.out.println("pedido: " + data.toString());
         EstadoPedido estado = EstadoPedido.valueOf((String) data.get("estado"));
         int id_cliente = (int) data.get("id_cliente");
         int id_vendedor = (int) data.get("id_vendedor");
-//        int id_pago = (int) data.get("id_pago");
 
         Cliente cliente = clienteService.buscarCliente(id_cliente);
         Vendedor vendedor = vendedorService.buscarVendedor(id_vendedor);
-
-        List<Map<String, Object>> itemsDetalles = (List<Map<String, Object>>) data.get("items");
-//        
+            
+        List<Map<String, Object>> itemsDetalles = (List<Map<String, Object>>) data.get("detalle_pedido");
+        
         Pedido pedido = new Pedido();
         Set<ItemsPedido> items = new HashSet();
         for (int i = 0; i < itemsDetalles.size(); i++) {
@@ -189,7 +215,6 @@ public class PedidosController {
             int cantidad = (int) itemsDetalles.get(i).get("cantidad");
 
             ItemMenu itemMenu = itemMenuService.buscarItemMenu(id_item_menu);
-
             ItemsPedido item = new ItemsPedido(pedido, itemMenu, cantidad);
             items.add(item);
         }
@@ -197,7 +222,7 @@ public class PedidosController {
         Pago pago;
         if (data.get("formapago").equals("mercadopago")) {
             String alias = (String) data.get("alias");
-            int monto = (int) data.get("monto");
+            int monto = (Integer) data.get("monto");
             String fecha = (String) data.get("fecha");
             pago = new MercadoPago(alias);
             pago.setMonto(monto);

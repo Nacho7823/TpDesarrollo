@@ -53,7 +53,7 @@ function addRow(item, valueCant) {
     const createInput = (action) => {
         const inp = document.createElement('input');
         inp.addEventListener("change", (ev) => {
-            const v = ev.target.value;
+            const v = Number(ev.target.value);
             action(v)
         });
         inp.type = "number";
@@ -105,27 +105,6 @@ function setItemCantity(id_item_menu, cantity) {
     else 
         itemsAdded[index].cantidad = cantity;
     
-}
-
-function calculateTotal() {
-    const detalles = [];
-    itemsAdded.forEach((value, key) => {
-        if (value <= 0) {
-            return;
-        }
-        detalles.push({
-            id_item_menu: key,
-            cantidad: value
-        });
-    });
-
-    let total = 0;
-    detalles.forEach((detalle) => {
-        const item = getItemMenu(detalle.id_item_menu);
-        total += item.precio * detalle.cantidad;
-    });
-
-    inputTotal.value = total;
 }
 
 

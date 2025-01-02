@@ -4,7 +4,7 @@ const btnVolver = document.getElementById("btn-volver");
 btnVolver.addEventListener("click", () => window.location.href = "../pedidos.html");
 
 async function addRow(itemregister) {
-    const item = itemregister.item;
+    const item = itemregister.item_menu;
     const cantidad = itemregister.cantidad;
     const row = document.createElement('tr');
 
@@ -13,7 +13,8 @@ async function addRow(itemregister) {
         cell.textContent = text;
         return cell;
     }
-
+    
+     
     row.appendChild(createCell(item.id_item_menu))
     row.appendChild(createCell(item.nombre))
     row.appendChild(createCell(item.descripcion))
@@ -32,10 +33,11 @@ async function addRow(itemregister) {
 }
 
 (async function main() {
-    const id_pedido = sessionStorage.getItem("pedido");
+    const id_pedido = sessionStorage.getItem("id_pedido");
 
     const items = await getItemsOfPedido(id_pedido);
-    console.log(items);
+
+    console.log("items", items);
 
     for (const item of items) {
         await addRow(item);

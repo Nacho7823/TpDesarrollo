@@ -261,6 +261,12 @@ public class ItemMenuController {
         return ResponseEntity.ok(true);
     }
     
+    @GetMapping("/itemmenu/{id}")
+    public ResponseEntity<ItemMenu> getItem(@PathVariable int id) {
+        ItemMenu items = itemMenuService.buscarItemMenu(id);
+        return ResponseEntity.ok(items);
+    }
+    
     @GetMapping("/itemmenusOfVendedor/{id}")
     public ResponseEntity<Iterable<ItemMenu>> itemsOfVendedor(@PathVariable int id) {
         Iterable<ItemMenu> items = itemMenuService.obtenerItemsMenuDeVendedor(id);
