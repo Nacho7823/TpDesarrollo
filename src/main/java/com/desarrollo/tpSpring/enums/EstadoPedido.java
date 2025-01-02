@@ -9,6 +9,5 @@ package com.desarrollo.tpSpring.enums;
  * @author florh
  */
 public enum EstadoPedido {
-    // cambiar: recibido, aceptado, preparado, enviado.
     RECIBIDO, PROCESADO, ENVIADO
 }

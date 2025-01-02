@@ -111,20 +111,10 @@ public class VendedorController {
         return ResponseEntity.ok(vend);
     }
     
-<<<<<<< HEAD
     @GetMapping("/vendedor/{id}")
     public ResponseEntity<Vendedor> getVendedor(@PathVariable int id) {
         Vendedor vendedor = vendedorService.buscarVendedor(id);
         return ResponseEntity.ok(vendedor);
-=======
-    @GetMapping("/vendedor")
-    public ResponseEntity<Vendedor> getVendedor(@RequestBody String id) {
-        Optional<Vendedor> opt = vendedorRepository.findById(Long.valueOf(id));
-        if(opt.isEmpty())
-            return ResponseEntity.notFound().build();
-        
-        return ResponseEntity.ok(opt.get());
->>>>>>> js
     }
 
     @DeleteMapping("/vendedor")
