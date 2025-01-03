@@ -16,4 +16,6 @@ public interface VendedorDAO {
     
     public List<Vendedor> obtenerVendedores() throws DAOException;
     
+    public Vendedor buscarVendedorPorNombre(String nombre) throws DAOException;
+    
 }

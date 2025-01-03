@@ -215,7 +215,7 @@ public class PedidoDAOSql extends DAO<Pedido> implements PedidoDAO {
     @Override
 public List<Pedido> obtenerPedidos() throws DAOException {
     List<Pedido> pedidos = new ArrayList<>();
-    String sql = "SELECT * FROM Pedidos";
+    String sql = "SELECT * FROM Pedido";
 
     try {
         ConectarBase();

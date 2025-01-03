@@ -38,6 +38,17 @@ public class Pedido {
         this.items=items;
     }
     
+    public Pedido(Cliente cliente, Vendedor vendedor, List<ItemMenu> items, Pago pago, EstadoPedido estado)throws InvalidOrderException {
+        if (!validarItemsUnVendedor(items, vendedor)) {
+            throw new InvalidOrderException("Los ítems deben pertenecer al mismo vendedor");
+        }
+        this.cliente=cliente;
+        this.vendedor = vendedor;
+        this.estado = estado;
+        this.pago = pago;
+        this.items = items;
+    }
+    
     
     
     public String getId() {

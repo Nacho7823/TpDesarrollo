@@ -152,4 +152,21 @@ public class ItemsMenuController {
         }
         return null;
     }
+    
+    public ItemMenu buscarItemMenuPorNombre(String nombre){
+        try {
+            ItemMenu item;
+            item = itemMenuDAO.buscarItemMenuPorNombre(nombre);
+            if (item != null) {
+                System.out.println("Item de menú encontrado: " + item.getNombre());
+                return item;
+            } else {
+                System.out.println("Item de menú no encontrado con nombre: " + nombre);
+                return null;
+            }
+        } catch (DAOException ex) {
+            Logger.getLogger(ItemsMenuController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 }

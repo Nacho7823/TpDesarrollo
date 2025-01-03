@@ -68,5 +68,10 @@ public void eliminarVendedor(Vendedor id) {
     public List<Vendedor> obtenerVendedores() throws DAOException {
         return vendedores;
     }
+
+    @Override
+    public Vendedor buscarVendedorPorNombre(String nombre) throws DAOException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
 }

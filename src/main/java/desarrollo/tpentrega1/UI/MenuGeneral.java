@@ -17,7 +17,7 @@ public class MenuGeneral extends JFrame{
         JTabbedPane tabbedPane = new JTabbedPane();
 
         PedidoUI pedidoUI =new PedidoUI(pedidoController,clienteController, vendedorController, itemsMenuController);
-        VendedorUI vendedorUI = new VendedorUI(vendedorController);
+        VendedorUI vendedorUI = new VendedorUI(vendedorController, itemsMenuController);
         ClienteUI clienteUI = new ClienteUI(clienteController);
         ItemMenuUII itemMenuUI = new ItemMenuUII(itemsMenuController, vendedorController);
         

@@ -13,7 +13,6 @@ import javax.swing.table.JTableHeader;
 
 /*
 falta
-consulta para buscar nombre y id juntos
 continuar con evento de tabla
 */
 public class ItemMenuUII extends javax.swing.JPanel {
@@ -196,19 +195,14 @@ public class ItemMenuUII extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableItems = new javax.swing.JTable();
-        jPanel2 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        jPanel6 = new javax.swing.JPanel();
+        btnBuscar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        txtId = new javax.swing.JTextField();
         btnRefrescar = new javax.swing.JButton();
         btnCrearBebida = new javax.swing.JButton();
         btnCrearPlato = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
-        jPanel5 = new javax.swing.JPanel();
-        jPanel4 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        txtNombre = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        txtId = new javax.swing.JTextField();
-        jPanel6 = new javax.swing.JPanel();
-        btnBuscar = new javax.swing.JButton();
 
         eliminarBebidaFrame.setTitle("Eliminar Bebida");
         eliminarBebidaFrame.setLocationByPlatform(true);
@@ -501,7 +495,6 @@ public class ItemMenuUII extends javax.swing.JPanel {
 
         editarPlatoFrame.setTitle("Editar Plato");
         editarPlatoFrame.setLocationByPlatform(true);
-        editarPlatoFrame.setPreferredSize(new java.awt.Dimension(425, 330));
         editarPlatoFrame.setSize(new java.awt.Dimension(400, 500));
 
         jLabel25.setText("Apto Celiaco:");
@@ -825,7 +818,62 @@ public class ItemMenuUII extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(tableItems);
 
-        jPanel2.setBackground(new java.awt.Color(224, 240, 254));
+        jPanel3.setBackground(new java.awt.Color(224, 240, 254));
+
+        jPanel6.setBackground(new java.awt.Color(224, 240, 254));
+
+        btnBuscar.setBackground(new java.awt.Color(100, 180, 255));
+        btnBuscar.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
+        btnBuscar.setForeground(new java.awt.Color(224, 240, 254));
+        btnBuscar.setText("Buscar");
+        btnBuscar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(224, 240, 254), new java.awt.Color(224, 240, 254), null, null));
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btnBuscar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(19, Short.MAX_VALUE))
+        );
+
+        jLabel1.setFont(new java.awt.Font("Arial", 3, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("ID Item:");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGap(13, 13, 13)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtId, javax.swing.GroupLayout.DEFAULT_SIZE, 688, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         btnRefrescar.setBackground(new java.awt.Color(100, 180, 252));
         btnRefrescar.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
@@ -862,146 +910,17 @@ public class ItemMenuUII extends javax.swing.JPanel {
             }
         });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(btnRefrescar, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnCrearPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnCrearBebida, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnRefrescar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCrearBebida, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCrearPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(14, Short.MAX_VALUE))
-        );
-
-        jPanel3.setBackground(new java.awt.Color(224, 240, 254));
-
-        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
-
-        jPanel4.setBackground(new java.awt.Color(224, 240, 254));
-
-        jLabel1.setFont(new java.awt.Font("Arial", 3, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("ID Item:");
-
-        jLabel2.setFont(new java.awt.Font("Arial", 3, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Nombre Item:");
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 688, Short.MAX_VALUE)
-                    .addComponent(txtId, javax.swing.GroupLayout.DEFAULT_SIZE, 688, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(27, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-
-        jPanel6.setBackground(new java.awt.Color(224, 240, 254));
-
-        btnBuscar.setBackground(new java.awt.Color(100, 180, 255));
-        btnBuscar.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
-        btnBuscar.setForeground(new java.awt.Color(224, 240, 254));
-        btnBuscar.setText("Buscar");
-        btnBuscar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(224, 240, 254), new java.awt.Color(224, 240, 254), null, null));
-        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
-                    .addContainerGap()))
-        );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 124, Short.MAX_VALUE)
-            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                    .addContainerGap(37, Short.MAX_VALUE)
-                    .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(42, Short.MAX_VALUE)))
-        );
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGap(0, 810, Short.MAX_VALUE)
-                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel3Layout.createSequentialGroup()
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGap(95, 95, 95)))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 922, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
+                .addComponent(btnRefrescar, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnCrearPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnCrearBebida, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -1012,16 +931,19 @@ public class ItemMenuUII extends javax.swing.JPanel {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(145, 145, 145)
+                .addGap(89, 89, 89)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnRefrescar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCrearBebida, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCrearPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(521, Short.MAX_VALUE)))
+                    .addContainerGap(434, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -1034,161 +956,11 @@ public class ItemMenuUII extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void tableItemsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableItemsMouseClicked
-        int fila = tableItems.rowAtPoint(evt.getPoint());
-        int columna = tableItems.columnAtPoint(evt.getPoint());
-        if(!tableItems.getValueAt(fila, 0).equals("") && !tableItems.getValueAt(fila, 1).equals("")
-                 && !tableItems.getValueAt(fila, 2).equals("") && !tableItems.getValueAt(fila, 3).equals("")
-                 && !tableItems.getValueAt(fila, 4).equals("") && !tableItems.getValueAt(fila, 5).equals("")
-                 && !tableItems.getValueAt(fila, 6).equals("") && !tableItems.getValueAt(fila, 7).equals("")
-                 && !tableItems.getValueAt(fila, 8).equals("") && !tableItems.getValueAt(fila, 9).equals("")
-                 && !tableItems.getValueAt(fila, 10).equals("") && !tableItems.getValueAt(fila, 11).equals("")
-                 && !tableItems.getValueAt(fila, 12).equals("")){
-            if(columna==11){
-                if(tableItems.getValueAt(fila, 4).equals("Plato")){
-                    nombrePField1.setText(tableItems.getValueAt(fila, 1).toString());
-                    descripcionPField1.setText(tableItems.getValueAt(fila, 2).toString());
-                    precioPField1.setText(tableItems.getValueAt(fila, 3).toString());
-                    caloriasField1.setText(tableItems.getValueAt(fila, 4).toString());
-                    aptoCeliacoField1.setText(tableItems.getValueAt(fila, 7).toString());
-                    aptoVeganoField1.setText(tableItems.getValueAt(fila, 6).toString());
-                    pesoField1.setText(tableItems.getValueAt(fila, 5).toString());
-                    idEditarPlato.setVisible(false);
-                    idEditarPlato.setText(tableItems.getValueAt(fila, 0).toString());
-                    editarPlatoFrame.setVisible(true);
-                } else if(tableItems.getValueAt(fila, 4).equals("Bebida")){
-                    nombreBField1.setText(tableItems.getValueAt(fila, 1).toString());
-                    descripcionBField1.setText(tableItems.getValueAt(fila, 2).toString());
-                    precioBField1.setText(tableItems.getValueAt(fila, 3).toString());
-                    tamañoField1.setText(tableItems.getValueAt(fila, 10).toString());
-                    gradAlcField1.setText(tableItems.getValueAt(fila, 9).toString());
-                    idEditarBebida.setVisible(false);
-                    idEditarBebida.setText(tableItems.getValueAt(fila, 0).toString());
-                    editarBebidaFrame.setVisible(true);
-                }
-            } else if(columna==12){
-                if(tableItems.getValueAt(fila, 4).equals("Plato")){
-                    nombrePField2.setText(tableItems.getValueAt(fila, 1).toString());
-                    descripcionPField2.setText(tableItems.getValueAt(fila, 2).toString());
-                    precioPField2.setText(tableItems.getValueAt(fila, 3).toString());
-                    caloriasField2.setText(tableItems.getValueAt(fila, 4).toString());
-                    aptoCeliacoField2.setText(tableItems.getValueAt(fila, 7).toString());
-                    aptoVeganoField2.setText(tableItems.getValueAt(fila, 6).toString());
-                    pesoField2.setText(tableItems.getValueAt(fila, 5).toString());
-                    nombrePField2.setEnabled(false);
-                    descripcionPField2.setEnabled(false);
-                    precioPField2.setEnabled(false);
-                    caloriasField2.setEnabled(false);
-                    aptoCeliacoField2.setEnabled(false);
-                    aptoVeganoField2.setEnabled(false);
-                    pesoField2.setEnabled(false);
-                    idEliminarPlato.setVisible(false);
-                    idEliminarPlato.setText(tableItems.getValueAt(fila, 0).toString());
-                    eliminarPlatoFrame.setVisible(true);
-                } else if(tableItems.getValueAt(fila, 4).equals("Bebida")){
-                    nombreBField2.setText(tableItems.getValueAt(fila, 1).toString());
-                    descripcionBField2.setText(tableItems.getValueAt(fila, 2).toString());
-                    precioBField2.setText(tableItems.getValueAt(fila, 3).toString());
-                    tamañoField2.setText(tableItems.getValueAt(fila, 10).toString());
-                    gradAlcField2.setText(tableItems.getValueAt(fila, 9).toString());
-                    nombreBField2.setEnabled(false);
-                    descripcionBField2.setEnabled(false);
-                    precioBField2.setEnabled(false);
-                    tamañoField2.setEnabled(false);
-                    gradAlcField2.setEnabled(false);
-                    idEliminarBebida.setVisible(false);
-                    idEliminarBebida.setText(tableItems.getValueAt(fila, 0).toString());
-                    eliminarBebidaFrame.setVisible(true);
-                }
-            }
-        }
-    }//GEN-LAST:event_tableItemsMouseClicked
-
-    private void btnRefrescarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefrescarActionPerformed
-        this.actualizarTabla();
-    }//GEN-LAST:event_btnRefrescarActionPerformed
-
-    private void btnCrearBebidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearBebidaActionPerformed
-        crearBebidaFrame.setVisible(true);
-    }//GEN-LAST:event_btnCrearBebidaActionPerformed
-
-    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        ItemMenu v = itemsMenuController.buscarItemsMenu(txtId.getText());
-        String[] columnNames = {"ID", "Nombre", "Descripcion", "Precio", "Categoria", "Peso", "Apto Vegano", "Apto Celiaco",
-        "Calorias", "Grad. Alcoholica", "Tamaño", "", ""};
-        Object[][] data = new Object[1][13];
-        if(v!=null){
-            data[0][0] = v.getId();
-            data[0][1] = v.getNombre();
-            data[0][2] = v.getDescripcion();
-            data[0][3] = v.getPrecio();
-            data[0][4] = v.getCategoria();
-            if(v.getCategoria().equals("Plato")){
-                data[0][5] = v.peso();
-                if(v.aptoVegano()) data[0][6] = "Si";
-                else data[0][6] = "No";
-                if(v.aptoCeliaco()) data[0][7] = "Si";
-                else data[0][7] = "No";
-                data[0][8] = v.getCalorias();
-                data[0][9] = "-";
-                data[0][10] = "-";
-            } else if (v.getCategoria().equals("Bebida")){
-                data[0][5] = "-";
-                data[0][6] = "-";
-                data[0][7] = "-";
-                data[0][8] = "-";
-                data[0][9] = v.getGraduacionAlcoholica();
-                data[0][10] = v.getTamaño();
-            }
-        data[0][11] = "Editar";
-        data[0][12] = "Borrar";
-        } else if (v==null){
-            data[0][0] = "";
-            data[0][1] = "";
-            data[0][2] = "";
-            data[0][3] = "";
-            data[0][4] = "";
-            data[0][5] = "";
-            data[0][6] = "";
-            data[0][7] = "";
-            data[0][8] = "";
-            data[0][9] = "";
-            data[0][10] = "";
-            data[0][11] = "";
-            data[0][12] = "";
-        }
-        tableItems.setModel(new javax.swing.table.DefaultTableModel(data, columnNames));
-        tableItems.getColumnModel().getColumn(0).setCellRenderer(new GestionCeldas("numerico"));
-        tableItems.getColumnModel().getColumn(1).setCellRenderer(new GestionCeldas("texto"));
-        tableItems.getColumnModel().getColumn(2).setCellRenderer(new GestionCeldas("texto"));
-        tableItems.getColumnModel().getColumn(3).setCellRenderer(new GestionCeldas("numerico"));
-        tableItems.getColumnModel().getColumn(4).setCellRenderer(new GestionCeldas("texto"));
-        tableItems.getColumnModel().getColumn(5).setCellRenderer(new GestionCeldas("numerico"));
-        tableItems.getColumnModel().getColumn(6).setCellRenderer(new GestionCeldas("texto"));
-        tableItems.getColumnModel().getColumn(7).setCellRenderer(new GestionCeldas("texto"));
-        tableItems.getColumnModel().getColumn(8).setCellRenderer(new GestionCeldas("numerico"));
-        tableItems.getColumnModel().getColumn(9).setCellRenderer(new GestionCeldas("numerico"));
-        tableItems.getColumnModel().getColumn(10).setCellRenderer(new GestionCeldas("numerico"));
-        tableItems.getColumnModel().getColumn(11).setCellRenderer(new GestionCeldas("icono"));
-        tableItems.getColumnModel().getColumn(12).setCellRenderer(new GestionCeldas("icono"));
-        tableItems.getColumnModel().getColumn(0).setPreferredWidth(8);
-        tableItems.getColumnModel().getColumn(3).setPreferredWidth(50);
-        tableItems.getColumnModel().getColumn(4).setPreferredWidth(50);
-        tableItems.getColumnModel().getColumn(5).setPreferredWidth(40);
-        tableItems.getColumnModel().getColumn(6).setPreferredWidth(60);
-        tableItems.getColumnModel().getColumn(7).setPreferredWidth(60);
-        tableItems.getColumnModel().getColumn(8).setPreferredWidth(50);
-        tableItems.getColumnModel().getColumn(9).setPreferredWidth(30);
-        tableItems.getColumnModel().getColumn(10).setPreferredWidth(30);
-        tableItems.getColumnModel().getColumn(11).setPreferredWidth(30);
-        tableItems.getColumnModel().getColumn(12).setPreferredWidth(30);
-    }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void eliminarBebidaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarBebidaBtnActionPerformed
         itemsMenuController.eliminarItemsMenu(itemsMenuController.buscarItemsMenu(nombreBField2.getText()));
@@ -1314,6 +1086,156 @@ public class ItemMenuUII extends javax.swing.JPanel {
         crearPlatoFrame.setVisible(true);
     }//GEN-LAST:event_btnCrearPlatoActionPerformed
 
+    private void btnCrearBebidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearBebidaActionPerformed
+        crearBebidaFrame.setVisible(true);
+    }//GEN-LAST:event_btnCrearBebidaActionPerformed
+
+    private void btnRefrescarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefrescarActionPerformed
+        this.actualizarTabla();
+    }//GEN-LAST:event_btnRefrescarActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        ItemMenu v = itemsMenuController.buscarItemsMenu(txtId.getText());
+        String[] columnNames = {"ID", "Nombre", "Descripcion", "Precio", "Categoria", "Peso", "Apto Vegano", "Apto Celiaco",
+            "Calorias", "Grad. Alcoholica", "Tamaño", "", ""};
+        Object[][] data = new Object[1][13];
+        if(v!=null){
+            data[0][0] = v.getId();
+            data[0][1] = v.getNombre();
+            data[0][2] = v.getDescripcion();
+            data[0][3] = v.getPrecio();
+            data[0][4] = v.getCategoria();
+            if(v.getCategoria().equals("Plato")){
+                data[0][5] = v.peso();
+                if(v.aptoVegano()) data[0][6] = "Si";
+                else data[0][6] = "No";
+                if(v.aptoCeliaco()) data[0][7] = "Si";
+                else data[0][7] = "No";
+                data[0][8] = v.getCalorias();
+                data[0][9] = "-";
+                data[0][10] = "-";
+            } else if (v.getCategoria().equals("Bebida")){
+                data[0][5] = "-";
+                data[0][6] = "-";
+                data[0][7] = "-";
+                data[0][8] = "-";
+                data[0][9] = v.getGraduacionAlcoholica();
+                data[0][10] = v.getTamaño();
+            }
+            data[0][11] = "Editar";
+            data[0][12] = "Borrar";
+        } else if (v==null){
+            data[0][0] = "";
+            data[0][1] = "";
+            data[0][2] = "";
+            data[0][3] = "";
+            data[0][4] = "";
+            data[0][5] = "";
+            data[0][6] = "";
+            data[0][7] = "";
+            data[0][8] = "";
+            data[0][9] = "";
+            data[0][10] = "";
+            data[0][11] = "";
+            data[0][12] = "";
+        }
+        tableItems.setModel(new javax.swing.table.DefaultTableModel(data, columnNames));
+        tableItems.getColumnModel().getColumn(0).setCellRenderer(new GestionCeldas("numerico"));
+        tableItems.getColumnModel().getColumn(1).setCellRenderer(new GestionCeldas("texto"));
+        tableItems.getColumnModel().getColumn(2).setCellRenderer(new GestionCeldas("texto"));
+        tableItems.getColumnModel().getColumn(3).setCellRenderer(new GestionCeldas("numerico"));
+        tableItems.getColumnModel().getColumn(4).setCellRenderer(new GestionCeldas("texto"));
+        tableItems.getColumnModel().getColumn(5).setCellRenderer(new GestionCeldas("numerico"));
+        tableItems.getColumnModel().getColumn(6).setCellRenderer(new GestionCeldas("texto"));
+        tableItems.getColumnModel().getColumn(7).setCellRenderer(new GestionCeldas("texto"));
+        tableItems.getColumnModel().getColumn(8).setCellRenderer(new GestionCeldas("numerico"));
+        tableItems.getColumnModel().getColumn(9).setCellRenderer(new GestionCeldas("numerico"));
+        tableItems.getColumnModel().getColumn(10).setCellRenderer(new GestionCeldas("numerico"));
+        tableItems.getColumnModel().getColumn(11).setCellRenderer(new GestionCeldas("icono"));
+        tableItems.getColumnModel().getColumn(12).setCellRenderer(new GestionCeldas("icono"));
+        tableItems.getColumnModel().getColumn(0).setPreferredWidth(8);
+        tableItems.getColumnModel().getColumn(3).setPreferredWidth(50);
+        tableItems.getColumnModel().getColumn(4).setPreferredWidth(50);
+        tableItems.getColumnModel().getColumn(5).setPreferredWidth(40);
+        tableItems.getColumnModel().getColumn(6).setPreferredWidth(60);
+        tableItems.getColumnModel().getColumn(7).setPreferredWidth(60);
+        tableItems.getColumnModel().getColumn(8).setPreferredWidth(50);
+        tableItems.getColumnModel().getColumn(9).setPreferredWidth(30);
+        tableItems.getColumnModel().getColumn(10).setPreferredWidth(30);
+        tableItems.getColumnModel().getColumn(11).setPreferredWidth(30);
+        tableItems.getColumnModel().getColumn(12).setPreferredWidth(30);
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void tableItemsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableItemsMouseClicked
+        int fila = tableItems.rowAtPoint(evt.getPoint());
+        int columna = tableItems.columnAtPoint(evt.getPoint());
+        if(!tableItems.getValueAt(fila, 0).equals("") && !tableItems.getValueAt(fila, 1).equals("")
+            && !tableItems.getValueAt(fila, 2).equals("") && !tableItems.getValueAt(fila, 3).equals("")
+            && !tableItems.getValueAt(fila, 4).equals("") && !tableItems.getValueAt(fila, 5).equals("")
+            && !tableItems.getValueAt(fila, 6).equals("") && !tableItems.getValueAt(fila, 7).equals("")
+            && !tableItems.getValueAt(fila, 8).equals("") && !tableItems.getValueAt(fila, 9).equals("")
+            && !tableItems.getValueAt(fila, 10).equals("") && !tableItems.getValueAt(fila, 11).equals("")
+            && !tableItems.getValueAt(fila, 12).equals("")){
+            if(columna==11){
+                if(tableItems.getValueAt(fila, 4).equals("Plato")){
+                    nombrePField1.setText(tableItems.getValueAt(fila, 1).toString());
+                    descripcionPField1.setText(tableItems.getValueAt(fila, 2).toString());
+                    precioPField1.setText(tableItems.getValueAt(fila, 3).toString());
+                    caloriasField1.setText(tableItems.getValueAt(fila, 4).toString());
+                    aptoCeliacoField1.setText(tableItems.getValueAt(fila, 7).toString());
+                    aptoVeganoField1.setText(tableItems.getValueAt(fila, 6).toString());
+                    pesoField1.setText(tableItems.getValueAt(fila, 5).toString());
+                    idEditarPlato.setVisible(false);
+                    idEditarPlato.setText(tableItems.getValueAt(fila, 0).toString());
+                    editarPlatoFrame.setVisible(true);
+                } else if(tableItems.getValueAt(fila, 4).equals("Bebida")){
+                    nombreBField1.setText(tableItems.getValueAt(fila, 1).toString());
+                    descripcionBField1.setText(tableItems.getValueAt(fila, 2).toString());
+                    precioBField1.setText(tableItems.getValueAt(fila, 3).toString());
+                    tamañoField1.setText(tableItems.getValueAt(fila, 10).toString());
+                    gradAlcField1.setText(tableItems.getValueAt(fila, 9).toString());
+                    idEditarBebida.setVisible(false);
+                    idEditarBebida.setText(tableItems.getValueAt(fila, 0).toString());
+                    editarBebidaFrame.setVisible(true);
+                }
+            } else if(columna==12){
+                if(tableItems.getValueAt(fila, 4).equals("Plato")){
+                    nombrePField2.setText(tableItems.getValueAt(fila, 1).toString());
+                    descripcionPField2.setText(tableItems.getValueAt(fila, 2).toString());
+                    precioPField2.setText(tableItems.getValueAt(fila, 3).toString());
+                    caloriasField2.setText(tableItems.getValueAt(fila, 4).toString());
+                    aptoCeliacoField2.setText(tableItems.getValueAt(fila, 7).toString());
+                    aptoVeganoField2.setText(tableItems.getValueAt(fila, 6).toString());
+                    pesoField2.setText(tableItems.getValueAt(fila, 5).toString());
+                    nombrePField2.setEnabled(false);
+                    descripcionPField2.setEnabled(false);
+                    precioPField2.setEnabled(false);
+                    caloriasField2.setEnabled(false);
+                    aptoCeliacoField2.setEnabled(false);
+                    aptoVeganoField2.setEnabled(false);
+                    pesoField2.setEnabled(false);
+                    idEliminarPlato.setVisible(false);
+                    idEliminarPlato.setText(tableItems.getValueAt(fila, 0).toString());
+                    eliminarPlatoFrame.setVisible(true);
+                } else if(tableItems.getValueAt(fila, 4).equals("Bebida")){
+                    nombreBField2.setText(tableItems.getValueAt(fila, 1).toString());
+                    descripcionBField2.setText(tableItems.getValueAt(fila, 2).toString());
+                    precioBField2.setText(tableItems.getValueAt(fila, 3).toString());
+                    tamañoField2.setText(tableItems.getValueAt(fila, 10).toString());
+                    gradAlcField2.setText(tableItems.getValueAt(fila, 9).toString());
+                    nombreBField2.setEnabled(false);
+                    descripcionBField2.setEnabled(false);
+                    precioBField2.setEnabled(false);
+                    tamañoField2.setEnabled(false);
+                    gradAlcField2.setEnabled(false);
+                    idEliminarBebida.setVisible(false);
+                    idEliminarBebida.setText(tableItems.getValueAt(fila, 0).toString());
+                    eliminarBebidaFrame.setVisible(true);
+                }
+            }
+        }
+    }//GEN-LAST:event_tableItemsMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField aptoCeliacoField;
@@ -1371,7 +1293,6 @@ public class ItemMenuUII extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
@@ -1399,10 +1320,7 @@ public class ItemMenuUII extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField nombreBField;
@@ -1425,6 +1343,5 @@ public class ItemMenuUII extends javax.swing.JPanel {
     private javax.swing.JTextField tamañoField1;
     private javax.swing.JTextField tamañoField2;
     private javax.swing.JTextField txtId;
-    private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 }

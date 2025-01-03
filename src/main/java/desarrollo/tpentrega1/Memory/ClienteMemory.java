@@ -3,10 +3,10 @@ package desarrollo.tpentrega1.Memory;
 
 import desarrollo.tpentrega1.dao.ClienteDAO;
 import desarrollo.tpentrega1.entidades.Cliente;
-import desarrollo.tpentrega1.entidades.Vendedor;
 import desarrollo.tpentrega1.exceptions.DAOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ClienteMemory implements ClienteDAO{
     
@@ -61,6 +61,11 @@ private static List<Cliente> clientes = new ArrayList<>();
         }
         
         return null;
+    }
+    
+    @Override
+    public Cliente buscarClientePorNombre(String nombre){
+        return clientes.stream().filter(c -> c.getNombre().equals(nombre)).findFirst().orElse(null);
     }
 
 

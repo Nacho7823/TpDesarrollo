@@ -15,4 +15,6 @@ public interface ClienteDAO {
     public Cliente buscarCliente(String id) throws DAOException;
     
     public List<Cliente> obtenerClientes() throws DAOException;
+    
+    public Cliente buscarClientePorNombre(String nombre) throws DAOException;
 }

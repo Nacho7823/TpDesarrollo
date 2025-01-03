@@ -1,6 +1,4 @@
-
 package desarrollo.tpentrega1.controllers;
-
 
 import desarrollo.tpentrega1.dao.PedidoDAO;
 import desarrollo.tpentrega1.dao.sql.PedidoDAOSql;
@@ -14,9 +12,6 @@ import desarrollo.tpentrega1.exceptions.DAOException;
 import desarrollo.tpentrega1.exceptions.InvalidOrderException;
 import java.util.List;
 
-
-
-
 public class PedidoController {
     private PedidoDAOSql pedidoDAO=PedidoDAOSql.getInstance();
 
@@ -26,6 +21,15 @@ public class PedidoController {
     public void newPedido(String id,Cliente cliente, Vendedor vendedor, List<ItemMenu> items, Pago pago, EstadoPedido estado) throws DAOException {
         try {
         Pedido nuevoPedido = new Pedido(id,cliente, vendedor, items, pago, estado);
+        pedidoDAO.crearPedido(nuevoPedido);
+        } catch (InvalidOrderException e) {
+            System.out.println("Error al crear el pedido: " + e.getMessage());
+        }
+    }
+    
+    public void newPedido(Cliente cliente, Vendedor vendedor, List<ItemMenu> items, Pago pago, EstadoPedido estado) throws DAOException {
+        try {
+        Pedido nuevoPedido = new Pedido(cliente, vendedor, items, pago, estado);
         pedidoDAO.crearPedido(nuevoPedido);
         } catch (InvalidOrderException e) {
             System.out.println("Error al crear el pedido: " + e.getMessage());
@@ -81,4 +85,5 @@ public class PedidoController {
     public void removeItem(ItemMenu item, Pedido p) throws DAOException{
         pedidoDAO.removeItem(item,p);
     }
+    
 }

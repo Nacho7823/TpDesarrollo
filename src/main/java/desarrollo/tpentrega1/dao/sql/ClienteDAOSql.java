@@ -116,6 +116,39 @@ private static ClienteDAOSql instance;
 
     return cliente;
     }
+    
+    @Override
+    public Cliente buscarClientePorNombre(String nombre) throws DAOException {
+        String sql = "SELECT * FROM cliente WHERE nombre = ?";
+        Cliente cliente = null;
+
+        try {
+            ConectarBase();
+            PreparedStatement preparedStatement = conexion.prepareStatement(sql);
+            preparedStatement.setString(1, nombre);
+            resultado = preparedStatement.executeQuery();
+
+            if (resultado.next()) {
+                cliente = new Cliente(resultado.getString("id_cliente"), 
+                        resultado.getString("nombre"), 
+                        resultado.getString("cuit"), 
+                        resultado.getString("email"), 
+                        resultado.getString("direccion"), 
+                        new Coordenada(resultado.getDouble("latitud"), resultado.getDouble("longitud")));
+            }
+
+            preparedStatement.close();
+        } catch (SQLException | ClassNotFoundException ex) {
+            throw new DAOException("No se pudo buscar el cliente: \n" + ex.getMessage());
+        } finally {
+            try {
+                desconectarBase();
+            } catch (Exception e) {
+                throw new DAOException("Error al desconectar la base de datos: " + e.getMessage());
+            }
+        }
+        return cliente;
+    }
 
     @Override
     public List<Cliente> obtenerClientes() throws DAOException {

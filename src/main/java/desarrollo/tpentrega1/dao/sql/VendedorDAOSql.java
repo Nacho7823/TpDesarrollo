@@ -135,6 +135,43 @@ public Vendedor buscarVendedor(String id) throws DAOException {
     return vendedor;
 }
 
+@Override
+public Vendedor buscarVendedorPorNombre(String nombre) throws DAOException {
+    String sql = "SELECT id_vendedor, nombre, direccion, longitud, latitud FROM vendedor WHERE nombre = ?";
+    Vendedor vendedor = null;
+
+    try {
+        ConectarBase();
+        try (PreparedStatement preparedStatement = conexion.prepareStatement(sql)) {
+            preparedStatement.setString(1, nombre);
+            resultado = preparedStatement.executeQuery();
+            
+            if (resultado.next()) {
+                vendedor = new Vendedor(
+                        String.valueOf(resultado.getInt("id_vendedor")),
+                        resultado.getString("nombre"),
+                        resultado.getString("direccion"),
+                        new Coordenada(resultado.getDouble("latitud"), resultado.getDouble("longitud")),
+                        itemsMenuDAO.obtenerItemsMenuDeVendedor(String.valueOf(resultado.getInt("id_vendedor")))
+                );
+                //System.out.println("Vendedor encontrado: " + vendedor.getNombre());
+            } else {
+                System.out.println("No se encontró un vendedor con el nombre " + nombre);
+            }
+        }
+    } catch (SQLException | ClassNotFoundException ex) {
+        throw new DAOException("No se pudo buscar el vendedor: \n" + ex.getMessage());
+    } finally {
+        try {
+            desconectarBase();  // Asegúrate de cerrar la conexión después de la consulta
+        } catch (Exception e) {
+            throw new DAOException("Error al desconectar la base de datos: " + e.getMessage());
+        }
+    }
+
+    return vendedor;
+}
+
     @Override
     public List<Vendedor> obtenerVendedores() throws DAOException {
         String sql = "SELECT * FROM vendedor";

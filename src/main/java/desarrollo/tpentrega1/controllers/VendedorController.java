@@ -93,6 +93,22 @@ public class VendedorController {
         }
         return null;
     }
+    
+    public Vendedor buscarVendedorPorNombre(String nombre) {
+        try {
+        Vendedor vendedor = vendedorDAO.buscarVendedorPorNombre(nombre);
+        if (vendedor != null) {
+            System.out.println("Vendedor encontrado: " + vendedor.getNombre());
+            return vendedor;
+        } else {
+            System.out.println("Vendedor no encontrado con nombre " + nombre);
+            return null;
+        }
+        } catch(Exception e){
+            System.out.println("" + e.getMessage());
+        }
+        return null;
+    }
 
     public List<Vendedor> obtenerListaVendedores() {
         try {

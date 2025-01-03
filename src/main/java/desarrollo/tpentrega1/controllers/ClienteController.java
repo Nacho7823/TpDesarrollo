@@ -82,6 +82,22 @@ public class ClienteController {
         }
         return null;
     }
+    
+    public Cliente buscarClientePorNombre(String nombre) {
+        try {
+            Cliente cliente = clienteDAO.buscarCliente(nombre);
+            if (cliente != null) {
+                System.out.println("Cliente encontrado: " + cliente.getNombre());
+                return cliente;
+            } else {
+                System.out.println("Cliente no encontrado con nombre: " + nombre);
+                return null;
+            }
+        } catch (DAOException ex) {
+            Logger.getLogger(ClienteController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 
     public List<Cliente> obtenerListaClientes() {
         try {
