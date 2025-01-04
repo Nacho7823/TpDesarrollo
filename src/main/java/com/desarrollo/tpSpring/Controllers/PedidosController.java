@@ -54,10 +54,13 @@ public class PedidosController {
     private String pedidos_crear_setItems_css;
     private String pedidos_crear_setItems_js;
     
-    
     private String pedidos_modificar_html;
     private String pedidos_modificar_css;
     private String pedidos_modificar_js;
+    private String pedidos_modificar_setItems_html;
+    private String pedidos_modificar_setItems_css;
+    private String pedidos_modificar_setItems_js;
+    
     private String pedidoveritems_html;
     private String pedidoveritems_css;
     private String pedidoveritems_js;
@@ -73,9 +76,14 @@ public class PedidosController {
             pedidos_crear_setItems_html = cargarArchivo("templates/pedidos/crear/setItems.html");
             pedidos_crear_setItems_css = cargarArchivo("templates/pedidos/crear/setItems.css");
             pedidos_crear_setItems_js = cargarArchivo("templates/pedidos/crear/setItems.js");
+            
             pedidos_modificar_html = cargarArchivo("templates/pedidos/modificar/pedidosmodificar.html");
             pedidos_modificar_css = cargarArchivo("templates/pedidos/modificar/pedidosmodificar.css");
             pedidos_modificar_js = cargarArchivo("templates/pedidos/modificar/pedidosmodificar.js");
+            pedidos_modificar_setItems_html = cargarArchivo("templates/pedidos/modificar/setItems.html");
+            pedidos_modificar_setItems_css = cargarArchivo("templates/pedidos/modificar/setItems.css");
+            pedidos_modificar_setItems_js = cargarArchivo("templates/pedidos/modificar/setItems.js");
+            
             pedidoveritems_html = cargarArchivo("templates/pedidos/veritems/pedidoveritems.html");
             pedidoveritems_css = cargarArchivo("templates/pedidos/veritems/pedidoveritems.css");
             pedidoveritems_js = cargarArchivo("templates/pedidos/veritems/pedidoveritems.js");
@@ -163,6 +171,24 @@ public class PedidosController {
                 .ok()
                 .header("Content-Type", "application/javascript")
                 .body(pedidos_modificar_js);
+    }
+    
+    @GetMapping("/modificar/setItems.html")
+    public ResponseEntity<String> pedidosModificarSetItemsHtml() {
+        return new ResponseEntity<>(pedidos_modificar_setItems_html, HttpStatus.OK);
+    }
+
+    @GetMapping("/modificar/setItems.css")
+    public ResponseEntity<String> pedidosModificarSetItemsCss() {
+        return new ResponseEntity<>(pedidos_modificar_setItems_css, HttpStatus.OK);
+    }
+
+    @GetMapping("/modificar/setItems.js")
+    public ResponseEntity<String> pedidosModificarSetItemsJs() {
+        return ResponseEntity
+                .ok()
+                .header("Content-Type", "application/javascript")
+                .body(pedidos_modificar_setItems_js);
     }
 
     @GetMapping("/veritems/pedidoveritems.html")

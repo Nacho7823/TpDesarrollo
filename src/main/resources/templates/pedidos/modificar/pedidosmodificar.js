@@ -1,4 +1,4 @@
-import { getClientes, getVendedores, getItemsOfVendedor, createPedido, createDetalles, updatePedido, getItemMenu } from "../../utils.js";
+import { getClientes, getVendedores, createPedido, createDetalles, updatePedido, getItemMenu } from "../../utils.js";
 
 const btnModificarItems = document.getElementById("btn-modificar-items");
 const btnVolver = document.getElementById("btn-volver");
@@ -18,24 +18,38 @@ btnModificarItems.addEventListener("click", () => {
         window.location.href = "setItems.html";
 });
 btnVolver.addEventListener("click", () => {
-    resetPedido();
     resetItems();
     window.location.href = "../pedidos.html";
 });
 
 btnCrear.addEventListener("click", async () => {
 
-    if (await calculateTotal() == 0) {
+    pedido.total = await calculateTotal();
+    if (pedido.total == 0) {
         alert("Debe seleccionar por lo menos un item");
         return;
     }
 
+    const detalle_pedido = [];
+    for (const value of itemsAdded) {
+        detalle_pedido.push({
+            id_item_menu: value.id_item_menu,
+            cantidad: value.cantidad
+        });
+    }
+
     const tmp = {
-        estado: selectEstado.value,
-        id_cliente: parseInt(selectCliente.value),
-        id_vendedor: parseInt(selectVendedor.value),
-        id_pago: null,
-        total: 0
+        estado: pedido.estado,
+        id_cliente: pedido.id_cliente,
+        id_vendedor: pedido.id_vendedor,
+        detalle_pedido: detalle_pedido,
+
+        formapago: pedido.formapago,
+        monto: pedido.total,
+        fecha: new Date(),
+        cvu: pedido.cvu,
+        cuit: pedido.cuit,
+        alias: pedido.alias
     };
 
     const id_pedido = await createPedido(tmp);
@@ -43,43 +57,10 @@ btnCrear.addEventListener("click", async () => {
         alert("No se pudo crear el pedido");
         return;
     }
-    tmp.id_pedido = id_pedido;
-
-    // asociar items
-    const detalles = [];
-    for (const value of itemsAdded) {
-        detalles.push({
-            id_pedido: id_pedido,
-            id_item_menu: value.id_item_menu,
-            cantidad: value.cantidad
-        });
-    }
-
-    for (const detalle_pedido of detalles) {
-        console.log(detalle_pedido);
-        if (!await createDetalles(detalle_pedido)) {
-            alert("No se pudo crear el pedido");
-            return;
-        }
-    }
-
-    // calcular precio total
-    let total = 0;
-    for (const detalle_pedido of detalles) {
-        const item = await getItemMenu(detalle_pedido.id_item_menu);
-        total += item.precio * detalle_pedido.cantidad;
-    }
-
-    tmp.total = total;
-
-    // actualizar pedido
-    if (!await updatePedido(tmp)) {
-        alert("No se pudo actualizar el pedido");
-        return;
-    }
 
     window.location.href = "../pedidos.html";
 });
+
 
 
 function updateDivPago(value) {
@@ -88,10 +69,11 @@ function updateDivPago(value) {
             divPago.removeChild(divPago.firstChild);
         }
     }
-    const createInputPago = (text) => {
+    const createInputPago = (text, value) => {
         const divC = document.createElement('div');
         const labelC = document.createElement('label');
         const inputC = document.createElement('input');
+        inputC.value = value;
 
         labelC.textContent = text;
         inputC.type = "text";
@@ -103,22 +85,25 @@ function updateDivPago(value) {
     }
 
     if (value == "mercadopago") {
-        formapago = value;
+        pedido.formapago = value;
         clearInputPago();
-        const container = createInputPago("Alias");
+        const alias = pedido.alias == null ? "" : pedido.alias;
+        const container = createInputPago("Alias", alias);
         divPago.appendChild(container.div);
         container.input.addEventListener("change", () => pedido.alias = container.input.value);
 
     }
     else if (value == "transferencia") {
-        formapago = value;
+        pedido.formapago = value;
         clearInputPago();
-        const container1 = createInputPago("CVU");
-        const container2 = createInputPago("CUIT");
+        const cvu = pedido.cvu == null ? "" : pedido.cvu;
+        const cuit = pedido.cuit == null ? "" : pedido.cuit;
+        const container1 = createInputPago("CVU", cvu);
+        const container2 = createInputPago("CUIT", cuit);
         divPago.appendChild(container1.div);
         divPago.appendChild(container2.div);
-        container1.input.addEventListener("change", () => cvu = container1.input.value);
-        container2.input.addEventListener("change", () => cuit = container2.input.value);
+        container1.input.addEventListener("change", () => pedido.cvu = container1.input.value);
+        container2.input.addEventListener("change", () => pedido.cuit = container2.input.value);
     }
 }
 
@@ -126,8 +111,15 @@ function updateDivPago(value) {
 
 // select-cliente / select-vendedor
 selectFormaPago.addEventListener("change", () => updateDivPago(selectFormaPago.value));
-selectVendedor.addEventListener("change", () => resetItems());
-
+selectVendedor.addEventListener("change", () => {
+    resetItems()
+    console.log(selectVendedor.value);
+    const v = Number(selectVendedor.value);
+    pedido.id_vendedor = v;
+    calculateTotal();
+});
+selectCliente.addEventListener("change", () => pedido.id_cliente = Number(selectCliente.value));
+selectEstado.addEventListener("change", () => pedido.estado = selectEstado.value);
 
 function addOptionsCliente(clientes) {
     const selectElement = document.getElementById("select-cliente");
@@ -161,11 +153,6 @@ async function calculateTotal() {
     return total;
 }
 
-let formapago = "";
-let alias = "";
-let cvu = "";
-let cuit = "";
-
 let pedido;
 let itemsAdded;
 
@@ -174,39 +161,17 @@ function saveItems() {
     sessionStorage.setItem("itemsSeleccionados", JSON.stringify(itemsAdded));
 }
 function loadItems() {
-    pedido = JSON.parse(sessionStorage.getItem("pedido"));
     itemsAdded = JSON.parse(sessionStorage.getItem("itemsSeleccionados"));
 }
 function resetItems() {
-    pedido = {
-        estado: null,
-        id_cliente: null,
-        id_vendedor: null,
-        id_pago: null,
-        total: 0
-    }
     itemsAdded = [];
     saveItems();
 }
-
 function savePedido() {
-    pedido.estado = selectEstado.value;
-    pedido.id_cliente = parseInt(selectCliente.value);
-    pedido.id_vendedor = parseInt(selectVendedor.value);
     sessionStorage.setItem("pedido", JSON.stringify(pedido));
 }
 function loadPedido() {
     pedido = JSON.parse(sessionStorage.getItem("pedido"));
-}
-function resetPedido() {
-    pedido = {
-        estado: null,
-        id_cliente: null,
-        id_vendedor: null,
-        id_pago: null,
-        total: 0
-    }
-    sessionStorage.setItem("pedido", JSON.stringify(pedido));
 }
 
 const clientes = await getClientes();
@@ -216,18 +181,26 @@ const vendedores = await getVendedores();
     addOptionsCliente(clientes);
     addOptionsVendedor(vendedores);
 
+    loadPedido();
+    console.log("pedido load", pedido);
+    inputId.value = pedido.id_pedido;
+    selectFormaPago.value = pedido.formapago;
+    selectVendedor.value = pedido.id_vendedor;
+    selectCliente.value = pedido.id_cliente;
+    selectEstado.value = pedido.estado;
+    selectFormaPago.value = pedido.formapago;
+    updateDivPago(selectFormaPago.value);
+
+
+    // items
     if (sessionStorage.getItem("itemsSeleccionados"))
         loadItems();
-    else
-        resetItems();
+    else {
+        pedido.id_vendedor = selectVendedor.value;
+        // resetItems();
+        itemsAdded = pedido.detalle_pedido;
+    }
 
-    if (sessionStorage.getItem("pedido"))
-        loadPedido();
-    else
-        resetPedido();        
-    
-    updateDivPago(selectFormaPago.value);
-    formapago = selectFormaPago.value;
 
     calculateTotal();
 

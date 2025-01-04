@@ -18,7 +18,7 @@ btnVolver.addEventListener("click", () => {
 
 
     sessionStorage.setItem("itemsSeleccionados", JSON.stringify(itemsAdded));
-    window.location.href = "pedidoscrear.html";
+    window.location.href = "pedidosmodificar.html";
 });
 
 
@@ -53,7 +53,7 @@ function addRow(item, valueCant) {
     const createInput = (action) => {
         const inp = document.createElement('input');
         inp.addEventListener("change", (ev) => {
-            const v = ev.target.value;
+            const v = Number(ev.target.value);
             action(v)
         });
         inp.type = "number";
@@ -107,30 +107,9 @@ function setItemCantity(id_item_menu, cantity) {
     
 }
 
-function calculateTotal() {
-    const detalles = [];
-    itemsAdded.forEach((value, key) => {
-        if (value <= 0) {
-            return;
-        }
-        detalles.push({
-            id_item_menu: key,
-            cantidad: value
-        });
-    });
-
-    let total = 0;
-    detalles.forEach((detalle) => {
-        const item = getItemMenu(detalle.id_item_menu);
-        total += item.precio * detalle.cantidad;
-    });
-
-    inputTotal.value = total;
-}
-
 
 const id_vendedor = JSON.parse(sessionStorage.getItem("vendedor"));
-let itemsAdded = JSON.parse(sessionStorage.getItem("itemsSeleccionados"))
+let itemsAdded = JSON.parse(sessionStorage.getItem("itemsSeleccionados"));
 
 if (Object.keys(itemsAdded).length == 0) 
     itemsAdded = [];
