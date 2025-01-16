@@ -1,9 +1,10 @@
-import { getItemsOfVendedor, getItemMenu} from "../../utils.js";
+import { getItemsOfVendedor } from "../../utils.js";
 
 const btnVolver = document.getElementById("btn-volver");
 
 
 btnVolver.addEventListener("click", () => {
+    const itemsAdded = getItemsAdded();
     for (let i = 0; i < itemsAdded.length; i++) {
         if (itemsAdded[i].cantidad < 0) {
             alert("la cantidad no puede ser negativa");
@@ -17,7 +18,7 @@ btnVolver.addEventListener("click", () => {
     }
 
 
-    sessionStorage.setItem("itemsSeleccionados", JSON.stringify(itemsAdded));
+    setItemsAdded(itemsAdded);
     window.location.href = "pedidosmodificar.html";
 });
 
@@ -30,7 +31,7 @@ async function updateItemsOfVendedor(id) {
     clearTable();
     for (const item of items) {
         let cant = 0;
-        for (const i of itemsAdded) {
+        for (const i of getItemsAdded()) {
             if (i.id_item_menu == item.id_item_menu) {
                 cant = i.cantidad;
                 break;
@@ -92,6 +93,7 @@ function clearTable() {
 
 
 function setItemCantity(id_item_menu, cantity) {
+    const itemsAdded = getItemsAdded();
     let index = -1;
     for (let i = 0; i < itemsAdded.length; i++) {
         if (itemsAdded[i].id_item_menu == id_item_menu) {
@@ -104,19 +106,27 @@ function setItemCantity(id_item_menu, cantity) {
     
     else 
         itemsAdded[index].cantidad = cantity;
+
+    setItemsAdded(itemsAdded);
     
 }
 
 
-const id_vendedor = JSON.parse(sessionStorage.getItem("vendedor"));
-let itemsAdded = JSON.parse(sessionStorage.getItem("itemsSeleccionados"));
+// if (Object.keys(itemsAdded).length == 0) 
+    // itemsAdded = [];
 
-if (Object.keys(itemsAdded).length == 0) 
-    itemsAdded = [];
-
+function getPedido() {
+    return JSON.parse(sessionStorage.getItem("pedido"));
+}
+function getItemsAdded() {
+    return JSON.parse(sessionStorage.getItem("itemsSeleccionados"));
+}
+function setItemsAdded(items) {
+    sessionStorage.setItem("itemsSeleccionados", JSON.stringify(items));
+}
 
 (async function main() {
-    console.log(id_vendedor)
-    updateItemsOfVendedor(id_vendedor);
+    const pedido = getPedido();
+    updateItemsOfVendedor(pedido.id_vendedor);
 
 })();

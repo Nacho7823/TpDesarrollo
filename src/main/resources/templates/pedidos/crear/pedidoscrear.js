@@ -1,4 +1,4 @@
-import { getClientes, getVendedores, createPedido, createDetalles, updatePedido, getItemMenu} from "../../utils.js";
+import { getClientes, getVendedores, createPedido, getItemMenu} from "../../utils.js";
 
 const btnModificarItems = document.getElementById("btn-modificar-items");
 const btnVolver = document.getElementById("btn-volver");

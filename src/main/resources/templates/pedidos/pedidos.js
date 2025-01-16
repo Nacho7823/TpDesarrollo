@@ -1,4 +1,4 @@
-import { getPedidos, getVendedor, getCliente, deletePedido} from "../utils.js";
+import { getPedidos, getVendedor, getCliente, deletePedido, getPedido, getItemsOfPedido} from "../utils.js";
 
 const btnVendedor = document.getElementById("btn-vendedorui")
 const btnCliente = document.getElementById("btn-clienteui")
@@ -92,6 +92,8 @@ function clearTable() {
 
 function modificarPedido(v) {
     sessionStorage.setItem("pedido", JSON.stringify(v));
+    sessionStorage.setItem("itemsSeleccionados", JSON.stringify(v.detalle_pedido));
+    
     window.location.href = "modificar/pedidosmodificar.html";
 }
 

@@ -158,7 +158,6 @@ function Pedido2DTO(pedido) {
 
 function DTO2Pedido(dto) {
 
-    console.log(dto);
     /*
     const detalle_pedido = [];
     for (const value of itemsAdded) {
@@ -183,10 +182,7 @@ function DTO2Pedido(dto) {
     };
     */
     
-    console.log("pago", dto.pago);
-    console.log("fecha", dto.pago);
     const f = dto.pago.fecha;
-    console.log(f);
     const [anio, mes, dia] = f.split("-").map(Number);
     const fecha = new Date(anio, mes - 1, dia); // Meses en JS son 0-indexados
 

@@ -12,6 +12,7 @@ import com.desarrollo.tpSpring.entities.Vendedor;
 import com.desarrollo.tpSpring.enums.EstadoPedido;
 import com.desarrollo.tpSpring.services.ClienteService;
 import com.desarrollo.tpSpring.services.ItemMenuService;
+import com.desarrollo.tpSpring.services.PagoService;
 import com.desarrollo.tpSpring.services.PedidoService;
 import com.desarrollo.tpSpring.services.VendedorService;
 import java.io.IOException;
@@ -37,6 +38,8 @@ public class PedidosController {
 
     @Autowired
     private PedidoService pedidoService;
+    @Autowired
+    private PagoService pagoService;
     @Autowired
     private VendedorService vendedorService;
     @Autowired
@@ -275,9 +278,62 @@ public class PedidosController {
     }
 
     @PutMapping("/pedido")
-    public ResponseEntity<String> modificarPedido(@RequestBody Pedido pedido) {
+    public ResponseEntity<String> modificarPedido(@RequestBody Map<String, Object> data) {
+        
+        System.out.println("pedido: " + data.toString());
+        int id_pedido = (int) data.get("id_pedido");
+        Pedido pedido = pedidoService.buscarPedidoPorId(id_pedido);
+        
+        EstadoPedido estado = EstadoPedido.valueOf((String) data.get("estado"));
+        pedido.setEstado(estado);
+        
+        int id_cliente = (int) data.get("id_cliente");
+        Cliente cliente = clienteService.buscarCliente(id_cliente);
+        pedido.setCliente(cliente);
+        
+        int id_vendedor = (int) data.get("id_vendedor");
+        Vendedor vendedor = vendedorService.buscarVendedor(id_vendedor);
+        pedido.setVendedor(vendedor);
+            
+        List<Map<String, Object>> itemsDetalles = (List<Map<String, Object>>) data.get("detalle_pedido");
+        
+        Set<ItemsPedido> items = pedido.getItems();
+        for (int i = 0; i < itemsDetalles.size(); i++) {
+            int id_item_menu = (int) itemsDetalles.get(i).get("id_item_menu");
+            int cantidad = (int) itemsDetalles.get(i).get("cantidad");
+
+            ItemMenu itemMenu = itemMenuService.buscarItemMenu(id_item_menu);
+            ItemsPedido item = new ItemsPedido(pedido, itemMenu, cantidad);
+            
+//            items.add(item);
+        }
+
+        if (data.get("formapago").equals("mercadopago")) {
+            String alias = (String) data.get("alias");
+            int monto = (Integer) data.get("monto");
+            String fecha = (String) data.get("fecha");
+            MercadoPago pago = (MercadoPago) pedido.getPago();
+            pago.setAlias(alias);
+            pago.setMonto(monto);
+            pago.setFecha(parseDate(fecha));
+        } else {              //transferencia
+            String cvu = (String) data.get("cvu");
+            String cuit = (String) data.get("cuit");
+            int monto = (int) data.get("monto");
+            String fecha = (String) data.get("fecha");
+            Transferencia pago = (Transferencia) pedido.getPago();
+            pago.setCuit(cuit);
+            pago.setCvu(cvu);
+            pago.setMonto(monto);
+            pago.setFecha(parseDate(fecha));
+        }
+        
+        pedido.calcularTotal();
+        
         pedidoService.actualizarPedido(pedido);
+        System.out.println("pedido actualizado");
         return ResponseEntity.ok("Pedido " + pedido + " modificado exitosamente");
+//        return ResponseEntity.ok(true);
     }
 
 }

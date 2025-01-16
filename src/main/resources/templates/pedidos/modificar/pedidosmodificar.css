@@ -87,7 +87,7 @@ tr, th {
     justify-content: end;
 }
 
-#btn-volver, #btn-crear, #btn-modificar-items {
+#btn-volver, #btn-modificar, #btn-modificar-items {
     width: 100px;
     height: 30px;
     margin-left: 10px;
