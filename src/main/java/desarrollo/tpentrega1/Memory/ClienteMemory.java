@@ -34,7 +34,7 @@ private static List<Cliente> clientes = new ArrayList<>();
     @Override
     public void actualizarCliente(Cliente cliente) {
         for (int i = 0; i < clientes.size(); i++) {
-            if (clientes.get(i).getId().equals(cliente.getId())) {
+            if (clientes.get(i).getId() == (cliente.getId())) {
                 clientes.set(i, cliente);
                
                 return;
@@ -44,17 +44,17 @@ private static List<Cliente> clientes = new ArrayList<>();
     }
 
 @Override
-    public void eliminarCliente(String id) {
-        boolean existe= clientes.stream().anyMatch(c ->c.getId().equals(id));
+    public void eliminarCliente(int id) {
+        boolean existe= clientes.stream().anyMatch(c ->c.getId() == (id));
         if(existe){
-        clientes.removeIf(c -> c.getId().equals(id));
+        clientes.removeIf(c -> c.getId() == (id));
         System.out.println("Cliente eliminado con ID: " + id);
     }}
 
     @Override
-    public Cliente buscarCliente(String id) {
+    public Cliente buscarCliente(int id) {
          for (Cliente cliente : clientes) {
-            if (cliente.getId().equals(id)) {
+            if (cliente.getId() == (id)) {
                 
                 return cliente;
             }

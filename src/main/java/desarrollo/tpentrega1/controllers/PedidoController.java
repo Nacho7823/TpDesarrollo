@@ -20,7 +20,14 @@ import java.util.List;
 public class PedidoController {
     private PedidoDAOSql pedidoDAO=PedidoDAOSql.getInstance();
 
-    public PedidoController() {
+    private static PedidoController instance;
+    public static PedidoController getInstance() {
+        if (instance == null) 
+            instance = new PedidoController();
+        
+        return instance;
+    }
+    private PedidoController() {
     }
 
     public void newPedido(String id,Cliente cliente, Vendedor vendedor, List<ItemMenu> items, Pago pago, EstadoPedido estado) throws DAOException {

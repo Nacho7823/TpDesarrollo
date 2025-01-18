@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class PedidoDAOSql extends DAO<Pedido> implements PedidoDAO {
+public class PedidoDAOSql extends DAO implements PedidoDAO {
     private VendedorDAO vendedorDAO = VendedorDAOSql.getInstance();
     private ClienteDAO clienteDAO = ClienteDAOSql.getInstance();
     private PagoDAO pagoDAO = PagoDAOSql.getInstance(); 
@@ -49,8 +49,8 @@ public class PedidoDAOSql extends DAO<Pedido> implements PedidoDAO {
          try (PreparedStatement stmt = conexion.prepareStatement(sqlPedido, Statement.RETURN_GENERATED_KEYS)) {
             ConectarBase();
             stmt.setString(1,pedido.getEstado().toString());
-            stmt.setInt(2,Integer.parseInt(pedido.getCliente().getId()));
-            stmt.setInt(3,Integer.parseInt(pedido.getVendedor().getId()));
+//            stmt.setInt(2,Integer.parseInt(pedido.getCliente().getId()));
+//            stmt.setInt(3,Integer.parseInt(pedido.getVendedor().getId()));
             stmt.setInt(4,Integer.parseInt(pago.getId()));
             stmt.setDouble(5, pedido.getTotal());
         
@@ -72,7 +72,7 @@ public class PedidoDAOSql extends DAO<Pedido> implements PedidoDAO {
             stmtItems = conexion.prepareStatement(sqlItems);
             for (ItemMenu item : pedido.getItems()) {
                 stmtItems.setInt(1, Integer.parseInt(pedido.getId()));
-                stmtItems.setInt(2, Integer.parseInt(item.getId()));
+                stmtItems.setInt(2, item.getId());
                 stmtItems.addBatch();
             }
             stmtItems.executeBatch();
@@ -114,15 +114,15 @@ public class PedidoDAOSql extends DAO<Pedido> implements PedidoDAO {
 
             insertarModificarEliminar(sqlPedido,
                     pedido.getEstado().toString(),
-                    Integer.parseInt(pedido.getCliente().getId()),
-                    Integer.parseInt(pedido.getVendedor().getId()),
+//                    Integer.parseInt(pedido.getCliente().getId()),
+//                    Integer.parseInt(pedido.getVendedor().getId()),
                     pedido.getPago().getId(),
                     pedido.getTotal(),
                     Integer.valueOf(pedido.getId()));
 
             stmtItems = conexion.prepareStatement(sqlItems);
             for (ItemMenu item : pedido.getItems()) {
-                stmtItems.setInt(1, Integer.parseInt(item.getId()));
+                stmtItems.setInt(1, item.getId());
                 stmtItems.setInt(2, Integer.parseInt(pedido.getId()));
                 stmtItems.addBatch();
             }
@@ -184,8 +184,8 @@ public class PedidoDAOSql extends DAO<Pedido> implements PedidoDAO {
 
         if (resultado.next()) {
        
-            String clienteId = String.valueOf(resultado.getInt("id_cliente"));
-            String vendedorId = String.valueOf(resultado.getString("id_vendedor"));
+            int clienteId = resultado.getInt("id_cliente");
+            int vendedorId = resultado.getInt("id_vendedor");
             String estadoStr = resultado.getString("estado");
           
             
@@ -224,8 +224,8 @@ public List<Pedido> obtenerPedidos() throws DAOException {
 
         while (rs.next()) {
             String id = String.valueOf(rs.getInt("id_pedido"));
-            String clienteId = String.valueOf(rs.getInt("id_cliente"));
-            String vendedorId = String.valueOf(rs.getInt("id_vendedor"));
+            int clienteId = (rs.getInt("id_cliente"));
+            int vendedorId = (rs.getInt("id_vendedor"));
             String estadoStr = rs.getString("estado");
 
             Cliente cliente = clienteDAO.buscarCliente(clienteId);

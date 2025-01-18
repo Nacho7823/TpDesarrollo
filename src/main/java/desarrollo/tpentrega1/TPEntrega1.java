@@ -284,7 +284,7 @@ import desarrollo.tpentrega1.controllers.ClienteController;
 import desarrollo.tpentrega1.controllers.PedidoController;
 import desarrollo.tpentrega1.controllers.VendedorController;
 import desarrollo.tpentrega1.UI.MenuGeneral;
-import desarrollo.tpentrega1.controllers.ItemsMenuController;
+import desarrollo.tpentrega1.controllers.ItemMenuController;
 import desarrollo.tpentrega1.dao.ClienteDAO;
 import desarrollo.tpentrega1.dao.ItemsMenuDAO;
 import desarrollo.tpentrega1.dao.ItemsPedidoDAO;
@@ -305,39 +305,28 @@ public class TPEntrega1 {
 
     public static void main(String[] args) throws DAOException {
 
-        // Crear instancias de memoria (simulando bases de datos en memoria)
-        ClienteDAO clienteDAO = ClienteDAOSql.getInstance();
-        VendedorDAO vendedorDAO = VendedorDAOSql.getInstance();
-        PedidoDAO pedidoDAO =PedidoDAOSql.getInstance();
-        ItemsMenuDAO itemMenuDAO =ItemMenuDAOSql.getInstance();
-        ItemsPedidoDAO itemsPedidoDAO =ItemsPedidoDAOSql.getInstance();
-
         // Crear instancias de controladores
-        ClienteController clienteController = new ClienteController();
-        VendedorController vendedorController = new VendedorController();
-        PedidoController pedidoController = new PedidoController();
-        ItemsMenuController itemsMenuController = new ItemsMenuController(vendedorController);
 
         // Cargar datos de prueba para clientes
 
-       Cliente c2= clienteController.buscarCliente("2");
+//       Cliente c2= clienteController.buscarCliente(1);
             
         
 
         // Cargar datos de prueba para vendedores
-        Vendedor v2 = vendedorController.buscarVendedor("2");
-        Vendedor v3 = vendedorController.buscarVendedor("3");
+//        Vendedor v2 = vendedorController.buscarVendedor(2);
+//        Vendedor v3 = vendedorController.buscarVendedor(3);
 
 
-        vendedorController.buscarVendedor("2").addItemMenu(itemsMenuController.buscarItemsMenu("1"));
-        vendedorController.buscarVendedor("2").addItemMenu(itemsMenuController.buscarItemsMenu("3"));
-        vendedorController.buscarVendedor("3").addItemMenu(itemsMenuController.buscarItemsMenu("2"));
+//        vendedorController.buscarVendedor(2).addItemMenu(itemsMenuController.buscarItemsMenu(1));
+//        vendedorController.buscarVendedor(2).addItemMenu(itemsMenuController.buscarItemsMenu(3));
+//        vendedorController.buscarVendedor(3).addItemMenu(itemsMenuController.buscarItemsMenu(2));
 
 
         
         // Configurar UI de Cliente y Vendedor
         SwingUtilities.invokeLater(() -> {
-            MenuGeneral menu = new MenuGeneral(clienteController, vendedorController, itemsMenuController, pedidoController);
+            MenuGeneral menu = new MenuGeneral();
             menu.setVisible(true);
             menu.setLocationRelativeTo(null);
         });

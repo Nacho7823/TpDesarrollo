@@ -9,15 +9,18 @@ import desarrollo.tpentrega1.utilidades.ButtonRenderer;
 import desarrollo.tpentrega1.utilidades.GestionCeldas;
 import java.util.List;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.table.JTableHeader;
 
 public class ClienteUI extends javax.swing.JPanel {
-    private final ClienteController clienteController;
+    
+    private ClienteController clienteController = ClienteController.getInstance();
+    
+    
     private Alerta alerta = new Alerta();
     private final ImageIcon icon= new ImageIcon("pedidosya-logo.png");
    
-    public ClienteUI(ClienteController clienteController) {
-        this.clienteController = clienteController;
+    public ClienteUI() {
         initComponents();
         actualizarTabla();
         this.tableClientes.setAutoResizeMode(5);
@@ -72,7 +75,7 @@ public class ClienteUI extends javax.swing.JPanel {
         direccionField = new javax.swing.JTextField();
         coordenada1Field = new javax.swing.JTextField();
         coordenada2Field = new javax.swing.JTextField();
-        cancelarBtn = new javax.swing.JButton();
+        cancelarCrear = new javax.swing.JButton();
         crearBtn = new javax.swing.JButton();
         editarFrame = new javax.swing.JFrame();
         nombreField1 = new javax.swing.JTextField();
@@ -135,10 +138,10 @@ public class ClienteUI extends javax.swing.JPanel {
 
         jLabel7.setText("Coordenadas");
 
-        cancelarBtn.setText("Cancelar");
-        cancelarBtn.addActionListener(new java.awt.event.ActionListener() {
+        cancelarCrear.setText("Cancelar");
+        cancelarCrear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancelarBtnActionPerformed(evt);
+                cancelarCrearActionPerformed(evt);
             }
         });
 
@@ -178,7 +181,7 @@ public class ClienteUI extends javax.swing.JPanel {
                                 .addComponent(coordenada2Field, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(direccionField, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(crearFrameLayout.createSequentialGroup()
-                        .addComponent(cancelarBtn)
+                        .addComponent(cancelarCrear)
                         .addGap(18, 18, 18)
                         .addComponent(crearBtn)))
                 .addContainerGap(71, Short.MAX_VALUE))
@@ -210,7 +213,7 @@ public class ClienteUI extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(crearFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(crearBtn)
-                    .addComponent(cancelarBtn))
+                    .addComponent(cancelarCrear))
                 .addContainerGap(34, Short.MAX_VALUE))
         );
 
@@ -645,9 +648,17 @@ public class ClienteUI extends javax.swing.JPanel {
                 || direccionField.getText().isEmpty() || coordenada1Field.getText().isEmpty() 
                 || coordenada2Field.getText().isEmpty()){
             //mensaje de error por campos vacios
+            JOptionPane.showMessageDialog(null, "error en los campos", "Alerta", JOptionPane.WARNING_MESSAGE);
         } else {
-            Coordenada coordenada = new Coordenada(Double.parseDouble(coordenada1Field.getText()), Double.parseDouble(coordenada2Field.getText()));
-            clienteController.crearNuevoCliente(nombreField.getText(), cuitField.getText(), emailField.getText(), direccionField.getText(), coordenada);
+            Coordenada coordenada = new Coordenada(
+                    Double.parseDouble(coordenada1Field.getText()), 
+                    Double.parseDouble(coordenada2Field.getText()));
+            
+            Cliente cliente = new Cliente(nombreField.getText(), 
+                    cuitField.getText(), 
+                    emailField.getText(), 
+                    direccionField.getText(), coordenada);
+            clienteController.crearNuevoCliente(cliente);
             nombreField.setText("");
             cuitField.setText("");
             emailField.setText("");
@@ -660,7 +671,7 @@ public class ClienteUI extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_crearBtnActionPerformed
 
-    private void cancelarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarBtnActionPerformed
+    private void cancelarCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarCrearActionPerformed
         nombreField.setText("");
         cuitField.setText("");
         emailField.setText("");
@@ -668,7 +679,7 @@ public class ClienteUI extends javax.swing.JPanel {
         coordenada1Field.setText("");
         coordenada2Field.setText("");        
         crearFrame.setVisible(false);
-    }//GEN-LAST:event_cancelarBtnActionPerformed
+    }//GEN-LAST:event_cancelarCrearActionPerformed
 
     private void tableClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableClientesMouseClicked
         int fila = tableClientes.rowAtPoint(evt.getPoint());
@@ -708,13 +719,29 @@ public class ClienteUI extends javax.swing.JPanel {
     }//GEN-LAST:event_tableClientesMouseClicked
 
     private void editarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarBtnActionPerformed
+        
+        // TODO
         if(nombreField1.getText().isEmpty() || cuitField1.getText().isEmpty() || emailField1.getText().isEmpty() 
                 || direccionField1.getText().isEmpty() || coordenada1Field1.getText().isEmpty() 
                 || coordenada2Field1.getText().isEmpty()){
             //mensaje de error por campos vacios
+            System.out.println("error en los campos");
+            JOptionPane.showMessageDialog(null, "error en los campos", "Alerta", JOptionPane.WARNING_MESSAGE);
         } else {
-            Coordenada coordenada = new Coordenada(Double.parseDouble(coordenada1Field1.getText()), Double.parseDouble(coordenada2Field1.getText()));
-            clienteController.modificarCliente(ideditar.getText(), nombreField1.getText(), cuitField1.getText(), emailField1.getText(), direccionField1.getText(), coordenada);
+            int id = Integer.valueOf(ideditar.getText());
+            Cliente cliente = clienteController.buscarCliente(id);
+            
+            Coordenada coord = cliente.getCoordenada();
+            coord.setLat(Double.parseDouble(coordenada1Field1.getText()));
+            coord.setLng(Double.parseDouble(coordenada2Field1.getText()));
+            
+            cliente.setNombre(nombreField1.getText());
+            cliente.setCuit(cuitField1.getText());
+            cliente.setEmail(emailField1.getText());
+            cliente.setDireccion(direccionField1.getText());
+            cliente.setCoordenadas(coord);
+            
+            clienteController.modificarCliente(cliente);
             actualizarTabla();
             nombreField.setText("");
             cuitField.setText("");
@@ -738,8 +765,22 @@ public class ClienteUI extends javax.swing.JPanel {
     }//GEN-LAST:event_cancelarEliminarBtnActionPerformed
 
     private void eliminarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarBtnActionPerformed
-        clienteController.eliminarCliente(clienteController.buscarCliente(ideliminar.getText()));
-        //mensaje de exito! mostrar tarjeta del cliente eliminado?
+        
+        
+        Cliente c = clienteController.buscarCliente(Integer.valueOf(ideliminar.getText()));
+        clienteController.eliminarCliente(c);
+        
+        actualizarTabla();
+        
+        nombreField.setText("");
+        cuitField.setText("");
+        emailField.setText("");
+        direccionField.setText("");
+        coordenada1Field.setText("");
+        coordenada2Field.setText("");
+        eliminarFrame.setVisible(false);
+        
+        
     }//GEN-LAST:event_eliminarBtnActionPerformed
 
     private void cancelarEditarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarEditarBtnActionPerformed
@@ -754,7 +795,7 @@ public class ClienteUI extends javax.swing.JPanel {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         txtNombre.getText();
-        Cliente c = clienteController.buscarCliente(txtId.getText());
+        Cliente c = clienteController.buscarCliente(Integer.valueOf(txtId.getText()));
         String[] columnNames = {"ID", "Nombre", "Cuit", "Email", "Dirección", "Latitud", "Longitud", "", ""};
         Object[][] data = new Object[1][9];
         if(c!=null){
@@ -799,7 +840,7 @@ public class ClienteUI extends javax.swing.JPanel {
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCrearCliente;
     private javax.swing.JButton btnRefrescar;
-    private javax.swing.JButton cancelarBtn;
+    private javax.swing.JButton cancelarCrear;
     private javax.swing.JButton cancelarEditarBtn;
     private javax.swing.JButton cancelarEliminarBtn;
     private javax.swing.JTextField coordenada1Field;

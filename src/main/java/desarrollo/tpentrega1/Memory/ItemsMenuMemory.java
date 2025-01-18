@@ -26,7 +26,7 @@ public class ItemsMenuMemory implements ItemsMenuDAO {
     @Override
     public void actualizarItemMenu(ItemMenu itemMenu) throws DAOException {
         for (int i = 0; i < itemsMenu.size(); i++) {
-            if (itemsMenu.get(i).getId().equals(itemMenu.getId())) {
+            if (itemsMenu.get(i).getId()==(itemMenu.getId())) {
                 itemsMenu.set(i, itemMenu);
                 System.out.println("Item de menú actualizado: " + itemMenu.getNombre());
                 return;
@@ -37,27 +37,26 @@ public class ItemsMenuMemory implements ItemsMenuDAO {
     }
 
     @Override
-    public void eliminarItemMenu(String id) throws DAOException {
-        boolean existe= itemsMenu.stream().anyMatch(c -> c.getId().equals(String.valueOf(id)));
+    public void eliminarItemMenu(int id) throws DAOException {
+        boolean existe= itemsMenu.stream().anyMatch(c -> c.getId() == ((id)));
         if(existe){
-        itemsMenu.removeIf(item -> item.getId().equals(id));
+        itemsMenu.removeIf(item -> item.getId()==(id));
         System.out.println("Item de menú eliminado con ID: " + id);
        }
     }
 
     @Override
-    public ItemMenu buscarItemMenu(String id) throws DAOException {
+    public ItemMenu buscarItemMenu(int id) throws DAOException {
         for (ItemMenu item : itemsMenu) {
-            if (item.getId().equals(id)) {
+            if (item.getId() == (id)) {
                 return item;
             }
         }
         return null;
     }
 
-    @Override
-    public List<ItemMenu> obtenerItemsMenuDeVendedor(String id) throws DAOException {
-        
-        return itemsMenu;
-    }
+//    @Override
+//    public List<ItemMenu> obtenerItemsMenuDeVendedor(int id) throws DAOException {
+//        return itemsMenu;
+//    }
 }

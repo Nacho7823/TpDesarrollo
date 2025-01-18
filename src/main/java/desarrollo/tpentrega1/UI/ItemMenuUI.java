@@ -1,6 +1,6 @@
 package desarrollo.tpentrega1.UI;
 
-import desarrollo.tpentrega1.controllers.ItemsMenuController;
+import desarrollo.tpentrega1.controllers.ItemMenuController;
 import desarrollo.tpentrega1.controllers.VendedorController;
 import desarrollo.tpentrega1.entidades.Bebida;
 import desarrollo.tpentrega1.entidades.ItemMenu;
@@ -22,11 +22,11 @@ public class ItemMenuUI extends JPanel {
     private JTable tableBebida, tablePlato;
     private JComboBox<String> ddIdVendedor;
 
-    private ItemsMenuController itemsMenuController;
+    private ItemMenuController itemsMenuController;
     private VendedorController vendedorController;
     private ItemType cardPanel;
 
-    public ItemMenuUI(ItemsMenuController itemsMenuController, VendedorController vendedorController) {
+    public ItemMenuUI(ItemMenuController itemsMenuController, VendedorController vendedorController) {
         this.itemsMenuController = itemsMenuController;
         this.vendedorController = vendedorController;
 
@@ -268,12 +268,12 @@ public class ItemMenuUI extends JPanel {
         btnBuscar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String id = txtId.getText();
+                int id = Integer.valueOf(txtId.getText());
                 ItemMenu itemMenu = itemsMenuController.buscarItemsMenu(id);
                 if (itemMenu != null) {
                     ItemMenu item = itemsMenuController.buscarItemsMenu(id);
 
-                    txtId.setText(id);
+                    txtId.setText(id + "");
                     txtNombre.setText(item.getNombre());
                     txtDescripcion.setText(item.getDescripcion());
                     txtPrecio.setText(item.getPrecio() + "");
@@ -296,7 +296,7 @@ public class ItemMenuUI extends JPanel {
                         actualizarTabla(tableBebida, item);
                         actualizarTabla(tablePlato, null);
                     } else {
-                        txtId.setText(id);
+                        txtId.setText(id + "");
                         txtNombre.setText(item.getNombre());
                         txtDescripcion.setText(item.getDescripcion());
                         txtPrecio.setText(item.getPrecio() + "");
@@ -337,7 +337,7 @@ public class ItemMenuUI extends JPanel {
         btnEditar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String id = txtId.getText();
+                int id = Integer.valueOf(txtId.getText());
                 String nombre = txtNombre.getText();
                 String descripcion = txtDescripcion.getText();
                 double precio = Double.parseDouble(txtPrecio.getText());
@@ -381,7 +381,7 @@ public class ItemMenuUI extends JPanel {
         btnEliminar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String id = txtId.getText();
+                int id = Integer.valueOf(txtId.getText());
                 ItemMenu item = itemsMenuController.buscarItemsMenu(id);
                 if (item instanceof Bebida) {
                     actualizarTabla(tablePlato, null);

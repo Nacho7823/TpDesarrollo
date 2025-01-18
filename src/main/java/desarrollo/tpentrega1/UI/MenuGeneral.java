@@ -7,7 +7,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 
 public class MenuGeneral extends JFrame{
-    public MenuGeneral(ClienteController clienteController,VendedorController vendedorController,ItemsMenuController itemsMenuController, PedidoController pedidoController){
+    public MenuGeneral() {
         this.setTitle("Menu general");
         this.setSize(1000,700);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -16,10 +16,10 @@ public class MenuGeneral extends JFrame{
 
         JTabbedPane tabbedPane = new JTabbedPane();
 
-        PedidoUI pedidoUI =new PedidoUI(pedidoController,clienteController, vendedorController, itemsMenuController);
-        VendedorUI vendedorUI = new VendedorUI(vendedorController);
-        ClienteUI clienteUI = new ClienteUI(clienteController);
-        ItemMenuUII itemMenuUI = new ItemMenuUII(itemsMenuController, vendedorController);
+        PedidoUI pedidoUI =new PedidoUI();
+        VendedorUI vendedorUI = new VendedorUI();
+        ClienteUI clienteUI = new ClienteUI();
+        ItemMenuUII itemMenuUI = new ItemMenuUII();
         
         tabbedPane.addTab("Cliente",clienteUI );
         tabbedPane.addTab("Vendedor", vendedorUI);

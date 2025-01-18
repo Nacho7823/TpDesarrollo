@@ -1,7 +1,7 @@
 package desarrollo.tpentrega1.UI;
 
 import desarrollo.tpentrega1.controllers.ClienteController;
-import desarrollo.tpentrega1.controllers.ItemsMenuController;
+import desarrollo.tpentrega1.controllers.ItemMenuController;
 import desarrollo.tpentrega1.controllers.PedidoController;
 import desarrollo.tpentrega1.controllers.VendedorController;
 import desarrollo.tpentrega1.entidades.Bebida;
@@ -26,10 +26,10 @@ import javax.swing.JTextField;
 
 public class PedidoUI extends javax.swing.JPanel {
 
-    private VendedorController vendedorController;
-    private ClienteController clienteController;
-    private PedidoController pedidoController;
-    private ItemsMenuController itemsMenuController;
+    private VendedorController vendedorController = VendedorController.getInstance();
+    private ClienteController clienteController = ClienteController.getInstance();
+    private PedidoController pedidoController = PedidoController.getInstance();
+    private ItemMenuController itemsMenuController = ItemMenuController.getInstance();
     private Pedido pedido;
 
 
@@ -37,12 +37,7 @@ public class PedidoUI extends javax.swing.JPanel {
     private JTextField tfFormaPago2;
     private boolean mostrandoTransferencia = false;
 
-    public PedidoUI(PedidoController pedidoController, ClienteController clienteController,
-            VendedorController vendedorController, ItemsMenuController itemsMenuController) {
-        this.pedidoController = pedidoController;
-        this.clienteController = clienteController;
-        this.vendedorController = vendedorController;
-        this.itemsMenuController = itemsMenuController;
+    public PedidoUI() {
         initComponents();
 
         this.jTable3.setAutoResizeMode(5);

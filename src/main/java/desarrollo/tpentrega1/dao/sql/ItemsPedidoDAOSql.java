@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ItemsPedidoDAOSql extends DAO<ItemMenu> implements ItemsPedidoDAO {
+public class ItemsPedidoDAOSql extends DAO implements ItemsPedidoDAO {
          private static ItemsPedidoDAOSql instance;
      
     public static ItemsPedidoDAOSql getInstance(){
@@ -24,7 +24,7 @@ public class ItemsPedidoDAOSql extends DAO<ItemMenu> implements ItemsPedidoDAO {
   
     private ItemMenu mapearItemMenu(ResultSet rs) throws DAOException {
         try {
-            String id = rs.getString("id");
+            int id = rs.getInt("id");
             String nombre = rs.getString("nombre");
             String descripcion = rs.getString("descripcion");
             double precio = rs.getDouble("precio");
@@ -90,7 +90,7 @@ public class ItemsPedidoDAOSql extends DAO<ItemMenu> implements ItemsPedidoDAO {
                 items.add(item);
             }
 
-        } catch (ClassNotFoundException | SQLException ex) {
+        } catch (SQLException ex) {
             throw new DAOException("Error al ejecutar la consulta: " + ex.getMessage());
         } finally {
             try {

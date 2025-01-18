@@ -3,7 +3,7 @@ package desarrollo.tpentrega1.entidades;
 
 public abstract class ItemMenu {
     
-    private String id;
+    private int id;
     private String nombre;
     private String descripcion;
     private double precio;
@@ -18,13 +18,13 @@ public abstract class ItemMenu {
     }
 
     public static abstract class Builder<T extends Builder<T>> {
-        private String id;
+        private int id;
         private String nombre;
         private String descripcion;
         private double precio;
         private String categoria;
 
-        public T id(String id) { this.id = id; return self(); }
+        public T id(int id) { this.id = id; return self(); }
         public T nombre(String nombre) { this.nombre = nombre; return self(); }
         public T descripcion(String descripcion) { this.descripcion = descripcion; return self(); }
         public T precio(double precio) { this.precio = precio; return self(); }
@@ -37,11 +37,11 @@ public abstract class ItemMenu {
 
    
     
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

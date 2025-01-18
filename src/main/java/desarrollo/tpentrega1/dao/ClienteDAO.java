@@ -10,9 +10,9 @@ public interface ClienteDAO {
 
     public void actualizarCliente(Cliente cliente) throws DAOException;
 
-    public void eliminarCliente(String id) throws DAOException;
+    public void eliminarCliente(int id) throws DAOException;
 
-    public Cliente buscarCliente(String id) throws DAOException;
+    public Cliente buscarCliente(int id) throws DAOException;
     
     public List<Cliente> obtenerClientes() throws DAOException;
 }

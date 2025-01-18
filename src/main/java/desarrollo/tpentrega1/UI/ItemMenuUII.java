@@ -1,6 +1,6 @@
 package desarrollo.tpentrega1.UI;
 
-import desarrollo.tpentrega1.controllers.ItemsMenuController;
+import desarrollo.tpentrega1.controllers.ItemMenuController;
 import desarrollo.tpentrega1.controllers.VendedorController;
 import desarrollo.tpentrega1.entidades.Bebida;
 import desarrollo.tpentrega1.entidades.ItemMenu;
@@ -17,11 +17,11 @@ consulta para buscar nombre y id juntos
 continuar con evento de tabla
 */
 public class ItemMenuUII extends javax.swing.JPanel {
-    private final ItemsMenuController itemsMenuController;
-    private final VendedorController vendedorController;
-    public ItemMenuUII(ItemsMenuController itemsMenuController, VendedorController vendedorController) {
-        this.itemsMenuController = itemsMenuController;
-        this.vendedorController = vendedorController;
+    private VendedorController vendedorController = VendedorController.getInstance();
+    private ItemMenuController itemsMenuController = ItemMenuController.getInstance();
+    
+    public ItemMenuUII() {
+        
         initComponents();
         actualizarTabla();
         this.tableItems.setAutoResizeMode(5);
@@ -1119,7 +1119,7 @@ public class ItemMenuUII extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCrearBebidaActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        ItemMenu v = itemsMenuController.buscarItemsMenu(txtId.getText());
+        ItemMenu v = itemsMenuController.buscarItemsMenu(Integer.valueOf(txtId.getText()));
         String[] columnNames = {"ID", "Nombre", "Descripcion", "Precio", "Categoria", "Peso", "Apto Vegano", "Apto Celiaco",
         "Calorias", "Grad. Alcoholica", "Tamaño", "", ""};
         Object[][] data = new Object[1][13];
@@ -1191,7 +1191,7 @@ public class ItemMenuUII extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void eliminarBebidaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarBebidaBtnActionPerformed
-        itemsMenuController.eliminarItemsMenu(itemsMenuController.buscarItemsMenu(nombreBField2.getText()));
+        itemsMenuController.eliminarItemsMenu(itemsMenuController.buscarItemsMenu(Integer.valueOf(nombreBField2.getText())));
     }//GEN-LAST:event_eliminarBebidaBtnActionPerformed
 
     private void cancelarEliminarBebidaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarEliminarBebidaBtnActionPerformed

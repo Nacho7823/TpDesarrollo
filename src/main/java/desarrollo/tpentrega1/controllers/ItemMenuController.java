@@ -12,22 +12,28 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ItemsMenuController {
+public class ItemMenuController {
 
     private ItemMenuDAOSql itemMenuDAO=ItemMenuDAOSql.getInstance();
-    private VendedorController vendedorController;
+//    private VendedorController vendedorController = VendedorController.getInstance();
 
-    public ItemsMenuController(VendedorController vendedorController) {
-
-        this.vendedorController = vendedorController;
+    
+    private static ItemMenuController instance;
+    public static ItemMenuController getInstance() {
+        if (instance == null) 
+            instance = new ItemMenuController();
+        
+        return instance;
     }
-
-    public List<ItemMenu> obtenerItemsMenuDeVendedor(String id) {
-        try {
-            return itemMenuDAO.obtenerItemsMenuDeVendedor(id);
-        } catch (DAOException ex) {
-            Logger.getLogger(ItemsMenuController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    private ItemMenuController() {
+    }
+    
+    public List<ItemMenu> obtenerItemsMenuDeVendedor(int id) {
+//        try {
+//            return itemMenuDAO.obtenerItemsMenuDeVendedor(id);
+//        } catch (DAOException ex) {
+//            Logger.getLogger(ItemsMenuController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
         return new ArrayList<>();
     }
     
@@ -47,7 +53,7 @@ public class ItemsMenuController {
         try {
             this.itemMenuDAO.crearItemMenu(p);
         } catch (DAOException ex) {
-            Logger.getLogger(ItemsMenuController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ItemMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return p;
     }
@@ -63,11 +69,11 @@ public class ItemsMenuController {
                 .graduacionAlcoholica(graduacionAlcoholica)
                 .build();
         vendedor.addItemMenu(nuevaBebida);
-        vendedorController.modificarVendedor(vendedor);
+        VendedorController.getInstance().modificarVendedor(vendedor);
         try {
             itemMenuDAO.crearItemMenu(nuevaBebida);
         } catch (DAOException ex) {
-            Logger.getLogger(ItemsMenuController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ItemMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return nuevaBebida;
     }
@@ -84,13 +90,13 @@ public class ItemsMenuController {
         try {
             itemMenuDAO.crearItemMenu(nuevaBebida);
         } catch (DAOException ex) {
-            Logger.getLogger(ItemsMenuController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ItemMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return nuevaBebida;
     }
 
     // Modificar un ítem de menú existente
-    public void modificarItemsMenu(String id, String nombre, String descripcion, double precio, String categoria) {
+    public void modificarItemsMenu(int id, String nombre, String descripcion, double precio, String categoria) {
         try {
             ItemMenu itemExistente;
             itemExistente = itemMenuDAO.buscarItemMenu(id);
@@ -105,7 +111,7 @@ public class ItemsMenuController {
                 System.out.println("Item de menú no encontrado para modificar.");//deberia ser exception
             }
         } catch (DAOException ex) {
-            Logger.getLogger(ItemsMenuController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ItemMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -113,7 +119,7 @@ public class ItemsMenuController {
         try {
             itemMenuDAO.actualizarItemMenu(plato);
         } catch (DAOException ex) {
-            Logger.getLogger(ItemsMenuController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ItemMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -121,7 +127,7 @@ public class ItemsMenuController {
         try {
             itemMenuDAO.actualizarItemMenu(bebida);
         } catch (DAOException ex) {
-            Logger.getLogger(ItemsMenuController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ItemMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -130,13 +136,13 @@ public class ItemsMenuController {
         try {
             itemMenuDAO.eliminarItemMenu(id.getId());
         } catch (DAOException ex) {
-            Logger.getLogger(ItemsMenuController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ItemMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
 
     // Buscar un ítem de menú por ID
-    public ItemMenu buscarItemsMenu(String id) {
+    public ItemMenu buscarItemsMenu(int id) {
         try {
             ItemMenu item;
             item = itemMenuDAO.buscarItemMenu(id);
@@ -148,7 +154,7 @@ public class ItemsMenuController {
                 return null;
             }
         } catch (DAOException ex) {
-            Logger.getLogger(ItemsMenuController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ItemMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }

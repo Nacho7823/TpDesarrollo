@@ -38,7 +38,7 @@
                               </Group>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
-                              <Component id="cancelarBtn" min="-2" max="-2" attributes="0"/>
+                              <Component id="cancelarCrear" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="crearBtn" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -70,7 +70,7 @@
                   <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="crearBtn" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="cancelarBtn" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="cancelarCrear" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="7" max="32767" attributes="0"/>
               </Group>
@@ -91,12 +91,12 @@
             <Property name="text" type="java.lang.String" value="Nombre"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="cancelarBtn">
+        <Component class="javax.swing.JButton" name="cancelarCrear">
           <Properties>
             <Property name="text" type="java.lang.String" value="Cancelar"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cancelarBtnActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cancelarCrearActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="crearBtn">
@@ -282,7 +282,7 @@
                           <Group type="102" alignment="1" attributes="0">
                               <Component id="ideliminar" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="cancelarEliminarBtn" min="-2" max="-2" attributes="0"/>
+                              <Component id="cancelarEliminar" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="eliminarBtn" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -314,7 +314,7 @@
                   <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="eliminarBtn" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="cancelarEliminarBtn" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="cancelarEliminar" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="ideliminar" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="7" max="32767" attributes="0"/>
@@ -335,12 +335,12 @@
         </Component>
         <Component class="javax.swing.JTextField" name="nombreField2">
         </Component>
-        <Component class="javax.swing.JButton" name="cancelarEliminarBtn">
+        <Component class="javax.swing.JButton" name="cancelarEliminar">
           <Properties>
             <Property name="text" type="java.lang.String" value="Cancelar"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cancelarEliminarBtnActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cancelarEliminarActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="eliminarBtn">

@@ -5,13 +5,14 @@ import desarrollo.tpentrega1.entidades.Coordenada;
 import desarrollo.tpentrega1.entidades.Vendedor;
 import desarrollo.tpentrega1.utilidades.GestionCeldas;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.JTableHeader;
 
 public class VendedorUI extends javax.swing.JPanel {
-        private final VendedorController vendedorController;
 
-    public VendedorUI(VendedorController vendedorController) {
-        this.vendedorController = vendedorController;
+    private VendedorController vendedorController = VendedorController.getInstance();
+
+    public VendedorUI() {
         initComponents();
         actualizarTabla();
         this.tableVendedores.setAutoResizeMode(5);
@@ -19,12 +20,13 @@ public class VendedorUI extends javax.swing.JPanel {
         JTableHeader tableHeader = tableVendedores.getTableHeader();
         tableHeader.setReorderingAllowed(false);
     }
+
     private void actualizarTabla() {
         String[] columnNames = {"ID", "Nombre", "Dirección", "Latitud", "Longitud", "", ""};
         List<Vendedor> vendedores = vendedorController.obtenerListaVendedores();
         Object[][] data = new Object[vendedores.size()][7];
         int i = 0;
-        for(Vendedor v : vendedores){
+        for (Vendedor v : vendedores) {
             data[i][0] = v.getId();
             data[i][1] = v.getNombre();
             data[i][2] = v.getDireccion();
@@ -45,7 +47,9 @@ public class VendedorUI extends javax.swing.JPanel {
         tableVendedores.getColumnModel().getColumn(6).setPreferredWidth(10);
         tableVendedores.getColumnModel().getColumn(5).setPreferredWidth(10);
     }
-    void update() {}
+
+    void update() {
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -57,7 +61,7 @@ public class VendedorUI extends javax.swing.JPanel {
         coordenada1Field = new javax.swing.JTextField();
         coordenada2Field = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        cancelarBtn = new javax.swing.JButton();
+        cancelarCrear = new javax.swing.JButton();
         crearBtn = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -76,7 +80,7 @@ public class VendedorUI extends javax.swing.JPanel {
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         nombreField2 = new javax.swing.JTextField();
-        cancelarEliminarBtn = new javax.swing.JButton();
+        cancelarEliminar = new javax.swing.JButton();
         eliminarBtn = new javax.swing.JButton();
         ideliminar = new javax.swing.JTextField();
         direccionField2 = new javax.swing.JTextField();
@@ -104,10 +108,10 @@ public class VendedorUI extends javax.swing.JPanel {
 
         jLabel3.setText("Nombre");
 
-        cancelarBtn.setText("Cancelar");
-        cancelarBtn.addActionListener(new java.awt.event.ActionListener() {
+        cancelarCrear.setText("Cancelar");
+        cancelarCrear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancelarBtnActionPerformed(evt);
+                cancelarCrearActionPerformed(evt);
             }
         });
 
@@ -146,7 +150,7 @@ public class VendedorUI extends javax.swing.JPanel {
                                     .addComponent(coordenada2Field, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addComponent(direccionField, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(crearFrameLayout.createSequentialGroup()
-                            .addComponent(cancelarBtn)
+                            .addComponent(cancelarCrear)
                             .addGap(18, 18, 18)
                             .addComponent(crearBtn))))
                 .addContainerGap(20, Short.MAX_VALUE))
@@ -170,7 +174,7 @@ public class VendedorUI extends javax.swing.JPanel {
                 .addGap(24, 24, 24)
                 .addGroup(crearFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(crearBtn)
-                    .addComponent(cancelarBtn))
+                    .addComponent(cancelarCrear))
                 .addContainerGap(7, Short.MAX_VALUE))
         );
 
@@ -261,10 +265,10 @@ public class VendedorUI extends javax.swing.JPanel {
 
         jLabel17.setText("Coordenadas");
 
-        cancelarEliminarBtn.setText("Cancelar");
-        cancelarEliminarBtn.addActionListener(new java.awt.event.ActionListener() {
+        cancelarEliminar.setText("Cancelar");
+        cancelarEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancelarEliminarBtnActionPerformed(evt);
+                cancelarEliminarActionPerformed(evt);
             }
         });
 
@@ -305,7 +309,7 @@ public class VendedorUI extends javax.swing.JPanel {
                         .addGroup(eliminarFrameLayout.createSequentialGroup()
                             .addComponent(ideliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(cancelarEliminarBtn)
+                            .addComponent(cancelarEliminar)
                             .addGap(18, 18, 18)
                             .addComponent(eliminarBtn))))
                 .addContainerGap(20, Short.MAX_VALUE))
@@ -329,7 +333,7 @@ public class VendedorUI extends javax.swing.JPanel {
                 .addGap(24, 24, 24)
                 .addGroup(eliminarFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(eliminarBtn)
-                    .addComponent(cancelarEliminarBtn)
+                    .addComponent(cancelarEliminar)
                     .addComponent(ideliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(7, Short.MAX_VALUE))
         );
@@ -570,25 +574,33 @@ public class VendedorUI extends javax.swing.JPanel {
         this.actualizarTabla();
     }//GEN-LAST:event_btnRefrescarActionPerformed
 
+    
+    //-----------------------------------------------------------------------------------------
+    // crear
+    //-----------------------------------------------------------------------------------------
+    
+    
     private void btnCrearVendedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearVendedorActionPerformed
         crearFrame.setVisible(true);
     }//GEN-LAST:event_btnCrearVendedorActionPerformed
 
-    private void cancelarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarBtnActionPerformed
+    private void cancelarCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarCrearActionPerformed
         nombreField.setText("");
         direccionField.setText("");
         coordenada1Field.setText("");
         coordenada2Field.setText("");
         crearFrame.setVisible(false);
-    }//GEN-LAST:event_cancelarBtnActionPerformed
+    }//GEN-LAST:event_cancelarCrearActionPerformed
 
     private void crearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearBtnActionPerformed
-        if(nombreField.getText().isEmpty() || direccionField.getText().isEmpty() || coordenada1Field.getText().isEmpty()
-            || coordenada2Field.getText().isEmpty()){
+        if (nombreField.getText().isEmpty() || direccionField.getText().isEmpty() || coordenada1Field.getText().isEmpty()
+                || coordenada2Field.getText().isEmpty()) {
             //mensaje de error por campos vacios
+            JOptionPane.showMessageDialog(null, "error en los campos", "Alerta", JOptionPane.WARNING_MESSAGE);
         } else {
             Coordenada coordenada = new Coordenada(Double.parseDouble(coordenada1Field.getText()), Double.parseDouble(coordenada2Field.getText()));
-            vendedorController.crearNuevoVendedor(nombreField.getText(), direccionField.getText(), coordenada);
+            Vendedor vend = new Vendedor(nombreField.getText(), direccionField.getText(), coordenada);
+            vendedorController.crearNuevoVendedor(vend);
             nombreField.setText("");
             direccionField.setText("");
             coordenada1Field.setText("");
@@ -599,6 +611,9 @@ public class VendedorUI extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_crearBtnActionPerformed
 
+    //-----------------------------------------------------------------------------------------
+    // editar
+    //-----------------------------------------------------------------------------------------
 
     private void cancelarEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarEditarActionPerformed
         nombreField1.setText("");
@@ -616,26 +631,32 @@ public class VendedorUI extends javax.swing.JPanel {
         editarFrame.setVisible(false);
     }//GEN-LAST:event_cancelarBtn1ActionPerformed
 
+    //-----------------------------------------------------------------------------------------
+    // eliminar
+    //-----------------------------------------------------------------------------------------
 
-    private void cancelarEliminarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarEliminarBtnActionPerformed
+    private void cancelarEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarEliminarActionPerformed
         nombreField2.setText("");
         direccionField2.setText("");
         coordenada1Field2.setText("");
         coordenada2Field2.setText("");
         eliminarFrame.setVisible(false);
-    }//GEN-LAST:event_cancelarEliminarBtnActionPerformed
+    }//GEN-LAST:event_cancelarEliminarActionPerformed
 
+    
+    
+    
     private void eliminarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarBtnActionPerformed
-        vendedorController.eliminarVendedor(vendedorController.buscarVendedor(ideliminar.getText()));
+        vendedorController.eliminarVendedor(vendedorController.buscarVendedor(Integer.valueOf(ideliminar.getText())));
         //mensaje de exito! mostrar tarjeta del cliente eliminado?
     }//GEN-LAST:event_eliminarBtnActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         txtNombre.getText();
-        Vendedor c = vendedorController.buscarVendedor(txtId.getText());
+        Vendedor c = vendedorController.buscarVendedor(Integer.valueOf(txtId.getText()));
         String[] columnNames = {"ID", "Nombre", "Dirección", "Latitud", "Longitud", "", ""};
         Object[][] data = new Object[1][7];
-        if(c!=null){
+        if (c != null) {
             data[0][0] = c.getId();
             data[0][1] = c.getNombre();
             data[0][2] = c.getDireccion();
@@ -643,7 +664,7 @@ public class VendedorUI extends javax.swing.JPanel {
             data[0][4] = c.getCoordenada().getLng();
             data[0][5] = "Editar";
             data[0][6] = "Borrar";
-        } else if (c==null){
+        } else if (c == null) {
             data[0][0] = "";
             data[0][1] = "";
             data[0][2] = "";
@@ -666,11 +687,11 @@ public class VendedorUI extends javax.swing.JPanel {
     private void tableVendedoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableVendedoresMouseClicked
         int fila = tableVendedores.rowAtPoint(evt.getPoint());
         int columna = tableVendedores.columnAtPoint(evt.getPoint());
-        if(!tableVendedores.getValueAt(fila, 0).equals("") && !tableVendedores.getValueAt(fila, 1).equals("")
-                 && !tableVendedores.getValueAt(fila, 2).equals("") && !tableVendedores.getValueAt(fila, 3).equals("")
-                 && !tableVendedores.getValueAt(fila, 4).equals("") && !tableVendedores.getValueAt(fila, 5).equals("")
-                 && !tableVendedores.getValueAt(fila, 6).equals("")){
-            if(columna==5){
+        if (!tableVendedores.getValueAt(fila, 0).equals("") && !tableVendedores.getValueAt(fila, 1).equals("")
+                && !tableVendedores.getValueAt(fila, 2).equals("") && !tableVendedores.getValueAt(fila, 3).equals("")
+                && !tableVendedores.getValueAt(fila, 4).equals("") && !tableVendedores.getValueAt(fila, 5).equals("")
+                && !tableVendedores.getValueAt(fila, 6).equals("")) {
+            if (columna == 5) {
                 nombreField1.setText(tableVendedores.getValueAt(fila, 1).toString());
                 direccionField1.setText(tableVendedores.getValueAt(fila, 2).toString());
                 coordenada1Field1.setText(tableVendedores.getValueAt(fila, 3).toString());
@@ -678,7 +699,7 @@ public class VendedorUI extends javax.swing.JPanel {
                 editarFrame.setVisible(true);
                 ideditar.setVisible(false);
                 ideditar.setText(tableVendedores.getValueAt(fila, 0).toString());
-            } else if(columna==6){
+            } else if (columna == 6) {
                 nombreField2.setText(tableVendedores.getValueAt(fila, 1).toString());
                 direccionField2.setText(tableVendedores.getValueAt(fila, 2).toString());
                 coordenada1Field2.setText(tableVendedores.getValueAt(fila, 3).toString());
@@ -695,12 +716,14 @@ public class VendedorUI extends javax.swing.JPanel {
     }//GEN-LAST:event_tableVendedoresMouseClicked
 
     private void editarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarBtnActionPerformed
-          if(nombreField1.getText().isEmpty() || direccionField1.getText().isEmpty() || coordenada1Field1.getText().isEmpty() 
-                || coordenada2Field1.getText().isEmpty()){
+        if (nombreField1.getText().isEmpty() || direccionField1.getText().isEmpty() || coordenada1Field1.getText().isEmpty()
+                || coordenada2Field1.getText().isEmpty()) {
             //mensaje de error por campos vacios
+            JOptionPane.showMessageDialog(null, "error en los campos", "Alerta", JOptionPane.WARNING_MESSAGE);
         } else {
             Coordenada coordenada = new Coordenada(Double.parseDouble(coordenada1Field1.getText()), Double.parseDouble(coordenada2Field1.getText()));
-            vendedorController.modificarVendedor(ideditar.getText(), nombreField1.getText(), direccionField1.getText(), coordenada);
+            Vendedor vend = new Vendedor(Integer.valueOf(ideditar.getText()), nombreField1.getText(), direccionField1.getText(), coordenada);
+            vendedorController.modificarVendedor(vend);
             actualizarTabla();
             nombreField.setText("");
             direccionField.setText("");
@@ -716,9 +739,9 @@ public class VendedorUI extends javax.swing.JPanel {
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCrearVendedor;
     private javax.swing.JButton btnRefrescar;
-    private javax.swing.JButton cancelarBtn;
+    private javax.swing.JButton cancelarCrear;
     private javax.swing.JButton cancelarEditar;
-    private javax.swing.JButton cancelarEliminarBtn;
+    private javax.swing.JButton cancelarEliminar;
     private javax.swing.JTextField coordenada1Field;
     private javax.swing.JTextField coordenada1Field1;
     private javax.swing.JTextField coordenada1Field2;
@@ -762,6 +785,4 @@ public class VendedorUI extends javax.swing.JPanel {
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 
-    
 }
-
