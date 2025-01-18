@@ -474,10 +474,13 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="jLabel25" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace min="0" pref="140" max="32767" attributes="0"/>
+                          <Component id="idEditarPlato" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="aptoCeliacoField1" max="32767" attributes="0"/>
+                          <Component id="cancelarEditarPlatoBtn" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="editarPlatoBtn" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -487,24 +490,23 @@
                               <Component id="jLabel28" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel29" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel30" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel25" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="aptoVeganoField1" alignment="0" max="32767" attributes="0"/>
                               <Component id="pesoField1" alignment="0" max="32767" attributes="0"/>
                               <Component id="caloriasField1" alignment="0" max="32767" attributes="0"/>
                               <Component id="precioPField1" alignment="0" max="32767" attributes="0"/>
                               <Component id="descripcionPField1" alignment="0" max="32767" attributes="0"/>
                               <Component id="nombrePField1" alignment="0" max="32767" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="rbtnEditarAptoC" min="-2" pref="98" max="-2" attributes="0"/>
+                                      <Component id="rbtnEditarAptoV" alignment="0" min="-2" pref="98" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
-                      </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace min="0" pref="140" max="32767" attributes="0"/>
-                          <Component id="idEditarPlato" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="cancelarEditarPlatoBtn" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="editarPlatoBtn" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -542,12 +544,12 @@
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel31" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="aptoVeganoField1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="rbtnEditarAptoV" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel25" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="aptoCeliacoField1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="rbtnEditarAptoC" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -555,7 +557,7 @@
                       <Component id="cancelarEditarPlatoBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="idEditarPlato" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="57" max="32767" attributes="0"/>
+                  <EmptySpace pref="61" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -565,10 +567,6 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Apto Celiaco:"/>
           </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="aptoCeliacoField1">
-        </Component>
-        <Component class="javax.swing.JTextField" name="aptoVeganoField1">
         </Component>
         <Component class="javax.swing.JTextField" name="pesoField1">
         </Component>
@@ -630,6 +628,10 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="jTextField1"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JRadioButton" name="rbtnEditarAptoV">
+        </Component>
+        <Component class="javax.swing.JRadioButton" name="rbtnEditarAptoC">
         </Component>
       </SubComponents>
     </Container>
@@ -785,8 +787,9 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="aptoCeliacoField" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                          <Component id="rbtnAptoCeliaco" min="-2" pref="98" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -799,7 +802,10 @@
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="aptoVeganoField" alignment="0" max="32767" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="rbtnAptoVegano" min="-2" pref="98" max="-2" attributes="0"/>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              </Group>
                               <Component id="pesoField" alignment="0" max="32767" attributes="0"/>
                               <Component id="caloriasField" alignment="0" max="32767" attributes="0"/>
                               <Component id="precioPField" alignment="0" max="32767" attributes="0"/>
@@ -849,19 +855,19 @@
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="aptoVeganoField" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="rbtnAptoVegano" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="aptoCeliacoField" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="rbtnAptoCeliaco" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="crearPlatoBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="cancelarCrearPlatoBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="27" max="32767" attributes="0"/>
+                  <EmptySpace pref="31" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -902,10 +908,6 @@
             <Property name="text" type="java.lang.String" value="Apto Celiaco:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="aptoCeliacoField">
-        </Component>
-        <Component class="javax.swing.JTextField" name="aptoVeganoField">
-        </Component>
         <Component class="javax.swing.JTextField" name="pesoField">
         </Component>
         <Component class="javax.swing.JTextField" name="caloriasField">
@@ -931,6 +933,10 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cancelarCrearPlatoBtnActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JRadioButton" name="rbtnAptoVegano">
+        </Component>
+        <Component class="javax.swing.JRadioButton" name="rbtnAptoCeliaco">
         </Component>
       </SubComponents>
     </Container>

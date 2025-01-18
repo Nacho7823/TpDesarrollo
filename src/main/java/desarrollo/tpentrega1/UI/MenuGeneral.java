@@ -19,7 +19,7 @@ public class MenuGeneral extends JFrame{
         PedidoUI pedidoUI =new PedidoUI();
         VendedorUI vendedorUI = new VendedorUI();
         ClienteUI clienteUI = new ClienteUI();
-        ItemMenuUII itemMenuUI = new ItemMenuUII();
+        ItemMenuUI itemMenuUI = new ItemMenuUI();
         
         tabbedPane.addTab("Cliente",clienteUI );
         tabbedPane.addTab("Vendedor", vendedorUI);

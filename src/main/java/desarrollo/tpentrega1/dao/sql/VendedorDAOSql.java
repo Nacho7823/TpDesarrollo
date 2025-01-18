@@ -1,6 +1,5 @@
 package desarrollo.tpentrega1.dao.sql;
 
-import desarrollo.tpentrega1.dao.ItemsMenuDAO;
 import desarrollo.tpentrega1.dao.VendedorDAO;
 import desarrollo.tpentrega1.entidades.Bebida;
 import desarrollo.tpentrega1.entidades.Coordenada;
@@ -15,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import desarrollo.tpentrega1.dao.ItemMenuDAO;
 
 public class VendedorDAOSql extends DAO implements VendedorDAO {
 

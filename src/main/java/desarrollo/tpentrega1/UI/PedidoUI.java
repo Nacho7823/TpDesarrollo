@@ -238,7 +238,7 @@ public class PedidoUI extends javax.swing.JPanel {
             "peso"
         };
         Vendedor vendedor = pedido.getVendedor();
-        List<ItemMenu> items = itemsMenuController.obtenerItemsMenuDeVendedor(vendedor.getId());
+        List<ItemMenu> items = itemsMenuController.obtenerItemMenusDeVendedor(vendedor.getId());
         Object[][] data = new Object[items.size()][12];
         for (int i = 0; i < items.size(); i++) {
             ItemMenu item = items.get(i);

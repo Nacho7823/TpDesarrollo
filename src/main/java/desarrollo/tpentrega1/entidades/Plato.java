@@ -83,6 +83,12 @@ public class Plato extends ItemMenu {
         this.peso = peso;
     }
 
+    public double getPeso() {
+        return peso;
+    }
+    
+    
+
     // funcs
 
     @Override

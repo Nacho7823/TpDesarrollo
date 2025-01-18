@@ -4,7 +4,7 @@ import desarrollo.tpentrega1.entidades.ItemMenu;
 import desarrollo.tpentrega1.exceptions.DAOException;
 import java.util.List;
 
-public interface ItemsMenuDAO {
+public interface ItemMenuDAO {
     
     public void crearItemMenu(ItemMenu itemMenu) throws DAOException;
 
@@ -14,7 +14,7 @@ public interface ItemsMenuDAO {
 
     public ItemMenu buscarItemMenu(int id) throws DAOException;
     
-//    public List<ItemMenu> obtenerItemsMenuDeVendedor(int id) throws DAOException;
+    public List<ItemMenu> obtenerItemMenus() throws DAOException;
     
     
     

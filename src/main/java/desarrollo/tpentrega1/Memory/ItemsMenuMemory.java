@@ -2,13 +2,13 @@
 package desarrollo.tpentrega1.Memory;
 
 import desarrollo.tpentrega1.entidades.ItemMenu;
-import desarrollo.tpentrega1.dao.ItemsMenuDAO;
 import desarrollo.tpentrega1.exceptions.DAOException;
 import java.util.ArrayList;
 import java.util.List;
+import desarrollo.tpentrega1.dao.ItemMenuDAO;
 
 
-public class ItemsMenuMemory implements ItemsMenuDAO {
+public class ItemsMenuMemory implements ItemMenuDAO {
 
     private static List<ItemMenu> itemsMenu = new ArrayList<ItemMenu>();
 //    private List<ItemMenu> itemsMenu;
@@ -59,4 +59,9 @@ public class ItemsMenuMemory implements ItemsMenuDAO {
 //    public List<ItemMenu> obtenerItemsMenuDeVendedor(int id) throws DAOException {
 //        return itemsMenu;
 //    }
+
+    @Override
+    public List<ItemMenu> obtenerItemMenus() throws DAOException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
