@@ -631,9 +631,7 @@ public class VendedorUI extends javax.swing.JPanel {
         editarFrame.setVisible(false);
     }//GEN-LAST:event_cancelarBtn1ActionPerformed
 
-    //-----------------------------------------------------------------------------------------
-    // eliminar
-    //-----------------------------------------------------------------------------------------
+    
 
     private void cancelarEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarEliminarActionPerformed
         nombreField2.setText("");
@@ -643,12 +641,20 @@ public class VendedorUI extends javax.swing.JPanel {
         eliminarFrame.setVisible(false);
     }//GEN-LAST:event_cancelarEliminarActionPerformed
 
-    
+    //-----------------------------------------------------------------------------------------
+    // eliminar
+    //-----------------------------------------------------------------------------------------
     
     
     private void eliminarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarBtnActionPerformed
         vendedorController.eliminarVendedor(vendedorController.buscarVendedor(Integer.valueOf(ideliminar.getText())));
-        //mensaje de exito! mostrar tarjeta del cliente eliminado?
+        
+        actualizarTabla();
+        nombreField2.setText("");
+        direccionField2.setText("");
+        coordenada1Field2.setText("");
+        coordenada2Field2.setText("");
+        eliminarFrame.setVisible(false);
     }//GEN-LAST:event_eliminarBtnActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
@@ -721,8 +727,17 @@ public class VendedorUI extends javax.swing.JPanel {
             //mensaje de error por campos vacios
             JOptionPane.showMessageDialog(null, "error en los campos", "Alerta", JOptionPane.WARNING_MESSAGE);
         } else {
-            Coordenada coordenada = new Coordenada(Double.parseDouble(coordenada1Field1.getText()), Double.parseDouble(coordenada2Field1.getText()));
-            Vendedor vend = new Vendedor(Integer.valueOf(ideditar.getText()), nombreField1.getText(), direccionField1.getText(), coordenada);
+            
+            Vendedor vend = VendedorController.getInstance().buscarVendedor(Integer.valueOf(ideditar.getText()));
+            vend.setNombre(nombreField1.getText());
+            vend.setDireccion(direccionField1.getText());
+            
+            Coordenada coordenada = vend.getCoordenada();
+            coordenada.setLat(Double.parseDouble(coordenada1Field1.getText()));
+            coordenada.setLng(Double.parseDouble(coordenada2Field1.getText()));
+            
+            vend.setCoordenada(coordenada);
+            
             vendedorController.modificarVendedor(vend);
             actualizarTabla();
             nombreField.setText("");

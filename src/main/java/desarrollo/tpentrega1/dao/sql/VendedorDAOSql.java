@@ -59,6 +59,7 @@ public class VendedorDAOSql extends DAO implements VendedorDAO {
             );
 
         } catch (SQLException e) {
+            System.out.println("vendedor: " + vendedor.toString());
             throw new DAOException("No se pudo actualizar el vendedor: \n" + e.getMessage());
         }
     }
