@@ -306,7 +306,7 @@ public class PedidosController {
             ItemMenu itemMenu = itemMenuService.buscarItemMenu(id_item_menu);
             ItemsPedido item = new ItemsPedido(pedido, itemMenu, cantidad);
             
-//            items.add(item);
+            items.add(item);
 
             // TODO: fix
         }
@@ -316,20 +316,22 @@ public class PedidosController {
             String alias = (String) data.get("alias");
             int monto = (Integer) data.get("monto");
             String fecha = (String) data.get("fecha");
-            MercadoPago pago = (MercadoPago) pedido.getPago();
+            MercadoPago pago = new MercadoPago();
             pago.setAlias(alias);
             pago.setMonto(monto);
             pago.setFecha(parseDate(fecha));
+            pedido.setPago(pago);
         } else {              //transferencia
             String cvu = (String) data.get("cvu");
             String cuit = (String) data.get("cuit");
             int monto = (int) data.get("monto");
             String fecha = (String) data.get("fecha");
-            Transferencia pago = (Transferencia) pedido.getPago();
+            Transferencia pago = new Transferencia();
             pago.setCuit(cuit);
             pago.setCvu(cvu);
             pago.setMonto(monto);
             pago.setFecha(parseDate(fecha));
+            pedido.setPago(pago);
         }
         
         pedido.calcularTotal();

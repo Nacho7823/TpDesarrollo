@@ -58,7 +58,7 @@ btnModificar.addEventListener("click", async () => {
     }
 
     console.log("pedido modificado: ", tmp);
-    // window.location.href = "../pedidos.html";
+    window.location.href = "../pedidos.html";
 });
 
 

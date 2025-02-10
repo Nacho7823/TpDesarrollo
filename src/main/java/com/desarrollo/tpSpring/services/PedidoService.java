@@ -6,11 +6,13 @@ package com.desarrollo.tpSpring.services;
 
 import com.desarrollo.tpSpring.DAOs.PagoRepository;
 import com.desarrollo.tpSpring.DAOs.PedidoRepository;
+import com.desarrollo.tpSpring.entities.ItemsPedido;
 import com.desarrollo.tpSpring.entities.Pago;
 import com.desarrollo.tpSpring.entities.Pedido;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -52,15 +54,29 @@ public class PedidoService {
 
     @Transactional
     public void actualizarPedido(@Validated Pedido pedido) {
+        Pedido pedidoViejo = pedidoRepository.findById(pedido.getId_pedido()).get();
 
-        // actualizar pago
+        Pago pagoViejo = pedidoViejo.getPago();
+
+        // borramos el pago viejo para poner los nuevos
+        if (pagoViejo != null) {
+            pagoRepository.delete(pagoViejo);
+        }
         Pago pago = pedido.getPago();
         pagoRepository.save(pago);
         pedido.setPago(pago);
-        if (pedido.getPago() != null) {
-            pedidoRepository.save(pedido);
 
+        // eliminar items viejos
+        Set<ItemsPedido> itemsViejos = pedidoViejo.getItems();
+        for (ItemsPedido item : itemsViejos) {
+            item.setPedido(null);
         }
+        itemsViejos.clear();
+        pedidoRepository.save(pedidoViejo);
+
+        // guardar
+        pedidoRepository.save(pedido);
+
     }
 
     @Transactional
