@@ -3,7 +3,9 @@ package desarrollo.tpentrega1.controllers;
 import desarrollo.tpentrega1.dao.sql.VendedorDAOSql;
 import desarrollo.tpentrega1.entidades.Vendedor;
 import desarrollo.tpentrega1.entidades.Coordenada;
+import desarrollo.tpentrega1.entidades.ItemMenu;
 import desarrollo.tpentrega1.exceptions.DAOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -118,6 +120,18 @@ public class VendedorController {
         }
         return null;
     }
+    
+    public List<ItemMenu> obtenerItemsDeVendedor(Vendedor vendedor) throws DAOException{
+        List<ItemMenu> lista = new ArrayList();
+        
+        try{
+            lista=vendedorDAO.obtenerItemsDeVendedor(vendedor);
+        } catch (DAOException ex) {
+            Logger.getLogger(ItemsMenuController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lista;
+    }
+    
 
     
 }

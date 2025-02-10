@@ -65,4 +65,9 @@ public class ItemsMenuMemory implements ItemsMenuDAO {
     public ItemMenu buscarItemMenuPorNombre(String nombre) throws DAOException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
+    @Override
+    public List<ItemMenu> obtenerItems() throws DAOException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

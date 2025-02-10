@@ -9,6 +9,7 @@ import desarrollo.tpentrega1.entidades.Vendedor;
 import desarrollo.tpentrega1.utilidades.GestionCeldas;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.table.JTableHeader;
 
 /*
@@ -18,6 +19,8 @@ continuar con evento de tabla
 public class ItemMenuUII extends javax.swing.JPanel {
     private final ItemsMenuController itemsMenuController;
     private final VendedorController vendedorController;
+    private final ImageIcon icon= new ImageIcon("pedidosya-logo.png");
+    
     public ItemMenuUII(ItemsMenuController itemsMenuController, VendedorController vendedorController) {
         this.itemsMenuController = itemsMenuController;
         this.vendedorController = vendedorController;
@@ -192,21 +195,19 @@ public class ItemMenuUII extends javax.swing.JPanel {
         nombrePField = new javax.swing.JTextField();
         crearPlatoBtn = new javax.swing.JButton();
         cancelarCrearPlatoBtn = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tableItems = new javax.swing.JTable();
-        jPanel3 = new javax.swing.JPanel();
-        jPanel6 = new javax.swing.JPanel();
         btnBuscar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         txtId = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tableItems = new javax.swing.JTable();
         btnRefrescar = new javax.swing.JButton();
         btnCrearBebida = new javax.swing.JButton();
         btnCrearPlato = new javax.swing.JButton();
 
         eliminarBebidaFrame.setTitle("Eliminar Bebida");
+        eliminarBebidaFrame.setIconImage(icon.getImage());
         eliminarBebidaFrame.setLocationByPlatform(true);
-        eliminarBebidaFrame.setSize(new java.awt.Dimension(425, 250));
+        eliminarBebidaFrame.setSize(new java.awt.Dimension(425, 255));
 
         eliminarBebidaBtn.setText("Eliminar Bebida");
         eliminarBebidaBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -296,6 +297,7 @@ public class ItemMenuUII extends javax.swing.JPanel {
         );
 
         eliminarPlatoFrame.setTitle("Eliminar Plato");
+        eliminarPlatoFrame.setIconImage(icon.getImage());
         eliminarPlatoFrame.setLocationByPlatform(true);
         eliminarPlatoFrame.setSize(new java.awt.Dimension(425, 330));
 
@@ -399,12 +401,13 @@ public class ItemMenuUII extends javax.swing.JPanel {
                     .addComponent(eliminarPlatoBtn)
                     .addComponent(cancelarEliminarPlatoBtn)
                     .addComponent(idEliminarPlato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(206, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         editarBebidaFrame.setTitle("Editar Bebida");
+        editarBebidaFrame.setIconImage(icon.getImage());
         editarBebidaFrame.setLocationByPlatform(true);
-        editarBebidaFrame.setSize(new java.awt.Dimension(425, 250));
+        editarBebidaFrame.setSize(new java.awt.Dimension(425, 255));
 
         editarBebidaBtn.setText("Editar Bebida");
         editarBebidaBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -494,8 +497,10 @@ public class ItemMenuUII extends javax.swing.JPanel {
         );
 
         editarPlatoFrame.setTitle("Editar Plato");
+        editarPlatoFrame.setAlwaysOnTop(true);
+        editarPlatoFrame.setIconImage(icon.getImage());
         editarPlatoFrame.setLocationByPlatform(true);
-        editarPlatoFrame.setSize(new java.awt.Dimension(400, 500));
+        editarPlatoFrame.setSize(new java.awt.Dimension(425, 330));
 
         jLabel25.setText("Apto Celiaco:");
 
@@ -603,8 +608,9 @@ public class ItemMenuUII extends javax.swing.JPanel {
         );
 
         crearBebidaFrame.setTitle("Crear Bebida");
+        crearBebidaFrame.setIconImage(icon.getImage());
         crearBebidaFrame.setLocationByPlatform(true);
-        crearBebidaFrame.setSize(new java.awt.Dimension(425, 250));
+        crearBebidaFrame.setSize(new java.awt.Dimension(425, 255));
 
         jLabel10.setText("Nombre:");
 
@@ -689,6 +695,7 @@ public class ItemMenuUII extends javax.swing.JPanel {
         );
 
         crearPlatoFrame.setTitle("Crear Plato");
+        crearPlatoFrame.setIconImage(icon.getImage());
         crearPlatoFrame.setLocationByPlatform(true);
         crearPlatoFrame.setSize(new java.awt.Dimension(425, 330));
 
@@ -792,9 +799,25 @@ public class ItemMenuUII extends javax.swing.JPanel {
                 .addContainerGap(27, Short.MAX_VALUE))
         );
 
-        jPanel1.setBackground(new java.awt.Color(224, 240, 254));
+        setBackground(new java.awt.Color(224, 240, 254));
 
-        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
+        btnBuscar.setBackground(new java.awt.Color(100, 180, 255));
+        btnBuscar.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
+        btnBuscar.setForeground(new java.awt.Color(224, 240, 254));
+        btnBuscar.setText("Buscar");
+        btnBuscar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(224, 240, 254), new java.awt.Color(224, 240, 254), null, null));
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Arial", 3, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("ID Item:");
+
+        jScrollPane1.setBackground(new java.awt.Color(224, 240, 254));
         jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 204, 153))); // NOI18N
         jScrollPane1.setFont(new java.awt.Font("Segoe UI Historic", 3, 12)); // NOI18N
         jScrollPane1.setRowHeaderView(null);
@@ -817,63 +840,6 @@ public class ItemMenuUII extends javax.swing.JPanel {
             }
         });
         jScrollPane1.setViewportView(tableItems);
-
-        jPanel3.setBackground(new java.awt.Color(224, 240, 254));
-
-        jPanel6.setBackground(new java.awt.Color(224, 240, 254));
-
-        btnBuscar.setBackground(new java.awt.Color(100, 180, 255));
-        btnBuscar.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
-        btnBuscar.setForeground(new java.awt.Color(224, 240, 254));
-        btnBuscar.setText("Buscar");
-        btnBuscar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(224, 240, 254), new java.awt.Color(224, 240, 254), null, null));
-        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btnBuscar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
-        );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
-        );
-
-        jLabel1.setFont(new java.awt.Font("Arial", 3, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("ID Item:");
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGap(13, 13, 13)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtId, javax.swing.GroupLayout.DEFAULT_SIZE, 688, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
 
         btnRefrescar.setBackground(new java.awt.Color(100, 180, 252));
         btnRefrescar.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
@@ -910,55 +876,44 @@ public class ItemMenuUII extends javax.swing.JPanel {
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 922, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(btnRefrescar, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnCrearPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnCrearBebida, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(89, 89, 89)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnRefrescar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCrearBebida, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCrearPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(434, Short.MAX_VALUE)))
-        );
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(btnRefrescar, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 532, Short.MAX_VALUE)
+                        .addComponent(btnCrearPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnCrearBebida, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtId)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnRefrescar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCrearBebida, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCrearPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -1319,9 +1274,6 @@ public class ItemMenuUII extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField nombreBField;
     private javax.swing.JTextField nombreBField1;

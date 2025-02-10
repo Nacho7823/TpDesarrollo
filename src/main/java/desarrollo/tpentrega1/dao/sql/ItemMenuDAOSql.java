@@ -351,4 +351,70 @@ public class ItemMenuDAOSql extends DAO<ItemMenu> implements ItemsMenuDAO {
         }
         return listaItemMenus;
     }
+    
+    @Override
+    public List<ItemMenu> obtenerItems() throws DAOException{
+        String sql = "SELECT * FROM item_menu I "
+                + "LEFT JOIN bebida B ON I.id_item_menu = B.id_item_menu "
+                + "LEFT JOIN plato P ON I.id_item_menu = P.id_item_menu ";
+        List<ItemMenu> listaItemMenus = new ArrayList<>();
+
+        try {
+            ConectarBase();
+            PreparedStatement preparedStatement = conexion.prepareStatement(sql);
+            resultado = preparedStatement.executeQuery();
+
+            while (resultado.next()) {
+                String id_item_menu = String.valueOf(resultado.getInt("id_item_menu"));
+                String nombre = resultado.getString("nombre");
+                String descripcion = resultado.getString("descripcion");
+                double precio = resultado.getDouble("precio");
+                String categoria = resultado.getString("categoria");
+                
+                ItemMenu itemMenu= null;
+                
+                if(categoria.equalsIgnoreCase("bebida")){
+                    double tamaño= resultado.getDouble("tamanio");
+                    double graduacionAlcoholica= resultado.getDouble("graduacion_alcoholica");
+                    itemMenu = new Bebida.Builder()
+                        .id(id_item_menu)
+                        .nombre(nombre)
+                        .descripcion(descripcion)
+                        .precio(precio)
+                        .categoria(categoria)
+                        .graduacionAlcoholica(graduacionAlcoholica)
+                        .tamaño(tamaño)
+                        .build(); 
+                }
+                else if(categoria.equalsIgnoreCase("plato")){
+                    double calorias= resultado.getDouble("calorias");
+                    boolean aptoCeliaco=resultado.getBoolean("apto_celiaco");
+                    boolean aptoVegano=resultado.getBoolean("apto_vegano");
+                    double peso= resultado.getDouble("peso");
+                    itemMenu= new Plato.Builder()
+                            .id(id_item_menu)
+                            .nombre(nombre)
+                            .descripcion(descripcion)
+                            .precio(precio)
+                            .categoria(categoria)
+                            .calorias(calorias)
+                            .aptoCeliaco(aptoCeliaco)
+                            .aptoVegano(aptoVegano)
+                            .peso(peso)
+                            .build();
+                }
+                
+                listaItemMenus.add(itemMenu);
+            }
+        } catch (Exception ex) {
+            throw new DAOException("No se pudo obtener los itemMenu: \n" + ex.getMessage());
+        } finally {
+            try {
+                desconectarBase();
+            } catch (Exception e) {
+                throw new DAOException("Error al cerrar la conexión: " + e.getMessage());
+            }
+        }
+        return listaItemMenus;
+    }
 }

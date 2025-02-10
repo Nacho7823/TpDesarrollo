@@ -2,6 +2,7 @@
 package desarrollo.tpentrega1.Memory;
 
 import desarrollo.tpentrega1.dao.VendedorDAO;
+import desarrollo.tpentrega1.entidades.ItemMenu;
 import desarrollo.tpentrega1.entidades.Vendedor;
 import desarrollo.tpentrega1.exceptions.DAOException;
 import java.util.ArrayList;
@@ -71,6 +72,11 @@ public void eliminarVendedor(Vendedor id) {
 
     @Override
     public Vendedor buscarVendedorPorNombre(String nombre) throws DAOException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<ItemMenu> obtenerItemsDeVendedor(Vendedor vendedor) throws DAOException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     

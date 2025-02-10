@@ -18,4 +18,6 @@ public interface ItemsMenuDAO {
     
     public List<ItemMenu> obtenerItemsMenuDeVendedor(String id) throws DAOException;
     
+    public List<ItemMenu> obtenerItems() throws DAOException;
+    
 }

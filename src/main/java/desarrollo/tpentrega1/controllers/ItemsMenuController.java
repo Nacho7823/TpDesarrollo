@@ -169,4 +169,16 @@ public class ItemsMenuController {
         }
         return null;
     }
+    
+    public List<ItemMenu> obtenerItems() throws DAOException{
+        List<ItemMenu> lista = new ArrayList();
+        
+        try{
+            lista=itemMenuDAO.obtenerItems();
+        } catch (DAOException ex) {
+            Logger.getLogger(ItemsMenuController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lista;
+    }
+    
 }
