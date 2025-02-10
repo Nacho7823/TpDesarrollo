@@ -52,6 +52,11 @@ public class PedidoService {
 
     @Transactional
     public void actualizarPedido(@Validated Pedido pedido) {
+
+        // actualizar pago
+        Pago pago = pedido.getPago();
+        pagoRepository.save(pago);
+        pedido.setPago(pago);
         if (pedido.getPago() != null) {
             pedidoRepository.save(pedido);
 

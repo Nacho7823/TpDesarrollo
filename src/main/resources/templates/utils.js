@@ -142,6 +142,7 @@ function Pedido2DTO(pedido) {
     // `${year}-${month}-${day}`;
     const fecha = f.getFullYear() + "-" + (f.getMonth() + 1) + "-" + f.getDate();
     return {
+        id_pedido: pedido.id_pedido,
         estado: pedido.estado,
         id_cliente: pedido.id_cliente,
         id_vendedor: pedido.id_vendedor,
@@ -306,7 +307,10 @@ async function updatePedido(pedido) {
 }
 async function deletePedido(pedido) {
     console.log(pedido);
-    return await DELETE("/pedidos/pedido", Pedido2DTO(pedido));
+    const dto = Pedido2DTO(pedido);
+    console.log(dto)
+    return await DELETE("/pedidos/pedido", dto);
+    // return await DELETE("/pedidos/pedido", Pedido2DTO(pedido));
 }
 
 // detalle_pedido
