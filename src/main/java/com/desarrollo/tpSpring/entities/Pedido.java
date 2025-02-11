@@ -102,7 +102,7 @@ public class Pedido {
     }
  
     public double calcularTotal() {
-        double totalProductos = items.stream().mapToDouble(item ->item.getItemMenu().getPrecio()).sum();
+        double totalProductos = items.stream().mapToDouble(item ->item.getItemMenu().getPrecio() * item.getCantidad()).sum();
         this.total = totalProductos + pago.aplicarRecargo(totalProductos);
         return this.total;
     }
