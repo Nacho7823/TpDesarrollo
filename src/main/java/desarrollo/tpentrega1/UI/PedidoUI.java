@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
@@ -29,22 +30,21 @@ public class PedidoUI extends javax.swing.JPanel {
     private final PedidoController pedidoController;
     private final ItemMenuController itemMenuController;
 
-
-    public PedidoUI(){
+    public PedidoUI() {
         this.pedidoController = PedidoController.getInstance();
         this.clienteController = ClienteController.getInstance();
         this.vendedorController = VendedorController.getInstance();
         this.itemMenuController = ItemMenuController.getInstance();
         initComponents();
 //        tablePedidos.
-        
+
         actualizarTabla();
     }
 
     public void update() {
     }
-    
-    private void actualizarTabla(){
+
+    private void actualizarTabla() {
         List<Pedido> pedidos;
         try {
             pedidos = pedidoController.obtenerListaPedidos();
@@ -79,7 +79,7 @@ public class PedidoUI extends javax.swing.JPanel {
             Logger.getLogger(PedidoUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -705,7 +705,7 @@ public class PedidoUI extends javax.swing.JPanel {
     }//GEN-LAST:event_idFieldActionPerformed
 
     private void btnBuscar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscar1ActionPerformed
-        
+
     }//GEN-LAST:event_btnBuscar1ActionPerformed
 
     private void tablePedidosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablePedidosMouseClicked
@@ -755,9 +755,17 @@ public class PedidoUI extends javax.swing.JPanel {
         SpinnerNumberModel modelo = new SpinnerNumberModel();
         modelo.setMinimum(0);
         cantItemSpinner.setModel(modelo);
-        clienteController.obtenerListaClientes().stream().forEach(cliente -> clientesDD.addItem(cliente.getNombre()));
+        try {
+            clienteController.obtenerListaClientes().stream().forEach(cliente -> clientesDD.addItem(cliente.getNombre()));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "No se encontraron clientes", "Alerta", JOptionPane.WARNING_MESSAGE);
+        }
         vendedoresDD.removeAllItems();
-        vendedorController.obtenerListaVendedores().stream().forEach(vendedor -> vendedoresDD.addItem(vendedor.getNombre()));
+        try {
+            vendedorController.obtenerListaVendedores().stream().forEach(vendedor -> vendedoresDD.addItem(vendedor.getNombre()));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "No se encontraron vendedores", "Alerta", JOptionPane.WARNING_MESSAGE);
+        }
         vendedoresDD.setEnabled(true);
         itemsDD.setEnabled(false);
         agregarItemButton.setEnabled(false);
@@ -783,27 +791,44 @@ public class PedidoUI extends javax.swing.JPanel {
         formaDePagoDD.setEnabled(true);
         cbuAliasField.setEnabled(true);
         cuitField.setEnabled(true);
-        if(vendedoresDD.getSelectedItem()!=null){
-            itemMenuController.obtenerItemsMenuDeVendedor(
-                vendedorController.buscarVendedorPorNombre(
-                    vendedoresDD.getSelectedItem().toString()).getId())
-            .stream().forEach(item -> itemsDD.addItem(item.getNombre()));
+        try {
+
+            if (vendedoresDD.getSelectedItem() != null) {
+                itemMenuController.obtenerItemsMenuDeVendedor(
+                        vendedorController.buscarVendedorPorNombre(
+                                vendedoresDD.getSelectedItem().toString()).getId())
+                        .stream().forEach(item -> itemsDD.addItem(item.getNombre()));
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "No se encontro el vendedor", "Alerta", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_vendedoresDDActionPerformed
 
     private void crearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearBtnActionPerformed
-        Cliente c = clienteController.buscarCliente(Integer.valueOf(clientesDD.getSelectedItem().toString()));
-        Vendedor v = vendedorController.buscarVendedor(Integer.valueOf(vendedoresDD.getSelectedItem().toString()));
+        Cliente c;
+        Vendedor v;
+        try {
+            c = clienteController.buscarCliente(Integer.valueOf(clientesDD.getSelectedItem().toString()));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "No se encontro el Cliente", "Alerta", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        try {
+            v = vendedorController.buscarVendedor(Integer.valueOf(vendedoresDD.getSelectedItem().toString()));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "No se encontro el vendedor", "Alerta", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         List<ItemMenu> listaItems = new ArrayList<>();
         Pago pago = null;
-        for(int i=0; i<tablaItemsCrear.getRowCount(); i++){
-            for(int j=0; j<(int)tablaItemsCrear.getValueAt(i, 1); j++){
+        for (int i = 0; i < tablaItemsCrear.getRowCount(); i++) {
+            for (int j = 0; j < (int) tablaItemsCrear.getValueAt(i, 1); j++) {
                 listaItems.add(itemMenuController.buscarItemMenuPorNombre(tablaItemsCrear.getValueAt(i, 0).toString()));
             }
         }
-        if(formaDePagoDD.getSelectedItem().toString().equals("Mercado Pago")){
+        if (formaDePagoDD.getSelectedItem().toString().equals("Mercado Pago")) {
             pago = new MercadoPago(cbuAliasField.getText(), Double.parseDouble(totalLabel.getText().substring(2)));
-        } else if(formaDePagoDD.getSelectedItem().toString().equals("Transferencia")){
+        } else if (formaDePagoDD.getSelectedItem().toString().equals("Transferencia")) {
             pago = new Transferencia(cuitField.getText(), cbuAliasField.getText(), Double.parseDouble(totalLabel.getText().substring(2)));
         }
         try {
@@ -818,12 +843,12 @@ public class PedidoUI extends javax.swing.JPanel {
     }//GEN-LAST:event_cancelarCrearBtnActionPerformed
 
     private void formaDePagoDDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_formaDePagoDDActionPerformed
-        if(formaDePagoDD.getSelectedItem()!=null){
-            if(formaDePagoDD.getSelectedItem().toString().equals("Mercado Pago")){
+        if (formaDePagoDD.getSelectedItem() != null) {
+            if (formaDePagoDD.getSelectedItem().toString().equals("Mercado Pago")) {
                 cbuAliasLabel.setText("Alias");
                 cuitField.setVisible(false);
                 cuitLabel.setVisible(false);
-            } else if(formaDePagoDD.getSelectedItem().toString().equals("Transferencia")){
+            } else if (formaDePagoDD.getSelectedItem().toString().equals("Transferencia")) {
                 cbuAliasLabel.setText("Cbu");
                 cuitField.setVisible(true);
                 cuitLabel.setVisible(true);
@@ -835,13 +860,13 @@ public class PedidoUI extends javax.swing.JPanel {
         String itemSeleccionado = itemsDD.getSelectedItem().toString();
         int cantSelecionada = (int) cantItemSpinner.getValue();
         DefaultTableModel modelo = (DefaultTableModel) tablaItemsCrear.getModel();
-        boolean encontrado=false;
-        int i=0;
-        while(i<tablaItemsCrear.getRowCount() && !encontrado){
+        boolean encontrado = false;
+        int i = 0;
+        while (i < tablaItemsCrear.getRowCount() && !encontrado) {
             String item = (String) modelo.getValueAt(i, 0);
-            if(item.equals(itemSeleccionado)){
-                encontrado=true;
-                if(cantSelecionada==0){
+            if (item.equals(itemSeleccionado)) {
+                encontrado = true;
+                if (cantSelecionada == 0) {
                     modelo.removeRow(i);
                 } else {
                     modelo.setValueAt(cantSelecionada, i, 1);
@@ -849,23 +874,23 @@ public class PedidoUI extends javax.swing.JPanel {
             }
             i++;
         }
-        if(cantSelecionada!=0){
-            if(!encontrado){
-                Object[] row = { itemSeleccionado, cantSelecionada };
+        if (cantSelecionada != 0) {
+            if (!encontrado) {
+                Object[] row = {itemSeleccionado, cantSelecionada};
                 modelo.addRow(row);
             }
         }
-        double total=0;
-        
-        if(formaDePagoDD.getSelectedItem().toString().equals("Mercado Pago")){
-            for(int j=0; j<tablaItemsCrear.getRowCount(); j++){
+        double total = 0;
+
+        if (formaDePagoDD.getSelectedItem().toString().equals("Mercado Pago")) {
+            for (int j = 0; j < tablaItemsCrear.getRowCount(); j++) {
                 double subtotal = ((int) tablaItemsCrear.getValueAt(j, 1)) * itemMenuController.buscarItemMenuPorNombre(tablaItemsCrear.getValueAt(j, 0).toString()).getPrecio();
-                total += (subtotal + (subtotal*(0.04)));
+                total += (subtotal + (subtotal * (0.04)));
             }
-        } else if(formaDePagoDD.getSelectedItem().toString().equals("Transferencia")){
-            for(int j=0; j<tablaItemsCrear.getRowCount(); j++){
+        } else if (formaDePagoDD.getSelectedItem().toString().equals("Transferencia")) {
+            for (int j = 0; j < tablaItemsCrear.getRowCount(); j++) {
                 double subtotal = ((int) tablaItemsCrear.getValueAt(j, 1)) * itemMenuController.buscarItemMenuPorNombre(tablaItemsCrear.getValueAt(j, 0).toString()).getPrecio();
-                total += (subtotal + (subtotal*(0.02)));
+                total += (subtotal + (subtotal * (0.02)));
             }
         }
         totalLabel.setText("Total: " + String.valueOf(total));

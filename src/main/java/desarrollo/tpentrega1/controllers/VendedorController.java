@@ -32,113 +32,32 @@ public class VendedorController {
      
     }
     
-    public Vendedor crearNuevoVendedor(int id, String nombre, String direccion, Coordenada coordenada) {
-        Vendedor nuevoVendedor = new Vendedor(id, nombre, direccion, coordenada);
-        try {
-            vendedorDAO.crearVendedor(nuevoVendedor);
-        } catch (DAOException ex) {
-            Logger.getLogger(VendedorController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return nuevoVendedor;
+    public void crearNuevoVendedor(Vendedor vendedor) throws Exception {
+        vendedorDAO.crearVendedor(vendedor);
     }
     
-    public Vendedor crearNuevoVendedor(String nombre, String direccion, Coordenada coordenada) {
-        Vendedor nuevoVendedor = new Vendedor(nombre, direccion, coordenada);
-        try {
-            vendedorDAO.crearVendedor(nuevoVendedor);
-        } catch (DAOException ex) {
-            Logger.getLogger(VendedorController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return nuevoVendedor;
-    }
-    
-// Modificar un vendedor existente (asumiendo que se identifica por nombre, dirección, coordenada)
-    public void modificarVendedor(int id, String nombre, String direccion, Coordenada coordenada) {
-        Vendedor vendedorExistente;
-        try {
-            vendedorExistente = vendedorDAO.buscarVendedor(id);
-            if (vendedorExistente != null) {
-                vendedorExistente.setNombre(nombre);
-                vendedorExistente.setDireccion(direccion);
-                vendedorExistente.setCoordenada(coordenada);
-                vendedorDAO.actualizarVendedor(vendedorExistente);
-                System.out.println("Vendedor modificado: " + nombre);
-            } else {
-                System.out.println("Vendedor no encontrado para modificar.");
-            }
-        } catch (DAOException ex) {
-            Logger.getLogger(VendedorController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    public void modificarVendedor(Vendedor vendedor) {
-        try {
-            vendedorDAO.actualizarVendedor(vendedor);
-        } catch (DAOException ex) {
-            Logger.getLogger(VendedorController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public void modificarVendedor(Vendedor vendedor) throws Exception {
+        vendedorDAO.actualizarVendedor(vendedor);
     }
 
-    // Eliminar un vendedor por ID
-    public void eliminarVendedor(Vendedor vendedor) {
-        try {
-            vendedorDAO.eliminarVendedor(vendedor.getId());
-        } catch (DAOException ex) {
-            Logger.getLogger(VendedorController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public void eliminarVendedor(int id) throws Exception {
+        vendedorDAO.eliminarVendedor(id);
     }
 
-    // Buscar un vendedor por ID
-    public Vendedor buscarVendedor(int id) {
-        try {
-        Vendedor vendedor = vendedorDAO.buscarVendedor(id);
-        if (vendedor != null) {
-            System.out.println("Vendedor encontrado: " + vendedor.getNombre());
-            return vendedor;
-        } else {
-            System.out.println("Vendedor no encontrado con ID " + id);
-            return null;
-        }
-        } catch(Exception e){
-            System.out.println("" + e.getMessage());
-        }
-        return null;
+    public Vendedor buscarVendedor(int id) throws Exception {
+        return vendedorDAO.buscarVendedor(id);
     }
     
-    public Vendedor buscarVendedorPorNombre(String nombre) {
-        try {
-        Vendedor vendedor = vendedorDAO.buscarVendedorPorNombre(nombre);
-        if (vendedor != null) {
-            System.out.println("Vendedor encontrado: " + vendedor.getNombre());
-            return vendedor;
-        } else {
-            System.out.println("Vendedor no encontrado con nombre " + nombre);
-            return null;
-        }
-        } catch(Exception e){
-            System.out.println("" + e.getMessage());
-        }
-        return null;
+    public Vendedor buscarVendedorPorNombre(String nombre) throws Exception {
+        return vendedorDAO.buscarVendedorPorNombre(nombre);
     }
 
-    public List<Vendedor> obtenerListaVendedores() {
-        try {
-            return vendedorDAO.obtenerVendedores();
-        } catch (DAOException ex) {
-            Logger.getLogger(VendedorController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
+    public List<Vendedor> obtenerListaVendedores() throws Exception {
+        return vendedorDAO.obtenerVendedores();
     }
     
     public List<ItemMenu> obtenerItemsDeVendedor(Vendedor vendedor) throws DAOException{
-        List<ItemMenu> lista = new ArrayList();
-        
-        try{
-            lista=vendedorDAO.obtenerItemsDeVendedor(vendedor);
-        } catch (DAOException ex) {
-            Logger.getLogger(ItemMenuController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return lista;
+        return vendedorDAO.obtenerItemsDeVendedor(vendedor);
     }
     
 

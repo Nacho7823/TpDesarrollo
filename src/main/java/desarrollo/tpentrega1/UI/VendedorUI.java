@@ -7,18 +7,19 @@ import desarrollo.tpentrega1.entidades.ItemMenu;
 import desarrollo.tpentrega1.entidades.Vendedor;
 import desarrollo.tpentrega1.exceptions.DAOException;
 import desarrollo.tpentrega1.utilidades.GestionCeldas;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
 public class VendedorUI extends javax.swing.JPanel {
-        private final VendedorController vendedorController;
-        private final ItemMenuController itemMenuController;
-    private final ImageIcon icon= new ImageIcon("pedidosya-logo.png");
+
+    private final VendedorController vendedorController;
+    private final ItemMenuController itemMenuController;
+    private final ImageIcon icon = new ImageIcon("pedidosya-logo.png");
 
     public VendedorUI() {
         this.vendedorController = VendedorController.getInstance();
@@ -30,12 +31,18 @@ public class VendedorUI extends javax.swing.JPanel {
         JTableHeader tableHeader = tableVendedores.getTableHeader();
         tableHeader.setReorderingAllowed(false);
     }
+
     private void actualizarTabla() {
         String[] columnNames = {"ID", "Nombre", "Dirección", "Latitud", "Longitud", "Items", "", ""};
-        List<Vendedor> vendedores = vendedorController.obtenerListaVendedores();
+        List<Vendedor> vendedores = new ArrayList<>();
+        try {
+            vendedores = vendedorController.obtenerListaVendedores();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "No se pudieron obtener los vendedores", "Alerta", JOptionPane.WARNING_MESSAGE);
+        }
         Object[][] data = new Object[vendedores.size()][8];
         int i = 0;
-        for(Vendedor v : vendedores){
+        for (Vendedor v : vendedores) {
             data[i][0] = v.getId();
             data[i][1] = v.getNombre();
             data[i][2] = v.getDireccion();
@@ -58,13 +65,13 @@ public class VendedorUI extends javax.swing.JPanel {
         tableVendedores.getColumnModel().getColumn(6).setPreferredWidth(10);
         tableVendedores.getColumnModel().getColumn(7).setPreferredWidth(10);
     }
-    
-    private void setTablaItemsEditarVendedor(Vendedor vendedor) throws DAOException{
+
+    private void setTablaItemsEditarVendedor(Vendedor vendedor) throws DAOException {
         String[] columnNames = {"ID", "Nombre", "Categoría", "Precio"};
         List<ItemMenu> items = vendedorController.obtenerItemsDeVendedor(vendedor);
         Object[][] data = new Object[items.size()][4];
         int i = 0;
-        for(ItemMenu item : items){
+        for (ItemMenu item : items) {
             data[i][0] = item.getId();
             data[i][1] = item.getNombre();
             data[i][2] = item.getCategoria();
@@ -73,7 +80,9 @@ public class VendedorUI extends javax.swing.JPanel {
         }
         tablaItemsCrear1.setModel(new javax.swing.table.DefaultTableModel(data, columnNames));
     }
-    void update() {}
+
+    void update() {
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -532,19 +541,33 @@ public class VendedorUI extends javax.swing.JPanel {
     }//GEN-LAST:event_cancelarBtnActionPerformed
 
     private void crearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearBtnActionPerformed
-        if(nombreField.getText().isEmpty() || direccionField.getText().isEmpty() || coordenada1Field.getText().isEmpty()
-            || coordenada2Field.getText().isEmpty()){
-            //mensaje de error por campos vacios
-        } else {
-            Coordenada coordenada = new Coordenada(Double.parseDouble(coordenada1Field.getText()), Double.parseDouble(coordenada2Field.getText()));
-            vendedorController.crearNuevoVendedor(nombreField.getText(), direccionField.getText(), coordenada);
-            nombreField.setText("");
-            direccionField.setText("");
-            coordenada1Field.setText("");
-            coordenada2Field.setText("");
-            actualizarTabla();
-            crearFrame.setVisible(false);
-            //mensaje de exito cliente creado
+        try {
+            if (nombreField.getText().isEmpty() || direccionField.getText().isEmpty() || coordenada1Field.getText().isEmpty()
+                    || coordenada2Field.getText().isEmpty()) {
+                //mensaje de error por campos vacios
+            } else {
+                Coordenada coordenada = new Coordenada(
+                        Double.parseDouble(coordenada1Field.getText()),
+                        Double.parseDouble(coordenada2Field.getText())
+                );
+                Vendedor v = new Vendedor(
+                        nombreField.getText(),
+                        direccionField.getText(),
+                        coordenada
+                );
+
+                vendedorController.crearNuevoVendedor(v);
+
+                nombreField.setText("");
+                direccionField.setText("");
+                coordenada1Field.setText("");
+                coordenada2Field.setText("");
+                actualizarTabla();
+                crearFrame.setVisible(false);
+                //mensaje de exito cliente creado
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "No se pudo crear el vendedor", "Alerta", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_crearBtnActionPerformed
 
@@ -571,18 +594,22 @@ public class VendedorUI extends javax.swing.JPanel {
     }//GEN-LAST:event_cancelarEliminarBtnActionPerformed
 
     private void eliminarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarBtnActionPerformed
-        vendedorController.eliminarVendedor(vendedorController.buscarVendedor(Integer.valueOf(ideliminar.getText())));
+        try {
+            vendedorController.eliminarVendedor(Integer.valueOf(ideliminar.getText()));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "No se pudo crear el vendedor", "Alerta", JOptionPane.WARNING_MESSAGE);
+        }
         //mensaje de exito! mostrar tarjeta del cliente eliminado?
     }//GEN-LAST:event_eliminarBtnActionPerformed
 
     private void tableVendedoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableVendedoresMouseClicked
         int fila = tableVendedores.rowAtPoint(evt.getPoint());
         int columna = tableVendedores.columnAtPoint(evt.getPoint());
-        if(!tableVendedores.getValueAt(fila, 0).equals("") && !tableVendedores.getValueAt(fila, 1).equals("")
-                 && !tableVendedores.getValueAt(fila, 2).equals("") && !tableVendedores.getValueAt(fila, 3).equals("")
-                 && !tableVendedores.getValueAt(fila, 4).equals("") && !tableVendedores.getValueAt(fila, 6).equals("")
-                 && !tableVendedores.getValueAt(fila, 7).equals("")){
-            if(columna==6){
+        if (!tableVendedores.getValueAt(fila, 0).equals("") && !tableVendedores.getValueAt(fila, 1).equals("")
+                && !tableVendedores.getValueAt(fila, 2).equals("") && !tableVendedores.getValueAt(fila, 3).equals("")
+                && !tableVendedores.getValueAt(fila, 4).equals("") && !tableVendedores.getValueAt(fila, 6).equals("")
+                && !tableVendedores.getValueAt(fila, 7).equals("")) {
+            if (columna == 6) {
                 nombreField1.setText(tableVendedores.getValueAt(fila, 1).toString());
                 direccionField1.setText(tableVendedores.getValueAt(fila, 2).toString());
                 coordenada1Field1.setText(tableVendedores.getValueAt(fila, 3).toString());
@@ -591,13 +618,13 @@ public class VendedorUI extends javax.swing.JPanel {
                     itemMenuController.obtenerItems().stream().forEach(item -> itemsDD1.addItem(item.getNombre()));
                     setTablaItemsEditarVendedor(vendedorController.buscarVendedor(
                             Integer.valueOf(tableVendedores.getValueAt(fila, 0).toString())));
-                } catch (DAOException ex) {
-                    Logger.getLogger(VendedorUI.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "No se pudo editar el vendedor", "Alerta", JOptionPane.WARNING_MESSAGE);
                 }
                 editarFrame.setVisible(true);
                 ideditar.setVisible(false);
                 ideditar.setText(tableVendedores.getValueAt(fila, 0).toString());
-            } else if(columna==7){
+            } else if (columna == 7) {
                 nombreField2.setText(tableVendedores.getValueAt(fila, 1).toString());
                 direccionField2.setText(tableVendedores.getValueAt(fila, 2).toString());
                 coordenada1Field2.setText(tableVendedores.getValueAt(fila, 3).toString());
@@ -614,27 +641,44 @@ public class VendedorUI extends javax.swing.JPanel {
     }//GEN-LAST:event_tableVendedoresMouseClicked
 
     private void editarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarBtnActionPerformed
-          if(nombreField1.getText().isEmpty() || direccionField1.getText().isEmpty() || coordenada1Field1.getText().isEmpty() 
-                || coordenada2Field1.getText().isEmpty()){
-            //mensaje de error por campos vacios
-        } else {
-            Coordenada coordenada = new Coordenada(Double.parseDouble(coordenada1Field1.getText()), Double.parseDouble(coordenada2Field1.getText()));
-            vendedorController.modificarVendedor(Integer.valueOf(ideditar.getText()), nombreField1.getText(), direccionField1.getText(), coordenada);
-            actualizarTabla();
-            nombreField.setText("");
-            direccionField.setText("");
-            coordenada1Field.setText("");
-            coordenada2Field.setText("");
-            editarFrame.setVisible(false);
-            //cartel de exito
+        try {
+            if (nombreField1.getText().isEmpty() || direccionField1.getText().isEmpty() || coordenada1Field1.getText().isEmpty()
+                    || coordenada2Field1.getText().isEmpty()) {
+                //mensaje de error por campos vacios
+            } else {
+                Coordenada coordenada = new Coordenada(Double.parseDouble(coordenada1Field1.getText()), Double.parseDouble(coordenada2Field1.getText()));
+                Vendedor v = new Vendedor(
+                        Integer.valueOf(ideditar.getText()),
+                        nombreField1.getText(),
+                        direccionField1.getText(),
+                        coordenada
+                );
+                vendedorController.modificarVendedor(v);
+                actualizarTabla();
+                nombreField.setText("");
+                direccionField.setText("");
+                coordenada1Field.setText("");
+                coordenada2Field.setText("");
+                editarFrame.setVisible(false);
+                //cartel de exito
+
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "No se pudo editar el vendedor", "Alerta", JOptionPane.WARNING_MESSAGE);
         }
+
     }//GEN-LAST:event_editarBtnActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        Vendedor c = vendedorController.buscarVendedor(Integer.valueOf(txtId.getText()));
+        Vendedor c = null;
+        try {
+            c = vendedorController.buscarVendedor(Integer.valueOf(txtId.getText()));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "No se pudo editar el vendedor", "Alerta", JOptionPane.WARNING_MESSAGE);
+        }
         String[] columnNames = {"ID", "Nombre", "Dirección", "Latitud", "Longitud", "Items", "", ""};
         Object[][] data = new Object[1][8];
-        if(c!=null){
+        if (c != null) {
             data[0][0] = c.getId();
             data[0][1] = c.getNombre();
             data[0][2] = c.getDireccion();
@@ -643,7 +687,7 @@ public class VendedorUI extends javax.swing.JPanel {
             data[0][5] = itemMenuController.obtenerItemsMenuDeVendedor(c.getId()).stream().map(ItemMenu::getNombre).collect(Collectors.joining(", "));
             data[0][6] = "Editar";
             data[0][7] = "Borrar";
-        } else if (c==null){
+        } else if (c == null) {
             data[0][0] = "";
             data[0][1] = "";
             data[0][2] = "";
@@ -668,18 +712,18 @@ public class VendedorUI extends javax.swing.JPanel {
     private void agregarItemButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarItemButton1ActionPerformed
         String itemSeleccionado = itemsDD1.getSelectedItem().toString();
         DefaultTableModel modelo = (DefaultTableModel) tablaItemsCrear1.getModel();
-        boolean encontrado=false;
-        int i=0;
-        while(i<tablaItemsCrear1.getRowCount() && !encontrado){
+        boolean encontrado = false;
+        int i = 0;
+        while (i < tablaItemsCrear1.getRowCount() && !encontrado) {
             String item = (String) modelo.getValueAt(i, 1);
-            if(item.equals(itemSeleccionado)){
-                encontrado=true;
+            if (item.equals(itemSeleccionado)) {
+                encontrado = true;
             }
             i++;
         }
-        if(!encontrado){
+        if (!encontrado) {
             ItemMenu item = itemMenuController.buscarItemMenuPorNombre(itemSeleccionado);
-            Object[] row = { item.getId(), itemSeleccionado, item.getCategoria(), item.getPrecio() };
+            Object[] row = {item.getId(), itemSeleccionado, item.getCategoria(), item.getPrecio()};
             modelo.addRow(row);
         }
     }//GEN-LAST:event_agregarItemButton1ActionPerformed
@@ -687,12 +731,12 @@ public class VendedorUI extends javax.swing.JPanel {
     private void eliminarItemButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarItemButtonActionPerformed
         String itemSeleccionado = itemsDD1.getSelectedItem().toString();
         DefaultTableModel modelo = (DefaultTableModel) tablaItemsCrear1.getModel();
-        boolean encontrado=false;
-        int i=0;
-        while(i<tablaItemsCrear1.getRowCount() && !encontrado){
+        boolean encontrado = false;
+        int i = 0;
+        while (i < tablaItemsCrear1.getRowCount() && !encontrado) {
             String item = (String) modelo.getValueAt(i, 1);
-            if(item.equals(itemSeleccionado)){
-                encontrado=true;
+            if (item.equals(itemSeleccionado)) {
+                encontrado = true;
                 modelo.removeRow(i);
             }
             i++;
@@ -749,6 +793,4 @@ public class VendedorUI extends javax.swing.JPanel {
     private javax.swing.JTextField txtId;
     // End of variables declaration//GEN-END:variables
 
-    
 }
-

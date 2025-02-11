@@ -7,8 +7,10 @@ import desarrollo.tpentrega1.entidades.Coordenada;
 import desarrollo.tpentrega1.utilidades.ButtonEditor;
 import desarrollo.tpentrega1.utilidades.ButtonRenderer;
 import desarrollo.tpentrega1.utilidades.GestionCeldas;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.table.JTableHeader;
 
 public class ClienteUI extends javax.swing.JPanel {
@@ -27,7 +29,15 @@ public class ClienteUI extends javax.swing.JPanel {
     }
     private void actualizarTabla() {
         String[] columnNames = {"ID", "Nombre", "Cuit", "Email", "Dirección", "Latitud", "Longitud", "", ""};
-        List<Cliente> clientes = clienteController.obtenerListaClientes();
+        
+        List<Cliente> clientes = new ArrayList<>();
+        try {
+            clientes = clienteController.obtenerListaClientes();    
+        } catch (Exception e) {
+//             JOptionPane.showMessageDialog(null, "No se pudieron obtener los clientes", "Alerta", JOptionPane.WARNING_MESSAGE);
+             alerta.setText("No se pudieron obtener los clientes");
+             alerta.setVisible(true);
+        }
         
         tableClientes.setModel(new UsuarioTableModel(clientes, columnNames));
         
@@ -491,10 +501,11 @@ public class ClienteUI extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -520,9 +531,19 @@ public class ClienteUI extends javax.swing.JPanel {
             alerta.setText("Ningun campo puede ser vacio");
             alerta.setVisible(true);
         } else {
-            Coordenada coordenada = new Coordenada(Double.parseDouble(coordenada1Field.getText()), Double.parseDouble(coordenada2Field.getText()));
             try{
-                clienteController.crearNuevoCliente(nombreField.getText(), cuitField.getText(), emailField.getText(), direccionField.getText(), coordenada);
+                Coordenada coordenada = new Coordenada(
+                        Double.parseDouble(coordenada1Field.getText()), 
+                        Double.parseDouble(coordenada2Field.getText()));
+                
+                Cliente c = new Cliente(
+                        nombreField.getText(), 
+                        cuitField.getText(), 
+                        emailField.getText(), 
+                        direccionField.getText(), 
+                        coordenada
+                );
+                clienteController.crearNuevoCliente(c);
                 nombreField.setText("");
                 cuitField.setText("");
                 emailField.setText("");
@@ -594,10 +615,19 @@ public class ClienteUI extends javax.swing.JPanel {
             alerta.setText("Ningun campo puede ser vacio");
             alerta.setVisible(true);
         } else {
-            Coordenada coordenada = new Coordenada(Double.parseDouble(coordenada1Field1.getText()), Double.parseDouble(coordenada2Field1.getText()));
             try{
-                clienteController.modificarCliente(
-                        Integer.valueOf(ideditar.getText()), nombreField1.getText(), cuitField1.getText(), emailField1.getText(), direccionField1.getText(), coordenada);
+                Coordenada coordenada = new Coordenada(
+                        Double.parseDouble(coordenada1Field1.getText()), 
+                        Double.parseDouble(coordenada2Field1.getText())
+                );
+                Cliente c = new Cliente(
+                        Integer.valueOf(ideditar.getText()), 
+                        nombreField1.getText(), 
+                        cuitField1.getText(), 
+                        emailField1.getText(), 
+                        direccionField1.getText(), 
+                        coordenada);
+                clienteController.modificarCliente(c);
                 nombreField1.setText("");
                 cuitField1.setText("");
                 emailField1.setText("");
@@ -628,11 +658,11 @@ public class ClienteUI extends javax.swing.JPanel {
 
     private void eliminarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarBtnActionPerformed
         try{
-            clienteController.eliminarCliente(clienteController.buscarCliente(Integer.valueOf(ideliminar.getText())));
+            clienteController.eliminarCliente(Integer.valueOf(ideliminar.getText()));
             alerta.setText("El cliente fue eliminado exitosamente");
             alerta.setVisible(true);
         }catch(Exception e){
-            alerta.setText(e.getMessage());
+            alerta.setText(e.getMessage()); //TODO: mostrar mensaje
             alerta.setVisible(true);
         }
     }//GEN-LAST:event_eliminarBtnActionPerformed
@@ -648,7 +678,14 @@ public class ClienteUI extends javax.swing.JPanel {
     }//GEN-LAST:event_cancelarEditarBtnActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        Cliente c = clienteController.buscarCliente(Integer.valueOf(txtId.getText()));
+        
+        Cliente c = null;
+        try {
+            c = clienteController.buscarCliente(Integer.valueOf(txtId.getText()));
+        }catch(Exception e){
+            alerta.setText(e.getMessage()); //TODO: mostrar mensaje
+            alerta.setVisible(true);
+        }
         String[] columnNames = {"ID", "Nombre", "Cuit", "Email", "Dirección", "Latitud", "Longitud", "", ""};
         Object[][] data = new Object[1][9];
         if(c!=null){

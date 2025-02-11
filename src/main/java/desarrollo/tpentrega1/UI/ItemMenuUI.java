@@ -10,17 +10,19 @@ import desarrollo.tpentrega1.utilidades.GestionCeldas;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.table.JTableHeader;
 
 /*
 falta
 continuar con evento de tabla
-*/
+ */
 public class ItemMenuUI extends javax.swing.JPanel {
+
     private final ItemMenuController itemMenuController;
     private final VendedorController vendedorController;
-    private final ImageIcon icon= new ImageIcon("pedidosya-logo.png");
-    
+    private final ImageIcon icon = new ImageIcon("pedidosya-logo.png");
+
     public ItemMenuUI() {
         this.itemMenuController = ItemMenuController.getInstance();
         this.vendedorController = VendedorController.getInstance();
@@ -31,34 +33,47 @@ public class ItemMenuUI extends javax.swing.JPanel {
         JTableHeader tableHeader = tableItems.getTableHeader();
         tableHeader.setReorderingAllowed(false);
     }
-    void update() {}
+
+    void update() {
+    }
+
     private void actualizarTabla() {
         String[] columnNames = {"ID", "Nombre", "Descripcion", "Precio", "Categoria", "Peso", "Apto Vegano", "Apto Celiaco",
-        "Calorias", "Grad. Alcoholica", "Tamaño", "", ""};
+            "Calorias", "Grad. Alcoholica", "Tamaño", "", ""};
         List<ItemMenu> items = new ArrayList();
-        for(Vendedor v: vendedorController.obtenerListaVendedores()){
-            for(ItemMenu e: itemMenuController.obtenerItemsMenuDeVendedor(v.getId())){
-                items.add(e);
+        try {
+            for (Vendedor v : vendedorController.obtenerListaVendedores()) {
+                for (ItemMenu e : itemMenuController.obtenerItemsMenuDeVendedor(v.getId())) {
+                    items.add(e);
+                }
             }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "No se pudieron obtener los datos", "Alerta", JOptionPane.WARNING_MESSAGE);
         }
         Object[][] data = new Object[items.size()][13];
         int i = 0;
-        for(ItemMenu v : items){
+        for (ItemMenu v : items) {
             data[i][0] = v.getId();
             data[i][1] = v.getNombre();
             data[i][2] = v.getDescripcion();
             data[i][3] = v.getPrecio();
             data[i][4] = v.getCategoria();
-            if(v.getCategoria().equals("Plato")){
+            if (v.getCategoria().equals("Plato")) {
                 data[i][5] = v.peso();
-                if(v.aptoVegano()) data[i][6] = "Si";
-                else data[i][6] = "No";
-                if(v.aptoCeliaco()) data[i][7] = "Si";
-                else data[i][7] = "No";
+                if (v.aptoVegano()) {
+                    data[i][6] = "Si";
+                } else {
+                    data[i][6] = "No";
+                }
+                if (v.aptoCeliaco()) {
+                    data[i][7] = "Si";
+                } else {
+                    data[i][7] = "No";
+                }
                 data[i][8] = v.getCalorias();
                 data[i][9] = "-";
                 data[i][10] = "-";
-            } else if (v.getCategoria().equals("Bebida")){
+            } else if (v.getCategoria().equals("Bebida")) {
                 data[i][5] = "-";
                 data[i][6] = "-";
                 data[i][7] = "-";
@@ -931,9 +946,13 @@ public class ItemMenuUI extends javax.swing.JPanel {
     }//GEN-LAST:event_cancelarEliminarBebidaBtnActionPerformed
 
     private void eliminarPlatoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarPlatoBtnActionPerformed
-        boolean av=false, ac=false;
-        if(aptoVeganoField2.getText().equals("Si")) av = true;
-        if(aptoCeliacoField2.getText().equals("Si")) ac = true;
+        boolean av = false, ac = false;
+        if (aptoVeganoField2.getText().equals("Si")) {
+            av = true;
+        }
+        if (aptoCeliacoField2.getText().equals("Si")) {
+            ac = true;
+        }
         ItemMenu item = new Plato.Builder()
                 .nombre(nombrePField2.getText())
                 .descripcion(descripcionPField2.getText())
@@ -979,9 +998,13 @@ public class ItemMenuUI extends javax.swing.JPanel {
     }//GEN-LAST:event_cancelarEditarBebidaBtnActionPerformed
 
     private void editarPlatoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarPlatoBtnActionPerformed
-        boolean av=false, ac=false;
-        if(aptoVeganoField1.getText().equals("Si")) av = true;
-        if(aptoCeliacoField1.getText().equals("Si")) ac = true;
+        boolean av = false, ac = false;
+        if (aptoVeganoField1.getText().equals("Si")) {
+            av = true;
+        }
+        if (aptoCeliacoField1.getText().equals("Si")) {
+            ac = true;
+        }
         Plato plato = new Plato.Builder()
                 .nombre(nombrePField1.getText())
                 .descripcion(descripcionPField1.getText())
@@ -1007,7 +1030,11 @@ public class ItemMenuUI extends javax.swing.JPanel {
     }//GEN-LAST:event_cancelarEditarPlatoBtnActionPerformed
 
     private void crearBebidaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearBebidaBtnActionPerformed
-        itemMenuController.crearNuevaBebida(nombreBField.getText(), descripcionBField.getText(), Double.parseDouble(precioBField.getText()), "Bebida", Double.parseDouble(tamañoField.getText()), Double.parseDouble(gradAlcField.getText()));
+        try {
+            itemMenuController.crearNuevaBebida(nombreBField.getText(), descripcionBField.getText(), Double.parseDouble(precioBField.getText()), "Bebida", Double.parseDouble(tamañoField.getText()), Double.parseDouble(gradAlcField.getText()));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "No se pudo crear el item", "Alerta", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_crearBebidaBtnActionPerformed
 
     private void cancelarCrearBebidaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarCrearBebidaBtnActionPerformed
@@ -1020,10 +1047,18 @@ public class ItemMenuUI extends javax.swing.JPanel {
     }//GEN-LAST:event_cancelarCrearBebidaBtnActionPerformed
 
     private void crearPlatoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearPlatoBtnActionPerformed
-        boolean av=false, ac=false;
-        if(aptoVeganoField.getText().equals("Si")) av = true;
-        if(aptoCeliacoField.getText().equals("Si")) ac = true;
-        itemMenuController.crearNuevoItem(nombrePField.getText(), descripcionPField.getText(), (Double.parseDouble(precioPField.getText())), "Plato", (Double.parseDouble(caloriasField.getText())), ac, av, (Double.parseDouble(pesoField.getText())));
+        boolean av = false, ac = false;
+        if (aptoVeganoField.getText().equals("Si")) {
+            av = true;
+        }
+        if (aptoCeliacoField.getText().equals("Si")) {
+            ac = true;
+        }
+        try{
+            itemMenuController.crearNuevoItem(nombrePField.getText(), descripcionPField.getText(), (Double.parseDouble(precioPField.getText())), "Plato", (Double.parseDouble(caloriasField.getText())), ac, av, (Double.parseDouble(pesoField.getText())));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "No se pudo crear el item", "Alerta", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_crearPlatoBtnActionPerformed
 
     private void cancelarCrearPlatoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarCrearPlatoBtnActionPerformed
@@ -1054,22 +1089,28 @@ public class ItemMenuUI extends javax.swing.JPanel {
         String[] columnNames = {"ID", "Nombre", "Descripcion", "Precio", "Categoria", "Peso", "Apto Vegano", "Apto Celiaco",
             "Calorias", "Grad. Alcoholica", "Tamaño", "", ""};
         Object[][] data = new Object[1][13];
-        if(v!=null){
+        if (v != null) {
             data[0][0] = v.getId();
             data[0][1] = v.getNombre();
             data[0][2] = v.getDescripcion();
             data[0][3] = v.getPrecio();
             data[0][4] = v.getCategoria();
-            if(v.getCategoria().equals("Plato")){
+            if (v.getCategoria().equals("Plato")) {
                 data[0][5] = v.peso();
-                if(v.aptoVegano()) data[0][6] = "Si";
-                else data[0][6] = "No";
-                if(v.aptoCeliaco()) data[0][7] = "Si";
-                else data[0][7] = "No";
+                if (v.aptoVegano()) {
+                    data[0][6] = "Si";
+                } else {
+                    data[0][6] = "No";
+                }
+                if (v.aptoCeliaco()) {
+                    data[0][7] = "Si";
+                } else {
+                    data[0][7] = "No";
+                }
                 data[0][8] = v.getCalorias();
                 data[0][9] = "-";
                 data[0][10] = "-";
-            } else if (v.getCategoria().equals("Bebida")){
+            } else if (v.getCategoria().equals("Bebida")) {
                 data[0][5] = "-";
                 data[0][6] = "-";
                 data[0][7] = "-";
@@ -1079,7 +1120,7 @@ public class ItemMenuUI extends javax.swing.JPanel {
             }
             data[0][11] = "Editar";
             data[0][12] = "Borrar";
-        } else if (v==null){
+        } else if (v == null) {
             data[0][0] = "";
             data[0][1] = "";
             data[0][2] = "";
@@ -1124,15 +1165,15 @@ public class ItemMenuUI extends javax.swing.JPanel {
     private void tableItemsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableItemsMouseClicked
         int fila = tableItems.rowAtPoint(evt.getPoint());
         int columna = tableItems.columnAtPoint(evt.getPoint());
-        if(!tableItems.getValueAt(fila, 0).equals("") && !tableItems.getValueAt(fila, 1).equals("")
-            && !tableItems.getValueAt(fila, 2).equals("") && !tableItems.getValueAt(fila, 3).equals("")
-            && !tableItems.getValueAt(fila, 4).equals("") && !tableItems.getValueAt(fila, 5).equals("")
-            && !tableItems.getValueAt(fila, 6).equals("") && !tableItems.getValueAt(fila, 7).equals("")
-            && !tableItems.getValueAt(fila, 8).equals("") && !tableItems.getValueAt(fila, 9).equals("")
-            && !tableItems.getValueAt(fila, 10).equals("") && !tableItems.getValueAt(fila, 11).equals("")
-            && !tableItems.getValueAt(fila, 12).equals("")){
-            if(columna==11){
-                if(tableItems.getValueAt(fila, 4).equals("Plato")){
+        if (!tableItems.getValueAt(fila, 0).equals("") && !tableItems.getValueAt(fila, 1).equals("")
+                && !tableItems.getValueAt(fila, 2).equals("") && !tableItems.getValueAt(fila, 3).equals("")
+                && !tableItems.getValueAt(fila, 4).equals("") && !tableItems.getValueAt(fila, 5).equals("")
+                && !tableItems.getValueAt(fila, 6).equals("") && !tableItems.getValueAt(fila, 7).equals("")
+                && !tableItems.getValueAt(fila, 8).equals("") && !tableItems.getValueAt(fila, 9).equals("")
+                && !tableItems.getValueAt(fila, 10).equals("") && !tableItems.getValueAt(fila, 11).equals("")
+                && !tableItems.getValueAt(fila, 12).equals("")) {
+            if (columna == 11) {
+                if (tableItems.getValueAt(fila, 4).equals("Plato")) {
                     nombrePField1.setText(tableItems.getValueAt(fila, 1).toString());
                     descripcionPField1.setText(tableItems.getValueAt(fila, 2).toString());
                     precioPField1.setText(tableItems.getValueAt(fila, 3).toString());
@@ -1143,7 +1184,7 @@ public class ItemMenuUI extends javax.swing.JPanel {
                     idEditarPlato.setVisible(false);
                     idEditarPlato.setText(tableItems.getValueAt(fila, 0).toString());
                     editarPlatoFrame.setVisible(true);
-                } else if(tableItems.getValueAt(fila, 4).equals("Bebida")){
+                } else if (tableItems.getValueAt(fila, 4).equals("Bebida")) {
                     nombreBField1.setText(tableItems.getValueAt(fila, 1).toString());
                     descripcionBField1.setText(tableItems.getValueAt(fila, 2).toString());
                     precioBField1.setText(tableItems.getValueAt(fila, 3).toString());
@@ -1153,8 +1194,8 @@ public class ItemMenuUI extends javax.swing.JPanel {
                     idEditarBebida.setText(tableItems.getValueAt(fila, 0).toString());
                     editarBebidaFrame.setVisible(true);
                 }
-            } else if(columna==12){
-                if(tableItems.getValueAt(fila, 4).equals("Plato")){
+            } else if (columna == 12) {
+                if (tableItems.getValueAt(fila, 4).equals("Plato")) {
                     nombrePField2.setText(tableItems.getValueAt(fila, 1).toString());
                     descripcionPField2.setText(tableItems.getValueAt(fila, 2).toString());
                     precioPField2.setText(tableItems.getValueAt(fila, 3).toString());
@@ -1172,7 +1213,7 @@ public class ItemMenuUI extends javax.swing.JPanel {
                     idEliminarPlato.setVisible(false);
                     idEliminarPlato.setText(tableItems.getValueAt(fila, 0).toString());
                     eliminarPlatoFrame.setVisible(true);
-                } else if(tableItems.getValueAt(fila, 4).equals("Bebida")){
+                } else if (tableItems.getValueAt(fila, 4).equals("Bebida")) {
                     nombreBField2.setText(tableItems.getValueAt(fila, 1).toString());
                     descripcionBField2.setText(tableItems.getValueAt(fila, 2).toString());
                     precioBField2.setText(tableItems.getValueAt(fila, 3).toString());

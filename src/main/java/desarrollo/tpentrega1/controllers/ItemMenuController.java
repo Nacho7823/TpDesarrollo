@@ -1,4 +1,3 @@
-
 package desarrollo.tpentrega1.controllers;
 
 import desarrollo.tpentrega1.dao.sql.ItemMenuDAOSql;
@@ -14,10 +13,10 @@ import java.util.logging.Logger;
 
 public class ItemMenuController {
 
-    private ItemMenuDAOSql itemMenuDAO=ItemMenuDAOSql.getInstance();
-    
+    private ItemMenuDAOSql itemMenuDAO = ItemMenuDAOSql.getInstance();
+
     private static ItemMenuController instance;
-    
+
     public static ItemMenuController getInstance() {
         if (instance == null) {
             instance = new ItemMenuController();
@@ -26,7 +25,7 @@ public class ItemMenuController {
     }
 
     private ItemMenuController() {
-     
+
     }
 
     public List<ItemMenu> obtenerItemsMenuDeVendedor(int id) {
@@ -37,10 +36,11 @@ public class ItemMenuController {
         }
         return new ArrayList<>();
     }
-    
-    //crearNuevoItem no contempla agregarlo a la lista de items de un vendedor, eso deberia hacerse luego de llamar este metodo
+
+    //crearNuevoItem no contempla agregarlo a la lista de items de un vendedor, 
+    // eso deberia hacerse luego de llamar este metodo
     public Plato crearNuevoItem(String nombre, String descripcion, double precio, String categoria,
-            double calorias, boolean aptoCeliaco, boolean aptoVegano, double peso) {
+            double calorias, boolean aptoCeliaco, boolean aptoVegano, double peso) throws Exception {
         Plato p = new Plato.Builder()
                 .nombre(nombre)
                 .descripcion(descripcion)
@@ -50,17 +50,14 @@ public class ItemMenuController {
                 .aptoCeliaco(aptoCeliaco)
                 .aptoVegano(aptoVegano)
                 .build();
-        
-        try {
-            this.itemMenuDAO.crearItemMenu(p);
-        } catch (DAOException ex) {
-            Logger.getLogger(ItemMenuController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
+        this.itemMenuDAO.crearItemMenu(p);
         return p;
     }
+
     // Crear una nueva bebida
     public Bebida crearNuevaBebida(String nombre, String descripcion, double precio, String categoria, Vendedor vendedor,
-            double tamaño, double graduacionAlcoholica) {        
+            double tamaño, double graduacionAlcoholica) throws Exception {
         Bebida nuevaBebida = new Bebida.Builder()
                 .nombre(nombre)
                 .descripcion(descripcion)
@@ -71,15 +68,12 @@ public class ItemMenuController {
                 .build();
         vendedor.addItemMenu(nuevaBebida);
         VendedorController.getInstance().modificarVendedor(vendedor);
-        try {
-            itemMenuDAO.crearItemMenu(nuevaBebida);
-        } catch (DAOException ex) {
-            Logger.getLogger(ItemMenuController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        itemMenuDAO.crearItemMenu(nuevaBebida);
         return nuevaBebida;
     }
+
     public Bebida crearNuevaBebida(String nombre, String descripcion, double precio, String categoria,
-            double tamaño, double graduacionAlcoholica) {        
+            double tamaño, double graduacionAlcoholica) throws Exception {
         Bebida nuevaBebida = new Bebida.Builder()
                 .nombre(nombre)
                 .descripcion(descripcion)
@@ -88,11 +82,7 @@ public class ItemMenuController {
                 .tamaño(tamaño)
                 .graduacionAlcoholica(graduacionAlcoholica)
                 .build();
-        try {
-            itemMenuDAO.crearItemMenu(nuevaBebida);
-        } catch (DAOException ex) {
-            Logger.getLogger(ItemMenuController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        itemMenuDAO.crearItemMenu(nuevaBebida);
         return nuevaBebida;
     }
 
@@ -159,8 +149,8 @@ public class ItemMenuController {
         }
         return null;
     }
-    
-    public ItemMenu buscarItemMenuPorNombre(String nombre){
+
+    public ItemMenu buscarItemMenuPorNombre(String nombre) {
         try {
             ItemMenu item;
             item = itemMenuDAO.buscarItemMenuPorNombre(nombre);
@@ -176,16 +166,16 @@ public class ItemMenuController {
         }
         return null;
     }
-    
-    public List<ItemMenu> obtenerItems() throws DAOException{
+
+    public List<ItemMenu> obtenerItems() throws DAOException {
         List<ItemMenu> lista = new ArrayList();
-        
-        try{
-            lista=itemMenuDAO.obtenerItemMenus();
+
+        try {
+            lista = itemMenuDAO.obtenerItemMenus();
         } catch (DAOException ex) {
             Logger.getLogger(ItemMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return lista;
     }
-    
+
 }
