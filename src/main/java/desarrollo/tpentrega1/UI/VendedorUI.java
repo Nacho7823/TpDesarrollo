@@ -39,6 +39,7 @@ public class VendedorUI extends javax.swing.JPanel {
             vendedores = vendedorController.obtenerListaVendedores();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "No se pudieron obtener los vendedores", "Alerta", JOptionPane.WARNING_MESSAGE);
+            System.out.println(e.getMessage());
         }
         Object[][] data = new Object[vendedores.size()][8];
         int i = 0;
@@ -52,6 +53,7 @@ public class VendedorUI extends javax.swing.JPanel {
             data[i][5] = itemMenuController.obtenerItemsMenuDeVendedor(v.getId()).stream().map(ItemMenu::getNombre).collect(Collectors.joining(", "));
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "No se pudieron obtener los items del vendedor", "Alerta", JOptionPane.WARNING_MESSAGE);
+                System.out.println(e.getMessage());
             }
             data[i][6] = "Editar";
             data[i][7] = "Borrar";
@@ -70,7 +72,7 @@ public class VendedorUI extends javax.swing.JPanel {
         tableVendedores.getColumnModel().getColumn(7).setPreferredWidth(10);
     }
 
-    private void setTablaItemsEditarVendedor(Vendedor vendedor) throws DAOException {
+    private void setTablaItemsEditarVendedor(Vendedor vendedor) throws Exception {
         String[] columnNames = {"ID", "Nombre", "Categoría", "Precio"};
         List<ItemMenu> items = vendedorController.obtenerItemsDeVendedor(vendedor);
         Object[][] data = new Object[items.size()][4];
@@ -572,6 +574,7 @@ public class VendedorUI extends javax.swing.JPanel {
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "No se pudo crear el vendedor", "Alerta", JOptionPane.WARNING_MESSAGE);
+            System.out.println(e.getMessage());
         }
     }//GEN-LAST:event_crearBtnActionPerformed
 
@@ -600,8 +603,14 @@ public class VendedorUI extends javax.swing.JPanel {
     private void eliminarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarBtnActionPerformed
         try {
             vendedorController.eliminarVendedor(Integer.valueOf(ideliminar.getText()));
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "No se pudo crear el vendedor", "Alerta", JOptionPane.WARNING_MESSAGE);
+            eliminarFrame.setVisible(false);
+            actualizarTabla();
+            JOptionPane.showMessageDialog(null, "El vendedor fue eliminado exitosamente", "Alerta", JOptionPane.WARNING_MESSAGE);
+            
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "No se pudo eliminar el vendedor, \n" + 
+                    "puede que contenga relaciones con items o pedidos", "Alerta", JOptionPane.WARNING_MESSAGE);
+            System.out.println(e.getMessage());
         }
         //mensaje de exito! mostrar tarjeta del cliente eliminado?
     }//GEN-LAST:event_eliminarBtnActionPerformed
@@ -624,6 +633,7 @@ public class VendedorUI extends javax.swing.JPanel {
                             Integer.valueOf(tableVendedores.getValueAt(fila, 0).toString())));
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "No se pudo editar el vendedor", "Alerta", JOptionPane.WARNING_MESSAGE);
+                    System.out.println(e.getMessage());
                 }
                 editarFrame.setVisible(true);
                 ideditar.setVisible(false);
@@ -648,7 +658,7 @@ public class VendedorUI extends javax.swing.JPanel {
         try {
             if (nombreField1.getText().isEmpty() || direccionField1.getText().isEmpty() || coordenada1Field1.getText().isEmpty()
                     || coordenada2Field1.getText().isEmpty()) {
-                //mensaje de error por campos vacios
+                JOptionPane.showMessageDialog(null, "Complete los campos", "Alerta", JOptionPane.WARNING_MESSAGE);
             } else {
                 Coordenada coordenada = new Coordenada(Double.parseDouble(coordenada1Field1.getText()), Double.parseDouble(coordenada2Field1.getText()));
                 Vendedor v = new Vendedor(
@@ -669,6 +679,7 @@ public class VendedorUI extends javax.swing.JPanel {
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "No se pudo editar el vendedor", "Alerta", JOptionPane.WARNING_MESSAGE);
+            System.out.println(e.getMessage());
         }
 
     }//GEN-LAST:event_editarBtnActionPerformed
@@ -679,6 +690,7 @@ public class VendedorUI extends javax.swing.JPanel {
             c = vendedorController.buscarVendedor(Integer.valueOf(txtId.getText()));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "No se pudo editar el vendedor", "Alerta", JOptionPane.WARNING_MESSAGE);
+            System.out.println(e.getMessage());
         }
         String[] columnNames = {"ID", "Nombre", "Dirección", "Latitud", "Longitud", "Items", "", ""};
         Object[][] data = new Object[1][8];
@@ -692,6 +704,7 @@ public class VendedorUI extends javax.swing.JPanel {
                 data[0][5] = itemMenuController.obtenerItemsMenuDeVendedor(c.getId()).stream().map(ItemMenu::getNombre).collect(Collectors.joining(", "));
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "No se pudo obtener los items del vendedor", "Alerta", JOptionPane.WARNING_MESSAGE);
+                System.out.println(e.getMessage());
                 return;
             }
             data[0][6] = "Editar";
@@ -740,6 +753,7 @@ public class VendedorUI extends javax.swing.JPanel {
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "No agregar el item", "Alerta", JOptionPane.WARNING_MESSAGE);
+            System.out.println(e.getMessage());
         }
     }//GEN-LAST:event_agregarItemButton1ActionPerformed
 

@@ -49,6 +49,7 @@ public class ItemMenuUI extends javax.swing.JPanel {
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "No se pudieron obtener los datos", "Alerta", JOptionPane.WARNING_MESSAGE);
+            System.out.println(e.getMessage());
         }
         Object[][] data = new Object[items.size()][13];
         int i = 0;
@@ -937,6 +938,7 @@ public class ItemMenuUI extends javax.swing.JPanel {
             itemMenuController.eliminarItemsMenu(Integer.valueOf(idEliminarBebida.getText()));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "No se pudo eliminar el item", "Alerta", JOptionPane.WARNING_MESSAGE);
+            System.out.println(e.getMessage());
         }
     }//GEN-LAST:event_eliminarBebidaBtnActionPerformed
 
@@ -954,6 +956,7 @@ public class ItemMenuUI extends javax.swing.JPanel {
             itemMenuController.eliminarItemsMenu(Integer.valueOf(idEliminarPlato.getText()));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "No se pudo eliminar el item", "Alerta", JOptionPane.WARNING_MESSAGE);
+            System.out.println(e.getMessage());
         }
     }//GEN-LAST:event_eliminarPlatoBtnActionPerformed
 
@@ -981,6 +984,7 @@ public class ItemMenuUI extends javax.swing.JPanel {
             itemMenuController.modificarItemsMenu(nuevaBebida);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "No se pudo editar el item", "Alerta", JOptionPane.WARNING_MESSAGE);
+            System.out.println(e.getMessage());
         }
     }//GEN-LAST:event_editarBebidaBtnActionPerformed
 
@@ -1016,6 +1020,7 @@ public class ItemMenuUI extends javax.swing.JPanel {
             editarPlatoFrame.setVisible(false);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "No se pudo editar el item", "Alerta", JOptionPane.WARNING_MESSAGE);
+            System.out.println(e.getMessage());
         }
     }//GEN-LAST:event_editarPlatoBtnActionPerformed
 
@@ -1043,6 +1048,7 @@ public class ItemMenuUI extends javax.swing.JPanel {
             itemMenuController.crearNuevoItem(bebida.build());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "No se pudo crear el item", "Alerta", JOptionPane.WARNING_MESSAGE);
+            System.out.println(e.getMessage());
         }
     }//GEN-LAST:event_crearBebidaBtnActionPerformed
 
@@ -1076,6 +1082,7 @@ public class ItemMenuUI extends javax.swing.JPanel {
             itemMenuController.crearNuevoItem(plato.build());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "No se pudo crear el item", "Alerta", JOptionPane.WARNING_MESSAGE);
+            System.out.println(e.getMessage());
         }
     }//GEN-LAST:event_crearPlatoBtnActionPerformed
 
@@ -1108,6 +1115,7 @@ public class ItemMenuUI extends javax.swing.JPanel {
             itemMenuController.buscarItemsMenu(Integer.valueOf(txtId.getText()));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "No se pudo buscar el item", "Alerta", JOptionPane.WARNING_MESSAGE);
+            System.out.println(e.getMessage());
         }
         String[] columnNames = {"ID", "Nombre", "Descripcion", "Precio", "Categoria", "Peso", "Apto Vegano", "Apto Celiaco",
             "Calorias", "Grad. Alcoholica", "Tamaño", "", ""};

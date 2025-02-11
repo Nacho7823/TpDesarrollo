@@ -56,7 +56,7 @@ public class VendedorController {
         return vendedorDAO.obtenerVendedores();
     }
     
-    public List<ItemMenu> obtenerItemsDeVendedor(Vendedor vendedor) throws DAOException{
+    public List<ItemMenu> obtenerItemsDeVendedor(Vendedor vendedor) throws Exception{
         return vendedorDAO.obtenerItemsDeVendedor(vendedor);
     }
     

@@ -75,8 +75,8 @@ public class PedidoUI extends javax.swing.JPanel {
             tablePedidos.getColumnModel().getColumn(8).setCellRenderer(new GestionCeldas("icono"));
             tablePedidos.getColumnModel().getColumn(7).setPreferredWidth(10);
             tablePedidos.getColumnModel().getColumn(8).setPreferredWidth(10);
-        } catch (DAOException ex) {
-            Logger.getLogger(PedidoUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "No se pudieron obtener los pedidos", "Alerta", JOptionPane.WARNING_MESSAGE);
         }
     }
 
@@ -837,7 +837,14 @@ public class PedidoUI extends javax.swing.JPanel {
             pago = new Transferencia(cuitField.getText(), cbuAliasField.getText(), Double.parseDouble(totalLabel.getText().substring(2)));
         }
         try {
-            pedidoController.newPedido(c, v, listaItems, pago, EstadoPedido.RECIBIDO);
+            Pedido pedido = new Pedido(
+                    c,
+                    v,
+                    listaItems,
+                    pago,
+                    EstadoPedido.RECIBIDO
+            );
+            pedidoController.newPedido(pedido);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "No se pudo creare el pedido", "Alerta", JOptionPane.WARNING_MESSAGE);
         }

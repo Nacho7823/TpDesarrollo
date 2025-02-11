@@ -34,9 +34,10 @@ public class ClienteUI extends javax.swing.JPanel {
         try {
             clientes = clienteController.obtenerListaClientes();    
         } catch (Exception e) {
-//             JOptionPane.showMessageDialog(null, "No se pudieron obtener los clientes", "Alerta", JOptionPane.WARNING_MESSAGE);
-             alerta.setText("No se pudieron obtener los clientes");
-             alerta.setVisible(true);
+             JOptionPane.showMessageDialog(null, "No se pudieron obtener los clientes", "Alerta", JOptionPane.WARNING_MESSAGE);
+             System.out.println(e.getMessage());
+//             alerta.setText("No se pudieron obtener los clientes");
+//             alerta.setVisible(true);
         }
         
         tableClientes.setModel(new UsuarioTableModel(clientes, columnNames));
@@ -551,12 +552,11 @@ public class ClienteUI extends javax.swing.JPanel {
                 coordenada1Field.setText("");
                 coordenada2Field.setText("");  
                 actualizarTabla();
-                alerta.setText("El cliente fue creado exitosamente");
-                alerta.setVisible(true);
+                JOptionPane.showMessageDialog(null, "El cliente fue creado exitosamente", "Alerta", JOptionPane.WARNING_MESSAGE);
                 crearFrame.setVisible(false);
             } catch(Exception e){
-                alerta.setText(e.getMessage());
-                alerta.setVisible(true);
+                JOptionPane.showMessageDialog(null, "No se pudo crear el cliente", "Alerta", JOptionPane.WARNING_MESSAGE);
+                System.out.println(e.getMessage());
             }
         }
     }//GEN-LAST:event_crearBtnActionPerformed
@@ -612,8 +612,9 @@ public class ClienteUI extends javax.swing.JPanel {
         if(nombreField1.getText().isEmpty() || cuitField1.getText().isEmpty() || emailField1.getText().isEmpty() 
                 || direccionField1.getText().isEmpty() || coordenada1Field1.getText().isEmpty() 
                 || coordenada2Field1.getText().isEmpty()){
-            alerta.setText("Ningun campo puede ser vacio");
-            alerta.setVisible(true);
+            JOptionPane.showMessageDialog(null, "Ningun campo puede ser vacio", "Alerta", JOptionPane.WARNING_MESSAGE);
+//            alerta.setText("Ningun campo puede ser vacio");     
+//            alerta.setVisible(true);
         } else {
             try{
                 Coordenada coordenada = new Coordenada(
@@ -635,12 +636,13 @@ public class ClienteUI extends javax.swing.JPanel {
                 coordenada1Field1.setText("");
                 coordenada2Field1.setText("");  
                 actualizarTabla();
-                alerta.setText("El cliente fue editado exitosamente");
-                alerta.setVisible(true);
+                
+                JOptionPane.showMessageDialog(null, "El cliente fue editado exitosamente", "Alerta", JOptionPane.WARNING_MESSAGE);
                 editarFrame.setVisible(false);
             } catch(Exception e){
-                alerta.setText(e.getMessage());
-                alerta.setVisible(true);
+               
+                JOptionPane.showMessageDialog(null, "No se pudo editar el cliente", "Alerta", JOptionPane.WARNING_MESSAGE);
+                System.out.println(e.getMessage());
             }
             
         }
@@ -659,11 +661,13 @@ public class ClienteUI extends javax.swing.JPanel {
     private void eliminarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarBtnActionPerformed
         try{
             clienteController.eliminarCliente(Integer.valueOf(ideliminar.getText()));
-            alerta.setText("El cliente fue eliminado exitosamente");
-            alerta.setVisible(true);
+            eliminarFrame.setVisible(false);
+            actualizarTabla();
+            JOptionPane.showMessageDialog(null, "El cliente fue eliminado exitosamente", "Alerta", JOptionPane.WARNING_MESSAGE);
+            
         }catch(Exception e){
-            alerta.setText(e.getMessage()); //TODO: mostrar mensaje
-            alerta.setVisible(true);
+            JOptionPane.showMessageDialog(null, "No se pudo eliminar el cliente", "Alerta", JOptionPane.WARNING_MESSAGE);
+            System.out.println(e.getMessage());
         }
     }//GEN-LAST:event_eliminarBtnActionPerformed
 
@@ -683,8 +687,8 @@ public class ClienteUI extends javax.swing.JPanel {
         try {
             c = clienteController.buscarCliente(Integer.valueOf(txtId.getText()));
         }catch(Exception e){
-            alerta.setText(e.getMessage()); //TODO: mostrar mensaje
-            alerta.setVisible(true);
+            JOptionPane.showMessageDialog(null, "No se pudo encontrar el cliente", "Alerta", JOptionPane.WARNING_MESSAGE);
+            System.out.println(e.getMessage());
         }
         String[] columnNames = {"ID", "Nombre", "Cuit", "Email", "Dirección", "Latitud", "Longitud", "", ""};
         Object[][] data = new Object[1][9];
@@ -708,8 +712,9 @@ public class ClienteUI extends javax.swing.JPanel {
             data[0][6] = "";
             data[0][7] = "";
             data[0][8] = "";
-            alerta.setText("No se encontro el cliente");
-            alerta.setVisible(true);
+            JOptionPane.showMessageDialog(null, "No se pudo encontrar el cliente", "Alerta", JOptionPane.WARNING_MESSAGE);
+//            alerta.setText("No se encontro el cliente");
+//            alerta.setVisible(true);
         }
         tableClientes.setModel(new javax.swing.table.DefaultTableModel(data, columnNames));
         tableClientes.getColumnModel().getColumn(0).setCellRenderer(new GestionCeldas("numerico"));
