@@ -918,7 +918,7 @@ public class ItemMenuUII extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void eliminarBebidaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarBebidaBtnActionPerformed
-        itemsMenuController.eliminarItemsMenu(itemsMenuController.buscarItemsMenu(nombreBField2.getText()));
+        itemsMenuController.eliminarItemsMenu(itemsMenuController.buscarItemsMenu(Integer.valueOf(nombreBField2.getText())));
     }//GEN-LAST:event_eliminarBebidaBtnActionPerformed
 
     private void cancelarEliminarBebidaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarEliminarBebidaBtnActionPerformed
@@ -1050,7 +1050,7 @@ public class ItemMenuUII extends javax.swing.JPanel {
     }//GEN-LAST:event_btnRefrescarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        ItemMenu v = itemsMenuController.buscarItemsMenu(txtId.getText());
+        ItemMenu v = itemsMenuController.buscarItemsMenu(Integer.valueOf(txtId.getText()));
         String[] columnNames = {"ID", "Nombre", "Descripcion", "Precio", "Categoria", "Peso", "Apto Vegano", "Apto Celiaco",
             "Calorias", "Grad. Alcoholica", "Tamaño", "", ""};
         Object[][] data = new Object[1][13];

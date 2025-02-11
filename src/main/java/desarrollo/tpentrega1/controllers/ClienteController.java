@@ -15,7 +15,7 @@ public class ClienteController {
     public ClienteController() {
     }
     
-    public Cliente crearNuevoCliente(String id, String nombre, String cuit, String email, String direccion, Coordenada coordenada) {
+    public Cliente crearNuevoCliente(int id, String nombre, String cuit, String email, String direccion, Coordenada coordenada) {
         Cliente nuevoCliente = new Cliente(id, nombre, cuit, email, direccion, coordenada);
         try {
             clienteDAO.crearCliente(nuevoCliente);
@@ -36,7 +36,7 @@ public class ClienteController {
     }
 
     // Modificar un cliente existente
-    public void modificarCliente(String id, String nombre, String cuit, String email, String direccion, Coordenada coordenada) {
+    public void modificarCliente(int id, String nombre, String cuit, String email, String direccion, Coordenada coordenada) {
         try {
             Cliente clienteExistente = clienteDAO.buscarCliente(id);
 
@@ -67,7 +67,7 @@ public class ClienteController {
     }
 
     // Buscar un cliente por ID
-    public Cliente buscarCliente(String id) {
+    public Cliente buscarCliente(int id) {
         try {
         Cliente cliente = clienteDAO.buscarCliente(id);
         if (cliente != null) {
@@ -85,7 +85,7 @@ public class ClienteController {
     
     public Cliente buscarClientePorNombre(String nombre) {
         try {
-            Cliente cliente = clienteDAO.buscarCliente(nombre);
+            Cliente cliente = clienteDAO.buscarClientePorNombre(nombre);
             if (cliente != null) {
                 System.out.println("Cliente encontrado: " + cliente.getNombre());
                 return cliente;

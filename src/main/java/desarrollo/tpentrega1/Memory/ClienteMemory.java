@@ -1,4 +1,3 @@
-
 package desarrollo.tpentrega1.Memory;
 
 import desarrollo.tpentrega1.dao.ClienteDAO;
@@ -8,9 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ClienteMemory implements ClienteDAO{
-    
-private static List<Cliente> clientes = new ArrayList<>();
+public class ClienteMemory implements ClienteDAO {
+
+    private static List<Cliente> clientes = new ArrayList<>();
 
     public static List<Cliente> getClientes() {
         return clientes;
@@ -24,7 +23,6 @@ private static List<Cliente> clientes = new ArrayList<>();
 //                               ", Dirección: " + c.getDireccion());
 //        }
 //    }
-
     @Override
     public void crearCliente(Cliente cliente) {
         clientes.add(cliente);
@@ -34,45 +32,44 @@ private static List<Cliente> clientes = new ArrayList<>();
     @Override
     public void actualizarCliente(Cliente cliente) {
         for (int i = 0; i < clientes.size(); i++) {
-            if (clientes.get(i).getId().equals(cliente.getId())) {
+            if (clientes.get(i).getId() == cliente.getId()) {
                 clientes.set(i, cliente);
-               
                 return;
             }
         }
         System.out.println("Cliente no encontrado para actualizar.");
     }
 
-@Override
-    public void eliminarCliente(String id) {
-        boolean existe= clientes.stream().anyMatch(c ->c.getId().equals(id));
-        if(existe){
-        clientes.removeIf(c -> c.getId().equals(id));
-        System.out.println("Cliente eliminado con ID: " + id);
-    }}
+    @Override
+    public void eliminarCliente(int id) {
+        boolean existe = clientes.stream().anyMatch(c -> c.getId() == (id));
+        if (existe) {
+            clientes.removeIf(c -> c.getId() == (id));
+            System.out.println("Cliente eliminado con ID: " + id);
+        }
+    }
 
     @Override
-    public Cliente buscarCliente(String id) {
-         for (Cliente cliente : clientes) {
-            if (cliente.getId().equals(id)) {
-                
+    public Cliente buscarCliente(int id) {
+        for (Cliente cliente : clientes) {
+            if (cliente.getId() == (id)) {
                 return cliente;
             }
         }
-        
+
         return null;
     }
-    
+
     @Override
-    public Cliente buscarClientePorNombre(String nombre){
+    public Cliente buscarClientePorNombre(String nombre) {
         return clientes.stream().filter(c -> c.getNombre().equals(nombre)).findFirst().orElse(null);
     }
-
 
     @Override
     public List<Cliente> obtenerClientes() throws DAOException {
         return clientes;
     }
+
     
-    
+
 }

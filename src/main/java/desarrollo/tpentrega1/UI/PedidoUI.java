@@ -793,8 +793,8 @@ public class PedidoUI extends javax.swing.JPanel {
     }//GEN-LAST:event_vendedoresDDActionPerformed
 
     private void crearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearBtnActionPerformed
-        Cliente c = clienteController.buscarCliente(clientesDD.getSelectedItem().toString());
-        Vendedor v = vendedorController.buscarVendedor(vendedoresDD.getSelectedItem().toString());
+        Cliente c = clienteController.buscarCliente(Integer.valueOf(clientesDD.getSelectedItem().toString()));
+        Vendedor v = vendedorController.buscarVendedor(Integer.valueOf(vendedoresDD.getSelectedItem().toString()));
         List<ItemMenu> listaItems = new ArrayList<>();
         Pago pago = null;
         for(int i=0; i<tablaItemsCrear.getRowCount(); i++){

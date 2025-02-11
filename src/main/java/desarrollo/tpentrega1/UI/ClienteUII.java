@@ -135,7 +135,7 @@ public class ClienteUII extends JPanel {
         btnCrear.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String id = txtId.getText();
+                int id = Integer.valueOf(txtId.getText());
                 String nombre = txtNombre.getText();
                 String cuit = txtCuit.getText();
                 String email = txtEmail.getText();
@@ -160,11 +160,11 @@ public class ClienteUII extends JPanel {
         btnBuscar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String id = txtId.getText();
+                int id = Integer.valueOf(txtId.getText());
                 Cliente cliente = clienteController.buscarCliente(id);
                 if (cliente != null) {
                     actualizarTabla();
-                    txtId.setText(cliente.getId());
+                    txtId.setText(cliente.getId() + "s");
                     txtNombre.setText(cliente.getNombre());
                     txtCuit.setText(cliente.getCuit());
                     txtEmail.setText(cliente.getEmail());
@@ -196,7 +196,7 @@ public class ClienteUII extends JPanel {
         btnEditar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String id = txtId.getText();
+                int id = Integer.valueOf(txtId.getText());
                 String nombre = txtNombre.getText();
                 String cuit = txtCuit.getText();
                 String email = txtEmail.getText();
@@ -220,7 +220,7 @@ public class ClienteUII extends JPanel {
         btnEliminar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String id = txtId.getText();
+                int id = Integer.valueOf(txtId.getText());
                 Cliente c = clienteController.buscarCliente(id);
                 actualizarTabla();
                 clienteController.eliminarCliente(c);

@@ -112,7 +112,7 @@ layout.setVerticalGroup(layout.createSequentialGroup()
         btnCrear.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String id= txtId.getText();
+                int id= Integer.valueOf(txtId.getText());
                 String nombre = txtNombre.getText();
                 String direccion = txtDireccion.getText();
                 double lat = Double.parseDouble(txtLatitud.getText());
@@ -129,11 +129,11 @@ layout.setVerticalGroup(layout.createSequentialGroup()
         btnBuscar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String id = txtId.getText();
+                int id = Integer.valueOf(txtId.getText());
                 Vendedor vendedor = vendedorController.buscarVendedor(id);
                 if (vendedor != null) {
                     actualizarTabla(vendedor);
-                    txtId.setText(vendedor.getId());
+                    txtId.setText(vendedor.getId() + "");
                     txtNombre.setText(vendedor.getNombre());
                     txtDireccion.setText(vendedor.getDireccion());
                     txtLatitud.setText(vendedor.getCoordenada().getLat() + "");
@@ -148,7 +148,7 @@ layout.setVerticalGroup(layout.createSequentialGroup()
         btnEditar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String id = txtId.getText();
+                int id = Integer.valueOf(txtId.getText());
                 String nombre = txtNombre.getText();
                 String direccion = txtDireccion.getText();
                 double lat = Double.parseDouble(txtLatitud.getText());
@@ -163,7 +163,7 @@ layout.setVerticalGroup(layout.createSequentialGroup()
         btnEliminar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String id = txtId.getText();
+                int id = Integer.valueOf(txtId.getText());
                 Vendedor v = vendedorController.buscarVendedor(id);
                 actualizarTabla(v);
                 vendedorController.eliminarVendedor(v);

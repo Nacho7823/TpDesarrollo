@@ -571,7 +571,7 @@ public class VendedorUI extends javax.swing.JPanel {
     }//GEN-LAST:event_cancelarEliminarBtnActionPerformed
 
     private void eliminarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarBtnActionPerformed
-        vendedorController.eliminarVendedor(vendedorController.buscarVendedor(ideliminar.getText()));
+        vendedorController.eliminarVendedor(vendedorController.buscarVendedor(Integer.valueOf(ideliminar.getText())));
         //mensaje de exito! mostrar tarjeta del cliente eliminado?
     }//GEN-LAST:event_eliminarBtnActionPerformed
 
@@ -589,7 +589,8 @@ public class VendedorUI extends javax.swing.JPanel {
                 coordenada2Field1.setText(tableVendedores.getValueAt(fila, 4).toString());
                 try {
                     itemMenuController.obtenerItems().stream().forEach(item -> itemsDD1.addItem(item.getNombre()));
-                    setTablaItemsEditarVendedor(vendedorController.buscarVendedor(tableVendedores.getValueAt(fila, 0).toString()));
+                    setTablaItemsEditarVendedor(vendedorController.buscarVendedor(
+                            Integer.valueOf(tableVendedores.getValueAt(fila, 0).toString())));
                 } catch (DAOException ex) {
                     Logger.getLogger(VendedorUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -618,7 +619,7 @@ public class VendedorUI extends javax.swing.JPanel {
             //mensaje de error por campos vacios
         } else {
             Coordenada coordenada = new Coordenada(Double.parseDouble(coordenada1Field1.getText()), Double.parseDouble(coordenada2Field1.getText()));
-            vendedorController.modificarVendedor(ideditar.getText(), nombreField1.getText(), direccionField1.getText(), coordenada);
+            vendedorController.modificarVendedor(Integer.valueOf(ideditar.getText()), nombreField1.getText(), direccionField1.getText(), coordenada);
             actualizarTabla();
             nombreField.setText("");
             direccionField.setText("");
@@ -630,7 +631,7 @@ public class VendedorUI extends javax.swing.JPanel {
     }//GEN-LAST:event_editarBtnActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        Vendedor c = vendedorController.buscarVendedor(txtId.getText());
+        Vendedor c = vendedorController.buscarVendedor(Integer.valueOf(txtId.getText()));
         String[] columnNames = {"ID", "Nombre", "Dirección", "Latitud", "Longitud", "Items", "", ""};
         Object[][] data = new Object[1][8];
         if(c!=null){

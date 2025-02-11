@@ -13,8 +13,8 @@ public class Pedido {
 
     private Cliente cliente;
     private Vendedor vendedor;
-    private String id;
-    private List<ItemMenu> items;
+    private int id;
+    private List<ItemMenu> items;   //TODO: cantidad?
     private Pago pago;
     private double total;
     private EstadoPedido estado;
@@ -26,7 +26,7 @@ public class Pedido {
     
 
     
-    public Pedido(String id,Cliente cliente, Vendedor vendedor, List<ItemMenu> items, Pago pago, EstadoPedido estado)throws InvalidOrderException {
+    public Pedido(int id,Cliente cliente, Vendedor vendedor, List<ItemMenu> items, Pago pago, EstadoPedido estado)throws InvalidOrderException {
         if (!validarItemsUnVendedor(items, vendedor)) {
             throw new InvalidOrderException("Los ítems deben pertenecer al mismo vendedor");
         }
@@ -51,11 +51,11 @@ public class Pedido {
     
     
     
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
     

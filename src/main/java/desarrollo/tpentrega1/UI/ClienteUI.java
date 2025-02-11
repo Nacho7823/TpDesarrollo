@@ -596,7 +596,8 @@ public class ClienteUI extends javax.swing.JPanel {
         } else {
             Coordenada coordenada = new Coordenada(Double.parseDouble(coordenada1Field1.getText()), Double.parseDouble(coordenada2Field1.getText()));
             try{
-                clienteController.modificarCliente(ideditar.getText(), nombreField1.getText(), cuitField1.getText(), emailField1.getText(), direccionField1.getText(), coordenada);
+                clienteController.modificarCliente(
+                        Integer.valueOf(ideditar.getText()), nombreField1.getText(), cuitField1.getText(), emailField1.getText(), direccionField1.getText(), coordenada);
                 nombreField1.setText("");
                 cuitField1.setText("");
                 emailField1.setText("");
@@ -627,7 +628,7 @@ public class ClienteUI extends javax.swing.JPanel {
 
     private void eliminarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarBtnActionPerformed
         try{
-            clienteController.eliminarCliente(clienteController.buscarCliente(ideliminar.getText()));
+            clienteController.eliminarCliente(clienteController.buscarCliente(Integer.valueOf(ideliminar.getText())));
             alerta.setText("El cliente fue eliminado exitosamente");
             alerta.setVisible(true);
         }catch(Exception e){
@@ -647,7 +648,7 @@ public class ClienteUI extends javax.swing.JPanel {
     }//GEN-LAST:event_cancelarEditarBtnActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        Cliente c = clienteController.buscarCliente(txtId.getText());
+        Cliente c = clienteController.buscarCliente(Integer.valueOf(txtId.getText()));
         String[] columnNames = {"ID", "Nombre", "Cuit", "Email", "Dirección", "Latitud", "Longitud", "", ""};
         Object[][] data = new Object[1][9];
         if(c!=null){

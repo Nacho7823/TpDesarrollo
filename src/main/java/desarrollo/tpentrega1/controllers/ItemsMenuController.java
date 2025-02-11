@@ -22,9 +22,9 @@ public class ItemsMenuController {
         this.vendedorController = vendedorController;
     }
 
-    public List<ItemMenu> obtenerItemsMenuDeVendedor(String id) {
+    public List<ItemMenu> obtenerItemsMenuDeVendedor(int id) {
         try {
-            return itemMenuDAO.obtenerItemsMenuDeVendedor(id);
+            return itemMenuDAO.obtenerItemMenusDeVendedor(id);
         } catch (DAOException ex) {
             Logger.getLogger(ItemsMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -90,7 +90,7 @@ public class ItemsMenuController {
     }
 
     // Modificar un ítem de menú existente
-    public void modificarItemsMenu(String id, String nombre, String descripcion, double precio, String categoria) {
+    public void modificarItemsMenu(int id, String nombre, String descripcion, double precio, String categoria) {
         try {
             ItemMenu itemExistente;
             itemExistente = itemMenuDAO.buscarItemMenu(id);
@@ -136,7 +136,7 @@ public class ItemsMenuController {
     }
 
     // Buscar un ítem de menú por ID
-    public ItemMenu buscarItemsMenu(String id) {
+    public ItemMenu buscarItemsMenu(int id) {
         try {
             ItemMenu item;
             item = itemMenuDAO.buscarItemMenu(id);
@@ -174,7 +174,7 @@ public class ItemsMenuController {
         List<ItemMenu> lista = new ArrayList();
         
         try{
-            lista=itemMenuDAO.obtenerItems();
+            lista=itemMenuDAO.obtenerItemMenus();
         } catch (DAOException ex) {
             Logger.getLogger(ItemsMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }

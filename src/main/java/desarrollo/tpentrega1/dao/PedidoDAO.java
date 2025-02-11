@@ -11,9 +11,9 @@ public interface PedidoDAO {
 
     public void actualizarPedido(Pedido pedido) throws DAOException;
 
-    public void eliminarPedido(String id) throws DAOException;
+    public void eliminarPedido(int id) throws DAOException;
 
-    public Pedido buscarPedido(String id) throws DAOException;
+    public Pedido buscarPedido(int id) throws DAOException;
     
     public List<Pedido> obtenerPedidos() throws DAOException;
 

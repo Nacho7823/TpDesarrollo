@@ -1,4 +1,3 @@
-
 package desarrollo.tpentrega1.dao.sql;
 
 import desarrollo.tpentrega1.dao.PagoDAO;
@@ -6,236 +5,202 @@ import desarrollo.tpentrega1.entidades.MercadoPago;
 import desarrollo.tpentrega1.entidades.Pago;
 import desarrollo.tpentrega1.entidades.Transferencia;
 import desarrollo.tpentrega1.exceptions.DAOException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PagoDAOSql extends DAO implements PagoDAO{
-         private static PagoDAOSql instance;
-     
-    public static PagoDAOSql getInstance(){
-        if(PagoDAOSql.instance == null)PagoDAOSql.instance =  new PagoDAOSql();
+public class PagoDAOSql extends DAO implements PagoDAO {
+
+    private static PagoDAOSql instance;
+
+    public static PagoDAOSql getInstance() {
+        if (PagoDAOSql.instance == null) {
+            PagoDAOSql.instance = new PagoDAOSql();
+        }
         return PagoDAOSql.instance;
     }
 
     @Override
-    public void crearPago(Pago pago) throws DAOException,Exception {
-                String sql = "INSERT INTO pago (monto, fecha) VALUES (?, ?)";
-         try (PreparedStatement stmt = conexion.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            ConectarBase();
-            stmt.setDouble(1, pago.getMonto());
-            stmt.setDate(2, java.sql.Date.valueOf(pago.getFecha()));
-        
-            stmt.executeUpdate();
-            
-            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    int idItemMenu = generatedKeys.getInt(1);
-                    
-                   pago.setId(String.valueOf(idItemMenu));
-                    
-                }
-                }
-                    
-                } catch (Exception ex) {
-            throw new DAOException("no se pudo crear el Pago: \n" + ex.getMessage());
-        }
-                if (pago instanceof MercadoPago) {
-            crearMercadoPago((MercadoPago) pago);
-        } else {
-            crearTransferencia((Transferencia) pago);
+    public void crearPago(Pago pago) throws DAOException {
+        String sql = "INSERT INTO pago (monto, fecha) VALUES (?, ?)";
+
+        try {
+
+            int id = create(sql, pago.getMonto(), java.sql.Date.valueOf(pago.getFecha()));
+            pago.setId(id);
+
+            if (pago instanceof MercadoPago) {
+                crearMercadoPago((MercadoPago) pago);
+            } else {
+                crearTransferencia((Transferencia) pago);
+            }
+
+        } catch (SQLException e) {
+            throw new DAOException(e.getMessage());
         }
     }
-    public void crearMercadoPago(MercadoPago mp)throws DAOException,Exception {
-        
+
+    public void crearMercadoPago(MercadoPago mp) throws DAOException {
+
         String sql = "INSERT INTO mercado_pago (id_pago,alias) VALUES ( ?, ?)";
         try {
 
-            insertarModificarEliminar(sql,
-                    Integer.valueOf(mp.getId()),
+            createNoKey(sql,
+                    mp.getId(),
                     mp.getAlias());
 
-        } catch (Exception ex) {
+        } catch (SQLException ex) {
             throw new DAOException("no se pudo crear el pago de MercadoPago: \n" + ex.getMessage());
         }
-        desconectarBase();
+
     }
-    public void crearTransferencia(Transferencia transferencia)throws DAOException,Exception{
-        
+
+    public void crearTransferencia(Transferencia transferencia) throws DAOException {
         String sql = "INSERT INTO transferencia (id_pago, cvu, cuit) VALUES (?, ?, ?)";
         try {
 
-            insertarModificarEliminar(sql,
-                    Integer.valueOf(transferencia.getId()),
+            createNoKey(sql,
+                    transferencia.getId(),
                     transferencia.getCvu(),
                     transferencia.getCuit());
 
-        } catch (Exception ex) {
-            throw new DAOException("no se pudo crear el plato: \n" + ex.getMessage());
+        } catch (SQLException ex) {
+            throw new DAOException("no se pudo crear el pago de transferencia: \n" + ex.getMessage());
         }
-        desconectarBase();
     }
 
     @Override
-    public void eliminarPago(String id) throws DAOException {
-        
-        String sql = "DELETE FROM pago WHERE id_pago = ?";
+    public void eliminarPago(int id) throws DAOException {
+
+        String sql1 = "DELETE FROM pago WHERE id_pago = ?";
+        String sql2 = "DELETE FROM transferencia WHERE id_pago = ?";
+        String sql3 = "DELETE FROM mercado_pago WHERE id_pago = ?";
 
         try {
-            insertarModificarEliminar(sql, Integer.valueOf(id));
-        } catch (Exception ex) {
-            throw new DAOException("no se pudo eliminar el itemMenu: \n" + ex.getMessage());
+            delete(sql1, id);
+            delete(sql2, id);
+            delete(sql3, id);
+        } catch (SQLException ex) {
+            throw new DAOException("no se pudo eliminar el pago: \n" + ex.getMessage());
         }
     }
 
     @Override
-    public Pago buscarPago(String id) throws DAOException {
-               
+    public Pago buscarPago(int id) throws DAOException {
+
         String sql = "SELECT * FROM pago P LEFT JOIN mercado_pago MP ON P.id_pago=MP.id_pago LEFT JOIN transferencia T ON"
                 + " P.id_pago=T.id_pago WHERE P.id_pago= ?";
-        Pago pago = null;
 
-         try {
-            ConectarBase();
-            PreparedStatement preparedStatement = conexion.prepareStatement(sql);
-            preparedStatement.setInt(1, Integer.parseInt(id));
-            resultado = preparedStatement.executeQuery();
+        try {
+            search(sql, id);
 
-            if(resultado.next()) {
-                double monto = resultado.getDouble("monto");
-                LocalDate fecha = resultado.getDate("fecha").toLocalDate();
-                
-                
-                if(resultado.getString("alias")!= null){
-                String alias= resultado.getString("alias");
-                pago = new MercadoPago(alias,monto);
+            if (!resultado.next()) {
+                throw new DAOException("pago not found");
+            }
+
+            double monto = resultado.getDouble("monto");
+            LocalDate fecha = resultado.getDate("fecha").toLocalDate();
+
+            Pago pago = null;
+            if (resultado.getString("alias") != null) {
+                String alias = resultado.getString("alias");
+                pago = new MercadoPago(alias, monto);
                 pago.setId(id);
                 pago.setFecha(fecha);
-                }
-                else if(resultado.getString("cvu")!= null){
-                    String cuit= resultado.getString("cuit");
-                    String cvu=resultado.getString("cvu");
-                    pago= new Transferencia(cuit,cvu,monto);
-                    pago.setId(id);
-                    pago.setFecha(fecha);
-                }
+            } else if (resultado.getString("cvu") != null) {
+                String cuit = resultado.getString("cuit");
+                String cvu = resultado.getString("cvu");
+                pago = new Transferencia(cuit, cvu, monto);
+                pago.setId(id);
+                pago.setFecha(fecha);
             }
-        } catch (Exception ex) {
-            throw new DAOException("No se pudo obtener los itemMenu: \n" + ex.getMessage());
-        } finally {
-            try {
+            closeSearch();
+            return pago;
 
-                desconectarBase();
-            } catch (Exception e) {
-                throw new DAOException("Error al cerrar la conexión: " + e.getMessage());
-            }
+        } catch (SQLException e) {
+            throw new DAOException(e.getMessage());
         }
-
-        return pago;
     }
 
+    @Override
+    public Pago buscarPagoPorIdPedido(int id) throws DAOException {
 
-    
-     @Override
-    public Pago buscarPagoPorIdPedido(String id) throws DAOException {
-        
         String sql = "SELECT * FROM pago P LEFT JOIN pedido PE ON PE.id_pago=P.id_pago LEFT JOIN mercado_pago MP ON P.id_pago=MP.id_pago LEFT JOIN transferencia T ON"
                 + " P.id_pago=T.id_pago WHERE PE.id_pedido= ?";
 
+        try {
+            search(sql, id);
+
+            if (!resultado.next()) {
+                throw new DAOException("pago not found");
+            }
+
+            double monto = resultado.getDouble("monto");
+            LocalDate fecha = resultado.getDate("fecha").toLocalDate();
 
             Pago pago = null;
-         try {
-            ConectarBase();
-            PreparedStatement preparedStatement = conexion.prepareStatement(sql);
-            preparedStatement.setInt(1, Integer.parseInt(id));
-            resultado = preparedStatement.executeQuery();
- 
-
-            if(resultado.next()) {
-                double monto = resultado.getDouble("monto");
-                LocalDate fecha = resultado.getDate("fecha").toLocalDate();
-                
-                
-                if(resultado.getString("alias")!= null){
-                String alias= resultado.getString("alias");
-                pago = new MercadoPago(alias,monto);
+            if (resultado.getString("alias") != null) {
+                String alias = resultado.getString("alias");
+                pago = new MercadoPago(alias, monto);
                 pago.setId(id);
                 pago.setFecha(fecha);
-                }
-                else if(resultado.getString("cvu")!= null){
-                    String cuit= resultado.getString("cuit");
-                    String cvu=resultado.getString("cvu");
-                    pago= new Transferencia(cuit,cvu,monto);
-                    pago.setId(id);
-                    pago.setFecha(fecha);
-                }
+            } else if (resultado.getString("cvu") != null) {
+                String cuit = resultado.getString("cuit");
+                String cvu = resultado.getString("cvu");
+                pago = new Transferencia(cuit, cvu, monto);
+                pago.setId(id);
+                pago.setFecha(fecha);
             }
-        } catch (Exception ex) {
-            throw new DAOException("No se pudo obtener los itemMenu: \n" + ex.getMessage());
-        } finally {
-            try {
 
-                desconectarBase();
-            } catch (Exception e) {
-                throw new DAOException("Error al cerrar la conexión: " + e.getMessage());
-            }
+            closeSearch();
+            return pago;
+
+        } catch (SQLException e) {
+            throw new DAOException(e.getMessage());
         }
+    }
 
-        return pago;
-    
-    
-    
-}
     @Override
     public List<Pago> obtenerPagos() throws DAOException {
-        
-        String sql = "SELECT * FROM pago P LEFT JOIN mercado_pago MP ON P.id_pago=MP.id_pago LEFT JOIN transferencia T ON"
-                + " P.id_pago=T.id_pago";
-        List<Pago> listaPagos = new ArrayList<>();
-
         try {
-            ConectarBase();
-            PreparedStatement preparedStatement = conexion.prepareStatement(sql);
-            resultado = preparedStatement.executeQuery();
+
+            String sql = "SELECT * FROM pago P LEFT JOIN mercado_pago MP ON P.id_pago=MP.id_pago LEFT JOIN transferencia T ON"
+                + " P.id_pago=T.id_pago";
+
+            List<Pago> listaPagos = new ArrayList<>();
+
+            search(sql);
 
             while (resultado.next()) {
-                String id_pago = String.valueOf(resultado.getInt("id_pago"));
+                int id_pago = resultado.getInt("id_pago");
                 double monto = resultado.getDouble("monto");
                 LocalDate fecha = resultado.getDate("fecha").toLocalDate();
 
-                Pago pago= null;
-                
-                if(resultado.getString("alias")!=null){
-                    String alias= resultado.getString("alias");
-                pago = new MercadoPago(alias,monto);
-                pago.setId(id_pago);
-                pago.setFecha(fecha);
-                }
-                else if(resultado.getString("cuit")!=null){
-                    String cuit= resultado.getString("cuit");
-                    String cvu=resultado.getString("cvu");
-                    pago= new Transferencia(cuit,cvu,monto);
+                Pago pago = null;
+
+                if (resultado.getString("alias") != null) {
+                    String alias = resultado.getString("alias");
+                    pago = new MercadoPago(alias, monto);
+                    pago.setId(id_pago);
+                    pago.setFecha(fecha);
+                } else if (resultado.getString("cuit") != null) {
+                    String cuit = resultado.getString("cuit");
+                    String cvu = resultado.getString("cvu");
+                    pago = new Transferencia(cuit, cvu, monto);
                     pago.setId(id_pago);
                     pago.setFecha(fecha);
                 }
-                
 
                 listaPagos.add(pago);
             }
-        } catch (Exception ex) {
-            throw new DAOException("No se pudo obtener los itemMenu: \n" + ex.getMessage());
-        } finally {
-            try {
 
-                desconectarBase();
-            } catch (Exception e) {
-                throw new DAOException("Error al cerrar la conexión: " + e.getMessage());
-            }
+            closeSearch();
+            return listaPagos;
+            
+        } catch (SQLException e) {
+            throw new DAOException(e.getMessage());
         }
-
-        return listaPagos;
+        
     }
 }

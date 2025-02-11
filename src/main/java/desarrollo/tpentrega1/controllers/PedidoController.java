@@ -18,7 +18,7 @@ public class PedidoController {
     public PedidoController() {
     }
 
-    public void newPedido(String id,Cliente cliente, Vendedor vendedor, List<ItemMenu> items, Pago pago, EstadoPedido estado) throws DAOException {
+    public void newPedido(int id,Cliente cliente, Vendedor vendedor, List<ItemMenu> items, Pago pago, EstadoPedido estado) throws DAOException {
         try {
         Pedido nuevoPedido = new Pedido(id,cliente, vendedor, items, pago, estado);
         pedidoDAO.crearPedido(nuevoPedido);
@@ -37,7 +37,7 @@ public class PedidoController {
     }
 
     // Modificar un pedido existente (cambia su estado)
-    public void modificarPedidoEstado(String id, EstadoPedido nuevoEstado) throws DAOException {
+    public void modificarPedidoEstado(int id, EstadoPedido nuevoEstado) throws DAOException {
         Pedido pedidoExistente = pedidoDAO.buscarPedido(id);
         if (pedidoExistente != null) {
             pedidoExistente.setEstado(nuevoEstado);
@@ -49,22 +49,22 @@ public class PedidoController {
     }
 
     // Eliminar un pedido por ID
-    public void eliminarPedido(String id) throws DAOException {
+    public void eliminarPedido(int id) throws DAOException {
         pedidoDAO.eliminarPedido(id);
         
     }
 
     // Buscar un pedido por ID
-    public Pedido buscarPedido(String id) throws DAOException{
-        Pedido pedido = pedidoDAO.buscarPedido(id);
-        if (pedido != null) {
-            System.out.println("Pedido encontrado con ID: " + pedido.getId());
-        } else {
-            System.out.println("Pedido no encontrado con ID: " + id);
-        }
-        return pedido;
-    }
-    public Pedido buscarYDevolverPedido(String id)throws DAOException{
+//    public Pedido buscarPedido(int id) throws DAOException{
+//        Pedido pedido = pedidoDAO.buscarPedido(id);
+//        if (pedido != null) {
+//            System.out.println("Pedido encontrado con ID: " + pedido.getId());
+//        } else {
+//            System.out.println("Pedido no encontrado con ID: " + id);
+//        }
+//        return pedido;
+//    }
+    public Pedido buscarYDevolverPedido(int id)throws DAOException{
         return pedidoDAO.buscarPedido(id);
     }
 

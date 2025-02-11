@@ -4,14 +4,14 @@ package desarrollo.tpentrega1.entidades;
 import desarrollo.tpentrega1.interfaces.Observador;
 
 public class Cliente implements Observador{
-    private String id;
+    private int id;
     private String nombre;
     private String cuit;
     private String email;
     private String direccion;
     private Coordenada coordenada;
 
-    public Cliente(String id, String nombre, String cuit, String email, String direccion, Coordenada coordenada) {
+    public Cliente(int id, String nombre, String cuit, String email, String direccion, Coordenada coordenada) {
         this.id = id;
         this.nombre = nombre;
         this.cuit = cuit;
@@ -20,7 +20,7 @@ public class Cliente implements Observador{
         this.coordenada = coordenada;
     }
         public Cliente( String nombre, String cuit, String email, String direccion, Coordenada coordenada) {
-        this.id = null;
+        this.id = -1;
         this.nombre = nombre;
         this.cuit = cuit;
         this.email = email;
@@ -29,11 +29,11 @@ public class Cliente implements Observador{
     }
 
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

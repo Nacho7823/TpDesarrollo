@@ -8,14 +8,14 @@ import java.util.List;
 
 
 public class Vendedor {
-    private String id;
+    private int id;
     private String nombre;
     private String direccion;
     private Coordenada coordenada;
     private List<ItemMenu> itemsMenu;
 
 
-    public Vendedor(String id, String nombre, String direccion, Coordenada coordenada, List<ItemMenu> itemsMenu) {
+    public Vendedor(int id, String nombre, String direccion, Coordenada coordenada, List<ItemMenu> itemsMenu) {
         this.id = id;
         this.nombre = nombre;
         this.direccion = direccion;
@@ -24,7 +24,7 @@ public class Vendedor {
         this.itemsMenu = itemsMenu;
     }
        
-    public Vendedor(String id, String nombre, String direccion, Coordenada coordenada) {
+    public Vendedor(int id, String nombre, String direccion, Coordenada coordenada) {
         this.id = id;
         this.nombre = nombre;
         this.direccion = direccion;
@@ -33,7 +33,7 @@ public class Vendedor {
 
     }
         public Vendedor( String nombre, String direccion, Coordenada coordenada) {
-        this.id = null;
+        this.id = -1;
         this.nombre = nombre;
         this.direccion = direccion;
         this.coordenada = coordenada;
@@ -42,11 +42,11 @@ public class Vendedor {
     }
 
     // getters / setters
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

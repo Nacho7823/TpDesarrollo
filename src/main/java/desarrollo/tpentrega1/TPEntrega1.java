@@ -286,7 +286,6 @@ import desarrollo.tpentrega1.controllers.VendedorController;
 import desarrollo.tpentrega1.UI.MenuGeneral;
 import desarrollo.tpentrega1.controllers.ItemsMenuController;
 import desarrollo.tpentrega1.dao.ClienteDAO;
-import desarrollo.tpentrega1.dao.ItemsMenuDAO;
 import desarrollo.tpentrega1.dao.ItemsPedidoDAO;
 import desarrollo.tpentrega1.dao.PedidoDAO;
 import desarrollo.tpentrega1.dao.VendedorDAO;
@@ -300,6 +299,7 @@ import desarrollo.tpentrega1.entidades.Vendedor;
 import desarrollo.tpentrega1.exceptions.DAOException;
 
 import javax.swing.*;
+import desarrollo.tpentrega1.dao.ItemMenuDAO;
 
 public class TPEntrega1 {
 
@@ -309,7 +309,7 @@ public class TPEntrega1 {
         ClienteDAO clienteDAO = ClienteDAOSql.getInstance();
         VendedorDAO vendedorDAO = VendedorDAOSql.getInstance();
         PedidoDAO pedidoDAO =PedidoDAOSql.getInstance();
-        ItemsMenuDAO itemMenuDAO =ItemMenuDAOSql.getInstance();
+        ItemMenuDAO itemMenuDAO =ItemMenuDAOSql.getInstance();
         ItemsPedidoDAO itemsPedidoDAO =ItemsPedidoDAOSql.getInstance();
 
         // Crear instancias de controladores
@@ -320,18 +320,18 @@ public class TPEntrega1 {
 
         // Cargar datos de prueba para clientes
 
-       Cliente c2= clienteController.buscarCliente("2");
+//       Cliente c2= clienteController.buscarCliente("2");
             
         
 
         // Cargar datos de prueba para vendedores
-        Vendedor v2 = vendedorController.buscarVendedor("2");
-        Vendedor v3 = vendedorController.buscarVendedor("3");
+//        Vendedor v2 = vendedorController.buscarVendedor("2");
+//        Vendedor v3 = vendedorController.buscarVendedor("3");
 
 
-        vendedorController.buscarVendedor("2").addItemMenu(itemsMenuController.buscarItemsMenu("1"));
-        vendedorController.buscarVendedor("2").addItemMenu(itemsMenuController.buscarItemsMenu("3"));
-        vendedorController.buscarVendedor("3").addItemMenu(itemsMenuController.buscarItemsMenu("2"));
+//        vendedorController.buscarVendedor("2").addItemMenu(itemsMenuController.buscarItemsMenu("1"));
+//        vendedorController.buscarVendedor("2").addItemMenu(itemsMenuController.buscarItemsMenu("3"));
+//        vendedorController.buscarVendedor("3").addItemMenu(itemsMenuController.buscarItemsMenu("2"));
 
 
         

@@ -2,18 +2,18 @@
 package desarrollo.tpentrega1.Memory;
 
 import desarrollo.tpentrega1.entidades.ItemMenu;
-import desarrollo.tpentrega1.dao.ItemsMenuDAO;
 import desarrollo.tpentrega1.exceptions.DAOException;
 import java.util.ArrayList;
 import java.util.List;
+import desarrollo.tpentrega1.dao.ItemMenuDAO;
 
 
-public class ItemsMenuMemory implements ItemsMenuDAO {
+public class ItemMenuMemory implements ItemMenuDAO {
 
     private static List<ItemMenu> itemsMenu = new ArrayList<ItemMenu>();
 //    private List<ItemMenu> itemsMenu;
 
-    public ItemsMenuMemory() {
+    public ItemMenuMemory() {
 //        itemsMenu = new ArrayList<ItemMenu>();
     }
 
@@ -26,7 +26,7 @@ public class ItemsMenuMemory implements ItemsMenuDAO {
     @Override
     public void actualizarItemMenu(ItemMenu itemMenu) throws DAOException {
         for (int i = 0; i < itemsMenu.size(); i++) {
-            if (itemsMenu.get(i).getId().equals(itemMenu.getId())) {
+            if (itemsMenu.get(i).getId()==(itemMenu.getId())) {
                 itemsMenu.set(i, itemMenu);
                 System.out.println("Item de menú actualizado: " + itemMenu.getNombre());
                 return;
@@ -37,18 +37,18 @@ public class ItemsMenuMemory implements ItemsMenuDAO {
     }
 
     @Override
-    public void eliminarItemMenu(String id) throws DAOException {
-        boolean existe= itemsMenu.stream().anyMatch(c -> c.getId().equals(String.valueOf(id)));
+    public void eliminarItemMenu(int id) throws DAOException {
+        boolean existe= itemsMenu.stream().anyMatch(c -> c.getId()==(id));
         if(existe){
-        itemsMenu.removeIf(item -> item.getId().equals(id));
+        itemsMenu.removeIf(item -> item.getId()==(id));
         System.out.println("Item de menú eliminado con ID: " + id);
        }
     }
 
     @Override
-    public ItemMenu buscarItemMenu(String id) throws DAOException {
+    public ItemMenu buscarItemMenu(int id) throws DAOException {
         for (ItemMenu item : itemsMenu) {
-            if (item.getId().equals(id)) {
+            if (item.getId()==(id)) {
                 return item;
             }
         }
@@ -56,7 +56,7 @@ public class ItemsMenuMemory implements ItemsMenuDAO {
     }
 
     @Override
-    public List<ItemMenu> obtenerItemsMenuDeVendedor(String id) throws DAOException {
+    public List<ItemMenu> obtenerItemMenusDeVendedor(int id) throws DAOException {
         
         return itemsMenu;
     }
@@ -67,7 +67,7 @@ public class ItemsMenuMemory implements ItemsMenuDAO {
     }
 
     @Override
-    public List<ItemMenu> obtenerItems() throws DAOException {
+    public List<ItemMenu> obtenerItemMenus() throws DAOException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

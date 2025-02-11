@@ -23,7 +23,7 @@ public class VendedorController {
 
     }
     
-    public Vendedor crearNuevoVendedor(String id, String nombre, String direccion, Coordenada coordenada) {
+    public Vendedor crearNuevoVendedor(int id, String nombre, String direccion, Coordenada coordenada) {
         Vendedor nuevoVendedor = new Vendedor(id, nombre, direccion, coordenada);
         try {
             vendedorDAO.crearVendedor(nuevoVendedor);
@@ -44,7 +44,7 @@ public class VendedorController {
     }
     
 // Modificar un vendedor existente (asumiendo que se identifica por nombre, dirección, coordenada)
-    public void modificarVendedor(String id, String nombre, String direccion, Coordenada coordenada) {
+    public void modificarVendedor(int id, String nombre, String direccion, Coordenada coordenada) {
         Vendedor vendedorExistente;
         try {
             vendedorExistente = vendedorDAO.buscarVendedor(id);
@@ -73,14 +73,14 @@ public class VendedorController {
     // Eliminar un vendedor por ID
     public void eliminarVendedor(Vendedor vendedor) {
         try {
-            vendedorDAO.eliminarVendedor(vendedor);
+            vendedorDAO.eliminarVendedor(vendedor.getId());
         } catch (DAOException ex) {
             Logger.getLogger(VendedorController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     // Buscar un vendedor por ID
-    public Vendedor buscarVendedor(String id) {
+    public Vendedor buscarVendedor(int id) {
         try {
         Vendedor vendedor = vendedorDAO.buscarVendedor(id);
         if (vendedor != null) {
