@@ -45,12 +45,14 @@ public class PedidoDAOSql extends DAO implements PedidoDAO {
             Pago pago = pedido.getPago();
             pagoDAO.crearPago(pago);
             pedido.setPago(pago);
-
-         try (PreparedStatement stmt = conexion.prepareStatement(sqlPedido, Statement.RETURN_GENERATED_KEYS)) {
             ConectarBase();
-            stmt.setString(1,pedido.getEstado().toString());
-//            stmt.setInt(2,Integer.parseInt(pedido.getCliente().getId()));
-//            stmt.setInt(3,Integer.parseInt(pedido.getVendedor().getId()));
+         try (PreparedStatement stmt = conexion.prepareStatement(sqlPedido, Statement.RETURN_GENERATED_KEYS)) {
+             int estadoInt = 111;
+             if("PROCESADO".equals(pedido.getEstado().toString())){estadoInt = 0;}
+            else if("ENVIADO".equals(pedido.getEstado().toString())){estadoInt = 1;}
+            stmt.setInt(1,estadoInt);
+            stmt.setInt(2,pedido.getCliente().getId());
+            stmt.setInt(3,pedido.getVendedor().getId());
             stmt.setInt(4,Integer.parseInt(pago.getId()));
             stmt.setDouble(5, pedido.getTotal());
         
@@ -215,7 +217,7 @@ public class PedidoDAOSql extends DAO implements PedidoDAO {
     @Override
 public List<Pedido> obtenerPedidos() throws DAOException {
     List<Pedido> pedidos = new ArrayList<>();
-    String sql = "SELECT * FROM Pedidos";
+    String sql = "SELECT * FROM Pedido";
 
     try {
         ConectarBase();
@@ -226,7 +228,9 @@ public List<Pedido> obtenerPedidos() throws DAOException {
             String id = String.valueOf(rs.getInt("id_pedido"));
             int clienteId = (rs.getInt("id_cliente"));
             int vendedorId = (rs.getInt("id_vendedor"));
-            String estadoStr = rs.getString("estado");
+            String estadoStr = null;
+            if("0".equals(rs.getString("estado"))){estadoStr = "PROCESADO";}
+            else if("1".equals(rs.getString("estado"))){estadoStr = "RECIBIDO";}
 
             Cliente cliente = clienteDAO.buscarCliente(clienteId);
             Vendedor vendedor = vendedorDAO.buscarVendedor(vendedorId);

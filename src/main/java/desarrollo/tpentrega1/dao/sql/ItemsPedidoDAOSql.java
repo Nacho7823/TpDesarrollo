@@ -107,8 +107,8 @@ public class ItemsPedidoDAOSql extends DAO implements ItemsPedidoDAO {
 
          @Override
     public List<ItemMenu> buscarPorIdPedido(String id){
-        String sql= "SELECT * FROM item_menu I LEFT JOIN items_pedido IP ON I.id_item_menu=IP.id_item_menu"
-                + "LEFT JOIN pedido P ON IP.id_pedido= P.id_pedido WHERE P.id_pedido= ?";
+        String sql= "SELECT * FROM item_menu I LEFT JOIN detalle_pedido DP ON I.id_item_menu = DP.id_item_menu "
++ "LEFT JOIN pedido P ON DP.id_pedido = P.id_pedido WHERE P.id_pedido = ?";
         try {
             return ejecutarConsulta(sql, id);
         } catch (DAOException ex) {

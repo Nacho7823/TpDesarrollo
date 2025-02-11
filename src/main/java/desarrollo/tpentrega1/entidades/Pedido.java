@@ -14,22 +14,22 @@ public class Pedido {
     private Cliente cliente;
     private Vendedor vendedor;
     private String id;
-    private List<ItemMenu> items;
+    private List<ItemMenu> items = new ArrayList<>();
     private Pago pago;
     private double total;
     private EstadoPedido estado;
     private List<Observador> observadores = new ArrayList<>();
 
     public Pedido(){
-        
+
     }
     
 
     
     public Pedido(String id,Cliente cliente, Vendedor vendedor, List<ItemMenu> items, Pago pago, EstadoPedido estado)throws InvalidOrderException {
-        if (!validarItemsUnVendedor(items, vendedor)) {
+       /* if (!validarItemsUnVendedor(items, vendedor)) {
             throw new InvalidOrderException("Los ítems deben pertenecer al mismo vendedor");
-        }
+        }*/
         this.id = id;
         this.cliente=cliente;
         this.vendedor = vendedor;
@@ -115,14 +115,14 @@ public class Pedido {
         }
     }
     
-    private boolean validarItemsUnVendedor(List<ItemMenu> items, Vendedor vendedor) {
+ /*   private boolean validarItemsUnVendedor(List<ItemMenu> items, Vendedor vendedor) {
         List<ItemMenu> itemsVendedor = vendedor.getItemsMenu();
 
         for (ItemMenu item : items) 
             if(!itemsVendedor.contains(item)) 
                 return false;
         return true;
-    }
+    }*/
 
     private double calcularTotal() {
         double totalProductos = items.stream().mapToDouble(ItemMenu::getPrecio).sum();

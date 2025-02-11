@@ -195,7 +195,6 @@ public class ItemMenuUI extends javax.swing.JPanel {
         btnRefrescar = new javax.swing.JButton();
         btnCrearBebida = new javax.swing.JButton();
         btnCrearPlato = new javax.swing.JButton();
-        btnRelacionarVendedor = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
@@ -872,27 +871,13 @@ public class ItemMenuUI extends javax.swing.JPanel {
             }
         });
 
-        btnRelacionarVendedor.setBackground(new java.awt.Color(100, 180, 252));
-        btnRelacionarVendedor.setFont(new java.awt.Font("Ebrima", 1, 14)); // NOI18N
-        btnRelacionarVendedor.setForeground(new java.awt.Color(224, 240, 254));
-        btnRelacionarVendedor.setText("Relacionar Vendedor");
-        btnRelacionarVendedor.setToolTipText("");
-        btnRelacionarVendedor.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(224, 240, 254), null, null));
-        btnRelacionarVendedor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRelacionarVendedorActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(btnRefrescar, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 315, Short.MAX_VALUE)
-                .addComponent(btnRelacionarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnCrearPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnCrearBebida, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -904,8 +889,7 @@ public class ItemMenuUI extends javax.swing.JPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRefrescar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCrearBebida, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCrearPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnRelacionarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnCrearPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
@@ -1026,7 +1010,7 @@ public class ItemMenuUI extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 910, Short.MAX_VALUE))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -1438,10 +1422,6 @@ public class ItemMenuUI extends javax.swing.JPanel {
         crearPlatoFrame.setVisible(true);
     }//GEN-LAST:event_btnCrearPlatoActionPerformed
 
-    private void btnRelacionarVendedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelacionarVendedorActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnRelacionarVendedorActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField aptoCeliacoField2;
@@ -1450,7 +1430,6 @@ public class ItemMenuUI extends javax.swing.JPanel {
     private javax.swing.JButton btnCrearBebida;
     private javax.swing.JButton btnCrearPlato;
     private javax.swing.JButton btnRefrescar;
-    private javax.swing.JButton btnRelacionarVendedor;
     private javax.swing.JTextField caloriasField;
     private javax.swing.JTextField caloriasField1;
     private javax.swing.JTextField caloriasField2;

@@ -65,6 +65,7 @@ public class VendedorController {
             throw new RuntimeException(e.getMessage());
         }
     }
+    
 
     // Buscar un vendedor por ID
     public Vendedor buscarVendedor(int id) {

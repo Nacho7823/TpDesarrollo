@@ -24,8 +24,8 @@ public class PagoDAOSql extends DAO implements PagoDAO{
     @Override
     public void crearPago(Pago pago) throws DAOException,Exception {
                 String sql = "INSERT INTO pago (monto, fecha) VALUES (?, ?)";
+                ConectarBase();
          try (PreparedStatement stmt = conexion.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            ConectarBase();
             stmt.setDouble(1, pago.getMonto());
             stmt.setDate(2, java.sql.Date.valueOf(pago.getFecha()));
         

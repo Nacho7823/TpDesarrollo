@@ -376,7 +376,7 @@ public class PedidoUI extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-        setBackground(new java.awt.Color(130, 217, 217));
+        setBackground(new java.awt.Color(224, 240, 254));
 
         lbId.setText("ID:");
 
@@ -440,28 +440,44 @@ public class PedidoUI extends javax.swing.JPanel {
 
         tfTotal.setEditable(false);
 
+        btnCrear.setBackground(new java.awt.Color(100, 180, 255));
+        btnCrear.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
+        btnCrear.setForeground(new java.awt.Color(224, 240, 254));
         btnCrear.setText("Crear");
+        btnCrear.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnCrear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCrearActionPerformed(evt);
             }
         });
 
+        btnEditar.setBackground(new java.awt.Color(100, 180, 255));
+        btnEditar.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
+        btnEditar.setForeground(new java.awt.Color(224, 240, 254));
         btnEditar.setText("Editar");
+        btnEditar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarActionPerformed(evt);
             }
         });
 
+        btnBuscar.setBackground(new java.awt.Color(100, 180, 255));
+        btnBuscar.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
+        btnBuscar.setForeground(new java.awt.Color(224, 240, 254));
         btnBuscar.setText("Buscar");
+        btnBuscar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarActionPerformed(evt);
             }
         });
 
+        btnEliminar.setBackground(new java.awt.Color(100, 180, 255));
+        btnEliminar.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
+        btnEliminar.setForeground(new java.awt.Color(224, 240, 254));
         btnEliminar.setText("Eliminar");
+        btnEliminar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarActionPerformed(evt);
@@ -487,14 +503,22 @@ public class PedidoUI extends javax.swing.JPanel {
         jTable3.getTableHeader().setReorderingAllowed(false);
         jScrollPane3.setViewportView(jTable3);
 
+        btnEliminarItems.setBackground(new java.awt.Color(100, 180, 255));
+        btnEliminarItems.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
+        btnEliminarItems.setForeground(new java.awt.Color(224, 240, 254));
         btnEliminarItems.setText("Eliminar");
+        btnEliminarItems.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnEliminarItems.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarItemsActionPerformed(evt);
             }
         });
 
+        btnAgregarItems.setBackground(new java.awt.Color(100, 180, 255));
+        btnAgregarItems.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
+        btnAgregarItems.setForeground(new java.awt.Color(224, 240, 254));
         btnAgregarItems.setText("Agregar");
+        btnAgregarItems.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnAgregarItems.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregarItemsActionPerformed(evt);
@@ -603,7 +627,7 @@ public class PedidoUI extends javax.swing.JPanel {
                         .addComponent(lbItems)
                         .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnEliminarItems, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCrear)
                     .addComponent(btnBuscar)
@@ -611,19 +635,20 @@ public class PedidoUI extends javax.swing.JPanel {
                     .addComponent(btnEditar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddSelectedItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddSelectedItemActionPerformed
-        int idx = tableAddItems.getSelectedRow();
-        if (idx == -1) {
-            return;
-        } else {
-            ItemMenu it = pedido.getVendedor().getItemsMenu().get(idx);
-            pedido.addItem(it);
-            updateAll(pedido);
-        }        
+int idx = tableAddItems.getSelectedRow();
+
+if (idx != -1) {
+    List<ItemMenu> items = itemsMenuController.obtenerItemMenusDeVendedor(pedido.getVendedor().getId());
+        ItemMenu it = items.get(idx);
+        pedido.addItem(it);
+        updateAll(pedido);
+    }
+
     }//GEN-LAST:event_btnAddSelectedItemActionPerformed
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
