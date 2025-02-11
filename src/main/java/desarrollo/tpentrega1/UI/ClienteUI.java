@@ -16,8 +16,8 @@ public class ClienteUI extends javax.swing.JPanel {
     private final Alerta alerta = new Alerta();
     private final ImageIcon icon= new ImageIcon("pedidosya-logo.png");
    
-    public ClienteUI(ClienteController clienteController) {
-        this.clienteController = clienteController;
+    public ClienteUI() {
+        this.clienteController = ClienteController.getInstance();
         initComponents();
         actualizarTabla();
         this.tableClientes.setAutoResizeMode(5);

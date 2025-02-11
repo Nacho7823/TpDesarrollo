@@ -1,6 +1,6 @@
 package desarrollo.tpentrega1.UI;
 
-import desarrollo.tpentrega1.controllers.ItemsMenuController;
+import desarrollo.tpentrega1.controllers.ItemMenuController;
 import desarrollo.tpentrega1.controllers.VendedorController;
 import desarrollo.tpentrega1.entidades.Bebida;
 import desarrollo.tpentrega1.entidades.ItemMenu;
@@ -22,11 +22,11 @@ public class ItemMenuUI extends JPanel {
     private JTable tableBebida, tablePlato;
     private JComboBox<String> ddIdVendedor;
 
-    private ItemsMenuController itemsMenuController;
+    private ItemMenuController itemsMenuController;
     private VendedorController vendedorController;
     private ItemType cardPanel;
 
-    public ItemMenuUI(ItemsMenuController itemsMenuController, VendedorController vendedorController) {
+    public ItemMenuUI(ItemMenuController itemsMenuController, VendedorController vendedorController) {
         this.itemsMenuController = itemsMenuController;
         this.vendedorController = vendedorController;
 

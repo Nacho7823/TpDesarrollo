@@ -1,7 +1,7 @@
 package desarrollo.tpentrega1.UI;
 
 import desarrollo.tpentrega1.controllers.ClienteController;
-import desarrollo.tpentrega1.controllers.ItemsMenuController;
+import desarrollo.tpentrega1.controllers.ItemMenuController;
 import desarrollo.tpentrega1.controllers.PedidoController;
 import desarrollo.tpentrega1.controllers.VendedorController;
 import desarrollo.tpentrega1.entidades.Cliente;
@@ -27,15 +27,14 @@ public class PedidoUI extends javax.swing.JPanel {
     private final VendedorController vendedorController;
     private final ClienteController clienteController;
     private final PedidoController pedidoController;
-    private final ItemsMenuController itemMenuController;
+    private final ItemMenuController itemMenuController;
 
 
-    public PedidoUI(PedidoController pedidoController, ClienteController clienteController,
-            VendedorController vendedorController, ItemsMenuController itemsMenuController){
-        this.pedidoController = pedidoController;
-        this.clienteController = clienteController;
-        this.vendedorController = vendedorController;
-        this.itemMenuController = itemsMenuController;
+    public PedidoUI(){
+        this.pedidoController = PedidoController.getInstance();
+        this.clienteController = ClienteController.getInstance();
+        this.vendedorController = VendedorController.getInstance();
+        this.itemMenuController = ItemMenuController.getInstance();
         initComponents();
 //        tablePedidos.
         

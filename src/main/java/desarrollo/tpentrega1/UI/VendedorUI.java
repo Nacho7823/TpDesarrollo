@@ -1,6 +1,6 @@
 package desarrollo.tpentrega1.UI;
 
-import desarrollo.tpentrega1.controllers.ItemsMenuController;
+import desarrollo.tpentrega1.controllers.ItemMenuController;
 import desarrollo.tpentrega1.controllers.VendedorController;
 import desarrollo.tpentrega1.entidades.Coordenada;
 import desarrollo.tpentrega1.entidades.ItemMenu;
@@ -17,12 +17,12 @@ import javax.swing.table.JTableHeader;
 
 public class VendedorUI extends javax.swing.JPanel {
         private final VendedorController vendedorController;
-        private final ItemsMenuController itemMenuController;
+        private final ItemMenuController itemMenuController;
     private final ImageIcon icon= new ImageIcon("pedidosya-logo.png");
 
-    public VendedorUI(VendedorController vendedorController, ItemsMenuController itemMenuController) {
-        this.vendedorController = vendedorController;
-        this.itemMenuController = itemMenuController;
+    public VendedorUI() {
+        this.vendedorController = VendedorController.getInstance();
+        this.itemMenuController = ItemMenuController.getInstance();
         initComponents();
         actualizarTabla();
         this.tableVendedores.setAutoResizeMode(5);

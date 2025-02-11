@@ -12,21 +12,28 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ItemsMenuController {
+public class ItemMenuController {
 
     private ItemMenuDAOSql itemMenuDAO=ItemMenuDAOSql.getInstance();
-    private VendedorController vendedorController;
+    
+    private static ItemMenuController instance;
+    
+    public static ItemMenuController getInstance() {
+        if (instance == null) {
+            instance = new ItemMenuController();
+        }
+        return instance;
+    }
 
-    public ItemsMenuController(VendedorController vendedorController) {
-
-        this.vendedorController = vendedorController;
+    private ItemMenuController() {
+     
     }
 
     public List<ItemMenu> obtenerItemsMenuDeVendedor(int id) {
         try {
             return itemMenuDAO.obtenerItemMenusDeVendedor(id);
         } catch (DAOException ex) {
-            Logger.getLogger(ItemsMenuController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ItemMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return new ArrayList<>();
     }
@@ -47,7 +54,7 @@ public class ItemsMenuController {
         try {
             this.itemMenuDAO.crearItemMenu(p);
         } catch (DAOException ex) {
-            Logger.getLogger(ItemsMenuController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ItemMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return p;
     }
@@ -63,11 +70,11 @@ public class ItemsMenuController {
                 .graduacionAlcoholica(graduacionAlcoholica)
                 .build();
         vendedor.addItemMenu(nuevaBebida);
-        vendedorController.modificarVendedor(vendedor);
+        VendedorController.getInstance().modificarVendedor(vendedor);
         try {
             itemMenuDAO.crearItemMenu(nuevaBebida);
         } catch (DAOException ex) {
-            Logger.getLogger(ItemsMenuController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ItemMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return nuevaBebida;
     }
@@ -84,7 +91,7 @@ public class ItemsMenuController {
         try {
             itemMenuDAO.crearItemMenu(nuevaBebida);
         } catch (DAOException ex) {
-            Logger.getLogger(ItemsMenuController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ItemMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return nuevaBebida;
     }
@@ -105,7 +112,7 @@ public class ItemsMenuController {
                 System.out.println("Item de menú no encontrado para modificar.");//deberia ser exception
             }
         } catch (DAOException ex) {
-            Logger.getLogger(ItemsMenuController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ItemMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -113,7 +120,7 @@ public class ItemsMenuController {
         try {
             itemMenuDAO.actualizarItemMenu(plato);
         } catch (DAOException ex) {
-            Logger.getLogger(ItemsMenuController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ItemMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -121,7 +128,7 @@ public class ItemsMenuController {
         try {
             itemMenuDAO.actualizarItemMenu(bebida);
         } catch (DAOException ex) {
-            Logger.getLogger(ItemsMenuController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ItemMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -130,7 +137,7 @@ public class ItemsMenuController {
         try {
             itemMenuDAO.eliminarItemMenu(id.getId());
         } catch (DAOException ex) {
-            Logger.getLogger(ItemsMenuController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ItemMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -148,7 +155,7 @@ public class ItemsMenuController {
                 return null;
             }
         } catch (DAOException ex) {
-            Logger.getLogger(ItemsMenuController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ItemMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
@@ -165,7 +172,7 @@ public class ItemsMenuController {
                 return null;
             }
         } catch (DAOException ex) {
-            Logger.getLogger(ItemsMenuController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ItemMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
@@ -176,7 +183,7 @@ public class ItemsMenuController {
         try{
             lista=itemMenuDAO.obtenerItemMenus();
         } catch (DAOException ex) {
-            Logger.getLogger(ItemsMenuController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ItemMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return lista;
     }

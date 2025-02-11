@@ -19,8 +19,17 @@ public class VendedorController {
     }
 
 
-    public VendedorController() {
+    private static VendedorController instance;
+    
+    public static VendedorController getInstance() {
+        if (instance == null) {
+            instance = new VendedorController();
+        }
+        return instance;
+    }
 
+    private VendedorController() {
+     
     }
     
     public Vendedor crearNuevoVendedor(int id, String nombre, String direccion, Coordenada coordenada) {
@@ -127,7 +136,7 @@ public class VendedorController {
         try{
             lista=vendedorDAO.obtenerItemsDeVendedor(vendedor);
         } catch (DAOException ex) {
-            Logger.getLogger(ItemsMenuController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ItemMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return lista;
     }

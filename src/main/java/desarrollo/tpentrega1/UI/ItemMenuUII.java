@@ -1,6 +1,6 @@
 package desarrollo.tpentrega1.UI;
 
-import desarrollo.tpentrega1.controllers.ItemsMenuController;
+import desarrollo.tpentrega1.controllers.ItemMenuController;
 import desarrollo.tpentrega1.controllers.VendedorController;
 import desarrollo.tpentrega1.entidades.Bebida;
 import desarrollo.tpentrega1.entidades.ItemMenu;
@@ -17,13 +17,13 @@ falta
 continuar con evento de tabla
 */
 public class ItemMenuUII extends javax.swing.JPanel {
-    private final ItemsMenuController itemsMenuController;
+    private final ItemMenuController itemMenuController;
     private final VendedorController vendedorController;
     private final ImageIcon icon= new ImageIcon("pedidosya-logo.png");
     
-    public ItemMenuUII(ItemsMenuController itemsMenuController, VendedorController vendedorController) {
-        this.itemsMenuController = itemsMenuController;
-        this.vendedorController = vendedorController;
+    public ItemMenuUII() {
+        this.itemMenuController = ItemMenuController.getInstance();
+        this.vendedorController = VendedorController.getInstance();
         initComponents();
         actualizarTabla();
         this.tableItems.setAutoResizeMode(5);
@@ -37,7 +37,7 @@ public class ItemMenuUII extends javax.swing.JPanel {
         "Calorias", "Grad. Alcoholica", "Tamaño", "", ""};
         List<ItemMenu> items = new ArrayList();
         for(Vendedor v: vendedorController.obtenerListaVendedores()){
-            for(ItemMenu e: itemsMenuController.obtenerItemsMenuDeVendedor(v.getId())){
+            for(ItemMenu e: itemMenuController.obtenerItemsMenuDeVendedor(v.getId())){
                 items.add(e);
             }
         }
@@ -918,7 +918,7 @@ public class ItemMenuUII extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void eliminarBebidaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarBebidaBtnActionPerformed
-        itemsMenuController.eliminarItemsMenu(itemsMenuController.buscarItemsMenu(Integer.valueOf(nombreBField2.getText())));
+        itemMenuController.eliminarItemsMenu(itemMenuController.buscarItemsMenu(Integer.valueOf(nombreBField2.getText())));
     }//GEN-LAST:event_eliminarBebidaBtnActionPerformed
 
     private void cancelarEliminarBebidaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarEliminarBebidaBtnActionPerformed
@@ -943,7 +943,7 @@ public class ItemMenuUII extends javax.swing.JPanel {
                 .aptoCeliaco(ac)
                 .aptoVegano(av)
                 .build();
-        itemsMenuController.eliminarItemsMenu(item);
+        itemMenuController.eliminarItemsMenu(item);
     }//GEN-LAST:event_eliminarPlatoBtnActionPerformed
 
     private void cancelarEliminarPlatoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarEliminarPlatoBtnActionPerformed
@@ -966,7 +966,7 @@ public class ItemMenuUII extends javax.swing.JPanel {
                 .tamaño(Double.parseDouble(tamañoField1.getText()))
                 .graduacionAlcoholica(Double.parseDouble(gradAlcField1.getText()))
                 .build();
-        itemsMenuController.modificarBebida(nuevaBebida);
+        itemMenuController.modificarBebida(nuevaBebida);
     }//GEN-LAST:event_editarBebidaBtnActionPerformed
 
     private void cancelarEditarBebidaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarEditarBebidaBtnActionPerformed
@@ -991,7 +991,7 @@ public class ItemMenuUII extends javax.swing.JPanel {
                 .aptoCeliaco(ac)
                 .aptoVegano(av)
                 .build();
-        itemsMenuController.modificarPlato(plato);
+        itemMenuController.modificarPlato(plato);
         editarPlatoFrame.setVisible(false);
     }//GEN-LAST:event_editarPlatoBtnActionPerformed
 
@@ -1007,7 +1007,7 @@ public class ItemMenuUII extends javax.swing.JPanel {
     }//GEN-LAST:event_cancelarEditarPlatoBtnActionPerformed
 
     private void crearBebidaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearBebidaBtnActionPerformed
-        itemsMenuController.crearNuevaBebida(nombreBField.getText(), descripcionBField.getText(), Double.parseDouble(precioBField.getText()), "Bebida", Double.parseDouble(tamañoField.getText()), Double.parseDouble(gradAlcField.getText()));
+        itemMenuController.crearNuevaBebida(nombreBField.getText(), descripcionBField.getText(), Double.parseDouble(precioBField.getText()), "Bebida", Double.parseDouble(tamañoField.getText()), Double.parseDouble(gradAlcField.getText()));
     }//GEN-LAST:event_crearBebidaBtnActionPerformed
 
     private void cancelarCrearBebidaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarCrearBebidaBtnActionPerformed
@@ -1023,7 +1023,7 @@ public class ItemMenuUII extends javax.swing.JPanel {
         boolean av=false, ac=false;
         if(aptoVeganoField.getText().equals("Si")) av = true;
         if(aptoCeliacoField.getText().equals("Si")) ac = true;
-        itemsMenuController.crearNuevoItem(nombrePField.getText(), descripcionPField.getText(), (Double.parseDouble(precioPField.getText())), "Plato", (Double.parseDouble(caloriasField.getText())), ac, av, (Double.parseDouble(pesoField.getText())));
+        itemMenuController.crearNuevoItem(nombrePField.getText(), descripcionPField.getText(), (Double.parseDouble(precioPField.getText())), "Plato", (Double.parseDouble(caloriasField.getText())), ac, av, (Double.parseDouble(pesoField.getText())));
     }//GEN-LAST:event_crearPlatoBtnActionPerformed
 
     private void cancelarCrearPlatoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarCrearPlatoBtnActionPerformed
@@ -1050,7 +1050,7 @@ public class ItemMenuUII extends javax.swing.JPanel {
     }//GEN-LAST:event_btnRefrescarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        ItemMenu v = itemsMenuController.buscarItemsMenu(Integer.valueOf(txtId.getText()));
+        ItemMenu v = itemMenuController.buscarItemsMenu(Integer.valueOf(txtId.getText()));
         String[] columnNames = {"ID", "Nombre", "Descripcion", "Precio", "Categoria", "Peso", "Apto Vegano", "Apto Celiaco",
             "Calorias", "Grad. Alcoholica", "Tamaño", "", ""};
         Object[][] data = new Object[1][13];

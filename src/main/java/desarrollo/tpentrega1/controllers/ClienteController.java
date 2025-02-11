@@ -10,9 +10,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ClienteController {
-     private ClienteDAOSql clienteDAO=ClienteDAOSql.getInstance();
+    private ClienteDAOSql clienteDAO=ClienteDAOSql.getInstance();
     
-    public ClienteController() {
+    private static ClienteController instance;
+    
+    public static ClienteController getInstance() {
+        if (instance == null) {
+            instance = new ClienteController();
+        }
+        return instance;
+    }
+    
+    private ClienteController() {
     }
     
     public Cliente crearNuevoCliente(int id, String nombre, String cuit, String email, String direccion, Coordenada coordenada) {
