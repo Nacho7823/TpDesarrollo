@@ -32,6 +32,7 @@ public abstract class Pago implements FormaDePago{
     @Column
     private double monto;
     
+    
     @Column
     @Temporal(TemporalType.DATE)
     private LocalDate fecha;

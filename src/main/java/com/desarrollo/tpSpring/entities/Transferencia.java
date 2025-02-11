@@ -27,7 +27,7 @@ public class Transferencia extends Pago{
     public Transferencia(String cuit, String cvu, double calcularTotal) {
         this.cuit=cuit;
         this.cvu=cvu;
-        super.setMonto(calcularTotal * 1.02);
+        super.setMonto(calcularTotal);
     }
     
     @Override
