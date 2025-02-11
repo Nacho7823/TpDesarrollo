@@ -53,7 +53,6 @@ public class PagoService {
     @Transactional
     public void crearPago(Pago p){
         try{
-        p.setMonto(p.aplicarRecargo(p.getMonto()));
         pagoRepository.save(p);
         }catch(Exception e){
             System.err.println("No se puedo crear el pago"+ e.getMessage());
@@ -61,7 +60,6 @@ public class PagoService {
     }
     @Transactional
     public void actualizarPago(Pago p){
-        p.setMonto(p.aplicarRecargo(p.getMonto()));
         try{
         pagoRepository.save(p);
         }catch(Exception e){
