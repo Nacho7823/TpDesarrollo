@@ -821,10 +821,15 @@ public class PedidoUI extends javax.swing.JPanel {
         }
         List<ItemMenu> listaItems = new ArrayList<>();
         Pago pago = null;
+        try {
         for (int i = 0; i < tablaItemsCrear.getRowCount(); i++) {
             for (int j = 0; j < (int) tablaItemsCrear.getValueAt(i, 1); j++) {
                 listaItems.add(itemMenuController.buscarItemMenuPorNombre(tablaItemsCrear.getValueAt(i, 0).toString()));
             }
+        }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "No se pudieron obtener los items del pedido", "Alerta", JOptionPane.WARNING_MESSAGE);
+            return;
         }
         if (formaDePagoDD.getSelectedItem().toString().equals("Mercado Pago")) {
             pago = new MercadoPago(cbuAliasField.getText(), Double.parseDouble(totalLabel.getText().substring(2)));
@@ -833,8 +838,8 @@ public class PedidoUI extends javax.swing.JPanel {
         }
         try {
             pedidoController.newPedido(c, v, listaItems, pago, EstadoPedido.RECIBIDO);
-        } catch (DAOException ex) {
-            Logger.getLogger(PedidoUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "No se pudo creare el pedido", "Alerta", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_crearBtnActionPerformed
 
@@ -857,43 +862,48 @@ public class PedidoUI extends javax.swing.JPanel {
     }//GEN-LAST:event_formaDePagoDDActionPerformed
 
     private void agregarItemButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarItemButtonActionPerformed
-        String itemSeleccionado = itemsDD.getSelectedItem().toString();
-        int cantSelecionada = (int) cantItemSpinner.getValue();
-        DefaultTableModel modelo = (DefaultTableModel) tablaItemsCrear.getModel();
-        boolean encontrado = false;
-        int i = 0;
-        while (i < tablaItemsCrear.getRowCount() && !encontrado) {
-            String item = (String) modelo.getValueAt(i, 0);
-            if (item.equals(itemSeleccionado)) {
-                encontrado = true;
-                if (cantSelecionada == 0) {
-                    modelo.removeRow(i);
-                } else {
-                    modelo.setValueAt(cantSelecionada, i, 1);
+        try {
+            String itemSeleccionado = itemsDD.getSelectedItem().toString();
+
+            int cantSelecionada = (int) cantItemSpinner.getValue();
+            DefaultTableModel modelo = (DefaultTableModel) tablaItemsCrear.getModel();
+            boolean encontrado = false;
+            int i = 0;
+            while (i < tablaItemsCrear.getRowCount() && !encontrado) {
+                String item = (String) modelo.getValueAt(i, 0);
+                if (item.equals(itemSeleccionado)) {
+                    encontrado = true;
+                    if (cantSelecionada == 0) {
+                        modelo.removeRow(i);
+                    } else {
+                        modelo.setValueAt(cantSelecionada, i, 1);
+                    }
+                }
+                i++;
+            }
+            if (cantSelecionada != 0) {
+                if (!encontrado) {
+                    Object[] row = {itemSeleccionado, cantSelecionada};
+                    modelo.addRow(row);
                 }
             }
-            i++;
-        }
-        if (cantSelecionada != 0) {
-            if (!encontrado) {
-                Object[] row = {itemSeleccionado, cantSelecionada};
-                modelo.addRow(row);
-            }
-        }
-        double total = 0;
+            double total = 0;
 
-        if (formaDePagoDD.getSelectedItem().toString().equals("Mercado Pago")) {
-            for (int j = 0; j < tablaItemsCrear.getRowCount(); j++) {
-                double subtotal = ((int) tablaItemsCrear.getValueAt(j, 1)) * itemMenuController.buscarItemMenuPorNombre(tablaItemsCrear.getValueAt(j, 0).toString()).getPrecio();
-                total += (subtotal + (subtotal * (0.04)));
+            if (formaDePagoDD.getSelectedItem().toString().equals("Mercado Pago")) {
+                for (int j = 0; j < tablaItemsCrear.getRowCount(); j++) {
+                    double subtotal = ((int) tablaItemsCrear.getValueAt(j, 1)) * itemMenuController.buscarItemMenuPorNombre(tablaItemsCrear.getValueAt(j, 0).toString()).getPrecio();
+                    total += (subtotal + (subtotal * (0.04)));
+                }
+            } else if (formaDePagoDD.getSelectedItem().toString().equals("Transferencia")) {
+                for (int j = 0; j < tablaItemsCrear.getRowCount(); j++) {
+                    double subtotal = ((int) tablaItemsCrear.getValueAt(j, 1)) * itemMenuController.buscarItemMenuPorNombre(tablaItemsCrear.getValueAt(j, 0).toString()).getPrecio();
+                    total += (subtotal + (subtotal * (0.02)));
+                }
             }
-        } else if (formaDePagoDD.getSelectedItem().toString().equals("Transferencia")) {
-            for (int j = 0; j < tablaItemsCrear.getRowCount(); j++) {
-                double subtotal = ((int) tablaItemsCrear.getValueAt(j, 1)) * itemMenuController.buscarItemMenuPorNombre(tablaItemsCrear.getValueAt(j, 0).toString()).getPrecio();
-                total += (subtotal + (subtotal * (0.02)));
-            }
+            totalLabel.setText("Total: " + String.valueOf(total));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "No se pudieron obtener los items del pedido", "Alerta", JOptionPane.WARNING_MESSAGE);
         }
-        totalLabel.setText("Total: " + String.valueOf(total));
     }//GEN-LAST:event_agregarItemButtonActionPerformed
 
     private void editarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarBtnActionPerformed

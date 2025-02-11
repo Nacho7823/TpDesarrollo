@@ -48,7 +48,11 @@ public class VendedorUI extends javax.swing.JPanel {
             data[i][2] = v.getDireccion();
             data[i][3] = v.getCoordenada().getLat();
             data[i][4] = v.getCoordenada().getLng();
+            try {
             data[i][5] = itemMenuController.obtenerItemsMenuDeVendedor(v.getId()).stream().map(ItemMenu::getNombre).collect(Collectors.joining(", "));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "No se pudieron obtener los items del vendedor", "Alerta", JOptionPane.WARNING_MESSAGE);
+            }
             data[i][6] = "Editar";
             data[i][7] = "Borrar";
             i++;
@@ -684,7 +688,12 @@ public class VendedorUI extends javax.swing.JPanel {
             data[0][2] = c.getDireccion();
             data[0][3] = c.getCoordenada().getLat();
             data[0][4] = c.getCoordenada().getLng();
-            data[0][5] = itemMenuController.obtenerItemsMenuDeVendedor(c.getId()).stream().map(ItemMenu::getNombre).collect(Collectors.joining(", "));
+            try {
+                data[0][5] = itemMenuController.obtenerItemsMenuDeVendedor(c.getId()).stream().map(ItemMenu::getNombre).collect(Collectors.joining(", "));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "No se pudo obtener los items del vendedor", "Alerta", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
             data[0][6] = "Editar";
             data[0][7] = "Borrar";
         } else if (c == null) {
@@ -710,21 +719,27 @@ public class VendedorUI extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void agregarItemButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarItemButton1ActionPerformed
-        String itemSeleccionado = itemsDD1.getSelectedItem().toString();
-        DefaultTableModel modelo = (DefaultTableModel) tablaItemsCrear1.getModel();
-        boolean encontrado = false;
-        int i = 0;
-        while (i < tablaItemsCrear1.getRowCount() && !encontrado) {
-            String item = (String) modelo.getValueAt(i, 1);
-            if (item.equals(itemSeleccionado)) {
-                encontrado = true;
+        try {
+            String itemSeleccionado = itemsDD1.getSelectedItem().toString();
+
+            DefaultTableModel modelo = (DefaultTableModel) tablaItemsCrear1.getModel();
+            boolean encontrado = false;
+            int i = 0;
+            while (i < tablaItemsCrear1.getRowCount() && !encontrado) {
+                String item = (String) modelo.getValueAt(i, 1);
+                if (item.equals(itemSeleccionado)) {
+                    encontrado = true;
+                }
+                i++;
             }
-            i++;
-        }
-        if (!encontrado) {
-            ItemMenu item = itemMenuController.buscarItemMenuPorNombre(itemSeleccionado);
-            Object[] row = {item.getId(), itemSeleccionado, item.getCategoria(), item.getPrecio()};
-            modelo.addRow(row);
+            if (!encontrado) {
+                ItemMenu item = itemMenuController.buscarItemMenuPorNombre(itemSeleccionado);
+                Object[] row = {item.getId(), itemSeleccionado, item.getCategoria(), item.getPrecio()};
+                modelo.addRow(row);
+
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "No agregar el item", "Alerta", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_agregarItemButton1ActionPerformed
 

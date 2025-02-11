@@ -933,7 +933,11 @@ public class ItemMenuUI extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void eliminarBebidaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarBebidaBtnActionPerformed
-        itemMenuController.eliminarItemsMenu(itemMenuController.buscarItemsMenu(Integer.valueOf(nombreBField2.getText())));
+        try {
+            itemMenuController.eliminarItemsMenu(Integer.valueOf(idEliminarBebida.getText()));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "No se pudo eliminar el item", "Alerta", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_eliminarBebidaBtnActionPerformed
 
     private void cancelarEliminarBebidaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarEliminarBebidaBtnActionPerformed
@@ -946,23 +950,11 @@ public class ItemMenuUI extends javax.swing.JPanel {
     }//GEN-LAST:event_cancelarEliminarBebidaBtnActionPerformed
 
     private void eliminarPlatoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarPlatoBtnActionPerformed
-        boolean av = false, ac = false;
-        if (aptoVeganoField2.getText().equals("Si")) {
-            av = true;
+        try {
+            itemMenuController.eliminarItemsMenu(Integer.valueOf(idEliminarPlato.getText()));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "No se pudo eliminar el item", "Alerta", JOptionPane.WARNING_MESSAGE);
         }
-        if (aptoCeliacoField2.getText().equals("Si")) {
-            ac = true;
-        }
-        ItemMenu item = new Plato.Builder()
-                .nombre(nombrePField2.getText())
-                .descripcion(descripcionPField2.getText())
-                .precio(Double.parseDouble(precioPField2.getText()))
-                .categoria("Plato")
-                .calorias(Double.parseDouble(caloriasField2.getText()))
-                .aptoCeliaco(ac)
-                .aptoVegano(av)
-                .build();
-        itemMenuController.eliminarItemsMenu(item);
     }//GEN-LAST:event_eliminarPlatoBtnActionPerformed
 
     private void cancelarEliminarPlatoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarEliminarPlatoBtnActionPerformed
@@ -977,15 +969,19 @@ public class ItemMenuUI extends javax.swing.JPanel {
     }//GEN-LAST:event_cancelarEliminarPlatoBtnActionPerformed
 
     private void editarBebidaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarBebidaBtnActionPerformed
-        Bebida nuevaBebida = new Bebida.Builder()
-                .nombre(nombreBField1.getText())
-                .descripcion(descripcionBField1.getText())
-                .precio(Double.parseDouble(precioBField1.getText()))
-                .categoria("Bebida")
-                .tamaño(Double.parseDouble(tamañoField1.getText()))
-                .graduacionAlcoholica(Double.parseDouble(gradAlcField1.getText()))
-                .build();
-        itemMenuController.modificarBebida(nuevaBebida);
+        try {
+            Bebida nuevaBebida = new Bebida.Builder()
+                    .nombre(nombreBField1.getText())
+                    .descripcion(descripcionBField1.getText())
+                    .precio(Double.parseDouble(precioBField1.getText()))
+                    .categoria("Bebida")
+                    .tamaño(Double.parseDouble(tamañoField1.getText()))
+                    .graduacionAlcoholica(Double.parseDouble(gradAlcField1.getText()))
+                    .build();
+            itemMenuController.modificarItemsMenu(nuevaBebida);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "No se pudo editar el item", "Alerta", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_editarBebidaBtnActionPerformed
 
     private void cancelarEditarBebidaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarEditarBebidaBtnActionPerformed
@@ -998,24 +994,29 @@ public class ItemMenuUI extends javax.swing.JPanel {
     }//GEN-LAST:event_cancelarEditarBebidaBtnActionPerformed
 
     private void editarPlatoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarPlatoBtnActionPerformed
-        boolean av = false, ac = false;
-        if (aptoVeganoField1.getText().equals("Si")) {
-            av = true;
+        try {
+            boolean av = false, ac = false;
+
+            if (aptoVeganoField1.getText().equals("Si")) {
+                av = true;
+            }
+            if (aptoCeliacoField1.getText().equals("Si")) {
+                ac = true;
+            }
+            Plato plato = new Plato.Builder()
+                    .nombre(nombrePField1.getText())
+                    .descripcion(descripcionPField1.getText())
+                    .precio(Double.parseDouble(precioPField1.getText()))
+                    .categoria("Plato")
+                    .calorias(Double.parseDouble(caloriasField1.getText()))
+                    .aptoCeliaco(ac)
+                    .aptoVegano(av)
+                    .build();
+            itemMenuController.modificarItemsMenu(plato);
+            editarPlatoFrame.setVisible(false);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "No se pudo editar el item", "Alerta", JOptionPane.WARNING_MESSAGE);
         }
-        if (aptoCeliacoField1.getText().equals("Si")) {
-            ac = true;
-        }
-        Plato plato = new Plato.Builder()
-                .nombre(nombrePField1.getText())
-                .descripcion(descripcionPField1.getText())
-                .precio(Double.parseDouble(precioPField1.getText()))
-                .categoria("Plato")
-                .calorias(Double.parseDouble(caloriasField1.getText()))
-                .aptoCeliaco(ac)
-                .aptoVegano(av)
-                .build();
-        itemMenuController.modificarPlato(plato);
-        editarPlatoFrame.setVisible(false);
     }//GEN-LAST:event_editarPlatoBtnActionPerformed
 
     private void cancelarEditarPlatoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarEditarPlatoBtnActionPerformed
@@ -1031,7 +1032,15 @@ public class ItemMenuUI extends javax.swing.JPanel {
 
     private void crearBebidaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearBebidaBtnActionPerformed
         try {
-            itemMenuController.crearNuevaBebida(nombreBField.getText(), descripcionBField.getText(), Double.parseDouble(precioBField.getText()), "Bebida", Double.parseDouble(tamañoField.getText()), Double.parseDouble(gradAlcField.getText()));
+            Bebida.Builder bebida = new Bebida.Builder();
+            bebida.nombre(nombreBField.getText());
+            bebida.descripcion(descripcionBField.getText());
+            bebida.precio(Double.parseDouble(precioBField.getText()));
+            bebida.categoria("Bebida");
+            bebida.tamaño(Double.parseDouble(tamañoField.getText()));
+            bebida.graduacionAlcoholica(Double.parseDouble(gradAlcField.getText()));
+
+            itemMenuController.crearNuevoItem(bebida.build());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "No se pudo crear el item", "Alerta", JOptionPane.WARNING_MESSAGE);
         }
@@ -1054,8 +1063,17 @@ public class ItemMenuUI extends javax.swing.JPanel {
         if (aptoCeliacoField.getText().equals("Si")) {
             ac = true;
         }
-        try{
-            itemMenuController.crearNuevoItem(nombrePField.getText(), descripcionPField.getText(), (Double.parseDouble(precioPField.getText())), "Plato", (Double.parseDouble(caloriasField.getText())), ac, av, (Double.parseDouble(pesoField.getText())));
+        try {
+            Plato.Builder plato = new Plato.Builder();
+            plato.nombre(nombrePField.getText());
+            plato.descripcion(descripcionPField.getText());
+            plato.precio(Double.parseDouble(precioPField.getText()));
+            plato.categoria("Plato");
+            plato.calorias(Double.parseDouble(caloriasField.getText()));
+            plato.aptoCeliaco(ac);
+            plato.aptoVegano(av);
+            plato.peso(Double.parseDouble(pesoField.getText()));
+            itemMenuController.crearNuevoItem(plato.build());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "No se pudo crear el item", "Alerta", JOptionPane.WARNING_MESSAGE);
         }
@@ -1085,7 +1103,12 @@ public class ItemMenuUI extends javax.swing.JPanel {
     }//GEN-LAST:event_btnRefrescarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        ItemMenu v = itemMenuController.buscarItemsMenu(Integer.valueOf(txtId.getText()));
+        ItemMenu v = null;
+        try {
+            itemMenuController.buscarItemsMenu(Integer.valueOf(txtId.getText()));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "No se pudo buscar el item", "Alerta", JOptionPane.WARNING_MESSAGE);
+        }
         String[] columnNames = {"ID", "Nombre", "Descripcion", "Precio", "Categoria", "Peso", "Apto Vegano", "Apto Celiaco",
             "Calorias", "Grad. Alcoholica", "Tamaño", "", ""};
         Object[][] data = new Object[1][13];
