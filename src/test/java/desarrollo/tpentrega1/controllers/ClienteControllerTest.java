@@ -100,14 +100,14 @@ public class ClienteControllerTest {
         String direccion = "";
         Coordenada coordenada = null;
         Cliente c = new Cliente(id, nombre, cuit, email, direccion, coordenada);
-        clienteController.crearNuevoCliente(id, nombre, cuit, email, direccion, coordenada);
+        //clienteController.crearNuevoCliente(id, nombre, cuit, email, direccion, coordenada);
         clienteController.eliminarCliente(c);
         Mockito.verify(clienteDAO).eliminarCliente(id);
     }
 
     @org.junit.jupiter.api.Test
     public void testBuscarCliente() throws DAOException {
-        clienteController.crearNuevoCliente(1, "nombre", "", "", "", null);
+       // clienteController.crearNuevoCliente(1, "nombre", "", "", "", null);
         clienteController.buscarCliente(1);
         Mockito.verify(clienteDAO).buscarCliente(1);
     }

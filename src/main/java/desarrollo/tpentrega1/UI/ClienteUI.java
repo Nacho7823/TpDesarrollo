@@ -728,7 +728,7 @@ public class ClienteUI extends javax.swing.JPanel {
             System.out.println("error en los campos");
             JOptionPane.showMessageDialog(null, "error en los campos", "Alerta", JOptionPane.WARNING_MESSAGE);
         } else {
-            int id = Integer.valueOf(ideditar.getText());
+            int id = Integer.parseInt(ideditar.getText());
             Cliente cliente = clienteController.buscarCliente(id);
             
             Coordenada coord = cliente.getCoordenada();
@@ -767,7 +767,7 @@ public class ClienteUI extends javax.swing.JPanel {
     private void eliminarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarBtnActionPerformed
         
         
-        Cliente c = clienteController.buscarCliente(Integer.valueOf(ideliminar.getText()));
+        Cliente c = clienteController.buscarCliente(Integer.parseInt(ideliminar.getText()));
         clienteController.eliminarCliente(c);
         
         actualizarTabla();
@@ -795,7 +795,7 @@ public class ClienteUI extends javax.swing.JPanel {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         txtNombre.getText();
-        Cliente c = clienteController.buscarCliente(Integer.valueOf(txtId.getText()));
+        Cliente c = clienteController.buscarCliente(Integer.parseInt(txtId.getText()));
         String[] columnNames = {"ID", "Nombre", "Cuit", "Email", "Dirección", "Latitud", "Longitud", "", ""};
         Object[][] data = new Object[1][9];
         if(c!=null){
