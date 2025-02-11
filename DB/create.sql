@@ -1,7 +1,7 @@
 CREATE TABLE coordenada (
     id_coordenada BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    longitud DECIMAL(9, 6) NOT NULL,
-    latitud DECIMAL(9, 6) NOT NULL
+    longitud DOUBLE PRECISION NOT NULL,
+    latitud DOUBLE PRECISION NOT NULL
 ) ENGINE=InnoDB;
 
 CREATE TABLE vendedor (
@@ -26,7 +26,7 @@ CREATE TABLE item_menu (
     id_item_menu BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(30) NOT NULL,
     descripcion VARCHAR(50) NOT NULL,
-    precio DECIMAL(10, 2) NOT NULL,
+    precio DOUBLE PRECISION NOT NULL,
     categoria VARCHAR(20) NOT NULL
 ) ENGINE=InnoDB;
 
@@ -40,23 +40,23 @@ CREATE TABLE vende (
 
 CREATE TABLE plato (
     id_item_menu BIGINT UNSIGNED PRIMARY KEY,
-    calorias DECIMAL(8, 2) NOT NULL,
+    calorias DOUBLE PRECISION NOT NULL,
     apto_celiaco BOOLEAN,
     apto_vegano BOOLEAN,
-    peso DECIMAL(5, 2) NOT NULL,
+    peso DOUBLE PRECISION NOT NULL,
     FOREIGN KEY (id_item_menu) REFERENCES item_menu(id_item_menu) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
 CREATE TABLE bebida (
     id_item_menu BIGINT UNSIGNED PRIMARY KEY,
-    graduacion_alcoholica DECIMAL(5, 2) NOT NULL,
-    tamanio DECIMAL(8, 2) NOT NULL,
+    graduacion_alcoholica DOUBLE PRECISION  NOT NULL,
+    tamanio DOUBLE PRECISION NOT NULL,
     FOREIGN KEY (id_item_menu) REFERENCES item_menu(id_item_menu) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
 CREATE TABLE pago (
     id_pago BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    monto DECIMAL(10, 2) NOT NULL,
+    monto DOUBLE PRECISION NOT NULL,
     fecha DATE NOT NULL
 ) ENGINE=InnoDB;
 
@@ -79,7 +79,7 @@ CREATE TABLE pedido (
     id_cliente BIGINT UNSIGNED,
     id_vendedor BIGINT UNSIGNED,
     id_pago BIGINT UNSIGNED,
-    total DECIMAL(10, 2) NOT NULL,
+    total DOUBLE PRECISION NOT NULL,
     FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente),
     FOREIGN KEY (id_vendedor) REFERENCES vendedor(id_vendedor),
     FOREIGN KEY (id_pago) REFERENCES pago(id_pago)

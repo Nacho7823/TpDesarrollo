@@ -52,12 +52,12 @@ btnModificar.addEventListener("click", async () => {
         alias: pedido.alias
     };
 
-    const id_pedido = await updatePedido(tmp);
-    if (id_pedido == null) {
-        alert("No se pudo crear el pedido");
+    if (!await updatePedido(tmp)) {
+        alert("No se pudo modificar el pedido");
         return;
     }
 
+    console.log("pedido modificado: ", tmp);
     window.location.href = "../pedidos.html";
 });
 
@@ -90,6 +90,7 @@ function updateDivPago(value) {
 
     if (value == "mercadopago") {
         pedido.formapago = value;
+        setPedido(pedido);
         clearInputPago();
         const alias = pedido.alias == null ? "" : pedido.alias;
         const container = createInputPago("Alias", alias);
@@ -103,6 +104,7 @@ function updateDivPago(value) {
     }
     else if (value == "transferencia") {
         pedido.formapago = value;
+        setPedido(pedido);
         clearInputPago();
         const cvu = pedido.cvu == null ? "" : pedido.cvu;
         const cuit = pedido.cuit == null ? "" : pedido.cuit;

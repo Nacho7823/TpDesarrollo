@@ -220,7 +220,8 @@ public class PedidosController {
     }
 
     @DeleteMapping("/pedido")
-    public ResponseEntity<Boolean> eliminarPedido(@RequestBody Pedido pedido) {
+    public ResponseEntity<Boolean> eliminarPedido(@RequestBody Map<String, Object> pedidoJson) {
+        Pedido pedido = pedidoService.buscarPedidoPorId((int)pedidoJson.get("id_pedido"));
         pedidoService.eliminarPedido(pedido);
         return ResponseEntity.ok(true);
     }
@@ -278,7 +279,7 @@ public class PedidosController {
     }
 
     @PutMapping("/pedido")
-    public ResponseEntity<String> modificarPedido(@RequestBody Map<String, Object> data) {
+    public ResponseEntity<Boolean> modificarPedido(@RequestBody Map<String, Object> data) {
         
         System.out.println("pedido: " + data.toString());
         int id_pedido = (int) data.get("id_pedido");
@@ -305,35 +306,39 @@ public class PedidosController {
             ItemMenu itemMenu = itemMenuService.buscarItemMenu(id_item_menu);
             ItemsPedido item = new ItemsPedido(pedido, itemMenu, cantidad);
             
-//            items.add(item);
+            items.add(item);
+
+            // TODO: fix
         }
 
+        // TODO fix
         if (data.get("formapago").equals("mercadopago")) {
             String alias = (String) data.get("alias");
             int monto = (Integer) data.get("monto");
             String fecha = (String) data.get("fecha");
-            MercadoPago pago = (MercadoPago) pedido.getPago();
+            MercadoPago pago = new MercadoPago();
             pago.setAlias(alias);
             pago.setMonto(monto);
             pago.setFecha(parseDate(fecha));
+            pedido.setPago(pago);
         } else {              //transferencia
             String cvu = (String) data.get("cvu");
             String cuit = (String) data.get("cuit");
             int monto = (int) data.get("monto");
             String fecha = (String) data.get("fecha");
-            Transferencia pago = (Transferencia) pedido.getPago();
+            Transferencia pago = new Transferencia();
             pago.setCuit(cuit);
             pago.setCvu(cvu);
             pago.setMonto(monto);
             pago.setFecha(parseDate(fecha));
+            pedido.setPago(pago);
         }
         
         pedido.calcularTotal();
         
         pedidoService.actualizarPedido(pedido);
         System.out.println("pedido actualizado");
-        return ResponseEntity.ok("Pedido " + pedido + " modificado exitosamente");
-//        return ResponseEntity.ok(true);
+        return ResponseEntity.ok(true);
     }
 
 }
