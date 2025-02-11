@@ -255,14 +255,17 @@ public class PedidosController {
             int monto = (Integer) data.get("monto");
             String fecha = (String) data.get("fecha");
             pago = new MercadoPago(alias);
+            System.out.println(" el monto recibido es: " + monto);
             pago.setMonto(monto);
             pago.setFecha(parseDate(fecha));
         } else {              //transferencia
             String cvu = (String) data.get("cvu");
             String cuit = (String) data.get("cuit");
             int monto = (int) data.get("monto");
+            
             String fecha = (String) data.get("fecha");
             pago = new Transferencia(cuit, cvu);
+            System.out.println(" el monto recibido es: " + monto);
             pago.setMonto(monto);
             pago.setFecha(parseDate(fecha));
         }

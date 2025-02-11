@@ -23,10 +23,11 @@ public class Transferencia extends Pago{
     @Column
     private String cvu;
 
+    
     public Transferencia(String cuit, String cvu, double calcularTotal) {
         this.cuit=cuit;
         this.cvu=cvu;
-        super.setMonto(calcularTotal);
+        super.setMonto(calcularTotal * 1.02);
     }
     
     @Override

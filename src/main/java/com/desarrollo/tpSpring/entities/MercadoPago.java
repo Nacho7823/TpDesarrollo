@@ -22,7 +22,7 @@ public class MercadoPago extends Pago{
 
     public MercadoPago(String alias, double calcularTotal) {
         this.alias=alias;
-        super.setMonto(calcularTotal);
+        super.setMonto(calcularTotal* 1.04);
     }
     
     @Override
