@@ -16,9 +16,11 @@ btnCliente.addEventListener("click", () => window.location.href = "../cliente/cl
 btnItemMenu.addEventListener("click", () => window.location.href = "../itemmenu/itemmenu.html");
 btnPedidos.addEventListener("click", () => window.location.href = "../pedidos/pedidos.html");
 
+
 // -------------
 
 const btnRefrescar = document.getElementById("btn-refresh");
+const btnRelacionarVendedor = document.getElementById("btn-relacion-item")
 const btnCrear = document.getElementById("btn-crear");
 const btnBuscar = document.getElementById("btn-buscar");
 const inputBuscarId = document.getElementById("input-buscar-id");
@@ -29,6 +31,7 @@ inputBuscarId.type = "number";
 let vendedores = [];
 
 btnRefrescar.addEventListener("click", () => location.reload());
+btnRelacionarVendedor.addEventListener("click", () => window.location.href = "relacionar/relacionar.html");
 btnCrear.addEventListener("click", () => window.location.href = "crear/vendedorcrear.html");
 btnBuscar.addEventListener("click", () => {
     const id = inputBuscarId.value;

@@ -10,7 +10,7 @@ btnPedidos.addEventListener("click", () => window.location.href = "../../pedidos
 
 const btnVolver = document.getElementById("btn-volver");
 
-btnVolver.addEventListener("click", () => window.location.href = "../itemmenu.html");
+btnVolver.addEventListener("click", () => window.location.href = "../vendedor.html");
 
 
 function addRow(item) {

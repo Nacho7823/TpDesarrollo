@@ -10,7 +10,7 @@ btnPedidos.addEventListener("click", () => window.location.href = "../pedidos/pe
 
 const btnRefrescar = document.getElementById("btn-refresh");
 const btnBuscar = document.getElementById("btn-buscar");
-const btnRelacionarVendedor = document.getElementById("btn-relacion-vendedor")
+
 const btnCrearBebida = document.getElementById("btn-crear-bebida")
 const btnCrearPlato = document.getElementById("btn-crear-plato")
 const inputBuscarId = document.getElementById("input-buscar-id");
@@ -51,7 +51,6 @@ btnBuscar.addEventListener("click", () => {
 });
 
 btnRefrescar.addEventListener("click", () => location.reload());
-btnRelacionarVendedor.addEventListener("click", () => window.location.href = "relacionar/relacionar.html");
 btnCrearBebida.addEventListener("click", () => window.location.href = "crear/bebidacrear.html");
 btnCrearPlato.addEventListener("click", () => window.location.href = "crear/platocrear.html");
 

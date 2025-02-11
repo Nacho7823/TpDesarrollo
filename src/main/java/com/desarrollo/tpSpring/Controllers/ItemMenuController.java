@@ -42,9 +42,7 @@ public class ItemMenuController {
     private String plato_modificar_html;
     private String plato_modificar_js;
     
-    private String relacionar_html;
-    private String relacionar_css;
-    private String relacionar_js;
+    
 
     public ItemMenuController() {
         try {
@@ -63,10 +61,6 @@ public class ItemMenuController {
             bebida_modificar_js = cargarArchivo("templates/itemmenu/modificar/bebidamodificar.js");
             plato_modificar_html = cargarArchivo("templates/itemmenu/modificar/platomodificar.html");
             plato_modificar_js = cargarArchivo("templates/itemmenu/modificar/platomodificar.js");
-            
-            relacionar_html = cargarArchivo("templates/itemmenu/relacionar/relacionar.html");
-            relacionar_css = cargarArchivo("templates/itemmenu/relacionar/relacionar.css");
-            relacionar_js = cargarArchivo("templates/itemmenu/relacionar/relacionar.js");
             
             
             System.out.println("paginas itemMenu cargadas correctamente");
@@ -157,24 +151,6 @@ public class ItemMenuController {
                 .ok()
                 .header("Content-Type", "application/javascript")
                 .body(plato_modificar_js);
-    }
-    
-    @GetMapping("/relacionar/relacionar.html")
-    public ResponseEntity<String> relacionarHtml() {
-        return new ResponseEntity<>(relacionar_html, HttpStatus.OK);
-    }
-    
-    @GetMapping("/relacionar/relacionar.css")
-    public ResponseEntity<String> relacionarCss() {
-        return new ResponseEntity<>(relacionar_css, HttpStatus.OK);
-    }
-    
-    @GetMapping("/relacionar/relacionar.js")
-    public ResponseEntity<String> relacionarJs() {
-        return ResponseEntity
-                .ok()
-                .header("Content-Type", "application/javascript")
-                .body(relacionar_js);
     }
     
 

@@ -29,6 +29,10 @@ public class VendedorController {
     private String vendedor_modificar_css;
     private String vendedor_modificar_js;
     
+    private String relacionar_html;
+    private String relacionar_css;
+    private String relacionar_js;
+    
 
     public VendedorController() {
         try {
@@ -41,6 +45,10 @@ public class VendedorController {
             vendedor_modificar_html = cargarArchivo("templates/vendedor/modificar/vendedormodificar.html");
             vendedor_modificar_css = cargarArchivo("templates/vendedor/modificar/vendedormodificar.css");
             vendedor_modificar_js = cargarArchivo("templates/vendedor/modificar/vendedormodificar.js");
+            
+            relacionar_html = cargarArchivo("templates/vendedor/relacionar/relacionar.html");
+            relacionar_css = cargarArchivo("templates/vendedor/relacionar/relacionar.css");
+            relacionar_js = cargarArchivo("templates/vendedor/relacionar/relacionar.js");
             
             System.out.println("paginas vendedor cargadas correctamente");
         } catch (IOException e) {
@@ -102,6 +110,24 @@ public class VendedorController {
                 .ok()
                 .header("Content-Type", "application/javascript")
                 .body(vendedor_modificar_js);
+    }
+    
+    @GetMapping("/relacionar/relacionar.html")
+    public ResponseEntity<String> relacionarHtml() {
+        return new ResponseEntity<>(relacionar_html, HttpStatus.OK);
+    }
+    
+    @GetMapping("/relacionar/relacionar.css")
+    public ResponseEntity<String> relacionarCss() {
+        return new ResponseEntity<>(relacionar_css, HttpStatus.OK);
+    }
+    
+    @GetMapping("/relacionar/relacionar.js")
+    public ResponseEntity<String> relacionarJs() {
+        return ResponseEntity
+                .ok()
+                .header("Content-Type", "application/javascript")
+                .body(relacionar_js);
     }
 
     // datos

@@ -132,7 +132,7 @@ footer {
     border: 0;
 }
 
-#btn-crear {
+#btn-crear, #btn-relacion-item {
     width: 100px;
     color: #ffffff;
     background-color: #64B4FF;
