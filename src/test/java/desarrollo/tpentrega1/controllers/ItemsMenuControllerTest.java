@@ -62,11 +62,11 @@ public class ItemsMenuControllerTest {
 
     @Test
     public void testObtenerItemsMenuDeVendedor() throws DAOException {
-        String id = "";
+        int id = 1;
         List<ItemMenu> expResult = new ArrayList();
         List<ItemMenu> result = itemMenuController.obtenerItemsMenuDeVendedor(id);
         assertEquals(expResult, result);
-        Mockito.verify(itemMenuDAOSql).obtenerItemsMenuDeVendedor(id);
+        Mockito.verify(itemMenuDAOSql).obtenerItemMenusDeVendedor(id);
     }
 
     @Test
@@ -102,12 +102,12 @@ public class ItemsMenuControllerTest {
 
     @Test
     public void testCrearNuevaBebida() throws DAOException {
-        String id = "";
+        int id = 0;
         String nombre = "";
         String descripcion = "";
         double precio = 0.0;
         String categoria = "";
-        String id1 = "1";
+        int id1 = 1;
         String nombre1 = "";
         String direccion = "";
         Coordenada coordenada = null;
@@ -137,7 +137,7 @@ public class ItemsMenuControllerTest {
 
     @Test
     public void testModificarItemsMenu() throws DAOException {
-        String id = "";
+        int id = 1;
         String nombre = "";
         String descripcion = "";
         double precio = 0.0;
@@ -170,11 +170,11 @@ public class ItemsMenuControllerTest {
 
     @Test
     public void testBuscarItemsMenu() throws DAOException {
-        String id = "";
+        int id = 1;
         ItemMenu expResult = null;
         ItemMenu result = itemMenuController.buscarItemsMenu(id);
         assertEquals(expResult, result);
-        Mockito.verify(itemMenuDAOSql).buscarItemMenu("");
+        Mockito.verify(itemMenuDAOSql).buscarItemMenu(1);
     }
     
 }

@@ -52,7 +52,7 @@ public class ClienteControllerTest {
     
     @org.junit.jupiter.api.Test
     public void testCrearNuevoCliente() throws DAOException {
-        String id = "";
+        int id = 1;
         String nombre = "";
         String cuit = "";
         String email = "";
@@ -72,7 +72,7 @@ public class ClienteControllerTest {
     
     @org.junit.jupiter.api.Test
     public void testModificarCliente() throws DAOException {
-        String id = "";
+        int id = 1;
         String nombre = "";
         String cuit = "";
         String email = "";
@@ -93,7 +93,7 @@ public class ClienteControllerTest {
 
     @org.junit.jupiter.api.Test
     public void testEliminarCliente() throws DAOException {
-        String id = "";
+        int id = 1;
         String nombre = "";
         String cuit = "";
         String email = "";
@@ -107,9 +107,9 @@ public class ClienteControllerTest {
 
     @org.junit.jupiter.api.Test
     public void testBuscarCliente() throws DAOException {
-        clienteController.crearNuevoCliente("1", "nombre", "", "", "", null);
-        clienteController.buscarCliente("1");
-        Mockito.verify(clienteDAO).buscarCliente("1");
+        clienteController.crearNuevoCliente(1, "nombre", "", "", "", null);
+        clienteController.buscarCliente(1);
+        Mockito.verify(clienteDAO).buscarCliente(1);
     }
 
     @org.junit.jupiter.api.Test

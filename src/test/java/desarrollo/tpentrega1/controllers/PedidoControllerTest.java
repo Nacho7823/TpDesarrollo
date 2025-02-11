@@ -57,11 +57,11 @@ public class PedidoControllerTest {
     
     @Test
     public void testNewPedido() throws Exception {
-        String id = "1";
+        int id = 1;
         Coordenada co = new Coordenada();
         List<ItemMenu> items = new ArrayList();
-        Vendedor vendedor = new Vendedor("1", "a", " ", co, items);
-        Cliente cliente = new Cliente("1", "c", "3", "d", "", co);
+        Vendedor vendedor = new Vendedor(1, "a", " ", co, items);
+        Cliente cliente = new Cliente(1, "c", "3", "d", "", co);
         Pago pago = null;
         EstadoPedido estado = null;
         Pedido expResult = new Pedido(id, cliente, vendedor, items, pago, estado);
@@ -76,41 +76,41 @@ public class PedidoControllerTest {
 
     @Test
     public void testModificarPedidoEstado() throws Exception {
-        String id = "3";
+        int id = 3;
         Coordenada co = new Coordenada();
         List<ItemMenu> items = new ArrayList();
-        Vendedor vendedor = new Vendedor("1", "a", " ", co, items);
-        Cliente cliente = new Cliente("1", "c", "3", "d", "", co);
+        Vendedor vendedor = new Vendedor(1, "a", " ", co, items);
+        Cliente cliente = new Cliente(1, "c", "3", "d", "", co);
         Pago pago = null;
         EstadoPedido estado = null;
         Pedido pedido = new Pedido(id, cliente, vendedor, items, pago, estado);
         when(pedidoDAOSql.buscarPedido(id)).thenReturn(pedido);
         pedidoController.newPedido(id, cliente, vendedor, items, pago, estado);
         pedidoController.modificarPedidoEstado(id, estado);
-        pedido = pedidoController.buscarPedido(id);
+        pedido = pedidoController.buscarYDevolverPedido(id);
         Mockito.verify(pedidoDAOSql, times(2)).buscarPedido(id);
         Mockito.verify(pedidoDAOSql).actualizarPedido(pedido);
     }
 
     @Test
     public void testEliminarPedido() throws Exception {
-        String id = "";
+        int id = 1;
         pedidoController.eliminarPedido(id);
         Mockito.verify(pedidoDAOSql).eliminarPedido(id);
     }
 
     @Test
     public void testBuscarPedido() throws DAOException {
-        String id = "";
+        int id = 1;
         Pedido expResult = null;
-        Pedido result = pedidoController.buscarPedido(id);
+        Pedido result = pedidoController.buscarYDevolverPedido(id);
         assertEquals(expResult, result);
         Mockito.verify(pedidoDAOSql).buscarPedido(id);
     }
 
     @Test
     public void testBuscarYDevolverPedido() throws DAOException {
-        String id = "";
+        int id = 1;
         Pedido expResult = null;
         Pedido result = pedidoController.buscarYDevolverPedido(id);
         assertEquals(expResult, result);
@@ -135,11 +135,11 @@ public class PedidoControllerTest {
 
     @Test
     public void testGetItems() throws InvalidOrderException {
-        String id = "3";
+        int id = 3;
         Coordenada co = new Coordenada();
         List<ItemMenu> items = new ArrayList();
-        Vendedor vendedor = new Vendedor("1", "a", " ", co, items);
-        Cliente cliente = new Cliente("1", "c", "3", "d", "", co);
+        Vendedor vendedor = new Vendedor(1, "a", " ", co, items);
+        Cliente cliente = new Cliente(1, "c", "3", "d", "", co);
         Pago pago = null;
         EstadoPedido estado = null;
         Pedido p = new Pedido(id, cliente, vendedor, items, pago, estado);

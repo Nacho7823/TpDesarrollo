@@ -57,7 +57,7 @@ public class VendedorControllerTest {
 
     @Test
     public void testCrearNuevoVendedor() throws DAOException {
-        String id = "1";
+        int id = 1;
         String nombre = "";
         String direccion = "";
         Coordenada coordenada = null;
@@ -72,7 +72,7 @@ public class VendedorControllerTest {
 
     @Test
     public void testModificarVendedor_4args() throws DAOException {
-        String id = "";
+        int id = 1;
         String nombre = "";
         String direccion = "";
         Coordenada coordenada = null;
@@ -93,12 +93,12 @@ public class VendedorControllerTest {
     public void testEliminarVendedor() throws DAOException {
         Vendedor vendedor = null;
         vendedorController.eliminarVendedor(vendedor);
-        Mockito.verify(vendedorDAO).eliminarVendedor(vendedor);
+        Mockito.verify(vendedorDAO).eliminarVendedor(vendedor.getId());
     }
 
     @Test
     public void testBuscarVendedor() throws DAOException {
-        String id = "";
+        int id = 1;
         Vendedor expResult = null;
         Vendedor result = vendedorController.buscarVendedor(id);
         assertEquals(expResult, result);
