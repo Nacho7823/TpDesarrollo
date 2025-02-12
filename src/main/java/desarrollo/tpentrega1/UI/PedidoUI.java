@@ -903,7 +903,7 @@ public class PedidoUI extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCrearPedidoActionPerformed
 
     private void btnRefrescarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefrescarActionPerformed
-        this.actualizarTabla();
+        actualizarTabla();
     }//GEN-LAST:event_btnRefrescarActionPerformed
 
     private void updateTableCrear(Map<ItemMenu, Integer> map) {
@@ -919,6 +919,20 @@ public class PedidoUI extends javax.swing.JPanel {
             Object[] row = {item.getNombre(), map.get(item)};
             modelo.addRow(row);
         }
+    }
+
+    private Map<ItemMenu, Integer> getFromTableCrear() throws Exception {
+        Map<ItemMenu, Integer> map = new HashMap<>();
+
+        for (int i = 0; i < tablaItemsCrear.getRowCount(); i++) {
+            ItemMenu item = itemMenuController.buscarItemMenuPorNombre(tablaItemsCrear.getValueAt(i, 0).toString());
+            int cantidad = Integer.valueOf(tablaItemsCrear.getValueAt(i, 1).toString());
+            if (cantidad > 0) {
+                map.put(item, cantidad);
+            }
+        }
+
+        return map;
     }
 
     //crear Frame
@@ -956,8 +970,14 @@ public class PedidoUI extends javax.swing.JPanel {
         Pago pago = null;
 
         double total = 0;
-        
-        // TODO: update cantidad from table
+
+        try {
+            itemsAgregados = getFromTableCrear();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "No se pudieron actualizar los items", "Alerta", JOptionPane.WARNING_MESSAGE);
+            System.out.println(e.getMessage());
+            return;
+        }
 
         List<ItemMenu> items = new ArrayList<>(itemsAgregados.keySet());
 
@@ -1077,6 +1097,14 @@ public class PedidoUI extends javax.swing.JPanel {
 
         double total = 0;
 
+        try {
+            itemsAgregados = getFromTableEditar();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "No se pudieron actualizar los items", "Alerta", JOptionPane.WARNING_MESSAGE);
+            System.out.println(e.getMessage());
+            return;
+        }
+
         List<ItemMenu> items = new ArrayList<>(itemsAgregados.keySet());
 
         for (ItemMenu item : items) {
@@ -1097,7 +1125,7 @@ public class PedidoUI extends javax.swing.JPanel {
             currentPedido.setItems(itemsAgregados);
             currentPedido.setPago(pago);
             pedidoController.modificarPedido(currentPedido);
-            crearFrame.setVisible(false);
+            editarFrame.setVisible(false);
             actualizarTabla();
             JOptionPane.showMessageDialog(null, "el pedido se edito correctamente", "Alerta", JOptionPane.WARNING_MESSAGE);
         } catch (Exception e) {
@@ -1120,6 +1148,20 @@ public class PedidoUI extends javax.swing.JPanel {
             Object[] row = {item.getNombre(), map.get(item)};
             modelo.addRow(row);
         }
+    }
+
+    private Map<ItemMenu, Integer> getFromTableEditar() throws Exception {
+        Map<ItemMenu, Integer> map = new HashMap<>();
+
+        for (int i = 0; i < tablaItemsCrear1.getRowCount(); i++) {
+            ItemMenu item = itemMenuController.buscarItemMenuPorNombre(tablaItemsCrear1.getValueAt(i, 0).toString());
+            int cantidad = Integer.parseInt(tablaItemsCrear1.getValueAt(i, 1).toString());
+            if (cantidad > 0) {
+                map.put(item, cantidad);
+            }
+        }
+
+        return map;
     }
 
     //editar frame
@@ -1225,6 +1267,7 @@ public class PedidoUI extends javax.swing.JPanel {
     private void cancelarCrearBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarCrearBtn1ActionPerformed
         editarFrame.setVisible(false);
     }//GEN-LAST:event_cancelarCrearBtn1ActionPerformed
+
 
     private void eliminarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarBtnActionPerformed
         // TODO add your handling code here:

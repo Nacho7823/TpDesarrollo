@@ -56,15 +56,7 @@ public class PedidoDAOSql extends DAO implements PedidoDAO {
 
             pedido.setId(id);
 
-            List<ItemMenu> items = new ArrayList<>(pedido.getItems().keySet());
-            
-            for (ItemMenu item : items) {
-                createNoKey(sqlItems,
-                        pedido.getId(),
-                        item.getId(),
-                        pedido.getItems().get(item)
-                );
-            }
+            itemsPedidoDAO.crearItemsPedido(pedido.getId(), pedido.getItems());
 
         } catch (SQLException ex) {
             throw new DAOException("no se pudo crear el Pedido: \n" + ex.getMessage());
@@ -79,9 +71,6 @@ public class PedidoDAOSql extends DAO implements PedidoDAO {
             String sqlPedido = "update pedido set estado = ?, id_cliente = ?, id_vendedor = ?,id_pago = ?"
                     + ",total= ? where id_pedido = ?;";
 
-            // TODO: cantidad
-            String sqlItems = "update detalle_pedido set id_item_menu = ?, cantidad = ? where id_pedido = ?;"; //cantidad a implementar
-
             Pago pago = pedido.getPago();
             pagoDAO.actualizarPago(pago);
             pedido.setPago(pago);
@@ -95,15 +84,7 @@ public class PedidoDAOSql extends DAO implements PedidoDAO {
                     pedido.getId());
 
             
-            
-            List<ItemMenu> items = new ArrayList<>(pedido.getItems().keySet());
-            for (ItemMenu item : items) {
-                update(sqlItems,
-                        item.getId(),
-                        pedido.getItems().get(item),
-                        pedido.getId()
-                );
-            }
+            itemsPedidoDAO.actualizarItemsPedido(pedido.getId(), pedido.getItems());
 
         } catch (SQLException ex) {
             throw new DAOException("no se pudo actualizar el Pedido: \n" + ex.getMessage());
@@ -113,9 +94,9 @@ public class PedidoDAOSql extends DAO implements PedidoDAO {
     @Override
     public void eliminarPedido(int id) throws DAOException {
         try {
-            String sql1 = "DELETE FROM detalle_pedido WHERE id_pedido = ?";
+            itemsPedidoDAO.eliminarItemsPedido(id);
+            
             String sql2 = "DELETE FROM pedido WHERE id_pedido = ?";
-            delete(sql1, id);
             delete(sql2, id);
         } catch (SQLException ex) {
             throw new DAOException("no se pudo eliminar el Pedido: \n" + ex.getMessage());

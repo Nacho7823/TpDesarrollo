@@ -29,6 +29,9 @@ public interface ItemsPedidoDAO {
     public List<ItemMenu> buscarBebidaGraduacion(double graduacion) throws DAOException;
 
     public Map<ItemMenu, Integer> buscarPorIdPedido(int id) throws DAOException;
+    public void crearItemsPedido(int id_pedido, Map<ItemMenu, Integer> itemsPedido) throws DAOException;
+    public void actualizarItemsPedido(int id_pedido, Map<ItemMenu, Integer> itemsPedido) throws DAOException;
+    public void eliminarItemsPedido(int id_pedido) throws DAOException;
 
     
 }

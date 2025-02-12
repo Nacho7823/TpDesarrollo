@@ -91,6 +91,42 @@ public class ItemsPedidoDAOSql extends DAO implements ItemsPedidoDAO {
     }
 
     @Override
+    public void crearItemsPedido(int id_pedido, Map<ItemMenu, Integer> itemsPedido) throws DAOException {
+        try {
+
+            String sqlItems = "insert into detalle_pedido (id_pedido, id_item_menu, cantidad) VALUES (?, ?, ?)";
+
+            List<ItemMenu> items = new ArrayList<>(itemsPedido.keySet());
+            
+            for (ItemMenu item : items) {
+                createNoKey(sqlItems,
+                        id_pedido,
+                        item.getId(),
+                        itemsPedido.get(item)
+                );
+            }
+
+        } catch (SQLException ex) {
+            throw new DAOException("no se pudo crear el Pedido: \n" + ex.getMessage());
+        }
+    }
+    @Override
+    public void actualizarItemsPedido(int id_pedido, Map<ItemMenu, Integer> itemsPedido) throws DAOException {
+        eliminarItemsPedido(id_pedido);
+        crearItemsPedido(id_pedido, itemsPedido);
+    }
+    
+    @Override
+    public void eliminarItemsPedido(int id_pedido) throws DAOException {
+        try {
+            String sql = "DELETE FROM detalle_pedido WHERE id_pedido = ?";
+            delete(sql, id_pedido);
+        } catch (SQLException ex) {
+            throw new DAOException("no se pudo eliminar el Pedido: \n" + ex.getMessage());
+        }
+    }
+    
+    @Override
     public Map<ItemMenu, Integer> buscarPorIdPedido(int id) throws DAOException {
         try {
             String sql = "select * from item_menu im left join bebida b on b.id_item_menu = im.id_item_menu " +
@@ -111,6 +147,8 @@ public class ItemsPedidoDAOSql extends DAO implements ItemsPedidoDAO {
             throw new DAOException(e.getMessage());
         }
     }
+    
+    
 
     @Override
     public ItemMenu buscarPorNombre(String nombre) throws DAOException {
