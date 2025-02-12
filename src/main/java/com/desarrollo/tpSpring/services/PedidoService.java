@@ -83,6 +83,7 @@ public class PedidoService {
     public void eliminarPedido(@Validated Pedido id) {
         Pedido pedido = pedidoRepository.findById(id.getId_pedido()).get();
         pedidoRepository.delete(pedido);
+        pagoRepository.delete(pedido.getPago());
     }
 
     public List<Pedido> encontrarPorTotal(double total) {
