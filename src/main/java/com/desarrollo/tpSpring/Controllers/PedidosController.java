@@ -256,7 +256,7 @@ public class PedidosController {
             String fecha = (String) data.get("fecha");
             pago = new MercadoPago(alias);
             System.out.println(" el monto recibido es: " + monto);
-            pago.setMonto(monto);
+            pago.setMonto(monto*1.04);
             pago.setFecha(parseDate(fecha));
         } else {              //transferencia
             String cvu = (String) data.get("cvu");
@@ -266,7 +266,7 @@ public class PedidosController {
             String fecha = (String) data.get("fecha");
             pago = new Transferencia(cuit, cvu);
             System.out.println(" el monto recibido es: " + monto);
-            pago.setMonto(monto);
+            pago.setMonto(monto*1.02);
             pago.setFecha(parseDate(fecha));
         }
         
@@ -321,7 +321,7 @@ public class PedidosController {
             String fecha = (String) data.get("fecha");
             MercadoPago pago = new MercadoPago();
             pago.setAlias(alias);
-            pago.setMonto(monto);
+            pago.setMonto(monto*1.04);
             pago.setFecha(parseDate(fecha));
             pedido.setPago(pago);
         } else {              //transferencia
@@ -332,7 +332,7 @@ public class PedidosController {
             Transferencia pago = new Transferencia();
             pago.setCuit(cuit);
             pago.setCvu(cvu);
-            pago.setMonto(monto);
+            pago.setMonto(monto*1.02);
             pago.setFecha(parseDate(fecha));
             pedido.setPago(pago);
         }
