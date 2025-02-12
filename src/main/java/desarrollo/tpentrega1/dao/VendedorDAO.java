@@ -21,4 +21,12 @@ public interface VendedorDAO {
     
     public Vendedor buscarVendedorPorNombre(String nombre) throws DAOException;
     
+    public void setVende(int v, int i) throws DAOException;
+    
+    public void eliminarVende(int v) throws DAOException;
+    
+    public List<ItemMenu> getVendeList(int v) throws DAOException;
+    
+    public boolean getVende(int v, int i) throws DAOException;
+    
 }

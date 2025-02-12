@@ -285,8 +285,11 @@
     <Container class="javax.swing.JFrame" name="editarFrame">
       <Properties>
         <Property name="locationByPlatform" type="boolean" value="true"/>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[469, 469]"/>
+        </Property>
         <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[425, 200]"/>
+          <Dimension value="[469, 469]"/>
         </Property>
       </Properties>
 

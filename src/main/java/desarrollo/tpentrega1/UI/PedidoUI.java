@@ -340,7 +340,8 @@ public class PedidoUI extends javax.swing.JPanel {
         );
 
         editarFrame.setLocationByPlatform(true);
-        editarFrame.setSize(new java.awt.Dimension(425, 200));
+        editarFrame.setPreferredSize(new java.awt.Dimension(469, 469));
+        editarFrame.setSize(new java.awt.Dimension(469, 469));
 
         editarBtn.setText("Editar");
         editarBtn.addActionListener(new java.awt.event.ActionListener() {

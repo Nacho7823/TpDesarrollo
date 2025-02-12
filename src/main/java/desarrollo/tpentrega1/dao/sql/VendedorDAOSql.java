@@ -214,5 +214,66 @@ public class VendedorDAOSql extends DAO implements VendedorDAO {
             throw new DAOException("No se pudo obtener los itemMenu: \n" + ex.getMessage());
         }
     }
+    
+    @Override
+    public void setVende(int v, int i) throws DAOException {
+        try {
+
+            String sql = "INSERT INTO vende (id_vendedor, id_item_menu) VALUES (?, ?)";
+
+            createNoKey(sql, v, i );
+
+        } catch (SQLException e) {
+            throw new DAOException(e.getMessage());
+        }
+    }
+    
+    @Override
+    public void eliminarVende(int v) throws DAOException {
+        try {
+
+            String sql = "DELETE FROM vende WHERE id_vendedor = ?";
+
+            delete(sql, v);
+
+        } catch (SQLException e) {
+            throw new DAOException(e.getMessage());
+        }
+    }
+    
+    @Override
+    public List<ItemMenu> getVendeList(int v) throws DAOException {
+        String sql = "SELECT * FROM vende WHERE id_vendedor = ?";
+        List<ItemMenu> listaItems = new ArrayList<>();
+
+        try {
+            search(sql, v);
+
+            while (resultado.next()) {
+                int id = resultado.getInt("id_item_menu");
+                ItemMenu it = ItemMenuDAOSql.getInstance().buscarItemMenu(id);
+                listaItems.add(it);
+            }
+            closeSearch();
+            return listaItems;
+        } catch (SQLException e) {
+            throw new DAOException("No se pudo obtener los vendedores: \n" + e.getMessage());
+        }
+    }
+    
+    @Override
+    public boolean getVende(int v, int i) throws DAOException {
+        String sql = "SELECT * FROM vende WHERE id_vendedor = ? AND id_item_menu = ?";
+
+        try {
+            search(sql, v, i);
+
+            boolean res = resultado.next();
+            closeSearch();
+            return res;
+        } catch (SQLException e) {
+            throw new DAOException("No se pudo obtener los vendedores: \n" + e.getMessage());
+        }
+    }
 
 }

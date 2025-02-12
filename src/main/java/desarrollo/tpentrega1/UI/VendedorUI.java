@@ -33,7 +33,7 @@ public class VendedorUI extends javax.swing.JPanel {
     }
 
     private void actualizarTabla() {
-        String[] columnNames = {"ID", "Nombre", "Dirección", "Latitud", "Longitud", "Items", "", ""};
+        String[] columnNames = {"ID", "Nombre", "Dirección", "Latitud", "Longitud", "Items", "", "", ""};
         List<Vendedor> vendedores = new ArrayList<>();
         try {
             vendedores = vendedorController.obtenerListaVendedores();
@@ -41,7 +41,7 @@ public class VendedorUI extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "No se pudieron obtener los vendedores", "Alerta", JOptionPane.WARNING_MESSAGE);
             System.out.println(e.getMessage());
         }
-        Object[][] data = new Object[vendedores.size()][8];
+        Object[][] data = new Object[vendedores.size()][9];
         int i = 0;
         for (Vendedor v : vendedores) {
             data[i][0] = v.getId();
@@ -50,13 +50,14 @@ public class VendedorUI extends javax.swing.JPanel {
             data[i][3] = v.getCoordenada().getLat();
             data[i][4] = v.getCoordenada().getLng();
             try {
-            data[i][5] = itemMenuController.obtenerItemsMenuDeVendedor(v.getId()).stream().map(ItemMenu::getNombre).collect(Collectors.joining(", "));
+                data[i][5] = itemMenuController.obtenerItemsMenuDeVendedor(v.getId()).stream().map(ItemMenu::getNombre).collect(Collectors.joining(", "));
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "No se pudieron obtener los items del vendedor", "Alerta", JOptionPane.WARNING_MESSAGE);
                 System.out.println(e.getMessage());
             }
-            data[i][6] = "Editar";
-            data[i][7] = "Borrar";
+            data[i][6] = "Relacionar";
+            data[i][7] = "Editar";
+            data[i][8] = "Borrar";
             i++;
         }
         tableVendedores.setModel(new javax.swing.table.DefaultTableModel(data, columnNames));
@@ -68,8 +69,10 @@ public class VendedorUI extends javax.swing.JPanel {
         tableVendedores.getColumnModel().getColumn(5).setCellRenderer(new GestionCeldas("texto"));
         tableVendedores.getColumnModel().getColumn(6).setCellRenderer(new GestionCeldas("icono"));
         tableVendedores.getColumnModel().getColumn(7).setCellRenderer(new GestionCeldas("icono"));
+        tableVendedores.getColumnModel().getColumn(8).setCellRenderer(new GestionCeldas("icono"));
         tableVendedores.getColumnModel().getColumn(6).setPreferredWidth(10);
         tableVendedores.getColumnModel().getColumn(7).setPreferredWidth(10);
+        tableVendedores.getColumnModel().getColumn(8).setPreferredWidth(10);
     }
 
     private void setTablaItemsEditarVendedor(Vendedor vendedor) throws Exception {
@@ -132,6 +135,11 @@ public class VendedorUI extends javax.swing.JPanel {
         coordenada1Field2 = new javax.swing.JTextField();
         coordenada2Field2 = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
+        relacionarItem = new javax.swing.JFrame();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tableRelacionarItem = new javax.swing.JTable();
+        btnCancelarRI = new javax.swing.JButton();
+        btnRelacionarItem = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         btnRefrescar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -219,7 +227,6 @@ public class VendedorUI extends javax.swing.JPanel {
         editarFrame.setTitle("Editar vendedor");
         editarFrame.setIconImage(icon.getImage());
         editarFrame.setLocationByPlatform(true);
-        editarFrame.setPreferredSize(new java.awt.Dimension(386, 570));
         editarFrame.setSize(new java.awt.Dimension(440, 480));
 
         jLabel8.setText("Nombre");
@@ -427,6 +434,77 @@ public class VendedorUI extends javax.swing.JPanel {
                 .addContainerGap(7, Short.MAX_VALUE))
         );
 
+        relacionarItem.setMinimumSize(new java.awt.Dimension(521, 500));
+
+        tableRelacionarItem.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "ID vendedor", "Nombre Vendedor", "ID Item", "Nombre Item", "Relacionar"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(tableRelacionarItem);
+
+        btnCancelarRI.setText("Cancelar");
+        btnCancelarRI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarRIActionPerformed(evt);
+            }
+        });
+
+        btnRelacionarItem.setText("Relacionar");
+        btnRelacionarItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRelacionarItemActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout relacionarItemLayout = new javax.swing.GroupLayout(relacionarItem.getContentPane());
+        relacionarItem.getContentPane().setLayout(relacionarItemLayout);
+        relacionarItemLayout.setHorizontalGroup(
+            relacionarItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(relacionarItemLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 509, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, relacionarItemLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnCancelarRI)
+                .addGap(18, 18, 18)
+                .addComponent(btnRelacionarItem)
+                .addGap(15, 15, 15))
+        );
+        relacionarItemLayout.setVerticalGroup(
+            relacionarItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(relacionarItemLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addGroup(relacionarItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnRelacionarItem)
+                    .addComponent(btnCancelarRI))
+                .addGap(11, 11, 11))
+        );
+
         setBackground(new java.awt.Color(224, 240, 254));
 
         jLabel1.setFont(new java.awt.Font("Arial", 3, 14)); // NOI18N
@@ -606,10 +684,10 @@ public class VendedorUI extends javax.swing.JPanel {
             eliminarFrame.setVisible(false);
             actualizarTabla();
             JOptionPane.showMessageDialog(null, "El vendedor fue eliminado exitosamente", "Alerta", JOptionPane.WARNING_MESSAGE);
-            
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(null, "No se pudo eliminar el vendedor, \n" + 
-                    "puede que contenga relaciones con items o pedidos", "Alerta", JOptionPane.WARNING_MESSAGE);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "No se pudo eliminar el vendedor, \n"
+                    + "puede que contenga relaciones con items o pedidos", "Alerta", JOptionPane.WARNING_MESSAGE);
             System.out.println(e.getMessage());
         }
         //mensaje de exito! mostrar tarjeta del cliente eliminado?
@@ -623,6 +701,16 @@ public class VendedorUI extends javax.swing.JPanel {
                 && !tableVendedores.getValueAt(fila, 4).equals("") && !tableVendedores.getValueAt(fila, 6).equals("")
                 && !tableVendedores.getValueAt(fila, 7).equals("")) {
             if (columna == 6) {
+                int idVendedor = Integer.valueOf(tableVendedores.getValueAt(fila, 0).toString());
+                try {
+                    currentVendedor = vendedorController.buscarVendedor(idVendedor);
+                    updateRelacionarTable();
+                    relacionarItem.setVisible(true);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Ocurrio un problema al buscar el vendedor", "Alerta", JOptionPane.WARNING_MESSAGE);
+                    System.out.println(e.getMessage());
+                }
+            } else if (columna == 7) {
                 nombreField1.setText(tableVendedores.getValueAt(fila, 1).toString());
                 direccionField1.setText(tableVendedores.getValueAt(fila, 2).toString());
                 coordenada1Field1.setText(tableVendedores.getValueAt(fila, 3).toString());
@@ -638,7 +726,7 @@ public class VendedorUI extends javax.swing.JPanel {
                 editarFrame.setVisible(true);
                 ideditar.setVisible(false);
                 ideditar.setText(tableVendedores.getValueAt(fila, 0).toString());
-            } else if (columna == 7) {
+            } else if (columna == 8) {
                 nombreField2.setText(tableVendedores.getValueAt(fila, 1).toString());
                 direccionField2.setText(tableVendedores.getValueAt(fila, 2).toString());
                 coordenada1Field2.setText(tableVendedores.getValueAt(fila, 3).toString());
@@ -773,12 +861,88 @@ public class VendedorUI extends javax.swing.JPanel {
 
     }//GEN-LAST:event_eliminarItemButtonActionPerformed
 
+    // relacionar
+    private Vendedor currentVendedor;
+
+    private void updateRelacionarTable() {
+        List<ItemMenu> items;
+        try {
+            items = itemMenuController.obtenerItems();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ocurrio un problema al obtener los items", "Alerta", JOptionPane.WARNING_MESSAGE);
+            System.out.println(e.getMessage());
+            return;
+        }
+
+        try {
+            setTableData(items);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ocurrio un problema al actualizar la tabla", "Alerta", JOptionPane.WARNING_MESSAGE);
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void setTableData(List<ItemMenu> items) throws Exception {
+        DefaultTableModel model = (DefaultTableModel) tableRelacionarItem.getModel();
+
+        while (tableRelacionarItem.getRowCount() > 0) {
+            model.removeRow(0);
+        }
+
+        for (ItemMenu item : items) {
+            boolean rel = vendedorController.obtenerRelacion(currentVendedor.getId(), item.getId());
+
+            Object[] data = {currentVendedor.getId() + "",
+                currentVendedor.getNombre(),
+                item.getId(),
+                item.getNombre(),
+                rel};
+            model.addRow(data);
+        }
+    }
+
+    private List<ItemMenu> getTableData() throws Exception {
+        DefaultTableModel model = (DefaultTableModel) tableRelacionarItem.getModel();
+        List<ItemMenu> items = new ArrayList<>();
+        for (int i = 0; i < tableRelacionarItem.getRowCount(); i++) {
+            if ((Boolean) model.getValueAt(i, 4)) {
+                int idItem = (Integer) model.getValueAt(i, 2);
+                ItemMenu item = itemMenuController.buscarItemsMenu(idItem);
+                items.add(item);
+            }
+        }
+        return items;
+    }
+
+    private void btnRelacionarItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelacionarItemActionPerformed
+        try {
+            List<ItemMenu> items = getTableData();
+            vendedorController.eliminarRelacionConItems(currentVendedor.getId());
+
+            vendedorController.setRelacionConItems(currentVendedor.getId(), items);
+
+            JOptionPane.showMessageDialog(null, "Los items se relacionaron correctamente", "Alerta", JOptionPane.WARNING_MESSAGE);
+            relacionarItem.setVisible(false);
+            actualizarTabla();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ocurrio un problema al relacionar los items", "Alerta", JOptionPane.WARNING_MESSAGE);
+            System.out.println(e.getMessage());
+        }
+    }//GEN-LAST:event_btnRelacionarItemActionPerformed
+
+    private void btnCancelarRIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarRIActionPerformed
+        relacionarItem.setVisible(false);
+    }//GEN-LAST:event_btnCancelarRIActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton agregarItemButton1;
     private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnCancelarRI;
     private javax.swing.JButton btnCrearVendedor;
     private javax.swing.JButton btnRefrescar;
+    private javax.swing.JButton btnRelacionarItem;
     private javax.swing.JButton cancelarBtn;
     private javax.swing.JButton cancelarEditar;
     private javax.swing.JButton cancelarEliminarBtn;
@@ -813,11 +977,14 @@ public class VendedorUI extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextField nombreField;
     private javax.swing.JTextField nombreField1;
     private javax.swing.JTextField nombreField2;
+    private javax.swing.JFrame relacionarItem;
     private javax.swing.JTable tablaItemsCrear1;
+    private javax.swing.JTable tableRelacionarItem;
     private javax.swing.JTable tableVendedores;
     private javax.swing.JTextField txtId;
     // End of variables declaration//GEN-END:variables

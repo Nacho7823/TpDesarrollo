@@ -6,7 +6,9 @@ import desarrollo.tpentrega1.entidades.Coordenada;
 import desarrollo.tpentrega1.entidades.ItemMenu;
 import desarrollo.tpentrega1.exceptions.DAOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -58,6 +60,21 @@ public class VendedorController {
     
     public List<ItemMenu> obtenerItemsDeVendedor(Vendedor vendedor) throws Exception{
         return vendedorDAO.obtenerItemsDeVendedor(vendedor);
+    }
+    
+    public boolean obtenerRelacion(int idVendedor, int idItemMenu) throws Exception {
+        return vendedorDAO.getVende(idVendedor, idItemMenu);
+    }
+    
+    public void eliminarRelacionConItems(int idVendedor) throws Exception {
+        vendedorDAO.eliminarVende(idVendedor);
+    }
+    
+    public void setRelacionConItems(int idVendedor, List<ItemMenu> items) throws Exception {
+        for (ItemMenu item : items) {
+            vendedorDAO.setVende(idVendedor, item.getId());
+        }
+        
     }
     
 
