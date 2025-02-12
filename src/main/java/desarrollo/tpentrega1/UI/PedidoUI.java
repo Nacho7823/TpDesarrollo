@@ -981,6 +981,11 @@ public class PedidoUI extends javax.swing.JPanel {
         }
 
         List<ItemMenu> items = new ArrayList<>(itemsAgregados.keySet());
+        
+        if (items.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Se debe agregar por lo menos un item", "Alerta", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
         for (ItemMenu item : items) {
             total += item.getPrecio() * itemsAgregados.get(item);
@@ -1090,6 +1095,8 @@ public class PedidoUI extends javax.swing.JPanel {
 //        }
     }//GEN-LAST:event_agregarItemButtonActionPerformed
 
+    
+    // editar frame
     private void editarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarBtnActionPerformed
         Cliente c = listaClientes.get(clientesDD1.getSelectedIndex());
         Vendedor v = listaVendedores.get(vendedoresDD1.getSelectedIndex());
@@ -1107,6 +1114,11 @@ public class PedidoUI extends javax.swing.JPanel {
         }
 
         List<ItemMenu> items = new ArrayList<>(itemsAgregados.keySet());
+        
+        if (items.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Se debe agregar por lo menos un item", "Alerta", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
         for (ItemMenu item : items) {
             total += item.getPrecio() * itemsAgregados.get(item);
