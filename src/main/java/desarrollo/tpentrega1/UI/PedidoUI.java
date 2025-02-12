@@ -43,8 +43,11 @@ public class PedidoUI extends javax.swing.JPanel {
         this.clienteController = ClienteController.getInstance();
         this.vendedorController = VendedorController.getInstance();
         this.itemMenuController = ItemMenuController.getInstance();
-        itemsAgregados = new HashMap<>();
         initComponents();
+        
+        itemsAgregados = new HashMap<>();
+        this.tablePedidos.setAutoResizeMode(5);
+        tablePedidos.setRowHeight(40);
 //        tablePedidos.
 
         actualizarTabla();
@@ -768,6 +771,7 @@ public class PedidoUI extends javax.swing.JPanel {
         }*/
     }//GEN-LAST:event_tablePedidosMouseClicked
 
+    // mainFrame
     private void btnCrearPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearPedidoActionPerformed
         String[] columnNames = {"Item", "Cantidad"};
         Object[][] data = null;
@@ -805,7 +809,9 @@ public class PedidoUI extends javax.swing.JPanel {
         try {
             if (vendedoresDD.getSelectedItem() != null) {
                 Vendedor v = listaVendedores.get(vendedoresDD.getSelectedIndex());
+                itemsDD.removeAllItems();
                 listaItems = itemMenuController.obtenerItemsMenuDeVendedor(v.getId());
+                listaItems.stream().forEach(item -> itemsDD.addItem(item.getNombre()));
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "No se encontraron items del vendedor", "Alerta", JOptionPane.WARNING_MESSAGE);
@@ -833,6 +839,7 @@ public class PedidoUI extends javax.swing.JPanel {
                 Vendedor v = listaVendedores.get(vendedoresDD.getSelectedIndex());
                 listaItems = itemMenuController.obtenerItemsMenuDeVendedor(v.getId());
 
+                itemsDD.removeAllItems();
                 listaItems.stream().forEach(item -> itemsDD.addItem(item.getNombre()));
             }
         } catch (Exception e) {
