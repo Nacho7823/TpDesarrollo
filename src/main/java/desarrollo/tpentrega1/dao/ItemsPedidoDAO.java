@@ -3,6 +3,7 @@ package desarrollo.tpentrega1.dao;
 import desarrollo.tpentrega1.entidades.ItemMenu;
 import desarrollo.tpentrega1.exceptions.DAOException;
 import java.util.List;
+import java.util.Map;
 
 
 public interface ItemsPedidoDAO {
@@ -27,7 +28,7 @@ public interface ItemsPedidoDAO {
     public List<ItemMenu> buscarBebidaTamaño(double tamaño) throws DAOException;
     public List<ItemMenu> buscarBebidaGraduacion(double graduacion) throws DAOException;
 
-    public List<ItemMenu> buscarPorIdPedido(int id) throws DAOException;
+    public Map<ItemMenu, Integer> buscarPorIdPedido(int id) throws DAOException;
 
     
 }

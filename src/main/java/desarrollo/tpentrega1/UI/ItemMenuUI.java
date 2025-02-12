@@ -937,7 +937,8 @@ public class ItemMenuUI extends javax.swing.JPanel {
         try {
             itemMenuController.eliminarItemsMenu(Integer.valueOf(idEliminarBebida.getText()));
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "No se pudo eliminar el item", "Alerta", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "No se pudo eliminar el item\n" + 
+                    "puede que contenga relaciones con vendedores o pedidos", "Alerta", JOptionPane.WARNING_MESSAGE);
             System.out.println(e.getMessage());
         }
     }//GEN-LAST:event_eliminarBebidaBtnActionPerformed
@@ -955,7 +956,8 @@ public class ItemMenuUI extends javax.swing.JPanel {
         try {
             itemMenuController.eliminarItemsMenu(Integer.valueOf(idEliminarPlato.getText()));
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "No se pudo eliminar el item", "Alerta", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "No se pudo eliminar el item\n" + 
+                    "puede que contenga relaciones con vendedores o pedidos", "Alerta", JOptionPane.WARNING_MESSAGE);
             System.out.println(e.getMessage());
         }
     }//GEN-LAST:event_eliminarPlatoBtnActionPerformed

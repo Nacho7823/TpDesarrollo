@@ -8,7 +8,11 @@ import desarrollo.tpentrega1.exceptions.DAOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ItemsPedidoDAOSql extends DAO implements ItemsPedidoDAO {
 
@@ -87,11 +91,24 @@ public class ItemsPedidoDAOSql extends DAO implements ItemsPedidoDAO {
     }
 
     @Override
-    public List<ItemMenu> buscarPorIdPedido(int id) throws DAOException {
-        String sql = "SELECT * FROM item_menu I LEFT JOIN items_pedido IP ON I.id_item_menu=IP.id_item_menu"
-                + "LEFT JOIN pedido P ON IP.id_pedido= P.id_pedido WHERE P.id_pedido= ?";
+    public Map<ItemMenu, Integer> buscarPorIdPedido(int id) throws DAOException {
+        try {
+            String sql = "SELECT * FROM item_menu I LEFT JOIN detalle_pedido DP ON I.id_item_menu=DP.id_item_menu"
+                + " WHERE P.id_pedido= ?";
+        
+            search(sql, id);
+            Map<ItemMenu, Integer> items = new HashMap<>();
+        
+            while(resultado.next()) {
+                ItemMenu item = mapearItemMenu(resultado);
+                int cantidad = resultado.getInt("cantidad");
+                items.put(item, cantidad);
+            }
 
-        return ejecutarConsulta(sql, id);
+            return items;
+        } catch (SQLException e) {
+            throw new DAOException(e.getMessage());
+        }
     }
 
     @Override

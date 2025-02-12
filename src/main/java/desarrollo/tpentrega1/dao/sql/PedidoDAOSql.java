@@ -16,6 +16,7 @@ import desarrollo.tpentrega1.exceptions.InvalidOrderException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class PedidoDAOSql extends DAO implements PedidoDAO {
 
@@ -38,14 +39,15 @@ public class PedidoDAOSql extends DAO implements PedidoDAO {
         try {
 
             String sqlPedido = "insert into pedido (estado,id_cliente, id_vendedor, id_pago, total) VALUES (?, ?, ?, ?, ?)";
-            String sqlItems = "insert into items_pedido (id_pedido, id_item_menu, cantidad) VALUES (?, ?, ?)";
+            String sqlItems = "insert into detalle_pedido (id_pedido, id_item_menu, cantidad) VALUES (?, ?, ?)";
 
             Pago pago = pedido.getPago();
             pagoDAO.crearPago(pago);
             pedido.setPago(pago);
+            
 
             int id = create(sqlPedido,
-                    pedido.getEstado().toString(),
+                    pedido.getEstado().ordinal(),
                     pedido.getCliente().getId(),
                     pedido.getVendedor().getId(),
                     pago.getId(),
@@ -54,12 +56,13 @@ public class PedidoDAOSql extends DAO implements PedidoDAO {
 
             pedido.setId(id);
 
-            // TODO: cantidad?
-            for (ItemMenu item : pedido.getItems()) {
+            List<ItemMenu> items = new ArrayList<>(pedido.getItems().keySet());
+            
+            for (ItemMenu item : items) {
                 createNoKey(sqlItems,
                         pedido.getId(),
                         item.getId(),
-                        1 // FIXME
+                        pedido.getItems().get(item)
                 );
             }
 
@@ -77,20 +80,25 @@ public class PedidoDAOSql extends DAO implements PedidoDAO {
                     + ",total= ? where id_pedido = ?;";
 
             // TODO: cantidad
-            String sqlItems = "update items_pedido set id_item_menu = ? where id_pedido = ?;"; //cantidad a implementar
+            String sqlItems = "update detalle_pedido set id_item_menu = ?, cantidad = ? where id_pedido = ?;"; //cantidad a implementar
 
             update(sqlPedido,
-                    pedido.getEstado().toString(),
+                    pedido.getEstado().ordinal(),
                     pedido.getCliente().getId(),
                     pedido.getVendedor().getId(),
                     pedido.getPago().getId(),
                     pedido.getTotal(),
                     pedido.getId());
 
-            for (ItemMenu item : pedido.getItems()) {
+            
+            
+            List<ItemMenu> items = new ArrayList<>(pedido.getItems().keySet());
+            for (ItemMenu item : items) {
                 update(sqlItems,
                         item.getId(),
-                        pedido.getId());
+                        pedido.getItems().get(item),
+                        pedido.getId()
+                );
             }
 
         } catch (SQLException ex) {
@@ -126,7 +134,7 @@ public class PedidoDAOSql extends DAO implements PedidoDAO {
             Cliente cliente = clienteDAO.buscarCliente(clienteId);
             Vendedor vendedor = vendedorDAO.buscarVendedor(vendedorId);
             EstadoPedido estado = EstadoPedido.valueOf(estadoStr);
-            List<ItemMenu> items = itemsPedidoDAO.buscarPorIdPedido(id);
+            Map<ItemMenu, Integer> items = itemsPedidoDAO.buscarPorIdPedido(id);
             Pago pago = pagoDAO.buscarPagoPorIdPedido(id);
 
             if (pago == null) {
@@ -137,7 +145,8 @@ public class PedidoDAOSql extends DAO implements PedidoDAO {
 
         } catch (SQLException ex) {
             throw new DAOException("no se pudo buscar el Pedido: \n" + ex.getMessage());
-        } catch (InvalidOrderException ex) {
+        } 
+        catch (InvalidOrderException ex) {
             throw new DAOException("el pedido es inconsistente InvalidOrderException: \n" + ex.getMessage());
         }
     }
@@ -160,7 +169,7 @@ public class PedidoDAOSql extends DAO implements PedidoDAO {
                 Vendedor vendedor = vendedorDAO.buscarVendedor(vendedorId);
                 EstadoPedido estado = EstadoPedido.valueOf(estadoStr);
 
-                List<ItemMenu> items = itemsPedidoDAO.buscarPorIdPedido(id);
+                Map<ItemMenu, Integer> items = itemsPedidoDAO.buscarPorIdPedido(id);
 
                 Pago pago = pagoDAO.buscarPagoPorIdPedido(id);
 
@@ -170,7 +179,8 @@ public class PedidoDAOSql extends DAO implements PedidoDAO {
             return pedidos;
         } catch (SQLException ex) {
             throw new DAOException("no se pudo buscar el Pedido: \n" + ex.getMessage());
-        } catch (InvalidOrderException ex) {
+        } 
+        catch (InvalidOrderException ex) {
             throw new DAOException("el pedido es inconsistente InvalidOrderException: \n" + ex.getMessage());
         }
 
