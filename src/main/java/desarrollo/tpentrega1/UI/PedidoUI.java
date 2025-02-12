@@ -62,13 +62,17 @@ public class PedidoUI extends javax.swing.JPanel {
             for (int i = 0; i < pedidos.size(); i++) {
                 List<String> items1 = new ArrayList();
                 data[i][0] = pedidos.get(i).getId();
-                data[i][1] = pedidos.get(i).getCliente();
+                data[i][1] = pedidos.get(i).getCliente().getNombre();
                 data[i][2] = pedidos.get(i).getVendedor().getNombre();
                 data[i][3] = pedidos.get(i).getEstado().toString();
-                data[i][4] = pedidos.get(i).getPago().getClass();
-                data[i][5] = pedidos.get(i).getTotal();
+                if (pedidos.get(i).getPago() instanceof MercadoPago)
+                    data[i][4] = "mercadopago";
+                else 
+                    data[i][4] = "transferencia";
+                
+                data[i][5] = pedidos.get(i).getTotal() + "";
                 pedidos.get(i).getItems().keySet().stream().forEach(item -> items1.add(item.getNombre()));
-                data[i][6] = items1;
+                data[i][6] = items1.toString();
                 data[i][7] = "Editar";
                 data[i][8] = "Borrar";
             }

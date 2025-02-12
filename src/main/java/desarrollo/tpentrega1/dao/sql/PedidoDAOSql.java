@@ -129,11 +129,11 @@ public class PedidoDAOSql extends DAO implements PedidoDAO {
 
             int clienteId = resultado.getInt("id_cliente");
             int vendedorId = resultado.getInt("id_vendedor");
-            String estadoStr = resultado.getString("estado");
+            int estadoInt = resultado.getInt("estado");
 
             Cliente cliente = clienteDAO.buscarCliente(clienteId);
             Vendedor vendedor = vendedorDAO.buscarVendedor(vendedorId);
-            EstadoPedido estado = EstadoPedido.valueOf(estadoStr);
+            EstadoPedido estado = EstadoPedido.values()[estadoInt];
             Map<ItemMenu, Integer> items = itemsPedidoDAO.buscarPorIdPedido(id);
             Pago pago = pagoDAO.buscarPagoPorIdPedido(id);
 
@@ -163,11 +163,11 @@ public class PedidoDAOSql extends DAO implements PedidoDAO {
                 int id = resultado.getInt("id_pedido");
                 int clienteId = resultado.getInt("id_cliente");
                 int vendedorId = resultado.getInt("id_vendedor");
-                String estadoStr = resultado.getString("estado");
+                int estadoInt = resultado.getInt("estado");
 
                 Cliente cliente = clienteDAO.buscarCliente(clienteId);
                 Vendedor vendedor = vendedorDAO.buscarVendedor(vendedorId);
-                EstadoPedido estado = EstadoPedido.valueOf(estadoStr);
+                EstadoPedido estado = EstadoPedido.values()[estadoInt];
 
                 Map<ItemMenu, Integer> items = itemsPedidoDAO.buscarPorIdPedido(id);
 

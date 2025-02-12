@@ -32,7 +32,7 @@ public class ItemsPedidoDAOSql extends DAO implements ItemsPedidoDAO {
     }
 
     private ItemMenu mapearItemMenu(ResultSet rs) throws SQLException, DAOException {
-        int id = rs.getInt("id");
+        int id = rs.getInt("id_item_menu");
         String nombre = rs.getString("nombre");
         String descripcion = rs.getString("descripcion");
         double precio = rs.getDouble("precio");
@@ -93,8 +93,9 @@ public class ItemsPedidoDAOSql extends DAO implements ItemsPedidoDAO {
     @Override
     public Map<ItemMenu, Integer> buscarPorIdPedido(int id) throws DAOException {
         try {
-            String sql = "SELECT * FROM item_menu I LEFT JOIN detalle_pedido DP ON I.id_item_menu=DP.id_item_menu"
-                + " WHERE P.id_pedido= ?";
+            String sql = "select * from item_menu im left join bebida b on b.id_item_menu = im.id_item_menu " +
+"	left join plato p on p.id_item_menu =im.id_item_menu" +
+"	left join detalle_pedido dp on dp.id_item_menu = im.id_item_menu where dp.id_pedido = ?";
         
             search(sql, id);
             Map<ItemMenu, Integer> items = new HashMap<>();
