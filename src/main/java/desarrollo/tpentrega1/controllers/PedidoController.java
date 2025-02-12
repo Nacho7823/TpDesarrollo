@@ -32,6 +32,10 @@ public class PedidoController {
         pedidoDAO.crearPedido(pedido);
     }
     
+    public void modificarPedido(Pedido pedido) throws Exception {
+        pedidoDAO.actualizarPedido(pedido);
+    }
+    
     public void modificarPedidoEstado(int id, EstadoPedido nuevoEstado) throws Exception {
         Pedido pedidoExistente = pedidoDAO.buscarPedido(id);
         pedidoExistente.setEstado(nuevoEstado);

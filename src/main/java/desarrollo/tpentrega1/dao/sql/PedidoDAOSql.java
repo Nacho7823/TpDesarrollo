@@ -82,6 +82,10 @@ public class PedidoDAOSql extends DAO implements PedidoDAO {
             // TODO: cantidad
             String sqlItems = "update detalle_pedido set id_item_menu = ?, cantidad = ? where id_pedido = ?;"; //cantidad a implementar
 
+            Pago pago = pedido.getPago();
+            pagoDAO.actualizarPago(pago);
+            pedido.setPago(pago);
+            
             update(sqlPedido,
                     pedido.getEstado().ordinal(),
                     pedido.getCliente().getId(),

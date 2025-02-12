@@ -69,6 +69,13 @@ public class PagoDAOSql extends DAO implements PagoDAO {
             throw new DAOException("no se pudo crear el pago de transferencia: \n" + ex.getMessage());
         }
     }
+    
+    @Override
+    public void actualizarPago(Pago pago) throws DAOException {
+        // TODO: fix
+        eliminarPago(pago.getId());
+        crearPago(pago);
+    }
 
     @Override
     public void eliminarPago(int id) throws DAOException {

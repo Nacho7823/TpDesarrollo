@@ -7,6 +7,8 @@ import java.util.List;
 public interface PagoDAO {
 
     public void crearPago(Pago pago) throws DAOException;
+    
+    public void actualizarPago(Pago pago) throws DAOException;
 
     public void eliminarPago(int id) throws DAOException;
 

@@ -51,9 +51,8 @@ public class PedidoUI extends javax.swing.JPanel {
         initComponents();
 
         itemsAgregados = new HashMap<>();
-        this.tablePedidos.setAutoResizeMode(5);
+        tablePedidos.setAutoResizeMode(5);
         tablePedidos.setRowHeight(40);
-//        tablePedidos.
 
         actualizarTabla();
     }
@@ -413,7 +412,7 @@ public class PedidoUI extends javax.swing.JPanel {
             .addGroup(editarFrameLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(editarFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 459, Short.MAX_VALUE)
                     .addGroup(editarFrameLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(totalLabel1)
@@ -438,7 +437,7 @@ public class PedidoUI extends javax.swing.JPanel {
                                 .addComponent(cantItemSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(agregarItemButton1))
-                            .addComponent(itemsDD1, javax.swing.GroupLayout.Alignment.TRAILING, 0, 338, Short.MAX_VALUE)
+                            .addComponent(itemsDD1, javax.swing.GroupLayout.Alignment.TRAILING, 0, 371, Short.MAX_VALUE)
                             .addComponent(vendedoresDD1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(formaDePagoDD1, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(cuitField1, javax.swing.GroupLayout.Alignment.TRAILING))))
@@ -782,26 +781,30 @@ public class PedidoUI extends javax.swing.JPanel {
                     formaDePagoDD1.removeAllItems();
                     formaDePagoDD1.addItem("Transferencia");
                     formaDePagoDD1.addItem("Mercado Pago");
-                    if (currentPedido.getPago() instanceof MercadoPago) {
+                    if (currentPedido.getPago() != null) {
+                        if (currentPedido.getPago() instanceof MercadoPago) {
+                            formaDePagoDD1.setSelectedIndex(1);
+                            cbuAliasLabel1.setText("Alias");
+                            MercadoPago mp = (MercadoPago) currentPedido.getPago();
+                            cbuAliasField1.setText(mp.getAlias());
+                            cuitField1.setVisible(false);
+                            cuitLabel1.setVisible(false);
+
+                        } else {
+                            formaDePagoDD1.setSelectedIndex(0);
+
+                            cbuAliasLabel1.setText("cbu");
+                            cuitLabel.setText("cbu");
+                            Transferencia t = (Transferencia) currentPedido.getPago();
+                            cbuAliasField1.setText(t.getCvu());
+                            cuitField1.setText(t.getCuit());
+                            cuitField1.setVisible(false);
+                            cuitLabel1.setVisible(false);
+                        }
+                    } else {
                         formaDePagoDD1.setSelectedIndex(1);
-
-                    } else {
-                        formaDePagoDD1.setSelectedIndex(0);
-
-                    }
-
-                    if (tablePedidos.getValueAt(fila, 3).toString().equals("Mercado Pago")) {
                         cbuAliasLabel1.setText("Alias");
-                        MercadoPago mp = (MercadoPago) currentPedido.getPago();
-                        cbuAliasField1.setText(mp.getAlias());
-                        cuitField1.setVisible(false);
-                        cuitLabel1.setVisible(false);
-                    } else {
-                        cbuAliasLabel1.setText("cbu");
-                        cuitLabel.setText("cbu");
-                        Transferencia t = (Transferencia) currentPedido.getPago();
-                        cbuAliasField1.setText(t.getCvu());
-                        cuitField1.setText(t.getCuit());
+                        cbuAliasField1.setText("");
                         cuitField1.setVisible(false);
                         cuitLabel1.setVisible(false);
                     }
@@ -813,10 +816,15 @@ public class PedidoUI extends javax.swing.JPanel {
                         listaItems.stream().forEach(item -> itemsDD1.addItem(item.getNombre()));
                     }
 
+                    String[] columnNames = {"Item", "Cantidad"};
+                    Object[][] data = null;
+                    tablaItemsCrear1.setModel(new javax.swing.table.DefaultTableModel(data, columnNames));
+                    updateTableEditar(currentPedido.getItems());
+
                     editarFrame.setVisible(true);
 
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, "No se pudo eliminar el pedido", "Alerta", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "No se pudo editar el pedido", "Alerta", JOptionPane.WARNING_MESSAGE);
                     System.out.println(e.getMessage());
                 }
             } else if (columna == 8) {
@@ -898,6 +906,21 @@ public class PedidoUI extends javax.swing.JPanel {
         this.actualizarTabla();
     }//GEN-LAST:event_btnRefrescarActionPerformed
 
+    private void updateTableCrear(Map<ItemMenu, Integer> map) {
+        DefaultTableModel modelo = (DefaultTableModel) tablaItemsCrear.getModel();
+
+        while (modelo.getRowCount() > 0) {
+            modelo.removeRow(0);
+        }
+
+        List<ItemMenu> items = new ArrayList<>(map.keySet());
+
+        for (ItemMenu item : items) {
+            Object[] row = {item.getNombre(), map.get(item)};
+            modelo.addRow(row);
+        }
+    }
+
     //crear Frame
     private void vendedoresDDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vendedoresDDActionPerformed
 //        vendedoresDD.setEnabled(false);
@@ -917,6 +940,7 @@ public class PedidoUI extends javax.swing.JPanel {
 
                 itemsDD.removeAllItems();
                 listaItems.stream().forEach(item -> itemsDD.addItem(item.getNombre()));
+                updateTableCrear(itemsAgregados);
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "No se encontro el vendedor", "Alerta", JOptionPane.WARNING_MESSAGE);
@@ -932,6 +956,8 @@ public class PedidoUI extends javax.swing.JPanel {
         Pago pago = null;
 
         double total = 0;
+        
+        // TODO: update cantidad from table
 
         List<ItemMenu> items = new ArrayList<>(itemsAgregados.keySet());
 
@@ -965,10 +991,12 @@ public class PedidoUI extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_crearBtnActionPerformed
 
+    // crear frame
     private void cancelarCrearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarCrearBtnActionPerformed
         crearFrame.setVisible(false);
     }//GEN-LAST:event_cancelarCrearBtnActionPerformed
 
+    // crear frame
     private void formaDePagoDDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_formaDePagoDDActionPerformed
         if (formaDePagoDD.getSelectedItem() != null) {
             if (formaDePagoDD.getSelectedItem().toString().equals("Mercado Pago")) {
@@ -983,6 +1011,7 @@ public class PedidoUI extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_formaDePagoDDActionPerformed
 
+    // crear frame
     private void agregarItemButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarItemButtonActionPerformed
 
         System.out.println(listaItems.toString());
@@ -1041,9 +1070,59 @@ public class PedidoUI extends javax.swing.JPanel {
     }//GEN-LAST:event_agregarItemButtonActionPerformed
 
     private void editarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarBtnActionPerformed
-        // TODO add your handling code here:
+        Cliente c = listaClientes.get(clientesDD1.getSelectedIndex());
+        Vendedor v = listaVendedores.get(vendedoresDD1.getSelectedIndex());
+
+        Pago pago = null;
+
+        double total = 0;
+
+        List<ItemMenu> items = new ArrayList<>(itemsAgregados.keySet());
+
+        for (ItemMenu item : items) {
+            total += item.getPrecio() * itemsAgregados.get(item);
+        }
+
+        if (formaDePagoDD1.getSelectedItem().toString().equals("Mercado Pago")) {
+
+            pago = new MercadoPago(cbuAliasField1.getText(), total);
+
+        } else if (formaDePagoDD1.getSelectedItem().toString().equals("Transferencia")) {
+
+            pago = new Transferencia(cuitField1.getText(), cbuAliasField1.getText(), total);
+        }
+        try {
+            currentPedido.setCliente(c);
+            currentPedido.setVendedor(v);
+            currentPedido.setItems(itemsAgregados);
+            currentPedido.setPago(pago);
+            pedidoController.modificarPedido(currentPedido);
+            crearFrame.setVisible(false);
+            actualizarTabla();
+            JOptionPane.showMessageDialog(null, "el pedido se edito correctamente", "Alerta", JOptionPane.WARNING_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "No se pudo editar el pedido", "Alerta", JOptionPane.WARNING_MESSAGE);
+            System.out.println(e.getMessage());
+        }
     }//GEN-LAST:event_editarBtnActionPerformed
 
+    // editar frame
+    private void updateTableEditar(Map<ItemMenu, Integer> map) {
+        DefaultTableModel modelo = (DefaultTableModel) tablaItemsCrear1.getModel();
+
+        while (modelo.getRowCount() > 0) {
+            modelo.removeRow(0);
+        }
+
+        List<ItemMenu> items = new ArrayList<>(map.keySet());
+
+        for (ItemMenu item : items) {
+            Object[] row = {item.getNombre(), map.get(item)};
+            modelo.addRow(row);
+        }
+    }
+
+    //editar frame
     private void vendedoresDD1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vendedoresDD1ActionPerformed
         //        vendedoresDD.setEnabled(false);
         // TODO: resetItems
@@ -1062,6 +1141,7 @@ public class PedidoUI extends javax.swing.JPanel {
 
                 itemsDD1.removeAllItems();
                 listaItems.stream().forEach(item -> itemsDD1.addItem(item.getNombre()));
+                updateTableEditar(itemsAgregados);
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "No se encontro el vendedor", "Alerta", JOptionPane.WARNING_MESSAGE);
@@ -1069,10 +1149,64 @@ public class PedidoUI extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_vendedoresDD1ActionPerformed
 
+    // editar frame
     private void agregarItemButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarItemButton1ActionPerformed
-        // TODO add your handling code here:
+        System.out.println(listaItems.toString());
+        ItemMenu itemSeleccionado = listaItems.get(itemsDD1.getSelectedIndex());
+        int cantSelecionada = (int) cantItemSpinner1.getValue();
+
+        DefaultTableModel modelo = (DefaultTableModel) tablaItemsCrear1.getModel();
+
+        if (itemsAgregados.containsKey(itemSeleccionado)) {
+            int cant = itemsAgregados.get(itemSeleccionado);
+            cant += cantSelecionada;
+            itemsAgregados.put(itemSeleccionado, cant);
+        } else {
+            itemsAgregados.put(itemSeleccionado, cantSelecionada);
+        }
+
+        // update table
+        boolean encontrado = false;
+        int i = 0;
+        while (i < tablaItemsCrear1.getRowCount() && !encontrado) {
+            String item = (String) modelo.getValueAt(i, 0);
+            if (item.equals(itemSeleccionado)) {
+                encontrado = true;
+                if (cantSelecionada == 0) {
+                    modelo.removeRow(i);
+                } else {
+                    modelo.setValueAt(cantSelecionada, i, 1);
+                }
+            }
+            i++;
+        }
+        if (cantSelecionada != 0) {
+            if (!encontrado) {
+                Object[] row = {itemSeleccionado.getNombre(), cantSelecionada};
+                modelo.addRow(row);
+            }
+        }
+        double total = 0;
+        List<ItemMenu> items = new ArrayList<>(itemsAgregados.keySet());
+        for (ItemMenu item1 : items) {
+            total += item1.getPrecio() + itemsAgregados.get(item1);
+        }
+
+        if (formaDePagoDD1.getSelectedItem().toString().equals("Mercado Pago")) {
+
+            total = total * 1.04;
+        } else if (formaDePagoDD1.getSelectedItem().toString().equals("Transferencia")) {
+            total = total * 1.02;
+        }
+        totalLabel1.setText("Total: " + String.valueOf(total));
+//        try {
+//        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(null, "No se pudieron obtener los items del pedido", "Alerta", JOptionPane.WARNING_MESSAGE);
+//            System.out.println(e.getMessage());
+//        }
     }//GEN-LAST:event_agregarItemButton1ActionPerformed
 
+    // editar frame
     private void formaDePagoDD1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_formaDePagoDD1ActionPerformed
         if (formaDePagoDD1.getSelectedItem() != null) {
             if (formaDePagoDD1.getSelectedItem().toString().equals("Mercado Pago")) {
@@ -1087,8 +1221,9 @@ public class PedidoUI extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_formaDePagoDD1ActionPerformed
 
+    // editar frame
     private void cancelarCrearBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarCrearBtn1ActionPerformed
-        // TODO add your handling code here:
+        editarFrame.setVisible(false);
     }//GEN-LAST:event_cancelarCrearBtn1ActionPerformed
 
     private void eliminarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarBtnActionPerformed
