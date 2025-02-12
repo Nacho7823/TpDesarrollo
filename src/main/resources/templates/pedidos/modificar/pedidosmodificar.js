@@ -24,6 +24,7 @@ btnModificar.addEventListener("click", async () => {
 
     const pedido = getPedido();
     pedido.total = await calculateTotal();
+    
     if (pedido.total == 0) {
         alert("Debe seleccionar por lo menos un item");
         return;
@@ -175,7 +176,7 @@ async function calculateTotal() {
         const item = await getItemMenu(value.id_item_menu);
         total += item.precio * value.cantidad;
     }
-
+    
     inputTotal.value = total;
     return total;
 }

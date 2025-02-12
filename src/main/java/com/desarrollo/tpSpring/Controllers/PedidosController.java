@@ -230,8 +230,8 @@ public class PedidosController {
     public ResponseEntity<Boolean> crearPedido(@RequestBody Map<String, Object> data) {
         System.out.println("pedido: " + data.toString());
         EstadoPedido estado = EstadoPedido.valueOf((String) data.get("estado"));
-        int id_cliente = (int) data.get("id_cliente");
-        int id_vendedor = (int) data.get("id_vendedor");
+        int id_cliente = Integer.parseInt(data.get("id_cliente").toString());
+        int id_vendedor = Integer.parseInt(data.get("id_vendedor").toString());
 
         Cliente cliente = clienteService.buscarCliente(id_cliente);
         Vendedor vendedor = vendedorService.buscarVendedor(id_vendedor);
