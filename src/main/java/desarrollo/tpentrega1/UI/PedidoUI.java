@@ -40,6 +40,9 @@ public class PedidoUI extends javax.swing.JPanel {
     private List<ItemMenu> listaItems;
     private Map<ItemMenu, Integer> itemsAgregados;
 
+    //editar frame
+    Pedido currentPedido;
+
     public PedidoUI() {
         this.pedidoController = PedidoController.getInstance();
         this.clienteController = ClienteController.getInstance();
@@ -752,27 +755,66 @@ public class PedidoUI extends javax.swing.JPanel {
                 && !tablePedidos.getValueAt(fila, 4).equals("") && !tablePedidos.getValueAt(fila, 6).equals("")
                 && !tablePedidos.getValueAt(fila, 7).equals("")) {
             int idPedido = (int) tablePedidos.getValueAt(fila, 0);
-            if (columna == 6) {
+            if (columna == 7) {
                 try {
 
-                    Pedido pedido = pedidoController.buscarPedido(idPedido);
-                    clientesDD1.setSelectedItem(tablePedidos.getValueAt(fila, 1).toString());
-                    vendedoresDD1.setSelectedItem(tablePedidos.getValueAt(fila, 2).toString());
-                    formaDePagoDD1.setSelectedItem(tablePedidos.getValueAt(fila, 3).toString());
+                    currentPedido = pedidoController.buscarPedido(idPedido);
+                    try {
+                        clientesDD.removeAllItems();
+                        listaClientes = clienteController.obtenerListaClientes();
+                        listaClientes.stream().forEach(c -> clientesDD1.addItem(c.getNombre()));
+                        clientesDD1.setSelectedItem(currentPedido.getCliente().getNombre());
+
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(null, "No se encontraron clientes", "Alerta", JOptionPane.WARNING_MESSAGE);
+                        System.out.println(e.getMessage());
+                    }
+                    try {
+                        vendedoresDD.removeAllItems();
+                        listaVendedores = vendedorController.obtenerListaVendedores();
+                        listaVendedores.stream().forEach(v -> vendedoresDD1.addItem(v.getNombre()));
+                        vendedoresDD1.setSelectedItem(currentPedido.getVendedor().getNombre());
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(null, "No se encontraron vendedores", "Alerta", JOptionPane.WARNING_MESSAGE);
+                        System.out.println(e.getMessage());
+                    }
+
+                    formaDePagoDD1.removeAllItems();
+                    formaDePagoDD1.addItem("Transferencia");
+                    formaDePagoDD1.addItem("Mercado Pago");
+                    if (currentPedido.getPago() instanceof MercadoPago) {
+                        formaDePagoDD1.setSelectedIndex(1);
+
+                    } else {
+                        formaDePagoDD1.setSelectedIndex(0);
+
+                    }
+
                     if (tablePedidos.getValueAt(fila, 3).toString().equals("Mercado Pago")) {
                         cbuAliasLabel1.setText("Alias");
-                        MercadoPago mp = (MercadoPago) pedido.getPago();
+                        MercadoPago mp = (MercadoPago) currentPedido.getPago();
                         cbuAliasField1.setText(mp.getAlias());
-                        // con getPago no puedo acceder al alias o cbu???????????
-                        cuitField.setVisible(false);
-                        cuitLabel.setVisible(false);
+                        cuitField1.setVisible(false);
+                        cuitLabel1.setVisible(false);
                     } else {
-                        // TODO
+                        cbuAliasLabel1.setText("cbu");
+                        cuitLabel.setText("cbu");
+                        Transferencia t = (Transferencia) currentPedido.getPago();
+                        cbuAliasField1.setText(t.getCvu());
+                        cuitField1.setText(t.getCuit());
+                        cuitField1.setVisible(false);
+                        cuitLabel1.setVisible(false);
                     }
-//                coordenada2Field1.setText(tablePedidos.getValueAt(fila, 4).toString());
+
+                    if (vendedoresDD1.getSelectedItem() != null) {
+                        Vendedor v = listaVendedores.get(vendedoresDD1.getSelectedIndex());
+                        itemsDD1.removeAllItems();
+                        listaItems = itemMenuController.obtenerItemsMenuDeVendedor(v.getId());
+                        listaItems.stream().forEach(item -> itemsDD1.addItem(item.getNombre()));
+                    }
+
                     editarFrame.setVisible(true);
-//                ideditar.setVisible(false);
-//                ideditar.setText(tablePedidos.getValueAt(fila, 0).toString());
+
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "No se pudo eliminar el pedido", "Alerta", JOptionPane.WARNING_MESSAGE);
                     System.out.println(e.getMessage());
@@ -856,6 +898,7 @@ public class PedidoUI extends javax.swing.JPanel {
         this.actualizarTabla();
     }//GEN-LAST:event_btnRefrescarActionPerformed
 
+    //crear Frame
     private void vendedoresDDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vendedoresDDActionPerformed
 //        vendedoresDD.setEnabled(false);
         // TODO: resetItems
@@ -914,6 +957,7 @@ public class PedidoUI extends javax.swing.JPanel {
             );
             pedidoController.newPedido(pedido);
             crearFrame.setVisible(false);
+            actualizarTabla();
             JOptionPane.showMessageDialog(null, "el pedido se creo correctamente", "Alerta", JOptionPane.WARNING_MESSAGE);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "No se pudo crear el pedido", "Alerta", JOptionPane.WARNING_MESSAGE);
@@ -1001,7 +1045,28 @@ public class PedidoUI extends javax.swing.JPanel {
     }//GEN-LAST:event_editarBtnActionPerformed
 
     private void vendedoresDD1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vendedoresDD1ActionPerformed
-        // TODO add your handling code here:
+        //        vendedoresDD.setEnabled(false);
+        // TODO: resetItems
+        itemsAgregados.clear();
+        itemsDD1.setEnabled(true);
+        agregarItemButton1.setEnabled(true);
+        cantItemSpinner1.setEnabled(true);
+        formaDePagoDD1.setEnabled(true);
+        cbuAliasField1.setEnabled(true);
+        cuitField1.setEnabled(true);
+        try {
+
+            if (vendedoresDD1.getSelectedItem() != null) {
+                Vendedor v = listaVendedores.get(vendedoresDD1.getSelectedIndex());
+                listaItems = itemMenuController.obtenerItemsMenuDeVendedor(v.getId());
+
+                itemsDD1.removeAllItems();
+                listaItems.stream().forEach(item -> itemsDD1.addItem(item.getNombre()));
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "No se encontro el vendedor", "Alerta", JOptionPane.WARNING_MESSAGE);
+            System.out.println(e.getMessage());
+        }
     }//GEN-LAST:event_vendedoresDD1ActionPerformed
 
     private void agregarItemButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarItemButton1ActionPerformed
@@ -1009,7 +1074,17 @@ public class PedidoUI extends javax.swing.JPanel {
     }//GEN-LAST:event_agregarItemButton1ActionPerformed
 
     private void formaDePagoDD1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_formaDePagoDD1ActionPerformed
-        // TODO add your handling code here:
+        if (formaDePagoDD1.getSelectedItem() != null) {
+            if (formaDePagoDD1.getSelectedItem().toString().equals("Mercado Pago")) {
+                cbuAliasLabel1.setText("Alias");
+                cuitField1.setVisible(false);
+                cuitLabel1.setVisible(false);
+            } else if (formaDePagoDD1.getSelectedItem().toString().equals("Transferencia")) {
+                cbuAliasLabel1.setText("Cbu");
+                cuitField1.setVisible(true);
+                cuitLabel1.setVisible(true);
+            }
+        }
     }//GEN-LAST:event_formaDePagoDD1ActionPerformed
 
     private void cancelarCrearBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarCrearBtn1ActionPerformed
