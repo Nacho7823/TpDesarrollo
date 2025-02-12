@@ -109,8 +109,10 @@ public class PedidoDAOSql extends DAO implements PedidoDAO {
     @Override
     public void eliminarPedido(int id) throws DAOException {
         try {
-            String sql = "DELETE FROM pedido WHERE id_pedido = ?";
-            delete(sql, id);
+            String sql1 = "DELETE FROM detalle_pedido WHERE id_pedido = ?";
+            String sql2 = "DELETE FROM pedido WHERE id_pedido = ?";
+            delete(sql1, id);
+            delete(sql2, id);
         } catch (SQLException ex) {
             throw new DAOException("no se pudo eliminar el Pedido: \n" + ex.getMessage());
         }

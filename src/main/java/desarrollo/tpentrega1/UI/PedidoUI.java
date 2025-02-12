@@ -13,6 +13,8 @@ import desarrollo.tpentrega1.entidades.Transferencia;
 import desarrollo.tpentrega1.entidades.Vendedor;
 import desarrollo.tpentrega1.enums.EstadoPedido;
 import desarrollo.tpentrega1.exceptions.DAOException;
+import desarrollo.tpentrega1.utilidades.ButtonEditor;
+import desarrollo.tpentrega1.utilidades.ButtonRenderer;
 import desarrollo.tpentrega1.utilidades.GestionCeldas;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,7 +46,7 @@ public class PedidoUI extends javax.swing.JPanel {
         this.vendedorController = VendedorController.getInstance();
         this.itemMenuController = ItemMenuController.getInstance();
         initComponents();
-        
+
         itemsAgregados = new HashMap<>();
         this.tablePedidos.setAutoResizeMode(5);
         tablePedidos.setRowHeight(40);
@@ -68,11 +70,12 @@ public class PedidoUI extends javax.swing.JPanel {
                 data[i][1] = pedidos.get(i).getCliente().getNombre();
                 data[i][2] = pedidos.get(i).getVendedor().getNombre();
                 data[i][3] = pedidos.get(i).getEstado().toString();
-                if (pedidos.get(i).getPago() instanceof MercadoPago)
+                if (pedidos.get(i).getPago() instanceof MercadoPago) {
                     data[i][4] = "mercadopago";
-                else 
+                } else {
                     data[i][4] = "transferencia";
-                
+                }
+
                 data[i][5] = pedidos.get(i).getTotal() + "";
                 pedidos.get(i).getItems().keySet().stream().forEach(item -> items1.add(item.getNombre()));
                 data[i][6] = items1.toString();
@@ -80,6 +83,14 @@ public class PedidoUI extends javax.swing.JPanel {
                 data[i][8] = "Borrar";
             }
             tablePedidos.setModel(new javax.swing.table.DefaultTableModel(data, columnNames));
+
+            tablePedidos.getColumnModel().getColumn(7).setCellRenderer(new ButtonRenderer("Editar"));
+            tablePedidos.getColumnModel().getColumn(8).setCellRenderer(new ButtonRenderer("Borrar"));
+
+            // Editores para las columnas
+            tablePedidos.getColumnModel().getColumn(7).setCellEditor(new ButtonEditor("Editar"));
+            tablePedidos.getColumnModel().getColumn(8).setCellEditor(new ButtonEditor("Borrar"));
+
             tablePedidos.getColumnModel().getColumn(0).setCellRenderer(new GestionCeldas("numerico"));
             tablePedidos.getColumnModel().getColumn(1).setCellRenderer(new GestionCeldas("texto"));
             tablePedidos.getColumnModel().getColumn(2).setCellRenderer(new GestionCeldas("texto"));
@@ -731,44 +742,66 @@ public class PedidoUI extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnBuscar1ActionPerformed
 
+    // mainFrame tabla
     private void tablePedidosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablePedidosMouseClicked
-        /*int fila = tablePedidos.rowAtPoint(evt.getPoint());
+        int fila = tablePedidos.rowAtPoint(evt.getPoint());
         int columna = tablePedidos.columnAtPoint(evt.getPoint());
-        if(!tablePedidos.getValueAt(fila, 0).equals("") && !tablePedidos.getValueAt(fila, 1).equals("")
-            && !tablePedidos.getValueAt(fila, 2).equals("") && !tablePedidos.getValueAt(fila, 3).equals("")
-            && !tablePedidos.getValueAt(fila, 4).equals("") && !tablePedidos.getValueAt(fila, 6).equals("")
-            && !tablePedidos.getValueAt(fila, 7).equals("")){
+
+        if (!tablePedidos.getValueAt(fila, 0).equals("") && !tablePedidos.getValueAt(fila, 1).equals("")
+                && !tablePedidos.getValueAt(fila, 2).equals("") && !tablePedidos.getValueAt(fila, 3).equals("")
+                && !tablePedidos.getValueAt(fila, 4).equals("") && !tablePedidos.getValueAt(fila, 6).equals("")
+                && !tablePedidos.getValueAt(fila, 7).equals("")) {
             int idPedido = (int) tablePedidos.getValueAt(fila, 0);
-            if(columna==6){
-                Pedido pedido = pedidoController.buscarPedido(String.valueOf(idPedido));
-                clientesDD1.setSelectedItem(tablePedidos.getValueAt(fila, 1).toString());
-                vendedoresDD1.setSelectedItem(tablePedidos.getValueAt(fila, 2).toString());
-                formaDePagoDD1.setSelectedItem(tablePedidos.getValueAt(fila, 3).toString());
-                if(tablePedidos.getValueAt(fila, 3).toString().equals("Mercado Pago")){
-                    cbuAliasLabel1.setText("Alias");
-                    cbuAliasField1.setText(pedido.getPago().);
-        // con getPago no puedo acceder al alias o cbu???????????
-                    cuitField.setVisible(false);
-                    cuitLabel.setVisible(false);
+            if (columna == 6) {
+                try {
+
+                    Pedido pedido = pedidoController.buscarPedido(idPedido);
+                    clientesDD1.setSelectedItem(tablePedidos.getValueAt(fila, 1).toString());
+                    vendedoresDD1.setSelectedItem(tablePedidos.getValueAt(fila, 2).toString());
+                    formaDePagoDD1.setSelectedItem(tablePedidos.getValueAt(fila, 3).toString());
+                    if (tablePedidos.getValueAt(fila, 3).toString().equals("Mercado Pago")) {
+                        cbuAliasLabel1.setText("Alias");
+                        MercadoPago mp = (MercadoPago) pedido.getPago();
+                        cbuAliasField1.setText(mp.getAlias());
+                        // con getPago no puedo acceder al alias o cbu???????????
+                        cuitField.setVisible(false);
+                        cuitLabel.setVisible(false);
+                    } else {
+                        // TODO
+                    }
+//                coordenada2Field1.setText(tablePedidos.getValueAt(fila, 4).toString());
+                    editarFrame.setVisible(true);
+//                ideditar.setVisible(false);
+//                ideditar.setText(tablePedidos.getValueAt(fila, 0).toString());
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "No se pudo eliminar el pedido", "Alerta", JOptionPane.WARNING_MESSAGE);
+                    System.out.println(e.getMessage());
                 }
-                coordenada2Field1.setText(tablePedidos.getValueAt(fila, 4).toString());
-                editarFrame.setVisible(true);
-                ideditar.setVisible(false);
-                ideditar.setText(tablePedidos.getValueAt(fila, 0).toString());
-            } else if(columna==7){
-                nombreField2.setText(tablePedidos.getValueAt(fila, 1).toString());
-                direccionField2.setText(tablePedidos.getValueAt(fila, 2).toString());
-                coordenada1Field2.setText(tablePedidos.getValueAt(fila, 3).toString());
-                coordenada2Field2.setText(tablePedidos.getValueAt(fila, 4).toString());
-                nombreField2.setEnabled(false);
-                direccionField2.setEnabled(false);
-                coordenada1Field2.setEnabled(false);
-                coordenada2Field2.setEnabled(false);
-                eliminarFrame.setVisible(true);
-                ideliminar.setVisible(false);
-                ideliminar.setText(tablePedidos.getValueAt(fila, 0).toString());
+            } else if (columna == 8) {
+                try {
+                    int id = Integer.valueOf(tablePedidos.getValueAt(fila, 0).toString());
+                    pedidoController.eliminarPedido(id);
+                    actualizarTabla();
+                    JOptionPane.showMessageDialog(null, "El pedido se elimino correctamente", "Alerta", JOptionPane.WARNING_MESSAGE);
+
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "No se pudo eliminar el pedido", "Alerta", JOptionPane.WARNING_MESSAGE);
+                    System.out.println(e.getMessage());
+                }
+
+//                nombreField2.setText(tablePedidos.getValueAt(fila, 1).toString());
+//                direccionField2.setText(tablePedidos.getValueAt(fila, 2).toString());
+//                coordenada1Field2.setText(tablePedidos.getValueAt(fila, 3).toString());
+//                coordenada2Field2.setText(tablePedidos.getValueAt(fila, 4).toString());
+//                nombreField2.setEnabled(false);
+//                direccionField2.setEnabled(false);
+//                coordenada1Field2.setEnabled(false);
+//                coordenada2Field2.setEnabled(false);
+//                eliminarFrame.setVisible(true);
+//                ideliminar.setVisible(false);
+//                ideliminar.setText(tablePedidos.getValueAt(fila, 0).toString());
             }
-        }*/
+        }
     }//GEN-LAST:event_tablePedidosMouseClicked
 
     // mainFrame
